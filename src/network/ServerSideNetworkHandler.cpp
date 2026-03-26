@@ -179,7 +179,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	if (!_allowIncoming) return;
 
 	LOGI("LoginPacket\n");
-
+	
+	printf("%d", packet->clientNetworkVersion);
 	int loginStatus = LoginStatus::Success;
 	//
 	// Bad/incompatible client version
