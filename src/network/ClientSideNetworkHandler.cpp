@@ -1,6 +1,7 @@
-
 #include "ClientSideNetworkHandler.h"
+#include <MinecraftClient.h>
 #include "client/Options.h"
+#include "gamemode/GameMode.h"
 #include "packet/PacketInclude.h"
 #include "RakNetInstance.h"
 #include "../world/level/chunk/ChunkSource.h"
@@ -8,11 +9,7 @@
 #include "../world/level/storage/LevelStorageSource.h"
 #include "../world/entity/player/Player.h"
 #include "../world/entity/player/Inventory.h"
-#include "../client/Minecraft.h"
-#include "../client/gamemode/GameMode.h"
-#ifndef STANDALONE_SERVER
-#include "../client/gui/screens/DisconnectionScreen.h"
-#endif
+#include <Minecraft.h>
 #include "../client/player/LocalPlayer.h"
 #include "../client/multiplayer/MultiPlayerLevel.h"
 #include "../client/player/input/KeyboardInput.h"
@@ -22,9 +19,6 @@
 #include "../world/level/Explosion.h"
 #include "../world/level/tile/entity/FurnaceTileEntity.h"
 #include "../world/inventory/BaseContainerMenu.h"
-#ifndef STANDALONE_SERVER
-#include "../client/particle/TakeAnimationParticle.h"
-#endif
 #include "../world/entity/EntityFactory.h"
 #include "../world/entity/item/PrimedTnt.h"
 #include "../world/entity/projectile/Arrow.h"
@@ -35,12 +29,9 @@
 
 static MultiPlayerLevel* mpcast(Level* l) { return (MultiPlayerLevel*) l; }
 
-ClientSideNetworkHandler::ClientSideNetworkHandler(Minecraft* minecraft, IRakNetInstance* raknetInstance)
+ClientSideNetworkHandler::ClientSideNetworkHandler(MinecraftClient& minecraft, IRakNetInstance* raknetInstance)
 :	minecraft(minecraft),
-	raknetInstance(raknetInstance),
-	level(NULL),
-	requestNextChunkPosition(0),
-    requestNextChunkIndex(0)
+	raknetInstance(raknetInstance)
 {
 	rakPeer = raknetInstance->getPeer();
 }
@@ -86,7 +77,7 @@ void ClientSideNetworkHandler::onConnect(const RakNet::RakNetGUID& hostGuid)
 	serverGuid = hostGuid;
 
 	clearChunksLoaded();
-	LoginPacket packet(minecraft->options.getStringValue(OPTIONS_USERNAME).c_str(), SharedConstants::NetworkProtocolVersion);
+	LoginPacket packet(minecraft.options().getStringValue(OPTIONS_USERNAME).c_str(), SharedConstants::NetworkProtocolVersion);
 	raknetInstance->send(packet);
 }
 
@@ -103,14 +94,14 @@ void ClientSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 		level->isClientSide = false;
 		for (int i = (int)level->players.size()-1; i >= 0; --i ) {
 			Player* p = level->players[i];
-			if (p != minecraft->player) {
+			if (p != minecraft.getPlayer()) {
 				p->reallyRemoveIfPlayer = true;
 				level->removeEntity(p);
 			}
 		}
 	}
 #ifndef STANDALONE_SERVER
-	minecraft->gui.addMessage("Disconnected from server");
+	minecraft.gui.addMessage("Disconnected from server");
 #endif
 }
 
@@ -123,13 +114,13 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginSta
 	if (packet->status == LoginStatus::Failed_ClientOld) {
 		LOGI("Disconnect! Client is outdated!\n");
 #ifndef STANDALONE_SERVER
-		minecraft->setScreen(new DisconnectionScreen("Could not connect: Outdated client!"));
+		minecraft.setScreen(new DisconnectionScreen("Could not connect: Outdated client!"));
 #endif
 	}
 	if (packet->status == LoginStatus::Failed_ServerOld) {
 		LOGI("Disconnect! Server is outdated!\n");
 #ifndef STANDALONE_SERVER
-		minecraft->setScreen(new DisconnectionScreen("Could not connect: Outdated server!"));
+		minecraft.setScreen(new DisconnectionScreen("Could not connect: Outdated server!"));
 #endif
 	}
 }
@@ -141,13 +132,13 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, StartGam
 
 #ifdef RPI
 	if (packet->gameType != GameType::Creative) {
-		minecraft->setScreen(new DisconnectionScreen("Could not connect: Incompatible server!"));
+		minecraft.setScreen(new DisconnectionScreen("Could not connect: Incompatible server!"));
 		return;
 	}
 #endif
 
 	const std::string& levelId = LevelStorageSource::TempLevelId;
-	LevelStorageSource* storageSource = minecraft->getLevelSource();
+	LevelStorageSource* storageSource = minecraft.getLevelSource();
 	storageSource->deleteLevel(levelId);
 	//level = new Level(storageSource->selectLevel(levelId, true), "temp", packet->levelSeed, SharedConstants::StorageVersion);
 	MultiPlayerLevel* level = new MultiPlayerLevel(
@@ -158,22 +149,22 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, StartGam
 	level->isClientSide = true;
 
 	bool isCreative = (packet->gameType == GameType::Creative);
-	LocalPlayer* player = new LocalPlayer(minecraft, level, minecraft->options.getStringValue(OPTIONS_USERNAME), level->dimension->id, isCreative);
+	LocalPlayer* player = new LocalPlayer(minecraft, level, minecraft.options().getStringValue(OPTIONS_USERNAME), level->dimension->id, isCreative);
 	player->owner = rakPeer->GetMyGUID();
 	player->entityId = packet->entityId;
 	player->moveTo(packet->x, packet->y, packet->z, player->yRot, player->xRot);
 
 	LOGI("new pos: %f, %f [%f - %f]\n", player->x, player->z, player->bb.y0, player->bb.y1);
 
-	minecraft->setLevel(level, "ClientSideNetworkHandler -> setLevel", player);
-	minecraft->setIsCreativeMode(isCreative);
+	minecraft.setLevel(level, "ClientSideNetworkHandler -> setLevel", player);
+	minecraft.setIsCreativeMode(isCreative);
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MessagePacket* packet)
 {
 	LOGI("MessagePacket\n");
 #ifndef STANDALONE_SERVER
-	minecraft->gui.addMessage(packet->message.C_String());
+	minecraft.gui.addMessage(packet->message.C_String());
 #endif
 }
 
@@ -270,8 +261,8 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AddPlaye
 	}
 	LOGI("AddPlayerPacket\n");
 
-	Player* player = new RemotePlayer(level, minecraft->isCreativeMode());
-	minecraft->gameMode->initAbilities(player->abilities);
+	Player* player = new RemotePlayer(level, minecraft.isCreativeMode());
+	minecraft.gameMode->initAbilities(player->abilities);
 	player->entityId = packet->entityId;
 	level->addEntity(player);
 
@@ -292,12 +283,12 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AddPlaye
 	std::string message = packet->name.C_String();
 	message += " joined the game";
 #ifndef STANDALONE_SERVER
-	minecraft->gui.addMessage(message);
+	minecraft.gui.addMessage(message);
 #endif
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemovePlayerPacket* packet) {
-	if (!level || source == minecraft->player->owner) return;
+	if (!level || source == minecraft.getPlayer()->owner) return;
 
 	if (Player* player = findPlayer(level, packet->entityId, &packet->owner)) {
 		player->reallyRemoveIfPlayer = true;
@@ -316,7 +307,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemovePl
 
 	//std::string message = packet->name.C_String();
 	//message += " joined the game";
-	//minecraft->gui.addMessage(message);
+	//minecraft.gui.addMessage(message);
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveEntityPacket* packet)
@@ -324,7 +315,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveEn
 	if (!level) return;
 
 	Entity* entity = level->getEntity(packet->entityId);
-	LOGI("RemoveEntityPacket %p %p, %d\n", entity, minecraft->player, entity?(int)(entity->isPlayer()): -1);
+	LOGI("RemoveEntityPacket %p %p, %d\n", entity, minecraft.getPlayer(), entity?(int)(entity->isPlayer()): -1);
 	if (!entity) return;
 
 	level->removeEntity(entity);
@@ -355,7 +346,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TakeItem
 		item = ((ItemEntity*) e)->item;
 #ifndef STANDALONE_SERVER
 		if (Entity* to = level->getEntity(packet->playerId))
-			minecraft->particleEngine->add(new TakeAnimationParticle(level, (ItemEntity*)e, to, -0.5f));
+			minecraft.particleEngine->add(new TakeAnimationParticle(level, (ItemEntity*)e, to, -0.5f));
 #endif
 	}
 	else if (e->getEntityTypeId() == EntityTypes::IdArrow)
@@ -365,10 +356,10 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TakeItem
 		return;
 
 	// try take it and if we don't have space; re-throw it
-	if (minecraft->player->entityId == packet->playerId
-	&& !minecraft->player->inventory->add(&item)) {
+	if (minecraft.getPlayer()->entityId == packet->playerId
+	&& !minecraft.getPlayer()->inventory->add(&item)) {
 		DropItemPacket dropPacket(packet->playerId, item);
-		minecraft->raknetInstance->send(dropPacket);
+		minecraft.raknetInstance->send(dropPacket);
 	}
 	level->playSound(e, "random.pop", 0.2f, 1.0f * 2.f);
 }
@@ -438,16 +429,16 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ExplodeP
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LevelEventPacket* packet) {
 	if (!level) return;
 	if(packet->eventId == LevelEvent::ALL_PLAYERS_SLEEPING) {
-		minecraft->player->setAllPlayersSleeping();
+		minecraft.getPlayer()->setAllPlayersSleeping();
 	}
 	else {
-		minecraft->level->levelEvent(NULL, packet->eventId, packet->x, packet->y, packet->z, packet->data);
+		minecraft.level->levelEvent(NULL, packet->eventId, packet->x, packet->y, packet->z, packet->data);
 	}
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TileEventPacket* packet) {
 	if (!level) return;
-	minecraft->level->tileEvent(packet->x, packet->y, packet->z, packet->b0, packet->b1);
+	minecraft.level->tileEvent(packet->x, packet->y, packet->z, packet->b0, packet->b1);
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, EntityEventPacket* packet) {
@@ -631,7 +622,7 @@ void ClientSideNetworkHandler::arrangeRequestChunkOrder() {
     int cz = CHUNK_CACHE_WIDTH / 2;
 
     // If player exists, let's sort around him
-    Player* p = minecraft? minecraft->player : NULL;
+    Player* p = minecraft.getPlayer();
     if (p) {
         cx = Mth::floor(p->x / (float)CHUNK_WIDTH);
         cz = Mth::floor(p->z / (float)CHUNK_DEPTH);
@@ -717,9 +708,9 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Interact
 	{
 		Player* player = (Player*) src;
 		if (InteractPacket::Attack == packet->action)
-			minecraft->gameMode->attack(player, entity);
+			minecraft.gameMode->attack(player, entity);
 		if (InteractPacket::Interact == packet->action)
-			minecraft->gameMode->interact(player, entity);
+			minecraft.gameMode->interact(player, entity);
 	}
 }
 
@@ -759,7 +750,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AnimateP
 		return;
 
     // Own player - Then don't play... :
-    if (minecraft->player->entityId == packet->entityId) {
+    if (minecraft.getPlayer()->entityId == packet->entityId) {
         if (packet->action == AnimatePacket::Swing) return;
     }
 
@@ -788,26 +779,26 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SetHealthPacket* packet)
 {
-	if (!level || !minecraft->player)
+	if (!level || !minecraft.getPlayer())
 		return;
 
-	minecraft->player->hurtTo(packet->health);
+	minecraft.getPlayer()->hurtTo(packet->health);
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SetSpawnPositionPacket* packet) {
-	if (!level || !minecraft || !minecraft->player) return;
+	if (!level || !minecraft.getPlayer()) return;
 	if (!level->inRange(packet->x, packet->y, packet->z)) return;
 
-	minecraft->player->setRespawnPosition(Pos(packet->x, packet->y, packet->z));
+	minecraft.getPlayer()->setRespawnPosition(Pos(packet->x, packet->y, packet->z));
 	level->getLevelData()->setSpawn(packet->x, packet->y, packet->z);
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, HurtArmorPacket* packet) {
-    if (!level || !minecraft->player) {
+    if (!level || !minecraft.getPlayer()) {
         return;
     }
 
-    minecraft->player->hurtArmor(packet->dmg);
+    minecraft.getPlayer()->hurtArmor(packet->dmg);
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RespawnPacket* packet)
@@ -820,43 +811,43 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RespawnP
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerOpenPacket* packet)
 {
-	if (!level || !minecraft || !minecraft->player)
+	if (!level)
 		return;
 
 	if (packet->type == ContainerType::FURNACE) {
 		FurnaceTileEntity* te = new FurnaceTileEntity();
 		te->clientSideOnly = true;
-		minecraft->player->openFurnace(te);
-		if (minecraft->player->containerMenu)
-			minecraft->player->containerMenu->containerId = packet->containerId;
+		minecraft.getPlayer()->openFurnace(te);
+		if (minecraft.getPlayer()->containerMenu)
+			minecraft.getPlayer()->containerMenu->containerId = packet->containerId;
 	}
 	if (packet->type == ContainerType::CONTAINER) {
 		ChestTileEntity* te = new ChestTileEntity();
 		te->clientSideOnly = true;
-		minecraft->player->openContainer(te);
-		if (minecraft->player->containerMenu)
-			minecraft->player->containerMenu->containerId = packet->containerId;
+		minecraft.getPlayer()->openContainer(te);
+		if (minecraft.getPlayer()->containerMenu)
+			minecraft.getPlayer()->containerMenu->containerId = packet->containerId;
 	}
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerClosePacket* packet)
 {
-	if (minecraft && minecraft->player && minecraft->player->containerMenu)
-		minecraft->player->closeContainer();
+	if (minecraft.getPlayer() && minecraft.getPlayer()->containerMenu)
+		minecraft.getPlayer()->closeContainer();
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerSetContentPacket* packet)
 {
-	if (!minecraft || !minecraft->player)
+	if (!minecraft.getPlayer())
 		return;
 
     if (packet->containerId == 0) {
         for (unsigned int i = 0; i < packet->items.size(); ++i) {
-            minecraft->player->inventory->setItem(Inventory::MAX_SELECTION_SIZE + i, &packet->items[i]);
+            minecraft.getPlayer()->inventory->setItem(Inventory::MAX_SELECTION_SIZE + i, &packet->items[i]);
         }
-    } else if (minecraft->player->containerMenu && minecraft->player->containerMenu->containerId == packet->containerId) {
+    } else if (minecraft.getPlayer()->containerMenu && minecraft.getPlayer()->containerMenu->containerId == packet->containerId) {
         for (unsigned int i = 0; i < packet->items.size(); ++i) {
-            minecraft->player->containerMenu->setSlot(i, &packet->items[i]);
+            minecraft.getPlayer()->containerMenu->setSlot(i, &packet->items[i]);
         }
     }
 }
@@ -865,28 +856,28 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 {
 	//LOGI("ContainerSetSlot\n");
 
-	if (!minecraft->player
-	  || !minecraft->player->containerMenu
-	  || minecraft->player->containerMenu->containerId != packet->containerId)
+	if (!minecraft.getPlayer()
+	  || !minecraft.getPlayer()->containerMenu
+	  || minecraft.getPlayer()->containerMenu->containerId != packet->containerId)
 	  return;
 
-	//minecraft->player->containerMenu->setSlot(packet->slot, packet->item.isNull()? NULL : &packet->item);
-	minecraft->player->containerMenu->setSlot(packet->slot, &packet->item);
+	//minecraft.getPlayer()->containerMenu->setSlot(packet->slot, packet->item.isNull()? NULL : &packet->item);
+	minecraft.getPlayer()->containerMenu->setSlot(packet->slot, &packet->item);
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerSetDataPacket* packet)
 {
 	//LOGI("ContainerSetData\n");
-	if (minecraft->player && minecraft->player->containerMenu && minecraft->player->containerMenu->containerId == packet->containerId) {
+	if (minecraft.getPlayer() && minecraft.getPlayer()->containerMenu && minecraft.getPlayer()->containerMenu->containerId == packet->containerId) {
 		//LOGI("client: SetData2 %d, %d\n", packet->id, packet->value);
-		minecraft->player->containerMenu->setData(packet->id, packet->value);
+		minecraft.getPlayer()->containerMenu->setData(packet->id, packet->value);
 	}
 }
 
 void ClientSideNetworkHandler::handle( const RakNet::RakNetGUID& source, ChatPacket* packet )
 {
 #ifndef STANDALONE_SERVER
-	minecraft->gui.displayClientMessage(packet->message);
+	minecraft.gui.displayClientMessage(packet->message);
 #endif
 }
 

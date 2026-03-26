@@ -1,6 +1,6 @@
 #include "TileRenderer.h"
 #include "Chunk.h"
-#include "../Minecraft.h"
+#include <Minecraft.h>
 #include "Tesselator.h"
 
 #include "../../world/level/LevelSource.h"

@@ -1,4 +1,5 @@
 #include "SelectWorldScreen.h"
+#include "MinecraftClient.h"
 #include "StartMenuScreen.h"
 #include "ProgressScreen.h"
 #include "DialogDefinitions.h"
@@ -22,7 +23,7 @@ static float Max(float a, float b) {
 //
 // World Selection List
 //
-WorldSelectionList::WorldSelectionList( Minecraft* minecraft, int width, int height )
+WorldSelectionList::WorldSelectionList( MinecraftClient& minecraft, int width, int height )
 :	_height(height),
 	hasPickedLevel(false),
 	currentTick(0),

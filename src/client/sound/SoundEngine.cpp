@@ -1,6 +1,6 @@
 #include "SoundEngine.h"
 #include "../Options.h"
-#include "../Minecraft.h"
+#include <Minecraft.h>
 #include "../../world/entity/Mob.h"
 
 

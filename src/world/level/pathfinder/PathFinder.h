@@ -37,7 +37,7 @@ public:
 	void clear() {
 		cache.setAll(0);
 	}
-	__inline int _index(int x, int y, int z) {
+	inline int _index(int x, int y, int z) {
 		return (x-bz) | ((z-bz) << ShiftZ) | ((y-by) << ShiftY);
 	}
 private:

@@ -1,14 +1,14 @@
 #include "RolledSelectionListH.h"
-#include "../../Minecraft.h"
 #include "../../renderer/Tesselator.h"
 #include "../../renderer/gles.h"
 #include "../../../platform/input/Mouse.h"
 #include "../../../platform/input/Multitouch.h"
 #include "../../../util/Mth.h"
 #include "../../renderer/Textures.h"
+#include "MinecraftClient.h"
 
 
-RolledSelectionListH::RolledSelectionListH( Minecraft* minecraft, int width, int height, int x0, int x1, int y0, int y1, int itemWidth )
+RolledSelectionListH::RolledSelectionListH( MinecraftClient& minecraft, int width, int height, int x0, int x1, int y0, int y1, int itemWidth )
 :	minecraft(minecraft),
 	width(width),
 	height(height),
@@ -172,7 +172,7 @@ void RolledSelectionListH::render( int xm, int ym, float a )
 
 	//LOGI("x: %f\n", xo);
 
-	minecraft->textures->loadAndBindTexture("gui/background.png");
+	minecraft.textures().loadAndBindTexture("gui/background.png");
 	glColor4f2(1.0f, 1, 1, 1);
 	float s = 32;
 	t.begin();
@@ -280,7 +280,7 @@ void RolledSelectionListH::render( int xm, int ym, float a )
 void RolledSelectionListH::renderHoleBackground( /*float x0, float x1,*/ float y0, float y1, int a0, int a1 )
 {
 	Tesselator& t = Tesselator::instance;
-	minecraft->textures->loadAndBindTexture("gui/background.png");
+	minecraft.textures().loadAndBindTexture("gui/background.png");
 	glColor4f2(1.0f, 1, 1, 1);
 	float s = 32;
 	t.begin();

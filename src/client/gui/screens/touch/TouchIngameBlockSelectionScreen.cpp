@@ -3,7 +3,7 @@
 #include "../../Screen.h"
 #include "../../components/ImageButton.h"
 #include "../../components/InventoryPane.h"
-#include "../../../gamemode/GameMode.h"
+#include <gamemode/GameMode.h>
 #include "../../../renderer/TileRenderer.h"
 #include "../../../player/LocalPlayer.h"
 #include "../../../renderer/gles.h"
@@ -91,8 +91,7 @@ void IngameBlockSelectionScreen::init()
 	//for (int i = 0; i < inventory->getContainerSize(); ++i)
 		//LOGI("> %d - %s\n", i, inventory->getItem(i)? inventory->getItem(i)->getDescriptionId().c_str() : "<-->\n");
 
-	// Grid indices are 0..N-1 for main inventory only; slots 0..MAX_SELECTION_SIZE-1 are hotbar links.
-	InventorySize = inventory->getContainerSize() - Inventory::MAX_SELECTION_SIZE;
+	InventorySize = inventory->getContainerSize();
 	InventoryRows = 1 + (InventorySize-1) / InventoryColumns;
 
     //
@@ -266,8 +265,7 @@ void IngameBlockSelectionScreen::buttonClicked(Button* button) {
 
 bool IngameBlockSelectionScreen::isAllowed( int slot )
 {
-	const int gridCount = minecraft->player->inventory->getContainerSize() - Inventory::MAX_SELECTION_SIZE;
-	if (slot < 0 || slot >= gridCount)
+	if (slot < 0 || slot >= minecraft->player->inventory->getContainerSize())
 		return false;
 
 #ifdef DEMO_MODE

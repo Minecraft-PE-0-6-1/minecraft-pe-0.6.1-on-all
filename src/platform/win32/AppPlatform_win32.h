@@ -1,7 +1,7 @@
 #ifndef APPPLATFORM_WIN32_H__
 #define APPPLATFORM_WIN32_H__
 
-#include "AppPlatform.h"
+#include <IPlatform.h>
 #include "platform/log.h"
 #include "platform/HttpClient.h"
 #include "platform/PngLoader.h"
@@ -47,7 +47,7 @@ public:
         //@todo
     }
 
-    __inline unsigned int rgbToBgr(unsigned int p) {
+    inline unsigned int rgbToBgr(unsigned int p) {
         return (p & 0xff00ff00) | ((p >> 16) & 0xff) | ((p << 16) & 0xff0000);
     }
 

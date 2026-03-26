@@ -1,20 +1,22 @@
 #include <iostream>
-#include "NinecraftApp.h"
-#include "AppPlatform.h"
+#include <IPlatform.h>
+#include <memory>
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
 
+#include "MinecraftServer.h"
+#include "platform/server/PlatformServer.h"
 #include "world/level/LevelSettings.h"
 #include "world/level/Level.h"
 #include "server/ArgumentsSettings.h"
 #include "platform/time.h"
 #include "SharedConstants.h"
 
-#define MAIN_CLASS NinecraftApp
 static App* g_app = 0;
 static int g_exitCode = 0;
+
 void signal_callback_handler(int signum) {
 	std::cout << "Signum caught: " << signum << std::endl;
 	if(signum == 2 || signum == 3){ // SIGINT ||  SIGQUIT
@@ -29,6 +31,7 @@ void signal_callback_handler(int signum) {
 
 int main(int numArguments, char* pszArgs[]) {
 	ArgumentsSettings aSettings(numArguments, pszArgs);
+
 	if(aSettings.getShowHelp()) {
 		ArgumentsSettings defaultSettings(0, NULL);
 		printf("Minecraft Pockect Edition Server %s\n", Common::getGameVersionString("").c_str());
@@ -43,34 +46,34 @@ int main(int numArguments, char* pszArgs[]) {
 		printf("-------------------------------------------------------\n");
 		return 0;
 	}
-	printf("Level Name: %s\n", aSettings.getLevelName().c_str());
-	AppContext appContext;
-	appContext.platform = new AppPlatform();
-	App* app = new MAIN_CLASS();
-	signal(SIGINT, signal_callback_handler);
-	g_app = app;
-	((MAIN_CLASS*)g_app)->externalStoragePath = aSettings.getExternalPath();
-	((MAIN_CLASS*)g_app)->externalCacheStoragePath = aSettings.getCachePath();
 
-	g_app->init(appContext);
+	printf("Level Name: %s\n", aSettings.getLevelName().c_str());
+
+	MinecraftServer server(App::CreatePlatform());
+
+	signal(SIGINT, signal_callback_handler);
+	g_app = &server;
+
+	server.externalStoragePath = aSettings.getExternalPath();
+	server.externalCacheStoragePath = aSettings.getCachePath();
+
+	server.init();
 	LevelSettings settings(getEpochTimeS(), GameType::Creative);
 	float startTime = getTimeS();
-	((MAIN_CLASS*)g_app)->selectLevel(aSettings.getLevelDir(), aSettings.getLevelName(),  settings);
-	((MAIN_CLASS*)g_app)->hostMultiplayer(aSettings.getPort());
+	server.selectLevel(aSettings.getLevelDir(), aSettings.getLevelName(),  settings);
+	server.hostMultiplayer(aSettings.getPort());
 
 	std::cout << "Level has been generated in " << getTimeS() - startTime << std::endl;
-	((MAIN_CLASS*)g_app)->level->saveLevelData();
+	server.level->saveLevelData();
 	std::cout << "Level has been saved!" << std::endl;
 
-	while(!app->wantToQuit()) {
-		app->update();
+	while(!server.wantToQuit()) {
+		server.update();
 		//pthread_yield();
 		sleepMs(20);
 	}
-	((MAIN_CLASS*)g_app)->level->saveLevelData();
-	delete app;
-	appContext.platform->finish();
-	delete appContext.platform;
+
+	server.level->saveLevelData();
 
 	std::cout << "Quit correctly" << std::endl;
 	return g_exitCode;

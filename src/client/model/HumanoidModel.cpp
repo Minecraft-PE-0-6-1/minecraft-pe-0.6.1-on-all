@@ -1,5 +1,5 @@
 #include "HumanoidModel.h"
-#include "../Minecraft.h"
+#include <Minecraft.h>
 #include "../../util/Mth.h"
 #include "../../world/entity/player/Player.h"
 #include "../../world/entity/player/Inventory.h"

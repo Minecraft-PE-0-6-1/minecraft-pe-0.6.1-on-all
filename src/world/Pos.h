@@ -26,7 +26,7 @@ public:
 		z(position.z)
 	{}
 
-    __inline bool operator==(const Pos& rhs) const {
+    inline bool operator==(const Pos& rhs) const {
         return x == rhs.x && y == rhs.y && z == rhs.z;
     }
 

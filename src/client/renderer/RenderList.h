@@ -18,7 +18,7 @@ public:
 	void add(int list);
 	void addR(const RenderChunk& chunk);
 
-	__inline void next() { ++listIndex; }
+	inline void next() { ++listIndex; }
 
     void render();
 	void renderChunks();

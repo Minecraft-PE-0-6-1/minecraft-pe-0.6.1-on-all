@@ -4,34 +4,20 @@
 #include "ptexture/DynamicTexture.h"
 #include "../Options.h"
 #include "../../platform/time.h"
-#include "../../AppPlatform.h"
 #include "../../util/StringUtils.h"
 
 /*static*/ int  Textures::textureChanges = 0;
-/*static*/ bool Textures::MIPMAP = false;
-/*static*/ const TextureId Textures::InvalidId = -1;
 
-Textures::Textures( Options* options_, AppPlatform* platform_ )
-:	clamp(false),
-	blur(false),
-	options(options_),
-	platform(platform_),
-	lastBoundTexture(Textures::InvalidId)
-{
-}
-
-Textures::~Textures()
-{
+Textures::~Textures() {
 	clear();
 
 	for (unsigned int i = 0; i < dynamicTextures.size(); ++i)
 		delete dynamicTextures[i];
 }
 
-void Textures::clear()
-{
+void Textures::clear() {
 	for (TextureMap::iterator it = idMap.begin(); it != idMap.end(); ++it) {
-		if (it->second != Textures::InvalidId)
+		if (it->second != TEXTURES_INVALID_ID)
 			glDeleteTextures(1, &it->second);
 	}
 	for (TextureImageMap::iterator it = loadedImages.begin(); it != loadedImages.end(); ++it) {
@@ -41,7 +27,7 @@ void Textures::clear()
 	idMap.clear();
 	loadedImages.clear();
 
-	lastBoundTexture = Textures::InvalidId;
+	lastBoundTexture = TEXTURES_INVALID_ID;
 }
 
 TextureId Textures::loadAndBindTexture( const std::string& resourceName )
@@ -51,7 +37,7 @@ TextureId Textures::loadAndBindTexture( const std::string& resourceName )
 	//t.start();
 	TextureId id = loadTexture(resourceName);
 	//t.stop();
-	if (id != Textures::InvalidId)
+	if (id != TEXTURES_INVALID_ID)
 		bind(id);
 
 	//t.printEvery(1000);
@@ -59,25 +45,24 @@ TextureId Textures::loadAndBindTexture( const std::string& resourceName )
 	return id;
 }
 
-TextureId Textures::loadTexture( const std::string& resourceName, bool inTextureFolder /* = true */ )
-{
+TextureId Textures::loadTexture(const std::string& resourceName, bool inTextureFolder) {
 	TextureMap::iterator it = idMap.find(resourceName);
 	if (it != idMap.end())
 		return it->second;
 
 	bool isUrl = Util::startsWith(resourceName, "http://") || Util::startsWith(resourceName, "https://");
-	TextureData texdata = platform->loadTexture(resourceName, isUrl ? false : inTextureFolder);
+	TextureData texdata = m_platform.loadTexture(resourceName, isUrl ? false : inTextureFolder);
 	if (texdata.data)
 		return assignTexture(resourceName, texdata);
-    else if (texdata.identifier != InvalidId) {
+    else if (texdata.identifier != TEXTURES_INVALID_ID) {
         //LOGI("Adding id: %d for %s\n", texdata.identifier, resourceName.c_str());
 		idMap.insert(std::make_pair(resourceName, texdata.identifier));
     }
 	else {
-		idMap.insert(std::make_pair(resourceName, Textures::InvalidId));
+		idMap.insert(std::make_pair(resourceName, TEXTURES_INVALID_ID));
 		//loadedImages.insert(std::make_pair(InvalidId, texdata));
 	}
-	return Textures::InvalidId;
+	return TEXTURES_INVALID_ID;
 }
 
 TextureId Textures::assignTexture( const std::string& resourceName, const TextureData& img )
@@ -87,13 +72,14 @@ TextureId Textures::assignTexture( const std::string& resourceName, const Textur
 
 	bind(id);
 
-	if (MIPMAP) {
+#ifdef TEXTURES_MIPMAP
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	} else {
+#else
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	}
+#endif
+
 	if (blur) {
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

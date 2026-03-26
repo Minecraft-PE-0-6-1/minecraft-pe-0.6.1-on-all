@@ -1,6 +1,6 @@
-#ifndef APP_H__
-#define APP_H__
+#pragma once
 
+#include <memory>
 #ifdef __APPLE__
 #define NO_EGL
 #endif
@@ -8,47 +8,36 @@
 #define NO_EGL
 #endif
 
-#include "AppPlatform.h"
+#include <IPlatform.h>
 #ifndef NO_EGL 
     #include <EGL/egl.h>
 #endif
-#include "platform/log.h"
-
-typedef struct AppContext {
-#ifndef NO_EGL
-	EGLDisplay display;
-	EGLContext context;
-	EGLSurface surface;
-#endif
-	AppPlatform* platform;
-	bool doRender;
-} AppContext;
 
 
-class App
-{
+// typedef struct AppContext {
+// #ifndef NO_EGL
+// 	EGLDisplay display;
+// 	EGLContext context;
+// 	EGLSurface surface;
+// #endif
+// 	AppPlatform* platform;
+// 	bool doRender;
+// } AppContext;
+
+class App {
+protected:
+	std::unique_ptr<IPlatform> m_platform;
+
 public:
-    App()
-	:	_finished(false),
-		_inited(false)
-	{
-		_context.platform = 0;
-	}
+	static std::unique_ptr<IPlatform> CreatePlatform();
+
+    App(std::unique_ptr<IPlatform> platform) : m_platform(std::move(platform)), m_finished(false), m_inited(false) {}
+	App() = delete;
 	virtual ~App() {}
 
-	void init(AppContext& c) {
-        _context = c;
-		init();
-		_inited = true;
-    }
-	bool isInited() { return _inited; }
+	void run();
 
-	virtual AppPlatform* platform() { return _context.platform; }
-
-	void onGraphicsReset(AppContext& c) {
-		_context = c;
-		onGraphicsReset();
-	}
+	bool isInited() { return m_inited; }
 
     virtual void audioEngineOn () {}
     virtual void audioEngineOff() {}
@@ -58,30 +47,25 @@ public:
     virtual void loadState(void* state, int stateSize) {}
     virtual bool saveState(void** state, int* stateSize) { return false; }
     
-	void swapBuffers() {
-#ifndef NO_EGL
-		if (_context.doRender)
-			eglSwapBuffers(_context.display, _context.surface);
-#endif
-	}
+	void swapBuffers();
+// 	{
+// #ifndef NO_EGL
+// 		if (_context.doRender)
+// 			eglSwapBuffers(_context.display, _context.surface);
+// #endif
+// 		m_platform->swapBuffers();
+// 	}
 
-	virtual void draw() {}
-	virtual void update() {};// = 0;
-	virtual void setSize(int width, int height) {}
+	virtual void update() = 0;
 	
-	virtual void quit() { _finished = true; }
-	virtual bool wantToQuit() { return _finished; }
+	virtual void quit() { m_finished = true; }
+	virtual bool wantToQuit() { return m_finished; }
 	virtual bool handleBack(bool isDown) { return false; }
 
 protected:
-	virtual void init() {}
-	//virtual void onGraphicsLost() = 0;
-	virtual void onGraphicsReset() = 0;
+	virtual void init() { m_inited = true;}
 
 private:
-	bool _inited;
-	bool _finished;
-    AppContext _context;
+	bool m_inited = false;
+	bool m_finished = false;
 };
-
-#endif//APP_H__

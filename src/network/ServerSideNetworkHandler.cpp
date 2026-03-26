@@ -5,19 +5,53 @@
 #include "../world/entity/player/Inventory.h"
 #include "../world/Container.h"
 #include "../world/inventory/BaseContainerMenu.h"
-#include "packet/PacketInclude.h"
+#include "MinecraftClient.h"
+#include "gamemode/GameMode.h"
 
 #include "RakNetInstance.h"
-#include "../client/Minecraft.h"
+#include <MinecraftClient.h>
 #include "../client/player/LocalPlayer.h"
-#include "../client/gamemode/GameMode.h"
 #include "../raknet/RakPeerInterface.h"
 #include "../raknet/PacketPriority.h"
-#ifndef STANDALONE_SERVER
-#include "../client/sound/SoundEngine.h"
-#endif
 #include "../server/ServerPlayer.h"
 #include "../world/entity/item/FallingTile.h"
+#include "network/packet/AddEntityPacket.h"
+#include "network/packet/AddItemEntityPacket.h"
+#include "network/packet/AddMobPacket.h"
+#include "network/packet/AddPaintingPacket.h"
+#include "network/packet/AddPlayerPacket.h"
+#include "network/packet/AdventureSettingsPacket.h"
+#include "network/packet/AnimatePacket.h"
+#include "network/packet/ChatPacket.h"
+#include "network/packet/ChunkDataPacket.h"
+#include "network/packet/ContainerSetSlotPacket.h"
+#include "network/packet/DropItemPacket.h"
+#include "network/packet/EntityEventPacket.h"
+#include "network/packet/InteractPacket.h"
+#include "network/packet/LevelEventPacket.h"
+#include "network/packet/LoginPacket.h"
+#include "network/packet/LoginStatusPacket.h"
+#include "network/packet/MessagePacket.h"
+#include "network/packet/MovePlayerPacket.h"
+#include "network/packet/PlayerActionPacket.h"
+#include "network/packet/PlayerArmorEquipmentPacket.h"
+#include "network/packet/PlayerEquipmentPacket.h"
+#include "network/packet/ReadyPacket.h"
+#include "network/packet/RemoveBlockPacket.h"
+#include "network/packet/RemoveEntityPacket.h"
+#include "network/packet/RemovePlayerPacket.h"
+#include "network/packet/RequestChunkPacket.h"
+#include "network/packet/RespawnPacket.h"
+#include "network/packet/SendInventoryPacket.h"
+#include "network/packet/SetHealthPacket.h"
+#include "network/packet/SetTimePacket.h"
+#include "network/packet/SignUpdatePacket.h"
+#include "network/packet/StartGamePacket.h"
+#include "network/packet/TileEventPacket.h"
+#include "network/packet/UpdateBlockPacket.h"
+#include "network/packet/UseItemPacket.h"
+#include "world/entity/Painting.h"
+#include "world/level/tile/entity/TileEntity.h"
 
 #define TIMES(x) for(int itc ## __LINE__ = 0; itc ## __LINE__ < x; ++ itc ## __LINE__)
 
@@ -52,16 +86,19 @@ void ServerSideNetworkHandler::tileChanged(int x, int y, int z)
 }
 
 Packet* ServerSideNetworkHandler::getAddPacketFromEntity( Entity* entity ) {
-	if (entity->isMob() && !entity->isPlayer()) { //@fix: This code is duplicated. See if it can be unified.
-		if (minecraft->player) {
-			// I guess this should always be true, but it crashed somewhere in this
-			// function once and I only see this one as a potential problem
-			return new AddMobPacket((Mob*)entity);
-		}
-	}
-	else if (entity->isPlayer()) {
+	// if (entity->isMob() && !entity->isPlayer()) { //@fix: This code is duplicated. See if it can be unified.
+	// 	auto client = dynamic_cast<MinecraftClient*>(minecraft);
 
-	} else if (entity->isItemEntity()) {
+	// 	if (client && client->getPlayer()) {
+	// 		// I guess this should always be true, but it crashed somewhere in this
+	// 		// function once and I only see this one as a potential problem
+	// 		return new AddMobPacket((Mob*)entity);
+	// 	}
+	// }
+	// else if (entity->isPlayer()) {
+
+	// } else 
+	if (entity->isItemEntity()) {
 		AddItemEntityPacket* packet = new AddItemEntityPacket((ItemEntity*)entity);
 		entity->xd = packet->xa();
 		entity->yd = packet->ya();
@@ -408,10 +445,12 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RequestC
 void ServerSideNetworkHandler::levelGenerated( Level* level )
 {
 	this->level = level;
+
+	// auto client = dynamic_cast<MinecraftClient*>(minecraft);
 	
-	if (minecraft->player) {
-		minecraft->player->owner = rakPeer->GetMyGUID();
-	}
+	// if (client && client->getPlayer()) {
+	// 	client->getPlayer()->owner = rakPeer->GetMyGUID();
+	// }
 	
 	level->addListener(this);
 #ifndef STANDALONE_SERVER
@@ -484,11 +523,13 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AnimateP
 {
 	if (!level)
         return;
+	
+	// auto client = dynamic_cast<MinecraftClient*>(minecraft);
 
-    // Own player -> invalid
-    if (minecraft->player && minecraft->player->entityId == packet->entityId) {
-        return;
-    }
+	// // Own player -> invalid
+	// if (client && client->getPlayer() && client->getPlayer()->entityId == packet->entityId) {
+	// 	return;
+	// }
 
 	Entity* entity = level->getEntity(packet->entityId);
 	if (!entity || !entity->isPlayer())
@@ -510,7 +551,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AnimateP
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemPacket* packet)
 {
 	if (!level) return;
-
+	
 	LOGI("UseItemPacket\n");
 	Entity* entity = level->getEntity(packet->entityId);
 	if (entity && entity->isPlayer()) {
@@ -605,8 +646,11 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 	Player* p = findPlayer(level, &source);
 	if (!p) return;
 
-	if (p != minecraft->player)
-		static_cast<ServerPlayer*>(p)->doCloseContainer();
+	// // if (p != minecraft->player)
+	// 	static_cast<ServerPlayer*>(p)->doCloseContainer();
+
+	if (auto sp = dynamic_cast<ServerPlayer*>(p))
+		sp->doCloseContainer();
 }
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerSetSlotPacket* packet) {
@@ -672,7 +716,7 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SignUpd
 void ServerSideNetworkHandler::allowIncomingConnections( bool doAllow )
 {
 	if (doAllow) {
-		raknetInstance->announceServer(minecraft->options.getStringValue(OPTIONS_USERNAME));
+		raknetInstance->announceServer(minecraft->getServerName());
 	} else {
 		raknetInstance->announceServer("");
 	}

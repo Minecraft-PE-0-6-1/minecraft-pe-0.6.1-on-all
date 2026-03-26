@@ -4,7 +4,7 @@
 //package net.minecraft.client.gamemode;
 
 #include "GameMode.h"
-#include "../../world/PosTranslator.h"
+#include <world/PosTranslator.h>
 
 class ICreator {
 public:
@@ -102,12 +102,12 @@ class CreatorMode: public GameMode
 {
 	typedef GameMode super;
 public:
-    CreatorMode(Minecraft* minecraft);
+    CreatorMode(Minecraft& minecraft);
 	~CreatorMode();
 
-    void startDestroyBlock(int x, int y, int z, int face);
-    void continueDestroyBlock(int x, int y, int z, int face);
-    void stopDestroyBlock();
+    void startDestroyBlock(Player* player, int x, int y, int z, int face);
+    void continueDestroyBlock(Player* player, int x, int y, int z, int face);
+    void stopDestroyBlock(Player* player);
 
 	bool useItemOn(Player* player, Level* level, ItemInstance* item, int x, int y, int z, int face, const Vec3& hit);
 
@@ -118,8 +118,9 @@ public:
 
 	void initAbilities(Abilities& abilities);
 
+	void releaseUsingItem(Player* player);
 private:
-	void CreatorDestroyBlock(int x, int y, int z, int face);
+	void CreatorDestroyBlock(Player* player, int x, int y, int z, int face);
 
 	Creator* _creator;
 };

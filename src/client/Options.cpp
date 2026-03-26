@@ -1,11 +1,6 @@
 #include "Options.h"
-#include "OptionStrings.h"
-#include "Minecraft.h"
-#include "../platform/log.h"
 #include "../world/Difficulty.h"
-#include <cmath>
-
-#include <memory>
+#include <MinecraftClient.h>
 
 bool Options::debugGl = false;
 
@@ -290,13 +285,13 @@ void Options::setOptionsFilePath(const std::string& path) {
 }
 
 void Options::notifyOptionUpdate(OptionId key, bool value) {
-	minecraft->optionUpdated(key, value);
+	minecraft.optionUpdated(key, value);
 }
 
 void Options::notifyOptionUpdate(OptionId key, float value) {
-	minecraft->optionUpdated(key, value);
+	minecraft.optionUpdated(key, value);
 }
 
 void Options::notifyOptionUpdate(OptionId key, int value) {
-	minecraft->optionUpdated(key, value);
+	minecraft.optionUpdated(key, value);
 }

@@ -1,6 +1,5 @@
 #include "LocalPlayer.h"
-#include "../Minecraft.h"
-#include "../../ErrorCodes.h"
+#include <Minecraft.h>
 #include "../../world/entity/EntityEvent.h"
 #include "../../world/entity/player/Player.h"
 #include "../../world/inventory/BaseContainerMenu.h"
@@ -35,7 +34,7 @@
 #include <errno.h>
 #endif
 
-#ifndef STANDALONE_SERVER
+
 #include "../gui/Screen.h"
 #include "../gui/screens/FurnaceScreen.h"
 #include "../gui/screens/ChestScreen.h"
@@ -44,13 +43,13 @@
 #include "../gui/screens/InBedScreen.h"
 #include "../gui/screens/TextEditScreen.h"
 #include "../particle/TakeAnimationParticle.h"
-#endif
 #include "../../network/packet/AnimatePacket.h"
 #include "../../world/item/ArmorItem.h"
 #include "../../network/packet/PlayerArmorEquipmentPacket.h"
+#include <MinecraftClient.h>
 
 namespace {
-#ifndef STANDALONE_SERVER
+
 
 static bool isBase64(unsigned char c) {
     return (std::isalnum(c) || (c == '+') || (c == '/'));
@@ -233,7 +232,7 @@ static bool fileExists(const std::string& path) {
 #endif
 }
 
-#ifndef STANDALONE_SERVER
+
 
 static void* fetchSkinForPlayer(void* param) {
     LocalPlayer* player = (LocalPlayer*)param;
@@ -345,33 +344,21 @@ static bool isJumpable(int tileId) {
 
 } // anonymous namespace
 
-LocalPlayer::LocalPlayer(Minecraft* minecraft, Level* level, const std::string& username, int dimension, bool isCreative)
-:	Player(level, isCreative),
-	minecraft(minecraft),
-	input(NULL),
-	sentInventoryItemId(-1),
-	sentInventoryItemData(-1),
-	autoJumpEnabled(true),
-	armorTypeHash(0),
-	sprinting(false),
-	sprintDoubleTapTimer(0),
-	prevForwardHeld(false)
-{
+LocalPlayer::LocalPlayer(MinecraftClient& minecraft, Level* level, const std::string& username, int dimension, bool isCreative)
+:	Player(level, isCreative), minecraft(minecraft) {
 	this->dimension = dimension;
 	_init();
-#ifndef STANDALONE_SERVER
 
-	if (minecraft->options.getStringValue(OPTIONS_USERNAME).size() != 0) {
+	if (minecraft.options().getStringValue(OPTIONS_USERNAME).size() != 0) {
 		textureName = "mob/char.png";
 
-		this->name = minecraft->options.getStringValue(OPTIONS_USERNAME);
+		this->name = minecraft.options().getStringValue(OPTIONS_USERNAME);
 		printf("test \n");
 		// Fetch user skin and cape from Mojang servers in the background (avoids blocking the main thread)
 		// TODO: Fix this memory leak
 		new CThread(fetchSkinForPlayer, this);
 		new CThread(fetchCapeForPlayer, this);
 	}
-#endif
 }
 
 LocalPlayer::~LocalPlayer() {
@@ -381,8 +368,8 @@ LocalPlayer::~LocalPlayer() {
 
 /*private*/
 void LocalPlayer::calculateFlight(float xa, float ya, float za) {
-	float flySpeed = minecraft->options.getProgressValue(OPTIONS_FLY_SPEED);
-	float sensivity = minecraft->options.getProgressValue(OPTIONS_SENSITIVITY);
+	float flySpeed = minecraft.options().getProgressValue(OPTIONS_FLY_SPEED);
+	float sensivity = minecraft.options().getProgressValue(OPTIONS_SENSITIVITY);
 
     xa = xa * flySpeed;
     ya = 0;
@@ -434,12 +421,12 @@ void LocalPlayer::tick() {
 			stopUsingItem();
 		}
 	}
-	if (minecraft->isOnline())
+	if (minecraft.isOnline())
 	{
 		if (std::abs(x - sentX) > .1f || std::abs(y - sentY) > .01f || std::abs(z - sentZ) > .1f || std::abs(sentRotX - xRot) > 1 || std::abs(sentRotY - yRot) > 1)
 		{
 			MovePlayerPacket packet(entityId, x, y - heightOffset, z, xRot, yRot);
-			minecraft->raknetInstance->send(packet);
+			minecraft.raknetInstance->send(packet);
 			sentX = x;
 			sentY = y;
 			sentZ = z;
@@ -457,7 +444,7 @@ void LocalPlayer::tick() {
 			sentInventoryItemId   = newItemId;
 			sentInventoryItemData = newItemData;
 			PlayerEquipmentPacket packet(entityId, newItemId, newItemData);
-			minecraft->raknetInstance->send(packet);
+			minecraft.raknetInstance->send(packet);
 		}
 	}
 /*
@@ -472,15 +459,14 @@ void LocalPlayer::tick() {
 */
 
 	updateArmorTypeHash();
-#ifndef STANDALONE_SERVER
-	if (!minecraft->screen && containerMenu) {
+	if (!minecraft.getScreen() && containerMenu) {
 		static bool hasPostedError = false;
 		if (!hasPostedError) {
-			minecraft->gui.postError( ErrorCodes::ContainerRefStillExistsAfterDestruction );
+			// @todo
+			// minecraft.gui().postError( ErrorCodes::ContainerRefStillExistsAfterDestruction );
 			hasPostedError = true;
 		}
 	}
-#endif
 	//LOGI("biome: %s\n", level->getBiomeSource()->getBiome((int)x >> 4, (int)z >> 4)->name.c_str());
 }
 
@@ -491,15 +477,14 @@ void LocalPlayer::aiStep() {
 	descendTriggerTime--;
 
 	bool wasJumping = input->jumping;
-#ifndef STANDALONE_SERVER
-    bool screenCovering = minecraft->screen && !minecraft->screen->passEvents;
+    bool screenCovering = minecraft.getScreen() && !minecraft.getScreen()->passEvents;
 	if (!screenCovering)
 		input->tick(this);
 
 	// Sprint: detect W double-tap
 	{
 		bool forwardHeld = (input->ya > 0);
-		if (forwardHeld && !prevForwardHeld && minecraft->options.getBooleanValue(OPTIONS_ALLOW_SPRINT)) {
+		if (forwardHeld && !prevForwardHeld && minecraft.options().getBooleanValue(OPTIONS_ALLOW_SPRINT)) {
 			// leading edge of W press
 			if (sprintDoubleTapTimer > 0)
 				sprinting = true;
@@ -518,7 +503,7 @@ void LocalPlayer::aiStep() {
     if (input->sneaking) {
         if (ySlideOffset < 0.2f) ySlideOffset = 0.2f;
     }
-#endif
+
 	if (abilities.mayfly) {
 		// Check for flight toggle
 		if (!wasJumping && input->jumping) {
@@ -559,16 +544,16 @@ void LocalPlayer::aiStep() {
 void LocalPlayer::closeContainer() {
 	if (level->isClientSide) {
 		ContainerClosePacket packet(containerMenu->containerId);
-		minecraft->raknetInstance->send(packet);
+		minecraft.raknetInstance->send(packet);
 	}
 	super::closeContainer();
-    minecraft->setScreen(NULL);
+    minecraft.setScreen(NULL);
 }
 
 //@Override
 void LocalPlayer::move(float xa, float ya, float za) {
-    //@note: why is this == minecraft->player needed?
-    if (this == minecraft->player  && minecraft->options.getBooleanValue(OPTIONS_IS_FLYING)) {
+    //@note: why is this == minecraft.player needed?
+    if (this == minecraft.getPlayer()  && minecraft.options().getBooleanValue(OPTIONS_IS_FLYING)) {
         noPhysics = true;
         float tmp = walkDist; // update
         calculateFlight((float) xa, (float) ya, (float) za);
@@ -588,7 +573,7 @@ void LocalPlayer::move(float xa, float ya, float za) {
 
 		float newX = x, newZ = z;
 
-		if (autoJumpTime <= 0 && minecraft->options.getBooleanValue(OPTIONS_AUTOJUMP))
+		if (autoJumpTime <= 0 && minecraft.options().getBooleanValue(OPTIONS_AUTOJUMP))
 		{
 			// auto-jump when crossing the middle of a tile, and the tile in the front is blocked
 			bool jump = false;
@@ -617,12 +602,9 @@ void LocalPlayer::updateAi() {
     this->jumping = input->jumping || autoJumpTime > 0;
 }
 
-void LocalPlayer::take( Entity* e, int orgCount )
-{
-#ifndef STANDALONE_SERVER
+void LocalPlayer::take( Entity* e, int orgCount ) {
 	if (e->isItemEntity())
-		minecraft->particleEngine->add(new TakeAnimationParticle(minecraft->level, (ItemEntity*)e, this, -0.5f));
-#endif
+		minecraft.getParticleEngine()->add(new TakeAnimationParticle(minecraft.level, (ItemEntity*)e, this, -0.5f));
 }
 
 void LocalPlayer::setKey( int eventKey, bool eventKeyState )
@@ -684,28 +666,25 @@ void LocalPlayer::hurtTo( int newHealth )
 		lastHealth = health;
 		invulnerableTime = invulnerableDuration;
 
-		minecraft->player->bypassArmor = true;
+		minecraft.getPlayer()->bypassArmor = true;
 		actuallyHurt(dmg);
-		minecraft->player->bypassArmor = false;
+		minecraft.getPlayer()->bypassArmor = false;
 
 		hurtTime = hurtDuration = 10;
 	}
 }
 
-void LocalPlayer::actuallyHurt( int dmg )
-{
-#ifndef STANDALONE_SERVER
-    if (minecraft->screen && minecraft->screen->closeOnPlayerHurt()) {
+void LocalPlayer::actuallyHurt( int dmg ) {
+    if (minecraft.getScreen() && minecraft.getScreen()->closeOnPlayerHurt()) {
 		if (containerMenu) closeContainer();
-        else minecraft->setScreen(NULL);
+        else minecraft.setScreen(NULL);
 	}
-#endif
+
     super::actuallyHurt(dmg);
 }
 
-void LocalPlayer::respawn()
-{
-	minecraft->respawnPlayer();
+void LocalPlayer::respawn() {
+	minecraft.respawnPlayer();
 }
 
 void LocalPlayer::die(Entity* source)
@@ -714,7 +693,7 @@ void LocalPlayer::die(Entity* source)
 	// If we're the server, drop the inventory immediately
 	if (level->isClientSide) {
 		SendInventoryPacket packet(this, true);
-		minecraft->raknetInstance->send(packet);
+		minecraft.raknetInstance->send(packet);
 	}
 	inventory->dropAll(level->isClientSide);
 	for (int i = 0; i < NUM_ARMOR; ++i) {
@@ -735,7 +714,7 @@ void LocalPlayer::swing() {
         AnimatePacket packet(AnimatePacket::Swing, this);
         packet.reliability = UNRELIABLE;
         packet.priority = MEDIUM_PRIORITY;
-        minecraft->raknetInstance->send(packet);
+        minecraft.raknetInstance->send(packet);
     }
 }
 
@@ -758,31 +737,23 @@ void LocalPlayer::_init() {
 }
 
 void LocalPlayer::startCrafting(int x, int y, int z, int tableSize) {
-#ifndef STANDALONE_SERVER
-	if (!minecraft->isCreativeMode())
-		minecraft->setScreen( new WorkbenchScreen(tableSize) );
-#endif
+	if (!minecraft.isCreativeMode())
+		minecraft.setScreen( new WorkbenchScreen(tableSize) );
 }
 
 void LocalPlayer::startStonecutting(int x, int y, int z) {
-#ifndef STANDALONE_SERVER
-	if (!minecraft->isCreativeMode())
-		minecraft->setScreen( new StonecutterScreen() );
-#endif
+	if (!minecraft.isCreativeMode())
+		minecraft.setScreen( new StonecutterScreen() );
 }
 
 void LocalPlayer::openFurnace( FurnaceTileEntity* e ) {
-#ifndef STANDALONE_SERVER
-	if (!minecraft->isCreativeMode())
-		minecraft->setScreen( new FurnaceScreen(this, e) );
-#endif
+	if (!minecraft.isCreativeMode())
+		minecraft.setScreen( new FurnaceScreen(this, e) );
 }
 
 void LocalPlayer::openContainer( ChestTileEntity* container ) {
-#ifndef STANDALONE_SERVER
-	if (!minecraft->isCreativeMode())
-		minecraft->setScreen( new ChestScreen(this, container) );
-#endif
+	if (!minecraft.isCreativeMode())
+		minecraft.setScreen( new ChestScreen(this, container) );
 }
 
 void LocalPlayer::drop( ItemInstance* item, bool randomly )
@@ -792,7 +763,7 @@ void LocalPlayer::drop( ItemInstance* item, bool randomly )
 
 	if (level->isClientSide) {
 		DropItemPacket packet(entityId, *item);
-		minecraft->raknetInstance->send(packet);
+		minecraft.raknetInstance->send(packet);
 		// delete the ItemEntity here, since we don't add it to level
 		delete item;
 	} else {
@@ -806,7 +777,7 @@ void LocalPlayer::causeFallDamage( float distance )
 	if (dmg > 0) {
 		if (level->isClientSide) {
 			SetHealthPacket packet(SetHealthPacket::HEALTH_MODIFY_OFFSET + dmg);
-			minecraft->raknetInstance->send(packet);
+			minecraft.raknetInstance->send(packet);
 		}
 	}
 	super::causeFallDamage(distance);
@@ -814,35 +785,33 @@ void LocalPlayer::causeFallDamage( float distance )
 }
 
 void LocalPlayer::displayClientMessage( const std::string& messageId ) {
-#ifndef STANDALONE_SERVER
-	minecraft->gui.displayClientMessage(messageId);
-#endif
+	minecraft.gui().displayClientMessage(messageId);
 }
 
 int LocalPlayer::startSleepInBed( int x, int y, int z ) {
 	int startSleepInBedReturnValue = super::startSleepInBed(x, y, z);
-#ifndef STANDALONE_SERVER
+
 	if(startSleepInBedReturnValue == BedSleepingResult::OK)
-		minecraft->setScreen(new InBedScreen());
-#endif
+		minecraft.setScreen(new InBedScreen());
+
 	return startSleepInBedReturnValue;
 }
 
 void LocalPlayer::stopSleepInBed( bool forcefulWakeUp, bool updateLevelList, bool saveRespawnPoint ) {
 	if(level->isClientSide) {
 		PlayerActionPacket packet(PlayerActionPacket::STOP_SLEEPING, 0, 0, 0, 0, entityId);
-		minecraft->raknetInstance->send(packet);
+		minecraft.raknetInstance->send(packet);
 	}
-#ifndef STANDALONE_SERVER
-	minecraft->setScreen(NULL);
-#endif
+
+	minecraft.setScreen(NULL);
+
 	super::stopSleepInBed(forcefulWakeUp, updateLevelList, saveRespawnPoint);
 }
 
 void LocalPlayer::openTextEdit( TileEntity* tileEntity ) {
-#if !defined(STANDALONE_SERVER) && !defined(RPI)
+#if !defined(RPI)
 	if(tileEntity->type == TileEntityType::Sign)
-		minecraft->setScreen(new TextEditScreen((SignTileEntity*) tileEntity));
+		minecraft.setScreen(new TextEditScreen((SignTileEntity*) tileEntity));
 #endif
 }
 
@@ -850,7 +819,7 @@ void LocalPlayer::updateArmorTypeHash() {
     int hash = getArmorTypeHash();
     if (hash != armorTypeHash) {
         PlayerArmorEquipmentPacket p(this);
-        minecraft->raknetInstance->send(p);
+        minecraft.raknetInstance->send(p);
         armorTypeHash = hash;
     }
 }

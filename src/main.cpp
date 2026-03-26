@@ -1,46 +1,9 @@
-/**
-    Entry point for cross compilation.
+#include "MinecraftClient.h"
 
-    This is ugly, yes. But it will change in the "half near" future
-    to a more correct system of solving the cross-platform entry
-    point "problem" */
+int main() {
+    MinecraftClient minecraft(App::CreatePlatform());
 
-#define _SECURE_SCL 0
+    minecraft.run();
 
-// #ifdef WIN32
-// 	#include "vld.h"
-// #endif
-
-#include "platform/log.h"
-
-#ifdef WIN32
-#endif
-#ifdef ANDROID
-#endif
-
-
-#include "NinecraftApp.h"
-#define MAIN_CLASS NinecraftApp
-
-// #ifdef PLATFORM_WINDOWS
-// 	#include "main_win32.h"
-// #endif
-
-
-#if defined(PLATFORM_DESKTOP) || defined(PLATFORM_WEB)
-    #include "main_glfw.h"
-#endif
-
-#ifdef PLATFORM_ANDROID
-    #ifdef PRE_ANDROID23
-        #include "main_android_java.h"
-    #else
-        #include "main_android.h"
-    #endif
-#endif
-
-#ifdef PLATFORM_RPI
-    #include "main_rpi.h"
-#endif
-
-
+    return 0;
+}

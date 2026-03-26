@@ -1,5 +1,6 @@
 #include "ScreenChooser.h"
 #include "StartMenuScreen.h"
+#include "MinecraftClient.h"
 #include "SelectWorldScreen.h"
 #include "JoinGameScreen.h"
 #include "PauseScreen.h"
@@ -58,6 +59,6 @@ Screen* ScreenChooser::createScreen( ScreenId id )
 Screen* ScreenChooser::setScreen(ScreenId id)
 {
 	Screen* screen = createScreen(id);
-	_mc->setScreen(screen);
+	_mc.setScreen(screen);
 	return screen;
 }

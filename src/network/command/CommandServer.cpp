@@ -1,7 +1,8 @@
 #include "CommandServer.h"
-#include "../../client/Minecraft.h"
+#include <Minecraft.h>
 #include "../../world/level/Level.h"
 #include "../../world/entity/Entity.h"
+#include "gamemode/CreatorMode.h"
 
 #ifdef WIN32
 	#define SERR(x) (WSA ## x)
@@ -14,10 +15,8 @@
 #include "../RakNetInstance.h"
 #include "../packet/ChatPacket.h"
 #include "../packet/AdventureSettingsPacket.h"
-#include "../../world/level/LevelSettings.h"
-#include "../../world/entity/player/Player.h"
-#include "../../client/gamemode/CreatorMode.h"
-#include "../../client/player/LocalPlayer.h"
+#include <world/level/LevelSettings.h>
+#include <world/entity/player/Player.h>
 #include "../RakNetInstance.h"
 
 const std::string NullString;
@@ -262,6 +261,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		return ToStringOk(y);
 	}
 
+#if 0
 	//
 	// Player related get, set and query
 	//
@@ -316,6 +316,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		apiPosTranslate.to(x, y, z);
 		return ToStringOk(x, y, z);
 	}
+#endif
 
 	//
 	// Entity
@@ -385,6 +386,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		return NullString;
 	}
 
+#if 0
 	//
 	// Camera
 	//
@@ -430,6 +432,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		e->moveTo((float)x + 0.5f, (float)y, (float)z + 0.5f, e->yRot, e->xRot);
 		return NullString;
 	}
+#endif
 
 	//
 	// Entities
@@ -445,6 +448,8 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		return s.str();
 	}
 
+
+#if 0
 	//
 	// Set and restore Checkpoint
 	//
@@ -478,6 +483,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		}
 		return success? NullString : Fail;
 	}
+#endif
 
 	//
 	// Event queries
@@ -540,9 +546,9 @@ void CommandServer::tick() {
 	_updateClients();
 	++t;
 
-	if (mc->cameraTargetPlayer == camera) {
-		camera->tick();
-	}
+	// if (mc->cameraTargetPlayer == camera) {
+	// 	camera->tick();
+	// }
 }
 
 void CommandServer::_updateAccept() {
@@ -587,9 +593,9 @@ bool CommandServer::_updateClient(ConnectedClient& client) {
 }
 
 void CommandServer::dispatchPacket( Packet& p ) {
-	if (!mc->netCallback || !mc->player) return;
-	const RakNet::RakNetGUID& guid = ((Player*)mc->player)->owner;
-	mc->raknetInstance->send(p);
+	// if (!mc->netCallback || !mc->player) return;
+	// const RakNet::RakNetGUID& guid = ((Player*)mc->player)->owner;
+	// mc->raknetInstance->send(p);
 	//p.handle(guid, mc->netCallback);
 }
 
@@ -608,6 +614,7 @@ std::string CommandServer::handleEventPollMessage( ConnectedClient& client, cons
 	if (cmd == "events.block.hits") {
 		ICreator::EventList<ICreator::TileEvent>& events = c->getTileEvents();
 		std::stringstream ss;
+		
 
 		events.write(ss, apiPosTranslate, client.lastPoll_blockHit);
 		client.lastPoll_blockHit = mc->level->getTime();
@@ -630,7 +637,7 @@ std::string CommandServer::handleSetSetting( const std::string& setting, int val
 {
 	bool status = value != 0;
 
-	if (setting == "autojump") mc->player->autoJumpEnabled = status;
+	// if (setting == "autojump") mc->player->autoJumpEnabled = status;
 
 	AdventureSettingsPacket::Flags flag = (AdventureSettingsPacket::Flags)0;
 	if (setting == "nametags_visible") flag = AdventureSettingsPacket::ShowNameTags;

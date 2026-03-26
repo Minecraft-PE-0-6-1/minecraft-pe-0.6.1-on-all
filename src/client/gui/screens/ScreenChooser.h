@@ -14,19 +14,17 @@ enum ScreenId {
 };
 
 class Screen;
-class Minecraft;
+class MinecraftClient;
 
 class ScreenChooser
 {
 public:
-	ScreenChooser(Minecraft* mc)
-	:	_mc(mc)
-	{}
+	ScreenChooser(MinecraftClient& mc) : _mc(mc) {}
 
 	Screen* createScreen(ScreenId id);
 	Screen* setScreen(ScreenId id);
 private:
-	Minecraft* _mc;
+	MinecraftClient& _mc;
 };
 
 #endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__ScreenChooser_H__*/

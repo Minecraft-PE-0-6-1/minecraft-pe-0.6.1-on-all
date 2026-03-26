@@ -25,7 +25,7 @@ namespace Mth
 		return ret;
 	}
 
-	static __inline float fastInvSqrt(float x) {
+	static inline float fastInvSqrt(float x) {
 		float xhalf = 0.5f*x;
 		int i = *(int*)&x;
 		i = 0x5f3759df - (i>>1);

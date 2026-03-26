@@ -9,7 +9,7 @@
 #include "gles.h"
 #include <vector>
 
-class Minecraft;
+class MinecraftClient;
 class Textures;
 class Culler;
 class Chunk;
@@ -33,7 +33,7 @@ public:
     float zOld;
     float destroyProgress;
 
-	LevelRenderer(Minecraft* mc);
+	LevelRenderer(MinecraftClient& mc);
 	~LevelRenderer();
 
 	void setLevel(Level* level);
@@ -77,7 +77,7 @@ private:
 	void resortChunks(int xc, int yc, int zc);
 	void deleteChunks();
 	//void checkQueryResults(int from, int to);
-	__inline int getLinearCoord(int x, int y, int z) {
+	inline int getLinearCoord(int x, int y, int z) {
 		return (z * yChunks + y) * xChunks + x;
 	}
 	int noEntityRenderFrames;

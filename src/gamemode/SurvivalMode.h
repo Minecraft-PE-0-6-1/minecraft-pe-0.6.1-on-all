@@ -10,12 +10,12 @@ class SurvivalMode: public GameMode
 {
 	typedef GameMode super;
 public:
-	SurvivalMode(Minecraft* minecraft);
+	SurvivalMode(Minecraft& minecraft);
 
-	bool destroyBlock(int x, int y, int z, int face);
-	void startDestroyBlock(int x, int y, int z, int face);
-	void continueDestroyBlock(int x, int y, int z, int face);
-	void stopDestroyBlock();
+	bool destroyBlock(Player* player, int x, int y, int z, int face);
+	void startDestroyBlock(Player* player, int x, int y, int z, int face);
+	void continueDestroyBlock(Player* player, int x, int y, int z, int face);
+	void stopDestroyBlock(Player* player);
 
 	bool canHurtPlayer() { return true; }
 

@@ -9,7 +9,7 @@
 
 #include "../Gui.h"
 #include "../../renderer/Textures.h"
-#include "../../gamemode/GameMode.h"
+#include <gamemode/GameMode.h>
 #include "ArmorScreen.h"
 #include "../components/Button.h"
 

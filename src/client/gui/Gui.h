@@ -10,7 +10,7 @@
 #include "../../util/Random.h"
 #include "../IConfigListener.h"
 
-class Minecraft;
+class MinecraftClient;
 class ItemInstance;
 class Textures;
 class Tesselator;
@@ -27,7 +27,7 @@ typedef std::vector<GuiMessage> GuiMessageList;
 class Gui: public GuiComponent, IConfigListener
 {
 public:
-    Gui(Minecraft* minecraft);
+    Gui(MinecraftClient& minecraft);
 	~Gui();
 
 	int getSlotIdAt(int x, int y);
@@ -90,43 +90,42 @@ private:
 	void tickItemDrop();
 	float cubeSmoothStep(float percentage, float min, float max);
 public:
-	float progress;
+	float progress = 0.f;
 	std::string selectedName;
 	static float InvGuiScale;
 	static float GuiScale;
 
 private:
-	int MAX_MESSAGE_WIDTH;
 	//ItemRenderer itemRenderer;
 	GuiMessageList guiMessages;
-	int chatScrollOffset;
+	int chatScrollOffset = 0;
 	Random random;
 
-	Minecraft* minecraft;
-	int tickCount;
-	float itemNameOverlayTime;
+	MinecraftClient& minecraft;
+	int tickCount = 0;
+	float itemNameOverlayTime = 2;
 	std::string overlayMessageString;
-	int overlayMessageTime;
-	bool animateOverlayMessageColor;
+	int overlayMessageTime = 0;
+	bool animateOverlayMessageColor = false;
 
-	float tbr;
+	float tbr = 1.f;
 
 	RenderChunk _inventoryRc;
-	bool _inventoryNeedsUpdate;
+	bool _inventoryNeedsUpdate = true;
 	
-	int _flashSlotId;
-	float _flashSlotStartTime;
+	int _flashSlotId = -1;
+	float _flashSlotStartTime = -1;
 
-	Font* _slotFont;
-	int _numSlots;
+	Font* _slotFont = nullptr;
+	int _numSlots = 4;
 
 	RenderChunk rcFeedbackOuter;
 	RenderChunk rcFeedbackInner;
 
 	// For dropping
 	static const float DropTicks;
-	float  _currentDropTicks;
-	int    _currentDropSlot;
+	float  _currentDropTicks = -1;
+	int    _currentDropSlot = -1;
 
 	bool   _openInventorySlot;
 };

@@ -37,7 +37,7 @@ public:
         set(x << 11 | z << 7 | y, val);
     }
 
-	__inline int get(int pos) {
+	inline int get(int pos) {
 		int slot = pos >> 1;
 		int part = pos & 1;
 
@@ -47,7 +47,7 @@ public:
 			return (data[slot] >> 4) & 0xf;
 		}
 	}
-	__inline void set(int pos, int val) {
+	inline void set(int pos, int val) {
         int slot = pos >> 1;
 	    int part = pos & 1;
 

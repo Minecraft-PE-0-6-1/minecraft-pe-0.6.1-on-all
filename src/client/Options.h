@@ -15,9 +15,8 @@
 //#include "locale/Language.h"
 
 #include <string>
-#include <cstdio>
-#include "../platform/input/Keyboard.h"
-#include "../util/StringUtils.h"
+#include <platform/input/Keyboard.h>
+#include <util/StringUtils.h>
 #include "OptionsFile.h"
 #include "Option.h"
 #include <array>
@@ -88,7 +87,7 @@ enum OptionId {
 	OPTIONS_COUNT
 };
 
-class Minecraft;
+class MinecraftClient;
 typedef std::vector<std::string> StringVector;
 
 class Options
@@ -96,7 +95,7 @@ class Options
 public:
     static bool debugGl;
 
-    Options(Minecraft* minecraft, const std::string& workingDirectory = "") 
+    Options(MinecraftClient& minecraft, const std::string& workingDirectory = "") 
 	: minecraft(minecraft) {
         // elements werent initialized so i was getting a garbage pointer and a crash
         m_options.fill(nullptr);
@@ -161,7 +160,7 @@ private:
 	std::array<Option*, OPTIONS_COUNT> m_options;
 	OptionsFile optionsFile;
 
-	Minecraft* minecraft;
+	MinecraftClient& minecraft;
 };
 
 #endif /*NET_MINECRAFT_CLIENT__Options_H__*/

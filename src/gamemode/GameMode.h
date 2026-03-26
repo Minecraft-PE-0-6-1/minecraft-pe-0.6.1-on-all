@@ -3,7 +3,7 @@
 
 //package net.minecraft.client.gamemode;
 
-#include "../../world/level/tile/Tile.h"
+#include <world/level/tile/Tile.h>
 
 class ItemInstance;
 class Minecraft;
@@ -11,23 +11,22 @@ class Level;
 class Player;
 class Abilities;
 
-class GameMode
-{
+class GameMode {
 protected:
-	Minecraft* minecraft;
+	Minecraft& minecraft;
+
 public:
-    GameMode(Minecraft* minecraft);
+    GameMode(Minecraft& minecraft) : minecraft(minecraft) {}
 	virtual ~GameMode() {}
 
     virtual void initLevel(Level* level) {}
 
-    virtual void startDestroyBlock(int x, int y, int z, int face);
-    virtual bool destroyBlock(int x, int y, int z, int face);
-    virtual void continueDestroyBlock(int x, int y, int z, int face) = 0;
-    virtual void stopDestroyBlock() {}
+    virtual void startDestroyBlock(Player* player, int x, int y, int z, int face);
+    virtual bool destroyBlock(Player* player, int x, int y, int z, int face);
+    virtual void continueDestroyBlock(Player* player, int x, int y, int z, int face) = 0;
+    virtual void stopDestroyBlock(Player* player) {}
 
     virtual void tick();
-    virtual void render(float a);
 
     virtual float getPickRange();
     /* void postLevelGen(LevelGen levelGen, Level level) {} */
@@ -35,7 +34,6 @@ public:
     virtual bool useItem(Player* player, Level* level, ItemInstance* item);
     virtual bool useItemOn(Player* player, Level* level, ItemInstance* item, int x, int y, int z, int face, const Vec3& hit);
 
-	virtual Player* createPlayer(Level* level);
     virtual void initPlayer(Player* player);
     virtual void adjustPlayer(Player* player) {}
     virtual bool canHurtPlayer() { return false; }
@@ -53,11 +51,11 @@ public:
 
 	virtual void releaseUsingItem(Player* player);
 
-	float oDestroyProgress;
-	float destroyProgress;
+	float oDestroyProgress = 0;
+	float destroyProgress = 0;
 protected:
-	int destroyTicks;
-	int destroyDelay;
+	int destroyTicks = 0;
+	int destroyDelay = 0;
 };
 
 #endif /*NET_MINECRAFT_CLIENT_GAMEMODE__GameMode_H__*/

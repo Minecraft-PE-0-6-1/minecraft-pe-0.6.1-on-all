@@ -5,7 +5,7 @@
 #include "entity/EntityRenderDispatcher.h"
 #include "entity/EntityRenderer.h"
 #include "entity/MobRenderer.h"
-#include "../Minecraft.h"
+#include <Minecraft.h>
 #include "../player/LocalPlayer.h"
 #include "../../world/entity/player/Player.h"
 #include "../../world/item/Item.h"

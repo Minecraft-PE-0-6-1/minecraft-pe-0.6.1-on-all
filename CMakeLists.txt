@@ -39,6 +39,8 @@ if (${PLATFORM} STREQUAL "Desktop")
         set(EXTRA_LIBS pthread m)
     endif()
 
+    include_directories("glad/include")
+
 elseif (${PLATFORM} STREQUAL "Web")
     set(PLATFORM_CPP "PLATFORM_WEB")
     set(EXTRA_LIBS "idbfs.js")
@@ -114,34 +116,38 @@ CPMAddPackage(
 # TODO: Clear this paths with *
 file(GLOB SERVER_SOURCES
     "project/lib_projects/raknet/jni/RaknetSources/*.cpp"
-    "src/NinecraftApp.cpp"
     "src/Performance.cpp"
     "src/SharedConstants.cpp"
+    "src/Minecraft.cpp"
+    "src/MinecraftServer.cpp"
+    "src/App.cpp"
+    "src/IPlatform.cpp"
 
-    "src/client/IConfigListener.cpp"
-    "src/client/Minecraft.cpp"
-    "src/client/OptionStrings.cpp"
-    "src/client/Option.cpp"
-    "src/client/Options.cpp"
-    "src/client/OptionsFile.cpp"
-    "src/client/ServerProfiler.cpp"
 
-    "src/client/gamemode/CreativeMode.cpp"
-    "src/client/gamemode/GameMode.cpp"
-    "src/client/gamemode/SurvivalMode.cpp"
+    # "src/client/IConfigListener.cpp"
+    # "src/client/Minecraft.cpp"
+    # "src/client/OptionStrings.cpp"
+    # "src/client/Option.cpp"
+    # "src/client/Options.cpp"
+    # "src/client/OptionsFile.cpp"
+    # "src/client/ServerProfiler.cpp"
 
-    "src/client/player/LocalPlayer.cpp"
-    "src/client/player/RemotePlayer.cpp"
-    "src/client/player/input/KeyboardInput.cpp"
+    # "src/client/gamemode/CreativeMode.cpp"
+    # "src/client/gamemode/GameMode.cpp"
+    # "src/client/gamemode/SurvivalMode.cpp"
+
+    # "src/client/player/LocalPlayer.cpp"
+    # "src/client/player/RemotePlayer.cpp"
+    # "src/client/player/input/KeyboardInput.cpp"
+
+    "src/gamemode/*.cpp"
 
     "src/locale/I18n.cpp"
 
-    "src/main.cpp"
     "src/main_dedicated.cpp"
 
     "src/nbt/Tag.cpp"
 
-    "src/network/ClientSideNetworkHandler.cpp"
     "src/network/NetEventCallback.cpp"
     "src/network/Packet.cpp"
     "src/network/RakNetInstance.cpp"
@@ -152,11 +158,7 @@ file(GLOB SERVER_SOURCES
     "src/platform/HttpClient.cpp"
     "src/platform/PngLoader.cpp"
     "src/platform/time.cpp"
-
-    "src/platform/input/Controller.cpp"
-    "src/platform/input/Keyboard.cpp"
-    "src/platform/input/Mouse.cpp"
-    "src/platform/input/Multitouch.cpp"
+    "src/platform/server/PlatformServer.cpp"
 
     "src/server/ArgumentsSettings.cpp"
     "src/server/ServerLevel.cpp"
@@ -369,7 +371,7 @@ if(${PLATFORM} MATCHES "Web")
 endif()
 
 # Client
-target_compile_definitions(${PROJECT_NAME} PUBLIC "OPENGL_ES" "NO_EGL" ${PLATFORM})
+target_compile_definitions(${PROJECT_NAME} PUBLIC "OPENGL_ES" "NO_EGL" "${PLATFORM_CPP}")
 target_link_libraries(${PROJECT_NAME} zlib ${PNG_LIB} OpenAL::OpenAL glfw ${EXTRA_LIBS})
 
 if (OpenSSL_FOUND)

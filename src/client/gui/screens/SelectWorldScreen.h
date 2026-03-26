@@ -5,11 +5,11 @@
 #include "../TweenData.h"
 #include "../components/Button.h"
 #include "../components/RolledSelectionListH.h"
-#include "../../Minecraft.h"
 #include "../../../world/level/storage/LevelStorageSource.h"
 
 
 class SelectWorldScreen;
+class MinecraftClient;
 
 //
 // Scrolling World selection list
@@ -17,7 +17,7 @@ class SelectWorldScreen;
 class WorldSelectionList : public RolledSelectionListH
 {
 public:
-	WorldSelectionList(Minecraft* _minecraft, int _width, int _height);
+	WorldSelectionList(MinecraftClient& _minecraft, int _width, int _height);
 	virtual void tick();
 	void stepLeft();
 	void stepRight();

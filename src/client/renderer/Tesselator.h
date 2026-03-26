@@ -72,18 +72,18 @@ public:
 
 	int getColor();
 
-	__inline void beginOverride() {
+	inline void beginOverride() {
 		begin();
 		voidBeginAndEndCalls(true);
 	}
-	__inline void endOverrideAndDraw() {
+	inline void endOverrideAndDraw() {
 		voidBeginAndEndCalls(false);
 		draw();
 	}
-	__inline bool isOverridden() {
+	inline bool isOverridden() {
 		return _voidBeginEnd;
 	}
-	__inline RenderChunk endOverride(int bufferId) {
+	inline RenderChunk endOverride(int bufferId) {
 		voidBeginAndEndCalls(false);
 		return end(true, bufferId);
 	}

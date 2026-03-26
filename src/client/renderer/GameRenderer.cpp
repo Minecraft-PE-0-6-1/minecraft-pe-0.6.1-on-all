@@ -9,7 +9,7 @@
 #include "culling/AllowAllCuller.h"
 #include "culling/FrustumCuller.h"
 #include "entity/EntityRenderDispatcher.h"
-#include "../Minecraft.h"
+#include <Minecraft.h>
 #include "../gamemode/GameMode.h"
 #include "../particle/ParticleEngine.h"
 #include "../player/LocalPlayer.h"

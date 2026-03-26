@@ -1,11 +1,12 @@
 #include "Gui.h"
 #include "Font.h"
+#include "MinecraftClient.h"
 #include "client/Options.h"
 #include "platform/input/Keyboard.h"
 #include "screens/IngameBlockSelectionScreen.h"
 #include "screens/ChatScreen.h"
 #include "screens/ConsoleScreen.h"
-#include "../Minecraft.h"
+#include <Minecraft.h>
 #include "../player/LocalPlayer.h"
 #include "../renderer/Tesselator.h"
 #include "../renderer/TileRenderer.h"
@@ -29,39 +30,23 @@
 #include <algorithm>
 #include <sstream>
 
+#define MAX_MESSAGE_WIDTH 240
+
 float Gui::InvGuiScale = 1.0f / 3.0f;
 float Gui::GuiScale = 1.0f / Gui::InvGuiScale;
 const float Gui::DropTicks = 40.0f;
 
 //#include <android/log.h>
 
-Gui::Gui(Minecraft* minecraft)
-:	minecraft(minecraft),
-	tickCount(0),
-	progress(0),
-	overlayMessageTime(0),
-	animateOverlayMessageColor(false),
-	chatScrollOffset(0),
-	tbr(1),
-	_inventoryNeedsUpdate(true),
-	_flashSlotId(-1),
-	_flashSlotStartTime(-1),
-	_slotFont(NULL),
-	_numSlots(4),
-	_currentDropTicks(-1),
-	_currentDropSlot(-1),
-	MAX_MESSAGE_WIDTH(240),
-	itemNameOverlayTime(2),
-	_openInventorySlot(minecraft->useTouchscreen())
-{
+// @todo virtual controlConfigurationChanged() when player switches from keyboard to touch for example 
+Gui::Gui(MinecraftClient& minecraft) : minecraft(minecraft), _openInventorySlot(minecraft.useTouchscreen()) {
 	glGenBuffers2(1, &_inventoryRc.vboId);
 	glGenBuffers2(1, &rcFeedbackInner.vboId);
 	glGenBuffers2(1, &rcFeedbackOuter.vboId);
 	//Gui::InvGuiScale = 1.0f / (int) (3 * Minecraft::width / 854);
 }
 
-Gui::~Gui()
-{
+Gui::~Gui() {
 	if (_slotFont)
 		delete _slotFont;
 
@@ -69,17 +54,16 @@ Gui::~Gui()
 }
 
 void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
-
-	if (!minecraft->level || !minecraft->player)
+	if (!minecraft.level || !minecraft.getPlayer())
 		return;
 
 	//minecraft->gameRenderer->setupGuiScreen();
-	Font* font = minecraft->font;
+	Font* font = minecraft.getFont();
 
-	const bool isTouchInterface = minecraft->useTouchscreen();
+	const bool isTouchInterface = minecraft.useTouchscreen();
 	
-	const int screenWidth = (int)(minecraft->width * InvGuiScale);
-	const int screenHeight = (int)(minecraft->height * InvGuiScale);
+	const int screenWidth = (int)(minecraft.getScreenWidth() * InvGuiScale);
+	const int screenHeight = (int)(minecraft.getScreenHeigth() * InvGuiScale);
 	blitOffset = -90;
 	renderProgressIndicator(isTouchInterface, screenWidth, screenHeight, a);
 
@@ -91,9 +75,9 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
     // F: 3
 	int ySlot = screenHeight - 16 - 3;
 
-	if (!minecraft->options.getBooleanValue(OPTIONS_HIDEGUI)) {
-		if (minecraft->gameMode->canHurtPlayer()) {
-			minecraft->textures->loadAndBindTexture("gui/icons.png");
+	if (!minecraft.options.getBooleanValue(OPTIONS_HIDEGUI)) {
+		if (minecraft.gameMode->canHurtPlayer()) {
+			minecraft.getTextures()->loadAndBindTexture("gui/icons.png");
 			Tesselator& t = Tesselator::instance;
 			t.beginOverride();
 			t.colorABGR(0xffffffff);
@@ -103,7 +87,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		}
 	}
 
-	if(minecraft->player->getSleepTimer() > 0) {
+	if(minecraft.getPlayer()->getSleepTimer() > 0) {
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_ALPHA_TEST);
 
@@ -112,7 +96,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		glEnable(GL_ALPHA_TEST);
 		glEnable(GL_DEPTH_TEST);
 	}
-	if (!minecraft->options.getBooleanValue(OPTIONS_HIDEGUI)) {
+	if (!minecraft.options.getBooleanValue(OPTIONS_HIDEGUI)) {
 	renderToolBar(a, ySlot, screenWidth);
 
 	glEnable(GL_BLEND);

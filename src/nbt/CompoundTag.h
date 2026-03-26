@@ -115,7 +115,7 @@ public:
 		return it->second;
     }
 
-    __inline bool contains(const std::string& name) const {
+    inline bool contains(const std::string& name) const {
 		return tags.find(name) != tags.end();
 	}
 	bool contains(const std::string& name, int type) const {

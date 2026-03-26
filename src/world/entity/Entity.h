@@ -117,7 +117,7 @@ public:
 	virtual SynchedEntityData* getEntityData();
 	virtual const SynchedEntityData* getEntityData() const;
 
-	__inline bool isEntityType(int type) { return getEntityTypeId() == type; }
+	inline bool isEntityType(int type) { return getEntityTypeId() == type; }
 	virtual int getEntityTypeId() const = 0;
 	virtual int getCreatureBaseType() const { return 0; }
 	virtual EntityRendererId queryEntityRenderer() { return ER_DEFAULT_RENDERER; }

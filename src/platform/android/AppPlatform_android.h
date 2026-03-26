@@ -1,7 +1,7 @@
 #ifndef APPPLATFORM_ANDROID_H__
 #define APPPLATFORM_ANDROID_H__
 
-#include "AppPlatform.h"
+#include <IPlatform.h>
 #include "client/renderer/gles.h"
 #include "platform/log.h"
 #include "platform/time.h"
@@ -322,7 +322,7 @@ public:
         }
     }
 
-    __inline unsigned int rgbToBgr(unsigned int p) {
+    inline unsigned int rgbToBgr(unsigned int p) {
         return (p & 0xff00ff00) | ((p >> 16) & 0xff) | ((p << 16) & 0xff0000);
     }
 
@@ -536,7 +536,7 @@ public:
 		return env->CallBooleanMethod(instance, _methodIsNetworkEnabled, onlyWifiAllowed);
 	}
 
-    static __inline bool isSquare(int n) {
+    static inline bool isSquare(int n) {
         int L = n & 0xf;
         if (((1 << L) & 0x213) == 0) return false;
 

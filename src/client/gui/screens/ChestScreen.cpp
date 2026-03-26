@@ -22,7 +22,7 @@
 
 //static NinePatchLayer* guiPaneFrame = NULL;
 
-static __inline void setIfNotSet(bool& ref, bool condition) {
+static inline void setIfNotSet(bool& ref, bool condition) {
 	ref = (ref || condition);
 }
 

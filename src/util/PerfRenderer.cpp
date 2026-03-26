@@ -5,7 +5,7 @@
 #include "../client/gui/Font.h"
 #include "../client/renderer/gles.h"
 #include "../client/renderer/Tesselator.h"
-#include "../client/Minecraft.h"
+#include <Minecraft.h>
 
 PerfRenderer::PerfRenderer( Minecraft* mc, Font* font )
 :   _mc(mc),

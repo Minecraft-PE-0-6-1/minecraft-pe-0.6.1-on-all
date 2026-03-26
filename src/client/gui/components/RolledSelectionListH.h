@@ -2,7 +2,7 @@
 #define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__RolledSelectionListH_H__
 
 #include "../GuiComponent.h"
-class Minecraft;
+class MinecraftClient;
 class Tesselator;
 
 
@@ -12,7 +12,7 @@ class RolledSelectionListH : public GuiComponent
 	static const int DRAG_OUTSIDE	= -2;
 	static const int DRAG_NORMAL	=  0;
 public:
-	RolledSelectionListH(Minecraft* minecraft, int width, int height, int x0, int x1, int y0, int y1, int itemWidth);
+	RolledSelectionListH(MinecraftClient& minecraft, int width, int height, int x0, int x1, int y0, int y1, int itemWidth);
 
 	virtual int getItemAtPosition(int x, int y);
 
@@ -45,7 +45,7 @@ protected:
 	virtual void clickedHeader(int headerMouseX, int headerMouseY) {}
 	int getItemAtXPositionRaw(int x);
 protected:
-	Minecraft* minecraft;
+	MinecraftClient& minecraft;
 
 	float x0;
 	float x1;

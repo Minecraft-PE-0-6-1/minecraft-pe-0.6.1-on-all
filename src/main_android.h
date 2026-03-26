@@ -250,10 +250,10 @@ static void pointerMove(int pointerId, int x, int y) {
     Multitouch::feed(0, 0, x, y, pointerId);
 }
 
-__inline static const float padXtoSigned(int x) {
+inline static const float padXtoSigned(int x) {
     return (x - 483.0f) * 0.002070393374741201f;
 }
-__inline static const float padYtoSigned(int y) {
+inline static const float padYtoSigned(int y) {
     return (y - 180.0f) * 0.005555555555555556f;
 }
 

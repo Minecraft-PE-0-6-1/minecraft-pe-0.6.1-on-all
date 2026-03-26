@@ -5,11 +5,10 @@
 #include "../raknet/BitStream.h"
 #include "../raknet/MessageIdentifiers.h"
 #include "../raknet/GetTime.h"
-#include "../AppConstants.h"
 
 #include "../platform/log.h"
 
-#define APP_IDENTIFIER "MCCPP;" APP_VERSION_STRING ";"
+#define APP_IDENTIFIER "MCCPP;Demo;"
 #define APP_IDENTIFIER_MINECON "MCCPP;MINECON;"
 
 RakNetInstance::RakNetInstance()

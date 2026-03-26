@@ -4,7 +4,7 @@
 #include "DistanceChunkSorter.h"
 #include "Chunk.h"
 #include "TileRenderer.h"
-#include "../Minecraft.h"
+#include <Minecraft.h>
 #include "../../util/Mth.h"
 #include "../../world/entity/player/Player.h"
 #include "../../world/level/tile/LevelEvent.h"

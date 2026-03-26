@@ -8,7 +8,7 @@
 
 #include <vector>
 
-class Minecraft;
+class MinecraftClient;
 class Level;
 class IRakNetInstance;
 
@@ -29,7 +29,7 @@ typedef struct IntPair {
 class ClientSideNetworkHandler : public NetEventCallback
 {
 public:
-	ClientSideNetworkHandler(Minecraft* minecraft, IRakNetInstance* raknetInstance);
+	ClientSideNetworkHandler(MinecraftClient& minecraft, IRakNetInstance* raknetInstance);
 	virtual ~ClientSideNetworkHandler();
 
 	virtual void levelGenerated(Level* level);
@@ -87,19 +87,19 @@ private:
 	void clearChunksLoaded();
 private:
 
-	Minecraft* minecraft;
-	Level* level;
+	MinecraftClient& minecraft;
+	Level* level = nullptr;
 	IRakNetInstance* raknetInstance;
 	RakNet::RakPeerInterface* rakPeer;
 
 	RakNet::RakNetGUID serverGuid;
 
 	BlockUpdateList	bufferedBlockUpdates;
-	int	requestNextChunkPosition;
+	int	requestNextChunkPosition = 0;
 
     static const int NumRequestChunks = CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH;
     
-    int requestNextChunkIndex;
+    int requestNextChunkIndex = 0;
     IntPair requestNextChunkIndexList[NumRequestChunks];
 	bool chunksLoaded[NumRequestChunks];
 };

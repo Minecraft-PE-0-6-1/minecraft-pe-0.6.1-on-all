@@ -44,7 +44,7 @@ private:
 		range(b);
 		range(a);
 	}
-	__inline void range(GLfloat& v) {
+	inline void range(GLfloat& v) {
 		if (v < 0) v = 0;
 		if (v > 1) v = 1;
 	}

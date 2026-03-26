@@ -7,7 +7,7 @@
 #include "../../util/SmoothFloat.h"
 #include "../../world/entity/player/Player.h"
 
-class Minecraft;
+class MinecraftClient;
 class Stat;
 class CompoundTag;
 
@@ -15,7 +15,7 @@ class LocalPlayer: public Player
 {
 	typedef Player super;
 public:
-	LocalPlayer(Minecraft* minecraft, Level* level, const std::string& username, int dimension, bool isCreative);
+	LocalPlayer(MinecraftClient& minecraft, Level* level, const std::string& username, int dimension, bool isCreative);
 	~LocalPlayer();
 
 	void _init();
@@ -74,10 +74,10 @@ private:
 	bool isSolidTile(int x, int y, int z);
 	void updateArmorTypeHash();
 public:
-	IMoveInput* input;
-	bool autoJumpEnabled;
+	IMoveInput* input = nullptr;
+	bool autoJumpEnabled = true;
 protected:
-	Minecraft* minecraft;
+	MinecraftClient& minecraft;
 	int jumpTriggerTime;
 	int ascendTriggerTime;
 	int descendTriggerTime;
@@ -94,15 +94,15 @@ private:
 
 	int autoJumpTime;
 
-	int sentInventoryItemId;
-	int sentInventoryItemData;
+	int sentInventoryItemId = -1;
+	int sentInventoryItemData = -1;
 
-	int armorTypeHash;
+	int armorTypeHash = 0;
 
 	// sprinting
-	bool sprinting;
-	int  sprintDoubleTapTimer;
-	bool prevForwardHeld;
+	bool sprinting = false;
+	int  sprintDoubleTapTimer = 0;
+	bool prevForwardHeld = false;
 public:
 	void setSprinting(bool sprint) { sprinting = sprint; }
 };

@@ -10,7 +10,7 @@
 #include "../network/packet/EntityEventPacket.h"
 #include "../network/packet/SetHealthPacket.h"
 #include "../network/packet/TakeItemEntityPacket.h"
-#include "../client/Minecraft.h"
+#include <Minecraft.h>
 #include "../world/level/tile/entity/FurnaceTileEntity.h"
 #include "../world/inventory/FurnaceMenu.h"
 #include "../world/inventory/FillingContainer.h"

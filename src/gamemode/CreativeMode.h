@@ -9,18 +9,19 @@ class CreativeMode: public GameMode
 {
 	typedef GameMode super;
 public:
-    CreativeMode(Minecraft* minecraft);
+    CreativeMode(Minecraft& minecraft);
 
-    void startDestroyBlock(int x, int y, int z, int face);
-    void continueDestroyBlock(int x, int y, int z, int face);
-    void stopDestroyBlock();
+    void startDestroyBlock(Player* player, int x, int y, int z, int face);
+    void continueDestroyBlock(Player* player, int x, int y, int z, int face);
+    void stopDestroyBlock(Player* player);
 
 	bool isCreativeType();
 
 	void initAbilities(Abilities& abilities);
 
+	void releaseUsingItem(Player* player);
 private:
-	void creativeDestroyBlock(int x, int y, int z, int face);
+	void creativeDestroyBlock(Player* player, int x, int y, int z, int face);
 };
 
 #endif /*NET_MINECRAFT_CLIENT_GAMEMODE__CreativeMode_H__*/

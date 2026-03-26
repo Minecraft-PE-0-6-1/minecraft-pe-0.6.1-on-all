@@ -6,8 +6,12 @@
 #include <string>
 #include <map>
 #include <utility>
+#include <IPlatform.h>
 #include "gles.h"
 #include "TextureData.h"
+
+#define TEXTURES_INVALID_ID -1
+#define TEXTURES_MIPMAP 0
 
 class DynamicTexture;
 class Options;
@@ -24,20 +28,21 @@ typedef std::map<TextureId, TextureData> TextureImageMap;
 class Textures
 {
 public:
-    Textures(Options* options_,  AppPlatform* platform_);
+    Textures(Options& options, IPlatform& platform) : m_options(options), m_platform(platform) {}
 	~Textures();
 
 	void addDynamicTexture(DynamicTexture* dynamicTexture);
 
-	__inline void bind(TextureId id) {
-		if (id != Textures::InvalidId && lastBoundTexture != id) {
+	inline void bind(TextureId id) {
+		if (id != TEXTURES_INVALID_ID && lastBoundTexture != id) {
 			glBindTexture2(GL_TEXTURE_2D, id);
 			lastBoundTexture = id;
 			++textureChanges;
-		} else if (id == Textures::InvalidId){
+		} else if (id == TEXTURES_INVALID_ID){
             LOGI("invalidId!\n");
         }
 	}
+
 	TextureId loadTexture(const std::string& resourceName, bool inTextureFolder = true);
 	TextureId loadAndBindTexture(const std::string& resourceName);
 
@@ -49,28 +54,26 @@ public:
 	void clear();
 	void reloadAll();
 
-	__inline static bool isTextureIdValid(TextureId t) { return t != Textures::InvalidId; }
+	inline static bool isTextureIdValid(TextureId t) { return t != TEXTURES_INVALID_ID; }
 
 private:
 	int smoothBlend(int c0, int c1);
 	int crispBlend(int c0, int c1);
 
 public:
-	static bool MIPMAP;
 	static int textureChanges;
-	static const TextureId InvalidId;
 
 private:
 	TextureMap idMap;
 	TextureImageMap loadedImages;
 
-	Options* options;
-	AppPlatform* platform;
+	Options& m_options;
+	IPlatform& m_platform;
 
-	bool clamp;
-	bool blur;
+	bool clamp = false;
+	bool blur = false;
 
-	int lastBoundTexture;
+	int lastBoundTexture = TEXTURES_INVALID_ID;
 	std::vector<DynamicTexture*> dynamicTextures;
 };
 

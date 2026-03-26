@@ -1,6 +1,6 @@
 #include "I18n.h"
 #include <sstream>
-#include "../AppPlatform.h"
+#include <IPlatform.h>
 #include "../util/StringUtils.h"
 #include "../world/level/tile/Tile.h"
 #include "../world/item/ItemInstance.h"
@@ -8,8 +8,7 @@
 
 I18n::Map I18n::_strings;
 
-void I18n::loadLanguage( AppPlatform* platform, const std::string& languageCode )
-{
+void I18n::loadLanguage(IPlatform& platform, const std::string& languageCode ) {
 	_strings.clear();
 	fillTranslations(platform, "lang/en_US.lang", true);
 
@@ -26,8 +25,7 @@ bool I18n::get( const std::string& id, std::string& out ) {
 	return false;
 }
 
-std::string I18n::get( const std::string& id )
-{
+std::string I18n::get( const std::string& id ) {
 	Map::const_iterator cit = _strings.find(id);
 	if (cit != _strings.end())
 		return cit->second;
@@ -35,13 +33,11 @@ std::string I18n::get( const std::string& id )
 	return id + '<';//lang.getElement(id);
 }
 
-void I18n::fillTranslations( AppPlatform* platform, const std::string& filename, bool overwrite )
-{
-	BinaryBlob blob = platform->readAssetFile(filename);
-	if (!blob.data || blob.size <= 0)
-		return;
+void I18n::fillTranslations(IPlatform& platform, const std::string& filename, bool overwrite ) {
+	auto blob = platform.readAssetFile(filename);
+	if (blob.empty()) return;
 
-	std::string data((const char*)blob.data, blob.size);
+	std::string data(blob.begin(), blob.end());
 	std::stringstream fin(data, std::ios_base::in);
 
 	std::string line;
@@ -58,12 +54,9 @@ void I18n::fillTranslations( AppPlatform* platform, const std::string& filename,
 		std::string value = Util::stringTrim(line.substr(spos + 1));
 		_strings.insert( std::make_pair(key, value ) );
 	}
-
-	delete[] blob.data;
 }
 
-std::string I18n::getDescriptionString( const ItemInstance& item )
-{
+std::string I18n::getDescriptionString( const ItemInstance& item ) {
 	// Convert to lower. Normally std::transform would be used, but tolower might be
 	// implemented with a macro in certain C-implementations -> messing stuff up
 	const std::string desc = item.getDescriptionId();
