@@ -2,6 +2,7 @@
 #define NET_MINECRAFT_NETWORK_PACKET__SendInventoryPacket_H__
 
 #include "../Packet.h"
+#include "world/entity/player/Inventory.h"
 
 class SendInventoryPacket: public Packet
 {

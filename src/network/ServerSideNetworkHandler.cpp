@@ -13,6 +13,7 @@
 #include "../client/gamemode/GameMode.h"
 #include "../raknet/RakPeerInterface.h"
 #include "../raknet/PacketPriority.h"
+#include "platform/log.h"
 #ifndef STANDALONE_SERVER
 #include "../client/sound/SoundEngine.h"
 #endif
@@ -244,6 +245,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ReadyPac
 
 	if (packet->type == ReadyPacket::READY_REQUESTEDCHUNKS)
 		onReady_RequestedChunks(source);
+
+	LOGI("Ready player two ready ready player two!!\n ");
 }
 
 void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID& source)
@@ -374,6 +377,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveBl
 
 		oldTile->destroy(level, x, y, z, data);
 	}
+
+	LOGI("Remove block [%i, %i, %i]\n", packet->x, packet->y, packet->z);
 }
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RequestChunkPacket* packet)
@@ -403,6 +408,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RequestC
             raknetInstance->send(source, p);
         }
     }
+
+	// LOGI("Requested chunk [%i, %i]\n", packet->x, packet->z);
 }
 
 void ServerSideNetworkHandler::levelGenerated( Level* level )
@@ -429,23 +436,36 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerEq
 	if (!player) return;
 	if (rakPeer->GetMyGUID() == player->owner) return;
 
+	LOGI("Equip item: id %i aux %i\n", packet->itemId, packet->itemAuxValue);
+
 	// override the player's inventory
-	//int slot = player->inventory->getSlot(packet->itemId, packet->itemAuxValue);
-	int slot = Inventory::MAX_SELECTION_SIZE;
+	int slot = player->inventory->getSlot(packet->itemId, packet->itemAuxValue);
+
 	if (slot >= 0) {
-		if (packet->itemId == 0) {
-			player->inventory->clearSlot(slot);
-		} else {
-			// @note: 128 is an ugly hack for depletable items.
-			// @todo: fix
-			ItemInstance newItem(packet->itemId, 128, packet->itemAuxValue);
-			player->inventory->replaceSlot(slot, &newItem);
-		}
+		// if (packet->itemId == 0) {
+		// 	player->inventory->clearSlot(slot);
+		// } else {
+		// 	// @note: 128 is an ugly hack for depletable items.
+		// 	// @todo: fix
+		// 	ItemInstance newItem(packet->itemId, 128, packet->itemAuxValue);
+		// 	player->inventory->replaceSlot(slot, &newItem);
+		// }
+
 		player->inventory->moveToSelectedSlot(slot, true);
-		redistributePacket(packet, source);
+	} else if (packet->itemId == 0) {
+		player->inventory->linkEmptySlot(player->inventory->selected);
 	} else {
-		LOGW("Warning: Remote player doesn't have his thing, Odd!\n");
+		LOGW("Warning: Remote player doesn't have his thing (or crafted it)!\n");
+		return;
 	}
+
+	LOGI("Inventory:\n");
+	for (int i = 0; i < player->inventory->numTotalSlots; i++) {
+		auto item = player->inventory->getItem(i);
+		if (item) LOGI("\t %i: %s (%i)\n", i, item->getName().c_str(), item->count);
+	}
+
+	redistributePacket(packet, source);
 }
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerArmorEquipmentPacket* packet) {
@@ -454,6 +474,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerAr
     Player* player = getPlayer(source);
     if (!player) return;
     if (rakPeer->GetMyGUID() == player->owner) return;
+
+	LOGI("Equip armor: %i %i %i %i\n", packet->head, packet->torso, packet->legs, packet->feet);
 
     packet->fillIn(player);
     redistributePacket(packet, source);
@@ -466,6 +488,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Interact
 	Entity* entity = level->getEntity(packet->targetId);
 	if (src && entity && src->isPlayer())
 	{
+		LOGI("Interact: source %i target %i\n", packet->sourceId, packet->targetId);
+
 		Player* player = (Player*) src;
 		if (InteractPacket::Attack == packet->action) {
 			player->swing();
@@ -544,6 +568,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, EntityEventPacket* packet) {
 	if (!level) return;
 
+	LOGI("EntityEventPacket: id %i\n", packet->eventId);
+
 	if (Entity* e = level->getEntity(packet->entityId))
 		e->handleEntityEvent(packet->eventId);
 }
@@ -577,6 +603,11 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SendInv
 {
 	if (!level) return;
 
+	LOGI("Sent inventory:\n");
+	for (int i = 0; i < packet->numItems; i++) {
+		LOGI("\t %i: %s (%i)\n", i, packet->items.at(i).getName().c_str(), packet->items.at(i).count);
+	}
+
 	Entity* entity = level->getEntity(packet->entityId);
 	if (entity && entity->isPlayer()) {
 		Player* p = (Player*)entity;
@@ -592,6 +623,8 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, DropIte
 {
 	if (!level) return;
 
+	LOGI("DropItemPacket\n");
+
 	Entity* entity = level->getEntity(packet->entityId);
 	if (entity && entity->isPlayer()) {
 		Player* p = (Player*)entity;
@@ -601,6 +634,7 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, DropIte
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerClosePacket* packet) {
 	if (!level) return;
+	LOGI("ContainerClosePacket\n");
 
 	Player* p = findPlayer(level, &source);
 	if (!p) return;
@@ -611,6 +645,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerSetSlotPacket* packet) {
 	if (!level) return;
+	LOGI("ContainerSetSlot: slot %i item %s\n", packet->slot, packet->item.getName().c_str());
 
 	Player* p = findPlayer(level, &source);
 	if (!p) return;
@@ -639,6 +674,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 
 void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SetHealthPacket* packet )
 {
+	LOGI("SetHealthPacket\n");
+
 	for (unsigned int i = 0; i < level->players.size(); ++i) {
 		Player* p = level->players[i];
 		if (p->owner == source) {
@@ -656,6 +693,8 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SignUpd
 	redistributePacket(packet, source);
 	if (!level)
 		return;
+
+		LOGI("SignUpdate: [%i, %i, %i]\n", packet->x, packet->y, packet->z);
 
 	TileEntity* te = level->getTileEntity(packet->x, packet->y, packet->z);
 	if (TileEntity::isType(te, TileEntityType::Sign)) {
