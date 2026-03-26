@@ -141,6 +141,11 @@ bool FillingContainer::add( ItemInstance* item )
 	//	// silently destroy the item when having a full inventory
 	//	item->count = 0;
 	//	return true;
+
+		LOGI("Inventory:\n");
+		for (int i = 0; i < numTotalSlots; i++) {
+			LOGI("\t %i: %s (%i)\n", i, items.at(i)->getName().c_str(), items.at(i)->count);
+		}
 	}
 
 	return false;

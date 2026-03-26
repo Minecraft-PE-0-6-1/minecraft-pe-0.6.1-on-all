@@ -19,6 +19,8 @@
 #include "../network/packet/AnimatePacket.h"
 #include "../world/level/tile/entity/ChestTileEntity.h"
 #include "../network/packet/HurtArmorPacket.h"
+#include "network/packet/SendInventoryPacket.h"
+#include "world/entity/player/Inventory.h"
 
 ServerPlayer::ServerPlayer( Minecraft* minecraft, Level* level )
 :   super(level, minecraft->isCreativeMode()),
@@ -26,7 +28,7 @@ ServerPlayer::ServerPlayer( Minecraft* minecraft, Level* level )
 	_prevHealth(-999),
 	_containerCounter(0)
 {
-	hasFakeInventory = true;
+	// hasFakeInventory = true;
 	footSize = 0;
 }
 
@@ -67,7 +69,15 @@ void ServerPlayer::tick() {
 
 void ServerPlayer::take( Entity* e, int orgCount ) {
 	TakeItemEntityPacket packet(e->entityId, entityId);
+	// SendInventoryPacket packet(this, false);
 	_mc->raknetInstance->send(packet);
+
+	LOGI("Inventory:\n");
+	for (int i = 0; i < inventory->numLinkedSlots; i++) {
+		auto item = inventory->getItem(i);
+		if (item)
+			LOGI("\t %i: %s (%i)\n", i, item->getName().c_str(), item->count);
+	}
 
 	super::take(e, orgCount);
 }
@@ -118,20 +128,20 @@ bool ServerPlayer::hasResource( int id ) {
 void ServerPlayer::setContainerData( BaseContainerMenu* menu, int id, int value ) {
 	ContainerSetDataPacket p(menu->containerId, id, value);
 	_mc->raknetInstance->send(owner, p);
-	//LOGI("Setting container data for id %d: %d\n", id, value);
+	LOGI("Setting container data for id %d: %d\n", id, value);
 }
 
 void ServerPlayer::slotChanged( BaseContainerMenu* menu, int slot, const ItemInstance& item, bool isResultSlot ) {
 	if (isResultSlot) return;
 	ContainerSetSlotPacket p(menu->containerId, slot, item);
 	_mc->raknetInstance->send(owner, p);
-	//LOGI("Slot %d changed\n", slot);
+	LOGI("Slot %d changed\n", slot);
 }
 
 void ServerPlayer::refreshContainer( BaseContainerMenu* menu, const std::vector<ItemInstance>& items ) {
 	ContainerSetContentPacket p(menu->containerId, menu->getItems());
 	_mc->raknetInstance->send(owner, p);
-	//LOGI("Refreshing container with %d items\n", items.size());
+	LOGI("Refreshing container with %zu items\n", items.size());
 }
 
 void ServerPlayer::nextContainerCounter() {
