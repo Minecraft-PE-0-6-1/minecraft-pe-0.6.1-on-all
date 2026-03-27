@@ -19,6 +19,9 @@
 #include "network/RakNetInstance.h"
 #include "network/packet/WantCreatePacket.h"
 #include "platform/input/Keyboard.h"
+#include <cstdint>
+#include <iostream>
+#include <string>
 
 static NinePatchLayer* guiPaneFrame = NULL;
 
@@ -195,6 +198,26 @@ void PaneCraftingScreen::setupPositions() {
 }
 
 void PaneCraftingScreen::tick() {
+	if (minecraft->isOnline()) {
+		// TODO: Make better algorithm
+		static std::map<uint8_t, uint16_t> oldMap = {};
+		std::map<uint8_t, uint16_t> newMap = {};
+
+		for (int i = Inventory::MAX_SELECTION_SIZE; i < minecraft->player->inventory->getContainerSize(); ++i) {
+			auto itm = minecraft->player->inventory->getItem(i);
+
+			if (itm != NULL) {
+				newMap[itm->id] += itm->count;
+			}
+		}
+
+		if (oldMap != newMap) {
+			oldMap = newMap;
+			newMap = {};
+			recheckRecipes();
+		}
+	}
+
 	if (pane) pane->tick();
 }
 
