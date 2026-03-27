@@ -1,6 +1,7 @@
 
 #include "ClientSideNetworkHandler.h"
 #include "client/Options.h"
+#include "network/packet/LoginStatusPacket.h"
 #include "packet/PacketInclude.h"
 #include "RakNetInstance.h"
 #include "../world/level/chunk/ChunkSource.h"
@@ -131,6 +132,12 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginSta
 		LOGI("Disconnect! Server is outdated!\n");
 #ifndef STANDALONE_SERVER
 		minecraft->setScreen(new DisconnectionScreen("Could not connect: Outdated server!"));
+#endif
+	}
+	if (packet->status == LoginStatus::Failed_TakenNickname) {
+		LOGI("Disconnect! Nickname is taken!\n");
+#ifndef STANDALONE_SERVER
+		minecraft->setScreen(new DisconnectionScreen("Could not connect: Nickname is taken!"));
 #endif
 	}
 }

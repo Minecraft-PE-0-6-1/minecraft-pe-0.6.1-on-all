@@ -6,6 +6,7 @@
 #include "../world/Container.h"
 #include "../world/inventory/BaseContainerMenu.h"
 #include "network/packet/ContainerSetSlotPacket.h"
+#include "network/packet/LoginStatusPacket.h"
 #include "network/packet/RemoveBlockPacket.h"
 #include "network/packet/SendInventoryPacket.h"
 #include "network/packet/UpdateBlockPacket.h"
@@ -205,6 +206,14 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	bool oldServer = packet->clientNetworkLowestSupportedVersion > SharedConstants::NetworkProtocolVersion;
 	if (oldClient || oldServer)
 		loginStatus = oldClient? LoginStatus::Failed_ClientOld : LoginStatus::Failed_ServerOld;
+
+	for (int i = 0; i < level->players.size(); i++) {
+		ServerPlayer* player = (ServerPlayer*) level->players.at(i);
+		
+		if (player->name == packet->clientName.C_String()) {
+			loginStatus = packet->newProto ? LoginStatus::Failed_TakenNickname : LoginStatus::Failed_ClientOld;
+		}
+	}
 
 	RakNet::BitStream bitStream;
 	LoginStatusPacket(loginStatus).write(&bitStream);
