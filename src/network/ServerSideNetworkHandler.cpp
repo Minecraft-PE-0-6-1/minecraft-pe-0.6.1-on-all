@@ -385,9 +385,24 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveBl
 	if (oldTile != NULL && changed) {
 		level->playSound(x + 0.5f, y + 0.5f, z + 0.5f, oldTile->soundType->getBreakSound(), (oldTile->soundType->getVolume() + 1) / 2, oldTile->soundType->getPitch() * 0.8f);
 
-		if (minecraft->gameMode->isSurvivalType() && player->canDestroy(oldTile))
+		if (minecraft->gameMode->isSurvivalType() && player->canDestroy(oldTile)) {
+			// From SurvivalMode.cpp
+			// Why tf i have to copy this shit from SurvivalMode class
+			// Why SurvivalMode class locked to LOCAL MINECRAFT PLAYER :sob: :sob: :sob: :sob: :sob: :sob: :sob: :sob:
+			// @fix @warn @ahtung @alert
+			ItemInstance* item = player->inventory->getSelected();
+			if (item != NULL) {
+				item->mineBlock(oldTile->id, x, y, z);
+				if (item->count == 0) {
+					//item->snap(minecraft->player);
+					player->inventory->clearSlot(player->inventory->selected);
+				}
+			}
+
 			//oldTile->spawnResources(level, x, y, z, data, 1); //@todo
 			oldTile->playerDestroy(level, player, x, y, z, data);
+		}
+			
 
 		oldTile->destroy(level, x, y, z, data);
 	}
