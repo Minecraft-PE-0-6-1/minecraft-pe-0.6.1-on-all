@@ -111,7 +111,6 @@ CPMAddPackage(
         "ALSOFT_STATIC_LIBGCC ON"
 )
 
-# TODO: Clear this paths with *
 file(GLOB SERVER_SOURCES
     "project/lib_projects/raknet/jni/RaknetSources/*.cpp"
     "src/NinecraftApp.cpp"

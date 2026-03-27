@@ -10,6 +10,7 @@
 #include "../world/entity/player/Inventory.h"
 #include "../client/Minecraft.h"
 #include "../client/gamemode/GameMode.h"
+#include "world/item/ItemInstance.h"
 #ifndef STANDALONE_SERVER
 #include "../client/gui/screens/DisconnectionScreen.h"
 #endif
@@ -384,6 +385,38 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 	{
 		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
 	}
+}
+void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TakeItemPacket* packet) {
+	if (!level) return;
+
+	LOGI("TakeItemPacket\n");
+
+	ItemInstance* item;
+
+	item->count = packet->count;
+	item->id = packet->itemId;
+	item->setAuxValue(packet->auxValue);
+
+	// if (minecraft->player->entityId == packet->playerId) {
+	if (!minecraft->player->inventory->add(item)) {
+		minecraft->player->drop(new ItemInstance(*item), false);
+	}
+	// }
+}
+
+void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveItemPacket* packet) {
+	// Idk how it works...
+	if (!level) return;
+
+	ItemInstance item;
+
+	item.count = packet->count;
+	item.id = packet->itemId;
+	item.setAuxValue(packet->auxValue);
+
+	// if (minecraft->player->entityId == packet->playerId) {
+	minecraft->player->inventory->removeResource(item);
+	// }
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MoveEntityPacket* packet)
@@ -780,6 +813,10 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AnimateP
 		LOGW("Unknown Animate action: %d\n", packet->action);
 		break;
 	}
+}
+
+void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCreatePacket* packet)
+{
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemPacket* packet)

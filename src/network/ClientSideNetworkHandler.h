@@ -77,6 +77,10 @@ public:
 	virtual void handle(const RakNet::RakNetGUID& source, ChatPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, AdventureSettingsPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, SignUpdatePacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, RemoveItemPacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, TakeItemPacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, WantCreatePacket* packet);
+
 private:
 
 	void requestNextChunk();
