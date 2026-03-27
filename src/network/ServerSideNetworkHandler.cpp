@@ -5,6 +5,9 @@
 #include "../world/entity/player/Inventory.h"
 #include "../world/Container.h"
 #include "../world/inventory/BaseContainerMenu.h"
+#include "network/packet/RemoveItemPacket.h"
+#include "network/packet/TakeItemPacket.h"
+#include "network/packet/WantCreatePacket.h"
 #include "packet/PacketInclude.h"
 
 #include "RakNetInstance.h"
@@ -14,6 +17,10 @@
 #include "../raknet/RakPeerInterface.h"
 #include "../raknet/PacketPriority.h"
 #include "platform/log.h"
+#include "world/item/ItemInstance.h"
+#include "world/item/crafting/Recipe.h"
+#include "world/item/crafting/Recipes.h"
+#include <cstddef>
 #ifndef STANDALONE_SERVER
 #include "../client/sound/SoundEngine.h"
 #endif
@@ -530,6 +537,63 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AnimateP
 		break;
 	}
 	redistributePacket(packet, source);
+}
+void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCreatePacket* packet) {
+	LOGI("WantCreatePacket\n");
+	Entity* entity = level->getEntity(packet->playerId);
+
+	if (entity && entity->isPlayer()) {
+		Player* p = (Player*)entity;
+		
+		auto playerInv = p->inventory;
+		
+		ItemInstance wantCreate;
+
+		wantCreate.id = packet->itemId;
+		wantCreate.count = packet->count;
+		wantCreate.setAuxValue(packet->auxValue);
+
+		Recipe* recipe = Recipes::getInstance()->getRecipeFor(wantCreate);
+
+		std::vector<ItemInstance> items = recipe->getItemPack().getItemInstances();
+
+		std::vector<int> checkForExists = {};
+
+		for (int i = Inventory::MAX_SELECTION_SIZE; i < p->inventory->getContainerSize(); ++i) {
+			auto itm = p->inventory->getItem(i);
+
+			if (itm != NULL) {
+				for (int y = 0; y < items.size(); y++) {
+					auto itmRecipe = items.at(y);
+
+					if (itmRecipe.id == itm->id && itmRecipe.count == itm->count) {
+						checkForExists.push_back(itm->id);
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < items.size(); i++) {
+			auto item = items.at(i);
+
+    		auto it = std::find(checkForExists.begin(), checkForExists.end(), item.id);
+
+			if (it == checkForExists.end()) {
+				return;
+			}
+		}
+
+		for (int i = 0; i < items.size(); i++) {
+			RemoveItemPacket removePacket(packet->playerId, items.at(i).count, items.at(i).getAuxValue(), items.at(i).id);
+			raknetInstance->send(source, removePacket);
+
+			p->inventory->removeItem(new ItemInstance(items.at(i).id, items.at(i).count, items.at(i).getAuxValue()));
+		}
+		TakeItemPacket itemAdd(p->entityId, wantCreate.count, wantCreate.getAuxValue(), wantCreate.id);
+		raknetInstance->send(source, itemAdd);
+
+		p->inventory->add(new ItemInstance(wantCreate.id, wantCreate.count, wantCreate.getAuxValue()));
+	}
 }
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemPacket* packet)

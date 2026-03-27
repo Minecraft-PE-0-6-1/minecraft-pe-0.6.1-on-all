@@ -50,5 +50,7 @@
 #include "TileEventPacket.h"
 #include "UpdateBlockPacket.h"
 #include "UseItemPacket.h"
-
+#include "RemoveItemPacket.h"
+#include "WantCreatePacket.h"
+#include "TakeItemPacket.h"
 #endif /*NET_MINECRAFT_NETWORK_PACKET__PacketInclude_H__*/

@@ -18,6 +18,8 @@ class RemovePlayerPacket;
 class RemoveEntityPacket;
 class MoveEntityPacket;
 //class TeleportEntityPacket;
+class RemoveItemPacket;
+class TakeItemPacket;
 class MovePlayerPacket;
 class PlaceBlockPacket;
 class RemoveBlockPacket;
@@ -48,6 +50,7 @@ class ContainerClosePacket;
 class ContainerSetSlotPacket;
 class ContainerSetDataPacket;
 class ContainerSetContentPacket;
+class WantCreatePacket;
 class ChatPacket;
 class SignUpdatePacket;
 class Minecraft;
@@ -119,6 +122,9 @@ public:
 	virtual void handle(const RakNet::RakNetGUID& source, SignUpdatePacket* packet) {}
 	virtual void handle(const RakNet::RakNetGUID& source, AdventureSettingsPacket* packet) {}
 	virtual void handle(const RakNet::RakNetGUID& source, AnimatePacket* packet) {}
+	virtual void handle(const RakNet::RakNetGUID& source, RemoveItemPacket* packet) {}
+	virtual void handle(const RakNet::RakNetGUID& source, TakeItemPacket* packet) {}
+	virtual void handle(const RakNet::RakNetGUID& source, WantCreatePacket* packet) {}
 
 	//
 	// Common implementation for Client and Server
