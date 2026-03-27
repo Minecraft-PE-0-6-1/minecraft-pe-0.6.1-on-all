@@ -80,6 +80,7 @@ public:
 	virtual void handle(const RakNet::RakNetGUID& source, RemoveItemPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, TakeItemPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, WantCreatePacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, SendInventoryPacket* packet);
 
 private:
 

@@ -386,6 +386,18 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
 	}
 }
+
+void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SendInventoryPacket* packet) {
+	if (!level) return;
+
+	// TODO: Linked slots
+	if (packet->entityId == minecraft->player->entityId) {
+		auto items = packet->items;
+		
+		minecraft->player->inventory->replace(items);
+	}
+}
+
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TakeItemPacket* packet) {
 	if (!level) return;
 

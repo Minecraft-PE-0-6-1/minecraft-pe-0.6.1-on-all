@@ -7,6 +7,7 @@
 #include "../world/inventory/BaseContainerMenu.h"
 #include "network/packet/ContainerSetSlotPacket.h"
 #include "network/packet/RemoveBlockPacket.h"
+#include "network/packet/SendInventoryPacket.h"
 #include "network/packet/UpdateBlockPacket.h"
 #include "network/packet/RemoveItemPacket.h"
 #include "network/packet/TakeItemPacket.h"
@@ -359,6 +360,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 	//LOGI("MovePlayerPacket\n");
 	if (Entity* entity = level->getEntity(packet->entityId))
 	{
+		
 		entity->xd = entity->yd = entity->zd = 0;
 		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
 
@@ -477,6 +479,10 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerEq
 
 	if (slot < 0 && packet->itemId != 0) {
 		LOGW("PlayerEquipmentPacket: Remote player doesn't have his thing (or crafted it)!\n");
+
+		SendInventoryPacket newInventory (player, false);
+		raknetInstance->send(newInventory);
+
 		return;
 	}
 
