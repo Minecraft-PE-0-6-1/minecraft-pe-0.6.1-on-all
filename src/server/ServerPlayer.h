@@ -43,6 +43,11 @@ public:
 	virtual void stopSleepInBed(bool forcefulWakeUp, bool updateLevelList, bool saveRespawnPoint);
 
 	void completeUsingItem();
+	
+	// Getter and setter? Doesnt hear about that
+	// TODO: Getter and setter :trollface:
+	int lastMoveTicks = 0;
+	int ticksInAir = 0;
 private:
 	void nextContainerCounter();
 	void setContainerMenu( BaseContainerMenu* menu );

@@ -21,6 +21,7 @@
 #include "../raknet/RakPeerInterface.h"
 #include "../raknet/PacketPriority.h"
 #include "platform/log.h"
+#include "util/Mth.h"
 #include "world/item/ItemInstance.h"
 #include "world/phys/Vec3.h"
 #include "world/item/crafting/Recipe.h"
@@ -360,12 +361,22 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 	//LOGI("MovePlayerPacket\n");
 	if (Entity* entity = level->getEntity(packet->entityId))
 	{
-		
-		entity->xd = entity->yd = entity->zd = 0;
-		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
+		ServerPlayer* player = (ServerPlayer*) getPlayer(source);
 
-		// broadcast this packet to other clients
-		redistributePacket(packet, source);
+		float vectorDist = sqrt( (packet->x - entity->x) * (packet->x - entity->x)  + 
+									(packet->y - entity->y) * (packet->y - entity->y) +
+									(packet->z - entity->z) * (packet->z - entity->z));
+		float speed = vectorDist / (minecraft->getTicks() - player->lastMoveTicks);
+
+		if (speed < 2.5f) {
+			entity->xd = entity->yd = entity->zd = 0;
+			entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
+		
+			// broadcast this packet to other clients
+			redistributePacket(packet, source);
+		}
+	
+		player->lastMoveTicks = minecraft->getTicks();
 	}
 }
 
