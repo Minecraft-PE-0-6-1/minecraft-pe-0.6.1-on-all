@@ -21,6 +21,7 @@
 #include "../raknet/RakPeerInterface.h"
 #include "../raknet/PacketPriority.h"
 #include "platform/log.h"
+#include "util/Mth.h"
 #include "world/item/ItemInstance.h"
 #include "world/level/storage/LevelStorage.h"
 #include "world/phys/Vec3.h"
@@ -196,7 +197,6 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 
 	LOGI("LoginPacket\n");
 	
-	printf("%d", packet->clientNetworkVersion);
 	int loginStatus = LoginStatus::Success;
 	//
 	// Bad/incompatible client version
@@ -216,8 +216,9 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	//
 	// Valid client version
 	//
-	Player* newPlayer = new ServerPlayer(minecraft, level);
-
+	
+	Player* newPlayer = new ServerPlayer(minecraft, level, packet->newProto);
+	
 	minecraft->gameMode->initAbilities(newPlayer->abilities);
 	newPlayer->owner = source;
 	newPlayer->name = packet->clientName.C_String();
@@ -251,6 +252,11 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
         ).write(&bitStream);
 
         rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+		
+		if (!packet->newProto) {
+			MessagePacket packet("You're using outdated client. Some features disabled.");
+			raknetInstance->send(packet);
+		}
 	}
 }
 
@@ -393,12 +399,22 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 	//LOGI("MovePlayerPacket\n");
 	if (Entity* entity = level->getEntity(packet->entityId))
 	{
-		
-		entity->xd = entity->yd = entity->zd = 0;
-		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
+		ServerPlayer* player = (ServerPlayer*) getPlayer(source);
 
-		// broadcast this packet to other clients
-		redistributePacket(packet, source);
+		float vectorDist = sqrt( (packet->x - entity->x) * (packet->x - entity->x)  + 
+									(packet->y - entity->y) * (packet->y - entity->y) +
+									(packet->z - entity->z) * (packet->z - entity->z));
+		float speed = vectorDist / (minecraft->getTicks() - player->getLastMoveTicks());
+
+		if (speed < 2.5f) {
+			entity->xd = entity->yd = entity->zd = 0;
+			entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
+		
+			// broadcast this packet to other clients
+			redistributePacket(packet, source);
+		}
+	
+		player->setLastMoveTicks(minecraft->getTicks());
 	}
 }
 
@@ -534,7 +550,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerAr
     if (!player) return;
     if (rakPeer->GetMyGUID() == player->owner) return;
 
-	LOGI("Equip armor: %i %i %i %i\n", packet->head, packet->torso, packet->legs, packet->feet);
+	// LOGI("Equip armor: %i %i %i %i\n", packet->head, packet->torso, packet->legs, packet->feet);
 
     packet->fillIn(player);
     redistributePacket(packet, source);

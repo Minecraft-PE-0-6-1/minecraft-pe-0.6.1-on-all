@@ -77,10 +77,10 @@ void PlayerRenderer::render(Entity* mob_, float x, float y, float z, float rot, 
 		model = desired;
 		humanoidModel = desired;
 	}
-	LOGI("[PlayerRenderer] %s: skin=%s, modelTex=%dx%d, desired=%s\n", 
+	/* LOGI("[PlayerRenderer] %s: skin=%s, modelTex=%dx%d, desired=%s\n", 
 		((Player*)mob)->name.c_str(), mob->getTexture().c_str(), 
 		humanoidModel->texWidth, humanoidModel->texHeight,
-		(desired == playerModel64 ? "64" : "32"));
+		(desired == playerModel64 ? "64" : "32")); */
 	HumanoidMobRenderer::render(mob_, x, y, z, rot, a);
 }
 

@@ -120,6 +120,8 @@ public:
 	void optionUpdated(OptionId option, bool value);
 	void optionUpdated(OptionId option, float value);
 	void optionUpdated(OptionId option, int value);
+
+	int getTicks() { return ticks; }
 #ifdef __APPLE__
     bool _isSuperFast;
     bool isSuperFast() { return _isSuperFast; }
@@ -197,7 +199,8 @@ public:
 	std::string externalCacheStoragePath;
 protected:
 	Timer timer;
-    // @note @attn @warn: this is dangerous as fuck!
+
+	// @note @attn @warn: this is dangerous as fuck!
 	volatile bool isGeneratingLevel;
 	bool _hasSignaledGeneratingLevelFinished;
 

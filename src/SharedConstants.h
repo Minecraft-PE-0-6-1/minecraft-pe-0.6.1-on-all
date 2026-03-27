@@ -16,9 +16,8 @@ namespace SharedConstants
 {
 	// 0.5.0 uses NPv8
 	// 0.6.0 uses NPv9
-	// TODO: Better proto check
-    const int NetworkProtocolVersion = 10;
-	const int NetworkProtocolLowestSupportedVersion = 10;
+    const int NetworkProtocolVersion = 9;
+	const int NetworkProtocolLowestSupportedVersion = 9;
 	const int GameProtocolVersion = 1;
 	const int GameProtocolLowestSupportedVersion = 1;
 
