@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__BreakingItemParticle_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__BreakingItemParticle_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -63,4 +62,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__BreakingItemParticle_H__*/

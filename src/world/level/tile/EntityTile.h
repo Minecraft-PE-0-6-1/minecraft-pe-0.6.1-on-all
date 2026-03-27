@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__EntityTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__EntityTile_H__
+#pragma once
 
 //package net.minecraft.world.level->tile;
 
@@ -25,4 +24,3 @@ protected:
     EntityTile(int id, int tex, const Material* material);
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__EntityTile_H__*/

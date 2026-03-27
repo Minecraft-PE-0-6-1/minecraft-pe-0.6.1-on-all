@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__UploadPhotoScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__UploadPhotoScreen_H__
+#pragma once
 
 #include "Screen.h"
 
@@ -33,4 +32,3 @@ private:
 	void selectSlotAndClose();
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__UploadPhotoScreen_H__*/

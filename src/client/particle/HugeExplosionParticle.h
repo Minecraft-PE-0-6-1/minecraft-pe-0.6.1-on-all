@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__HugeExplosionParticle_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__HugeExplosionParticle_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -69,4 +68,3 @@ private:
 	Textures* textures;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__HugeExplosionParticle_H__*/

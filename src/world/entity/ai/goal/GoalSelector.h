@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__GoalSelector_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__GoalSelector_H__
+#pragma once
 
 //package net.minecraft.world.entity.ai.goal;
 
@@ -101,4 +100,3 @@ private:
     //std::vector<InternalGoal> usingGoals;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__GoalSelector_H__*/

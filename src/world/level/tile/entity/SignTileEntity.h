@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE_ENTITY__SignTileEntity_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE_ENTITY__SignTileEntity_H__
+#pragma once
 
 //package net.minecraft.world.level.tile.entity;
 
@@ -36,4 +35,3 @@ private:
     bool editable;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE_ENTITY__SignTileEntity_H__*/

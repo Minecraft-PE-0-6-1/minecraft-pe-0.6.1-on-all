@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM_CRAFTING__StructureRecipes_H__
-#define NET_MINECRAFT_WORLD_ITEM_CRAFTING__StructureRecipes_H__
+#pragma once
 
 //package net.minecraft.world.item.crafting;
 
@@ -97,4 +96,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM_CRAFTING__StructureRecipes_H__*/

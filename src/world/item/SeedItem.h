@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__SeedItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__SeedItem_H__
+#pragma once
 
 #include "Item.h"
 
@@ -28,4 +27,3 @@ private:
 	int targetLand;
 };
 
-#endif /* NET_MINECRAFT_WORLD_ITEM__SeedItem_H__ */

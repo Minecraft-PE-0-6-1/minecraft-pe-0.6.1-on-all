@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_BIOME__RainforestBiome_H__
-#define NET_MINECRAFT_WORLD_LEVEL_BIOME__RainforestBiome_H__
+#pragma once
 
 //package net.minecraft.world.level.biome;
 
@@ -18,4 +17,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_BIOME__RainforestBiome_H__*/

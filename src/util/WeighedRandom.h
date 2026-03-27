@@ -1,5 +1,4 @@
-#ifndef UTIL__WeighedRandom_H__
-#define UTIL__WeighedRandom_H__
+#pragma once
 
 //package util;
 
@@ -100,4 +99,3 @@ public:
 //     }
 };
 
-#endif /*UTIL__WeighedRandom_H__*/

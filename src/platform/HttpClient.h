@@ -1,5 +1,4 @@
-#ifndef HTTPCLIENT_H__
-#define HTTPCLIENT_H__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -10,4 +9,3 @@ bool download(const std::string& url, std::vector<unsigned char>& outBody);
 
 } // namespace HttpClient
 
-#endif /* HTTPCLIENT_H__ */

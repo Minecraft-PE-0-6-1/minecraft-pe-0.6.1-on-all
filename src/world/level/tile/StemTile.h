@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__StemTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__StemTile_H__
+#pragma once
 #include "Bush.h"
 class StemTile : public Bush {
 	typedef Bush super;
@@ -25,4 +24,3 @@ private:
 	Tile* fruit;
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__StemTile_H__ */

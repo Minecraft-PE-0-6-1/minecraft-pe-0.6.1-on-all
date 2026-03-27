@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__ChickenModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__ChickenModel_H__
+#pragma once
 
 #include "Model.h"
 #include "geom/ModelPart.h"
@@ -20,4 +19,3 @@ public:
     void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale);
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__ChickenModel_H__*/

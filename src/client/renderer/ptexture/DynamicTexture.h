@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_PTEXTURE__DynamicTexture_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_PTEXTURE__DynamicTexture_H__
+#pragma once
 
 #include <vector>
 
@@ -56,4 +55,3 @@ public:
 	void tick();
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_PTEXTURE__DynamicTexture_H__*/

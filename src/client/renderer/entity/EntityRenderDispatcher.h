@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__EntityRenderDispatcher_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__EntityRenderDispatcher_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -73,4 +72,3 @@ private:
 	RendererMap _renderers;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__EntityRenderDispatcher_H__*/

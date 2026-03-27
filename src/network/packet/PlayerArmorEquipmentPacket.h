@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__PlayerArmorEquipmentPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__PlayerArmorEquipmentPacket_H__
+#pragma once
 
 #include "../Packet.h"
 #include "../../world/entity/player/Player.h"
@@ -75,4 +74,3 @@ private:
 	}
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__PlayerArmorEquipmentPacket_H__*/

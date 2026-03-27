@@ -1,5 +1,4 @@
-#ifndef COM_MOJANG_NBT__StringTag_H__
-#define COM_MOJANG_NBT__StringTag_H__
+#pragma once
 
 //package com.mojang.nbt;
 
@@ -59,4 +58,3 @@ public:
     }
 };
 
-#endif /*COM_MOJANG_NBT__StringTag_H__*/

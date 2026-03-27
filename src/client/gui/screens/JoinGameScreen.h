@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__JoinGameScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__JoinGameScreen_H__
+#pragma once
 
 #include "../Screen.h"
 #include "../components/Button.h"
@@ -67,4 +66,3 @@ private:
 	AvailableGamesList* gamesList;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__JoinGameScreen_H__*/

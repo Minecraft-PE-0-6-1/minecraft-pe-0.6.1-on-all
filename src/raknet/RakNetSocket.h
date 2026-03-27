@@ -1,5 +1,4 @@
-#ifndef __RAKNET_SOCKET_H
-#define __RAKNET_SOCKET_H
+#pragma once
 
 #include "RakNetTypes.h"
 #include "RakNetDefines.h"
@@ -35,4 +34,3 @@ struct RAK_DLL_EXPORT RakNetSocket
 
 } // namespace RakNet
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__EntityEvent_H__
-#define NET_MINECRAFT_WORLD_ENTITY__EntityEvent_H__
+#pragma once
 
 //package net.minecraft.world.entity;
 
@@ -20,4 +19,3 @@ public:
     static const char EAT_GRASS = 10;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY__EntityEvent_H__*/

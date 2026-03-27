@@ -1,5 +1,4 @@
-#ifndef _MINECRAFT_NETWORK_NATPUNCHHANDLER_H_
-#define _MINECRAFT_NETWORK_NATPUNCHHANDLER_H_
+#pragma once
 #include "../raknet/TCPInterface.h"
 #include "../raknet/RakString.h"
 class NATPuchHandler {
@@ -21,4 +20,3 @@ private:
 	RakNet::TCPInterface *tcpInterface;
 };
 
-#endif /* _MINECRAFT_NETWORK_NATPUNCHHANDLER_H_ */

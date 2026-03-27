@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS_TOUCH__TouchIngameBlockSelectionScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS_TOUCH__TouchIngameBlockSelectionScreen_H__
+#pragma once
 
 #include "../../Screen.h"
 #include "../../components/InventoryPane.h"
@@ -70,4 +69,3 @@ private:
 
 }
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS_TOUCH__TouchIngameBlockSelectionScreen_H__*/

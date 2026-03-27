@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__ChestTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__ChestTile_H__
+#pragma once
 
 #include "EntityTile.h"
 class Level;
@@ -48,4 +47,3 @@ private:
 	Random random;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__ChestTile_H__*/

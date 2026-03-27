@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__MeleeAttackGoal_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__MeleeAttackGoal_H__
+#pragma once
 
 //package net.minecraft.world.entity.ai.goal;
 
@@ -91,4 +90,3 @@ private:
 	bool trackTarget;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__MeleeAttackGoal_H__*/

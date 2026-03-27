@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__AuxDataTileItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__AuxDataTileItem_H__
+#pragma once
 
 //package net.minecraft.world.item;
 
@@ -31,4 +30,3 @@ private:
     Tile* parentTile;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__AuxDataTileItem_H__*/

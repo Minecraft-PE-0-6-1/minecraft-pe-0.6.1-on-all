@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_DIMENSION__NormalDayCycleDimension_H__
-#define NET_MINECRAFT_WORLD_LEVEL_DIMENSION__NormalDayCycleDimension_H__
+#pragma once
 
 //package net.minecraft.world.level.dimension;
 
@@ -38,4 +37,3 @@ public:
 	
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_DIMENSION__NormalDayCycleDimension_H__*/

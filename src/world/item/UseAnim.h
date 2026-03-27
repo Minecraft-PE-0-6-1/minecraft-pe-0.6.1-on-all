@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__UseAnim_H__
-#define NET_MINECRAFT_WORLD_ITEM__UseAnim_H__
+#pragma once
 class UseAnim {
 public:
 	enum UseAnimation {
@@ -12,4 +11,3 @@ public:
 };
 
 
-#endif /* NET_MINECRAFT_WORLD_ITEM__UseAnim_H__ */

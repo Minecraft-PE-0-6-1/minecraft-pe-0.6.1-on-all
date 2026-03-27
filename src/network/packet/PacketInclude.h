@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__PacketInclude_H__
-#define NET_MINECRAFT_NETWORK_PACKET__PacketInclude_H__
+#pragma once
 
 #include "AddEntityPacket.h"
 #include "AddItemEntityPacket.h"
@@ -51,4 +50,3 @@
 #include "UpdateBlockPacket.h"
 #include "UseItemPacket.h"
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__PacketInclude_H__*/

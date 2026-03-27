@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__Polygon_H__
-#define NET_MINECRAFT_CLIENT_MODEL__Polygon_H__
+#pragma once
 
 //package net.minecraft.client.model;
 #include "Vertex.h"
@@ -26,4 +25,3 @@ private:
 	bool _flipNormal;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__Polygon_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__GuiComponent_H__
-#define NET_MINECRAFT_CLIENT_GUI__GuiComponent_H__
+#pragma once
 
 //package net.minecraft.client.gui;
 
@@ -31,4 +30,3 @@ protected:
 	
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__GuiComponent_H__*/

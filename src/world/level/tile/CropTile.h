@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__CropTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__CropTile_H__
+#pragma once
 
 #include "Bush.h"
 
@@ -26,4 +25,3 @@ private:
 	
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__CropTile_H__ */

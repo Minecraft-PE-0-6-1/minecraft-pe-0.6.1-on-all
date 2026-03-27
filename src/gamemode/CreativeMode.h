@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GAMEMODE__CreativeMode_H__
-#define NET_MINECRAFT_CLIENT_GAMEMODE__CreativeMode_H__
+#pragma once
 
 //package net.minecraft.client.gamemode;
 
@@ -24,4 +23,3 @@ private:
 	void creativeDestroyBlock(Player* player, int x, int y, int z, int face);
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GAMEMODE__CreativeMode_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__AddMobPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__AddMobPacket_H__
+#pragma once
 
 #include "../Packet.h"
 #include "../../world/entity/Mob.h"
@@ -75,4 +74,3 @@ private:
 	const SynchedEntityData* _entityData;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__AddMobPacket_H__*/

@@ -1,5 +1,4 @@
-#ifndef SoundSystemSL_H__
-#define SoundSystemSL_H__
+#pragma once
 
 #include "SoundSystem.h"
 #include <SLES/OpenSLES.h>
@@ -76,4 +75,3 @@ public:
 	static void removePlayer(SLAndroidSimpleBufferQueueItf bq, void *context);
 };
 
-#endif /*SoundSystemSL_H__ */

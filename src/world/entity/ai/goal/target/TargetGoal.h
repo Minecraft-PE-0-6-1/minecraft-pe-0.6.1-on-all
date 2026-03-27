@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_GOAL_TARGET__TargetGoal_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_GOAL_TARGET__TargetGoal_H__
+#pragma once
 
 //package net.minecraft.world.entity->ai.goal.target;
 
@@ -54,4 +53,3 @@ protected:
     bool mustSee;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_GOAL_TARGET__TargetGoal_H__*/

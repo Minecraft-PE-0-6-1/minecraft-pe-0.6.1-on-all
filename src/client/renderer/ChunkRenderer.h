@@ -1,5 +1,4 @@
-#ifndef CHUNKRENDERER_H__
-#define CHUNKRENDERER_H__
+#pragma once
 
 #include "gles.h"
 #include "../../world/level/Region.h"
@@ -19,4 +18,3 @@ private:
 	const Region& r;
 };
 
-#endif /*CHUNKRENDERER_H__*/

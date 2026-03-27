@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__TakeAnimationParticle_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__TakeAnimationParticle_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -79,4 +78,3 @@ private:
     float yOffs;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__TakeAnimationParticle_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__Button_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__Button_H__
+#pragma once
 
 //package net.minecraft.client.gui;
 
@@ -77,4 +76,3 @@ public:
 };
 }
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__Button_H__*/

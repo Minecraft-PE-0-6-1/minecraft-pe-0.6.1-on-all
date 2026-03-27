@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__ArgumentsSettings_H__
-#define NET_MINECRAFT_WORLD_LEVEL__ArgumentsSettings_H__
+#pragma once
 #include <string>
 class ArgumentsSettings {
 public:
@@ -21,4 +20,3 @@ private:
 	int port;
 };
 
-#endif

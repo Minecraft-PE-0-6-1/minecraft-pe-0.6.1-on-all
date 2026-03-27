@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__RenderChunkHandler_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__RenderChunkHandler_H__
+#pragma once
 
 #include <vector>
 #include "RenderChunk.h"
@@ -20,4 +19,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__RenderChunkHandler_H__*/

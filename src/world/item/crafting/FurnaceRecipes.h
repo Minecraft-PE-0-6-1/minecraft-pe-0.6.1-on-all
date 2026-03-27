@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM_CRAFTING__FurnaceRecipes_H__
-#define NET_MINECRAFT_WORLD_ITEM_CRAFTING__FurnaceRecipes_H__
+#pragma once
 
 //package net.minecraft.world.item.crafting;
 
@@ -30,4 +29,3 @@ private:
 	Map recipes;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM_CRAFTING__FurnaceRecipes_H__*/

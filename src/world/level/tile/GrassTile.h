@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__GrassTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__GrassTile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -26,4 +25,3 @@ public:
     int getResource(int data, Random* random);
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__GrassTile_H__*/

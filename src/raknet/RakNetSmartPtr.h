@@ -1,5 +1,4 @@
-#ifndef __RAKNET_SMART_PTR_H
-#define __RAKNET_SMART_PTR_H
+#pragma once
 
 // From http://www.codeproject.com/KB/cpp/SmartPointers.aspx
 // with bugs fixed
@@ -170,4 +169,3 @@ public:
 
 } // namespace RakNet
 
-#endif

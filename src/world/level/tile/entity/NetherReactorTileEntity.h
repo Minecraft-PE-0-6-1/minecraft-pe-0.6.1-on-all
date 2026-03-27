@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE_ENTITY__NetherReactorTileEntity_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE_ENTITY__NetherReactorTileEntity_H__
+#pragma once
 #include "../../../Pos.h"
 #include "TileEntity.h"
 class NetherReactorTileEntity : public  TileEntity {
@@ -52,4 +51,3 @@ private:
 	short progress;
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE_ENTITY__NetherReactorTileEntity_H__ */

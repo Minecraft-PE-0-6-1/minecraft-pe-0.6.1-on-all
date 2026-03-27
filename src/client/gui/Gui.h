@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__Gui_H__
-#define NET_MINECRAFT_CLIENT_GUI__Gui_H__
+#pragma once
 
 //package net.minecraft.client.gui;
 
@@ -130,4 +129,3 @@ private:
 	bool   _openInventorySlot;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__Gui_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI__PathNavigation_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI__PathNavigation_H__
+#pragma once
 
 //package net.minecraft.world.entity.ai;
 
@@ -343,4 +342,3 @@ public:
     bool canOpenDoors;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI__PathNavigation_H__*/

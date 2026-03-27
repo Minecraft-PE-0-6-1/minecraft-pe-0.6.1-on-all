@@ -1,5 +1,4 @@
-#ifndef APPPLATFORM_WIN32_H__
-#define APPPLATFORM_WIN32_H__
+#pragma once
 
 #include <IPlatform.h>
 #include "platform/log.h"
@@ -139,4 +138,3 @@ public:
 private:
 };
 
-#endif /*APPPLATFORM_WIN32_H__*/

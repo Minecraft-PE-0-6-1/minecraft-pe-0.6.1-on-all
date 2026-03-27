@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__DoorTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__DoorTile_H__
+#pragma once
 
 //package net.minecraft.world.level->tile;
 
@@ -61,4 +60,3 @@ public:
 	static int getCompositeData(LevelSource* level, int x, int y, int z);
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__DoorTile_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_TILEENTITY__ChestRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_TILEENTITY__ChestRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.tileentity;
 
@@ -18,4 +17,3 @@ private:
     //LargeChestModel* largeChestModel;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_TILEENTITY__ChestRenderer_H__*/

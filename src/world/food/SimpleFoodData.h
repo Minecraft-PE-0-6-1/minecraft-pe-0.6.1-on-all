@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_FOOD__SimpleFoodData_H__
-#define NET_MINECRAFT_WORLD_FOOD__SimpleFoodData_H__
+#pragma once
 
 //package net.minecraft.world.food;
 
@@ -19,4 +18,3 @@ private:
 	int foodLevel;
 };
 
-#endif /*NET_MINECRAFT_WORLD_FOOD__SimpleFoodData_H__*/

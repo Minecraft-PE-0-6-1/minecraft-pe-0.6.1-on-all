@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_STORAGE__MemoryLevelStorageSource_H__
-#define NET_MINECRAFT_WORLD_LEVEL_STORAGE__MemoryLevelStorageSource_H__
+#pragma once
 
 //package net.minecraft.world.level.storage;
 
@@ -55,4 +54,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_STORAGE__MemoryLevelStorageSource_H__*/

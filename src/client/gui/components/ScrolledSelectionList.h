@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__ScrolledSelectionList_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__ScrolledSelectionList_H__
+#pragma once
 
 #include "../GuiComponent.h"
 class Minecraft;
@@ -66,4 +65,3 @@ private:
 	int headerHeight;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__ScrolledSelectionList_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT__Facing_H__
-#define NET_MINECRAFT__Facing_H__
+#pragma once
 
 //package net.minecraft;
 
@@ -31,4 +30,3 @@ public:
 	static const int STEP_Z[6];
 };
 
-#endif /*NET_MINECRAFT__Facing_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM_CRAFTING__ShapedRecipe_H__
-#define NET_MINECRAFT_WORLD_ITEM_CRAFTING__ShapedRecipe_H__
+#pragma once
 
 //package net.minecraft.world.item.crafting;
 
@@ -102,4 +101,3 @@ private:
 	//ItemPack myItems;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM_CRAFTING__ShapedRecipe_H__*/

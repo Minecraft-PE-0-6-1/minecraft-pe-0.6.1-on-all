@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER__IInputHolder_H__
-#define NET_MINECRAFT_CLIENT_PLAYER__IInputHolder_H__
+#pragma once
 
 #include "IMoveInput.h"
 #include "ITurnInput.h"
@@ -72,4 +71,3 @@ private:
 	IBuildInput*	_build;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER__IInputHolder_H__*/

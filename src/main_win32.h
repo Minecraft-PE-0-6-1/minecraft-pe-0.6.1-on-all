@@ -1,5 +1,4 @@
-#ifndef MAIN_WIN32_H__
-#define MAIN_WIN32_H__
+#pragma once
 
 /*
 #define _CRTDBG_MAP_ALLOC
@@ -328,4 +327,3 @@ int main(void) {
 	return 0;
 }
 
-#endif /*MAIN_WIN32_H__*/

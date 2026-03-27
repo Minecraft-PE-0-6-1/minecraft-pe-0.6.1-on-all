@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__StonecutterTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__StonecutterTile_H__
+#pragma once
 
 #include "Tile.h"
 #include "../Level.h"
@@ -29,4 +28,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__StonecutterTile_H__*/

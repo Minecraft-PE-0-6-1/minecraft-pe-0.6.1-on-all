@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__SetSpawnPositionPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__SetSpawnPositionPacket_H__
+#pragma once
 
 #include "../Packet.h"
 
@@ -49,4 +48,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__SetSpawnPositionPacket_H__*/

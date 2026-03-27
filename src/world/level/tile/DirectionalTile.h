@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__DirectionalTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__DirectionalTile_H__
+#pragma once
 #include "Tile.h"
 class Material;
 class DirectionalTile : public Tile {
@@ -14,4 +13,3 @@ protected:
 	DirectionalTile(int id, const Material* material) : Tile(id, material) {}
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__DirectionalTile_H__ */

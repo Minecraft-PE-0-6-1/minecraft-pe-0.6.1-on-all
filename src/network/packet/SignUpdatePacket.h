@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__SignUpdatePacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__SignUpdatePacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -65,4 +64,3 @@ public:
     std::string lines[4];
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__SignUpdatePacket_H__*/

@@ -1,5 +1,4 @@
-#ifndef MTH_H__
-#define MTH_H__
+#pragma once
 
 #include <vector>
 #include <set>
@@ -94,4 +93,3 @@ namespace Util
 	}
 };
 
-#endif // MTH_H__

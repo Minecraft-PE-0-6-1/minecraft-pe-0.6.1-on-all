@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER_INPUT_TOUCHSCREEN_TouchscreenInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER_INPUT_TOUCHSCREEN_TouchscreenInput_H__
+#pragma once
 
 //package net.minecraft.client.player;
 
@@ -77,4 +76,3 @@ private:
 	void rebuild();
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER_INPUT_TOUCHSCREEN_TouchscreenInput_H__*/

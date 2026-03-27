@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__FoodItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__FoodItem_H__
+#pragma once
 
 //package net.minecraft.world.item;
 
@@ -92,4 +91,3 @@ private:
 	*/
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__FoodItem_H__*/

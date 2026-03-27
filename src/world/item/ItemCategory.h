@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__ItemCategory_H__
-#define NET_MINECRAFT_WORLD_ITEM__ItemCategory_H__
+#pragma once
 
 class ItemCategory {
 public:
@@ -24,4 +23,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__ItemCategory_H__*/

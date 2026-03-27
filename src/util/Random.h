@@ -1,5 +1,4 @@
-#ifndef RANDOM_H__
-#define RANDOM_H__
+#pragma once
 
 /* 
           A random generator class based on Mersenne-Twister.
@@ -251,4 +250,3 @@ private:
 	}
 };
 
-#endif /*RANDOM_H__*/

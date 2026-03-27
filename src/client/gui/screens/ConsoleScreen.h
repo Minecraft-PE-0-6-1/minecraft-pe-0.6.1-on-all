@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__ConsoleScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__ConsoleScreen_H__
+#pragma once
 
 #include "../Screen.h"
 #include <string>
@@ -31,4 +30,3 @@ private:
     int         _cursorBlink; // tick counter for cursor blink
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__ConsoleScreen_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__CreeperRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__CreeperRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -91,4 +90,3 @@ protected:
     //Model* armorModel = /*new*/ CreeperModel(2);
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__CreeperRenderer_H__*/

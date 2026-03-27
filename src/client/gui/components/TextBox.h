@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__TextBox_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__TextBox_H__
+#pragma once
 
 //package net.minecraft.client.gui;
 
@@ -41,4 +40,3 @@ public:
 	bool blink;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__TextBox_H__*/

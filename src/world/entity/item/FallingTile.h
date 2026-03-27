@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_ITEM__FallingTile_H__
-#define NET_MINECRAFT_WORLD_ENTITY_ITEM__FallingTile_H__
+#pragma once
 
 //package net.minecraft.world.entity.item;
 
@@ -37,4 +36,3 @@ public:
     int time;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_ITEM__FallingTile_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__ThinFenceTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__ThinFenceTile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -130,4 +129,3 @@ private:
     const bool dropsResources;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__ThinFenceTile_H__*/

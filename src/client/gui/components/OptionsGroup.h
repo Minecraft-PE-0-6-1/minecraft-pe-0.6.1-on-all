@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__OptionsGroup_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__OptionsGroup_H__
+#pragma once
 
 //package net.minecraft.client.gui;
 
@@ -29,4 +28,3 @@ protected:
 	std::string label;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__OptionsGroup_H__*/

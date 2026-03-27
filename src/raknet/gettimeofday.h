@@ -1,5 +1,4 @@
-#ifndef __GET_TIME_OF_DAY_H
-#define __GET_TIME_OF_DAY_H
+#pragma once
 
 #if defined(_WIN32) && !defined(__GNUC__)  &&!defined(__GCCXML__)
 #include < time.h >
@@ -53,4 +52,3 @@ inline int gettimeofday(struct timeval* p, void* tz )
 
 #endif
 
-#endif

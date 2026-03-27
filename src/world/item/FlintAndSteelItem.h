@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__FlintAndSteelItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__FlintAndSteelItem_H__
+#pragma once
 
 //package net.minecraft.world.item;
 
@@ -40,4 +39,3 @@ public:
     */
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__FlintAndSteelItem_H__*/

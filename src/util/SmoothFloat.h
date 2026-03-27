@@ -1,5 +1,4 @@
-#ifndef UTIL__SmoothFloat_H__
-#define UTIL__SmoothFloat_H__
+#pragma once
 
 //package util;
 
@@ -34,4 +33,3 @@ public:
     }
 };
 
-#endif /*UTIL__SmoothFloat_H__*/

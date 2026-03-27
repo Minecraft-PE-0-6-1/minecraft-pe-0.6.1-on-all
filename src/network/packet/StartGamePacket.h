@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__StartGamePacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__StartGamePacket_H__
+#pragma once
 
 #include "../Packet.h"
 #include <cstdint>
@@ -59,4 +58,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__StartGamePacket_H__*/

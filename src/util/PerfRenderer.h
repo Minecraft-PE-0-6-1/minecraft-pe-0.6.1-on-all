@@ -1,5 +1,4 @@
-#ifndef NET_UTIL__PerfRenderer_H__
-#define NET_UTIL__PerfRenderer_H__
+#pragma once
 
 #include <vector>
 #include <string>
@@ -31,4 +30,3 @@ private:
 	float lastTimer;
 };
 
-#endif /*NET_UTIL__PerfRenderer_H__*/

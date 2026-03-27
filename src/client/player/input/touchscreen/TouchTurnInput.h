@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER_INPUT_TOUCHSCREEN_TouchTurnInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER_INPUT_TOUCHSCREEN_TouchTurnInput_H__
+#pragma once
 
 #include "../ITurnInput.h"
 #include "TouchAreaModel.h"
@@ -85,4 +84,3 @@ private:
 	static const int AREA_TURN = 100;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER_INPUT_TOUCHSCREEN_TouchTurnInput_H__*/

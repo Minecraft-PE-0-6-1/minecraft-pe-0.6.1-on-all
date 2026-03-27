@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__EntityFactory_H__
-#define NET_MINECRAFT_WORLD_ENTITY__EntityFactory_H__
+#pragma once
 
 class Level;
 class Entity;
@@ -12,4 +11,3 @@ public:
 	static Entity* loadEntity(CompoundTag* tag, Level* level);
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY__EntityFactory_H__*/

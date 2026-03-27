@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_PROJECTILE__Snowball_H__
-#define NET_MINECRAFT_WORLD_ENTITY_PROJECTILE__Snowball_H__
+#pragma once
 
 //package net.minecraft.world.entity->projectile;
 
@@ -47,4 +46,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_PROJECTILE__Snowball_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GAMEMODE__GameMode_H__
-#define NET_MINECRAFT_CLIENT_GAMEMODE__GameMode_H__
+#pragma once
 
 //package net.minecraft.client.gamemode;
 
@@ -58,4 +57,3 @@ protected:
 	int destroyDelay = 0;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GAMEMODE__GameMode_H__*/

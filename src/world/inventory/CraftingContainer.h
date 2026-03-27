@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_INVENTORY__None_H__
-#define NET_MINECRAFT_WORLD_INVENTORY__None_H__
+#pragma once
 
 //package net.minecraft.world.inventory;
 
@@ -89,4 +88,3 @@ private:
     //AbstractContainerMenu* menu;
 };
 
-#endif /*NET_MINECRAFT_WORLD_INVENTORY__None_H__*/

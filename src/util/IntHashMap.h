@@ -1,5 +1,4 @@
-#ifndef UTIL__IntHashMap_H__
-#define UTIL__IntHashMap_H__
+#pragma once
 
 template <class V>
 class IntHashMap
@@ -223,4 +222,3 @@ private:
     }
 };
 
-#endif /*UTIL__IntHashMap_H__*/

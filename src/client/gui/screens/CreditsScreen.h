@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__CreditsScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__CreditsScreen_H__
+#pragma once
 
 #include "../Screen.h"
 #include "../components/Button.h"
@@ -29,4 +28,3 @@ private:
     float _scrollSpeed;
 };
 
-#endif /* NET_MINECRAFT_CLIENT_GUI_SCREENS__CreditsScreen_H__ */

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__PrerenderTilesScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__PrerenderTilesScreen_H__
+#pragma once
 
 #include "../Screen.h"
 
@@ -159,4 +158,3 @@ private:
 	std::vector<ItemInstance> mItems;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__PrerenderTilesScreen_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__Goal_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__Goal_H__
+#pragma once
 
 //package net.minecraft.world.entity.ai.goal;
 
@@ -41,4 +40,3 @@ private:
     int _requiredControlFlags;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__Goal_H__*/

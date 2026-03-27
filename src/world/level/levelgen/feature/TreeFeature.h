@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__TreeFeature_H__
-#define NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__TreeFeature_H__
+#pragma once
 
 //package net.minecraft.world.level.levelgen.feature;
 
@@ -71,4 +70,3 @@ private:
 	int trunkType;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__TreeFeature_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER__KeyboardInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER__KeyboardInput_H__
+#pragma once
 
 //package net.minecraft.client.player;
 
@@ -33,4 +32,3 @@ protected:
 	Options* options;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER__KeyboardInput_H__*/

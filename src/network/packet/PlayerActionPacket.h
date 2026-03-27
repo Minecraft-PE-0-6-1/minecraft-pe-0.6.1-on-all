@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__PlayerActionPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__PlayerActionPacket_H__
+#pragma once
 
 #include "../Packet.h"
 
@@ -59,4 +58,3 @@ public:
 	int x, y, z, face, action, entityId;
 };
 
-#endif /* NET_MINECRAFT_NETWORK_PACKET__PlayerActionPacket_H__ */

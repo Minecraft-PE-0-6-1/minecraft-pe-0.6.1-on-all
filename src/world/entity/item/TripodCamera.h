@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_ITEM__TripodCamera_H__
-#define NET_MINECRAFT_WORLD_ENTITY_ITEM__TripodCamera_H__
+#pragma once
 
 #include "../Mob.h"
 
@@ -29,4 +28,3 @@ protected:
 };
 
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_ITEM__TripodCamera_H__*/

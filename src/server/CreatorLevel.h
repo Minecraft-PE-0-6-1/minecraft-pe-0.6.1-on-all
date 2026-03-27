@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__CreatorLevel_H__
-#define NET_MINECRAFT_WORLD_LEVEL__CreatorLevel_H__
+#pragma once
 
 #include "../world/level/Level.h"
 
@@ -12,4 +11,3 @@ public:
 	void tick();
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL__CreatorLevel_H__ */

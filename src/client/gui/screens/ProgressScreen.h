@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__ProgressScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__ProgressScreen_H__
+#pragma once
 
 #include "../Screen.h"
 
@@ -18,4 +17,3 @@ private:
 	int ticks;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__ProgressScreen_H__*/

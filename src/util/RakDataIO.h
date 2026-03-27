@@ -1,5 +1,4 @@
-#ifndef RAKDATAIO_H__
-#define RAKDATAIO_H__
+#pragma once
 
 #include <cstring>
 #include <string>
@@ -46,4 +45,3 @@ private:
 	RakNet::BitStream& _bitStream;
 };
 
-#endif /*RAKDATAIO_H__*/

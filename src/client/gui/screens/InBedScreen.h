@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__InBedScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__InBedScreen_H__
+#pragma once
 
 #include "../Screen.h"
 class Button;
@@ -23,4 +22,3 @@ private:
 	Button* bWakeUp;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__InBedScreen_H__*/

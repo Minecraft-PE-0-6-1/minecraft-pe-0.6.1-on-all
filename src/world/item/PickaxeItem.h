@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__PickaxeItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__PickaxeItem_H__
+#pragma once
 
 //package net.minecraft.world.item;
 
@@ -20,4 +19,3 @@ public:
     float getDestroySpeed(ItemInstance* itemInstance, Tile* tile);
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__PickaxeItem_H__*/

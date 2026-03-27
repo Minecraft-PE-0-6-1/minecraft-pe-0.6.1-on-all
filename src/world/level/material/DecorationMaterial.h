@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_MATERIAL__DecorationMaterial_H__
-#define NET_MINECRAFT_WORLD_LEVEL_MATERIAL__DecorationMaterial_H__
+#pragma once
 
 //package net.minecraft.world.level.material;
 #include "Material.h"
@@ -20,4 +19,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_MATERIAL__DecorationMaterial_H__*/

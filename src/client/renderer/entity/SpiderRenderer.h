@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__SpiderRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__SpiderRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -43,4 +42,3 @@ protected:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__SpiderRenderer_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__DyePowderItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__DyePowderItem_H__
+#pragma once
 
 //package net.minecraft.world.item;
 
@@ -50,4 +49,3 @@ public:
     void interactEnemy(ItemInstance* itemInstance, Mob* mob);
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__DyePowderItem_H__*/

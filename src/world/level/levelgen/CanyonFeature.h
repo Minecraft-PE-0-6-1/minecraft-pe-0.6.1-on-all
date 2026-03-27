@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__CanyonFeature_H__
-#define NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__CanyonFeature_H__
+#pragma once
 
 #if 0
 
@@ -16,4 +15,3 @@ class CanyonFeature: public LargeFeature {
 };
 
 #endif
-#endif /*NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__CanyonFeature_H__*/

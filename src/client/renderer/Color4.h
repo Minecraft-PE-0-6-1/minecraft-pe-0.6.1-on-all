@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__Color4_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__Color4_H__
+#pragma once
 
 class Color4
 {
@@ -50,4 +49,3 @@ private:
 	}
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__Color4_H__*/

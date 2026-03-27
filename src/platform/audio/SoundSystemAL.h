@@ -1,5 +1,4 @@
-#ifndef SoundSystemAL_H__
-#define SoundSystemAL_H__
+#pragma once
 
 #include "SoundSystem.h"
 
@@ -70,4 +69,3 @@ private:
 public:
 };
 
-#endif /*SoundSystemAL_H__ */

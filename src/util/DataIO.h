@@ -1,5 +1,4 @@
-#ifndef DATAIO_H__
-#define DATAIO_H__
+#pragma once
 
 #include <cstring>
 #include <string>
@@ -317,4 +316,3 @@ public:
 //	}
 //};
 
-#endif /*DATAIO_H__*/

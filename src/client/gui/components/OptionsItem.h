@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__OptionsItem_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__OptionsItem_H__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -24,4 +23,3 @@ private:
 	std::string m_label;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__OptionsItem_H__*/

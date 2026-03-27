@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__ImageButton_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__ImageButton_H__
+#pragma once
 
 #include "Button.h"
 
@@ -94,4 +93,3 @@ private:
 };
 
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__ImageButton_H__*/

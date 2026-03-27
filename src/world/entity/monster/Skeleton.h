@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_MONSTER__Skeleton_H__
-#define NET_MINECRAFT_WORLD_ENTITY_MONSTER__Skeleton_H__
+#pragma once
 
 //package net.minecraft.world.entity->monster;
 
@@ -40,4 +39,3 @@ private:
 	int fireCheckTick;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_MONSTER__Skeleton_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_ANIMAL__Cow_H__
-#define NET_MINECRAFT_WORLD_ENTITY_ANIMAL__Cow_H__
+#pragma once
 
 //package net.minecraft.world.entity.animal;
 
@@ -39,4 +38,3 @@ protected:
     Animal* getBreedOffspring(Animal* target);
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_ANIMAL__Cow_H__*/

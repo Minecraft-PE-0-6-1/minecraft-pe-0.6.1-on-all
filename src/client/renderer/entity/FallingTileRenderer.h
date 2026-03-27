@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__FallingTileRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__FallingTileRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -19,4 +18,3 @@ private:
     TileRenderer* tileRenderer;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__FallingTileRenderer_H__*/

@@ -1,5 +1,4 @@
-#ifndef MAIN_RPI_H__
-#define MAIN_RPI_H__
+#pragma once
 
 #include <cassert>
 
@@ -436,4 +435,3 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-#endif

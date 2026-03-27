@@ -1,5 +1,4 @@
-#ifndef MAIN_GLFW_H__
-#define MAIN_GLFW_H__
+#pragma once
 
 #include "App.h"
 #include "NinecraftApp.h"
@@ -74,4 +73,3 @@ int main(void) {
 	return 0;
 }
 
-#endif /*MAIN_GLFW_H__*/

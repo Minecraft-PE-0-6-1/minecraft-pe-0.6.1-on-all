@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__ChatPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__ChatPacket_H__
+#pragma once
 #include "../Packet.h"
 #include "../..//world/entity/player/Player.h"
 
@@ -38,4 +37,3 @@ public:
 	bool isSystem;
 };
 
-#endif /* NET_MINECRAFT_NETWORK_PACKET__ChatPacket_H__ */

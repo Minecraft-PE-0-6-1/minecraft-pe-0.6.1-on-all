@@ -1,5 +1,4 @@
-#ifndef _MINECRAFT_FOLDERMETHODS_H_
-#define _MINECRAFT_FOLDERMETHODS_H_
+#pragma once
 
 #include "../../../platform/log.h"
 
@@ -19,4 +18,3 @@ int getFileSize(const char* filename);
 
 bool createTree(const char* base, const char* tree[], int treeLength);
 
-#endif

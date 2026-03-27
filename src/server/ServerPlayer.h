@@ -1,5 +1,4 @@
-#ifndef ServerPlayer_H__
-#define ServerPlayer_H__
+#pragma once
 
 #include "../world/entity/player/Player.h"
 #include "../world/inventory/BaseContainerMenu.h"
@@ -52,4 +51,3 @@ private:
 	int _containerCounter;
 };
 
-#endif /*ServerPlayer_H__*/

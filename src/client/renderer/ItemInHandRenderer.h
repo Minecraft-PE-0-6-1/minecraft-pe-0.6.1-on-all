@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__ItemInHandRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__ItemInHandRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -54,4 +53,3 @@ private:
 	RenderCall renderObjects[MaxNumRenderObjects];
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__ItemInHandRenderer_H__*/

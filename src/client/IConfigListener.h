@@ -1,5 +1,4 @@
-#ifndef CONFIGLISTENER_H__
-#define CONFIGLISTENER_H__
+#pragma once
 
 #include "PixelCalc.h"
 class Minecraft;
@@ -45,4 +44,3 @@ public:
     virtual void onConfigChanged(const Config& config) = 0;
 };
 
-#endif /*CONFIGLISTENER_H__*/

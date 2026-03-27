@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__ContainerSetContentPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__ContainerSetContentPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -41,4 +40,3 @@ public:
     std::vector<ItemInstance> items;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__ContainerSetContentPacket_H__*/

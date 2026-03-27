@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__TripodCameraRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__TripodCameraRenderer_H__
+#pragma once
 
 #include "EntityRenderer.h"
 #include "../TileRenderer.h"
@@ -26,4 +25,3 @@ private:
 	ModelPart cameraCube;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__TripodCameraRenderer_H__*/

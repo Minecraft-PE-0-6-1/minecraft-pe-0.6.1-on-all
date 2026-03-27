@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__EntityRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__EntityRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -37,4 +36,3 @@ protected:
 	static EntityRenderDispatcher* entityRenderDispatcher;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__EntityRenderer_H__*/

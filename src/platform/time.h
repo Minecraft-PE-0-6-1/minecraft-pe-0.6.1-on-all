@@ -1,5 +1,4 @@
-#ifndef TIME_H__
-#define TIME_H__
+#pragma once
 
 #include <string>
 #include <map>
@@ -108,4 +107,3 @@ private:
 	Stopwatch sw;
 };
 
-#endif /*TIME_H__*/

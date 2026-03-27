@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_PLAYER__Inventory_H__
-#define NET_MINECRAFT_WORLD_ENTITY_PLAYER__Inventory_H__
+#pragma once
 
 //package net.minecraft.world.entity.player;
 
@@ -41,4 +40,3 @@ protected:
 	int inventoryIds[INVENTORY_SIZE];
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_PLAYER__Inventory_H__*/

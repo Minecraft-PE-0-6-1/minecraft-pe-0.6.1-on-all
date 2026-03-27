@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL_GEOM__ModelPart_H__
-#define NET_MINECRAFT_CLIENT_MODEL_GEOM__ModelPart_H__
+#pragma once
 
 #include "../../renderer/gles.h"
 
@@ -71,4 +70,3 @@ private:
 	Model* model;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL_GEOM__ModelPart_H__*/

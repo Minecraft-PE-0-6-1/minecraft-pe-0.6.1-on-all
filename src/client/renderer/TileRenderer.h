@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__TileRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__TileRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -82,4 +81,3 @@ private:
 };
 
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__TileRenderer_H__*/

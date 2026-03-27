@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__MobSpawner_H__
-#define NET_MINECRAFT_WORLD_LEVEL__MobSpawner_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -38,4 +37,3 @@ private:
 	static std::map<ChunkPos, bool> chunksToPoll;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__MobSpawner_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_SOUND__SoundRepository_H__
-#define NET_MINECRAFT_CLIENT_SOUND__SoundRepository_H__
+#pragma once
 
 #include <map>
 #include <string>
@@ -56,4 +55,3 @@ private:
 	SoundMap map;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_SOUND__SoundRepository_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_CONTROL__Control_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_CONTROL__Control_H__
+#pragma once
 
 //package net.minecraft.world.entity->ai.control;
 
@@ -10,4 +9,3 @@ public:
     static const int JumpControlFlag = 4;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_CONTROL__Control_H__*/

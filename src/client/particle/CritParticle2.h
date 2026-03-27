@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__CritParticle2_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__CritParticle2_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -71,4 +70,3 @@ protected:
 	float oSize;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__CritParticle2_H__*/

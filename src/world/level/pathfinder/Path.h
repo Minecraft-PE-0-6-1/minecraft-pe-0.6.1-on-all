@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_PATHFINDER__Path_H__
-#define NET_MINECRAFT_WORLD_LEVEL_PATHFINDER__Path_H__
+#pragma once
 
 //package net.minecraft.world.level.pathfinder;
 
@@ -50,4 +49,3 @@ private:
 	static int p;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_PATHFINDER__Path_H__*/

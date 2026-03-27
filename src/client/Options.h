@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT__Options_H__
-#define NET_MINECRAFT_CLIENT__Options_H__
+#pragma once
 
 #define SOUND_MIN_VALUE 0.0f
 #define SOUND_MAX_VALUE 1.0f
@@ -163,4 +162,3 @@ private:
 	MinecraftClient& minecraft;
 };
 
-#endif /*NET_MINECRAFT_CLIENT__Options_H__*/

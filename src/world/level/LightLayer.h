@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_CHUNK__LightLayer_H__
-#define NET_MINECRAFT_WORLD_LEVEL_CHUNK__LightLayer_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -17,4 +16,3 @@ private:
 	{}
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_CHUNK__LightLayer_H__*/

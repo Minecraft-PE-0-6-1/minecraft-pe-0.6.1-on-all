@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__AddPaintingPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__AddPaintingPacket_H__
+#pragma once
 #include "../Packet.h"
 #include "../../world/entity/Painting.h"
 class AddPaintingPacket : public Packet {
@@ -45,4 +44,3 @@ public:
 	std::string motive;
 };
 
-#endif /* NET_MINECRAFT_NETWORK_PACKET__AddPaintingPacket_H__ */

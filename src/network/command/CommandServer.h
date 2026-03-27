@@ -1,5 +1,4 @@
-#ifndef COMMANDSERVER_H__
-#define COMMANDSERVER_H__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -74,4 +73,3 @@ private:
 	static const std::string Fail;
 };
 
-#endif /*COMMANDSERVER_H__*/

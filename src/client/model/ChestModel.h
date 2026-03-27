@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__ChestModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__ChestModel_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -49,4 +48,3 @@ public:
     ModelPart lock;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__ChestModel_H__*/

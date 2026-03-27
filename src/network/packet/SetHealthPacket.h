@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__SetHealthPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__SetHealthPacket_H__
+#pragma once
 
 #include "../Packet.h"
 
@@ -38,4 +37,3 @@ public:
 	int health;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__SetHealthPacket_H__*/

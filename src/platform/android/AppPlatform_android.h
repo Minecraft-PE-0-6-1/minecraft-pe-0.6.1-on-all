@@ -1,5 +1,4 @@
-#ifndef APPPLATFORM_ANDROID_H__
-#define APPPLATFORM_ANDROID_H__
+#pragma once
 
 #include <IPlatform.h>
 #include "client/renderer/gles.h"
@@ -651,4 +650,3 @@ public:
 	ANativeActivity* _nativeActivity;
 };
 
-#endif /*APPPLATFORM_ANDROID_H__*/

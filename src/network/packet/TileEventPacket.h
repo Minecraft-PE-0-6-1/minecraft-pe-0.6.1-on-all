@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__TileEventPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__TileEventPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -45,4 +44,3 @@ public:
     int b0, b1;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__TileEventPacket_H__*/

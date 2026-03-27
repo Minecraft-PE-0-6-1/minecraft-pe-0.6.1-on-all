@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__Motive_H__
-#define NET_MINECRAFT_WORLD_ENTITY__Motive_H__
+#pragma once
 #include <string>
 #include <vector>
 class Motive {
@@ -50,4 +49,3 @@ public:
 	static const Motive Water;
 };
 
-#endif /* NET_MINECRAFT_WORLD_ENTITY__Motive_H__ */

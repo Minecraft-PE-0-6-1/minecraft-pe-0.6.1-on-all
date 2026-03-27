@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_CULLING__FrustumCuller_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_CULLING__FrustumCuller_H__
+#pragma once
 
 //package net.minecraft.client.renderer.culling;
 
@@ -162,4 +161,3 @@ private:
 	}
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_CULLING__FrustumCuller_H__*/

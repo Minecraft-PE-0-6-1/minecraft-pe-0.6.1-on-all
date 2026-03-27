@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_CHUNK__EmptyLevelChunk_H__
-#define NET_MINECRAFT_WORLD_LEVEL_CHUNK__EmptyLevelChunk_H__
+#pragma once
 
 //package net.minecraft.world.level.chunk;
 
@@ -193,4 +192,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_CHUNK__EmptyLevelChunk_H__*/

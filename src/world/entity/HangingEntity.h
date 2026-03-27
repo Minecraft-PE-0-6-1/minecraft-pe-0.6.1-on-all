@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__HangingEntity_H__
-#define NET_MINECRAFT_WORLD_ENTITY__HangingEntity_H__
+#pragma once
 
 #include "Entity.h"
 class HangingEntity : public Entity {
@@ -33,4 +32,3 @@ private:
 	int checkInterval;
 };
 
-#endif /* NET_MINECRAFT_WORLD_ENTITY__HangingEntity_H__ */

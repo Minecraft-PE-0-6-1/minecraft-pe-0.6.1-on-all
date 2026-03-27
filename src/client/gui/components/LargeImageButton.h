@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__LargeImageButton_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__LargeImageButton_H__
+#pragma once
 
 #include "ImageButton.h"
 
@@ -18,4 +17,3 @@ private:
 	float _buttonScale;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__LargeImageButton_H__*/

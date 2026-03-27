@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__DialogDefinitions_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__DialogDefinitions_H__
+#pragma once
 
 class DialogDefinitions {
 public:
@@ -10,4 +9,3 @@ public:
     static const int DIALOG_DEMO_FEATURE_DISABLED = 98;
 };
 
-#endif /*#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__DialogDefinitions_H__*/

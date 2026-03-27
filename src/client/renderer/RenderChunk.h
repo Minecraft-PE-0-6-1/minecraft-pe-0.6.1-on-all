@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__RenderChunk_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__RenderChunk_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -21,4 +20,3 @@ private:
 	static int runningId;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__RenderChunk_H__*/

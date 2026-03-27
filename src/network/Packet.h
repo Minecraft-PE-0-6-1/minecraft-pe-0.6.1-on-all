@@ -1,5 +1,4 @@
-#ifndef _MINECRAFT_NETWORK_PACKET_H_
-#define _MINECRAFT_NETWORK_PACKET_H_
+#pragma once
 
 #include "NetEventCallback.h"
 
@@ -170,4 +169,3 @@ namespace PacketUtil {
 	ItemInstance readItemInstance(RakNet::BitStream* stream);
 }
 
-#endif

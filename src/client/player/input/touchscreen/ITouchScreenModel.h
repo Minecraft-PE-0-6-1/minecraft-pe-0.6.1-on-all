@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER__ITouchScreenModel_H__
-#define NET_MINECRAFT_CLIENT_PLAYER__ITouchScreenModel_H__
+#pragma once
 
 #include "../../../../platform/input/Mouse.h"
 
@@ -11,4 +10,3 @@ public:
 	virtual int getPointerId(int x, int y, int pid) { return pid; }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER__ITouchScreenModel_H__*/

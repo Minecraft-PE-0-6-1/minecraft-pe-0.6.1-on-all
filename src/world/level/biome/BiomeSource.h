@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_BIOME__BiomeSource_H__
-#define NET_MINECRAFT_WORLD_LEVEL_BIOME__BiomeSource_H__
+#pragma once
 
 //package net.minecraft.world.level.biome;
 
@@ -59,4 +58,3 @@ private:
 	static const float noiseScale;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_BIOME__BiomeSource_H__*/

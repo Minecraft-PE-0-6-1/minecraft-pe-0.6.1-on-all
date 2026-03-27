@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__ShovelItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__ShovelItem_H__
+#pragma once
 
 //package net.minecraft.world.item;
 
@@ -18,4 +17,3 @@ public:
     bool canDestroySpecial(const Tile* tile) const;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__ShovelItem_H__*/

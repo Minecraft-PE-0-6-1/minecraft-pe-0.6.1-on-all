@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__InventoryPane_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__InventoryPane_H__
+#pragma once
 
 #include "ScrollingPane.h"
 #include "ImageButton.h"
@@ -59,4 +58,3 @@ public:
 
 }
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__InventoryPane_H__*/

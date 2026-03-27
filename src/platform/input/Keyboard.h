@@ -1,5 +1,4 @@
-#ifndef KEYBOARD_H__
-#define KEYBOARD_H__
+#pragma once
 
 #include <vector>
 
@@ -139,4 +138,3 @@ private:
 	static bool _inited;
 };
 
-#endif//KEYBOARD_H__

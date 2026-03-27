@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__FlyingMob_H__
-#define NET_MINECRAFT_WORLD_ENTITY__FlyingMob_H__
+#pragma once
 
 //package net.minecraft.world.entity;
 
@@ -21,4 +20,3 @@ protected:
     void causeFallDamage(float distance);
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY__FlyingMob_H__*/

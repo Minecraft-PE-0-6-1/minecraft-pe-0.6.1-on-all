@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_ANIMAL__Chicken_H__
-#define NET_MINECRAFT_WORLD_ENTITY_ANIMAL__Chicken_H__
+#pragma once
 
 //package net.minecraft.world.entity.animal;
 
@@ -46,4 +45,3 @@ public:
 	int eggTime;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_ANIMAL__Chicken_H__*/

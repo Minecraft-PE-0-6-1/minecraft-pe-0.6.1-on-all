@@ -1,5 +1,4 @@
-#ifndef MULTITOUCH_H__
-#define MULTITOUCH_H__
+#pragma once
 
 #include "Mouse.h"
 #include "../log.h"
@@ -173,4 +172,3 @@ private:
 	static int _index;
 };
 
-#endif /*MULTITOUCH_H__*/

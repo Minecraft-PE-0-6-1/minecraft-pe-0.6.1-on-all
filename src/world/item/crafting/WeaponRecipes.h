@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM_CRAFTING__WeaponRecipes_H__
-#define NET_MINECRAFT_WORLD_ITEM_CRAFTING__WeaponRecipes_H__
+#pragma once
 
 //package net.minecraft.world.item.crafting;
 
@@ -12,4 +11,3 @@ public:
 	static void addRecipes( Recipes* r );
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM_CRAFTING__WeaponRecipes_H__*/

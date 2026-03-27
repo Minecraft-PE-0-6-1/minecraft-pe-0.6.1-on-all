@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__ContainerSetDataPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__ContainerSetDataPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -40,4 +39,3 @@ public:
     unsigned char containerId;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__ContainerSetDataPacket_H__*/

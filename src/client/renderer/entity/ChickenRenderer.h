@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__ChickenRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__ChickenRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -19,4 +18,3 @@ protected:
     float getBob(Mob* mob_, float a);
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__ChickenRenderer_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__Model_H__
-#define NET_MINECRAFT_CLIENT_MODEL__Model_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -45,4 +44,3 @@ private:
 	//Map<String, TexOffs> mappedTexOffs = new HashMap<String, TexOffs>();
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__Model_H__*/

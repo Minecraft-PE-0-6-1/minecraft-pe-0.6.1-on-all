@@ -1,5 +1,4 @@
-#ifndef COLLECTIONUTILS_H__
-#define COLLECTIONUTILS_H__
+#pragma once
 
 struct PairKeyFunctor {
     template <typename T>
@@ -14,4 +13,3 @@ struct PairValueFunctor {
     }
 };
 
-#endif /*COLLECTIONUTILS_H__*/

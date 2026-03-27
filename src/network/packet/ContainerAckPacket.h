@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__ContainerAckPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__ContainerAckPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -40,4 +39,3 @@ public:
     bool accepted;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__ContainerAckPacket_H__*/

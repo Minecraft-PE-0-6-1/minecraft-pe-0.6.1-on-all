@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__EntityTileRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__EntityTileRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -18,4 +17,3 @@ public:
     ChestTileEntity chest;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__EntityTileRenderer_H__*/

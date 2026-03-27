@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__Font_H__
-#define NET_MINECRAFT_CLIENT_GUI__Font_H__
+#pragma once
 
 //package net.minecraft.client.gui;
 
@@ -60,4 +59,3 @@ private:
 	unsigned char _charOffset;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__Font_H__*/

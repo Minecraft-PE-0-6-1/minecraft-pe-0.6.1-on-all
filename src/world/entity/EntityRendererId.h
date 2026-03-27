@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__EntityRendererId_H__
-#define NET_MINECRAFT_WORLD_ENTITY__EntityRendererId_H__
+#pragma once
 
 enum EntityRendererId {
     ER_DEFAULT_RENDERER,
@@ -25,4 +24,3 @@ enum EntityRendererId {
     ER_FALLINGTILE_RENDERER
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY__EntityRendererId_H__*/

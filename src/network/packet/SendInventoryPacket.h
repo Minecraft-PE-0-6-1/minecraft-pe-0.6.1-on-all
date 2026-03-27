@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__SendInventoryPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__SendInventoryPacket_H__
+#pragma once
 
 #include "../Packet.h"
 
@@ -66,4 +65,3 @@ public:
     static const int NumArmorItems = 4;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__SendInventoryPacket_H__*/

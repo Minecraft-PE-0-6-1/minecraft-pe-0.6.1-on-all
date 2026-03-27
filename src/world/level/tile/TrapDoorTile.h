@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__TrapDoorTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__TrapDoorTile_H__
+#pragma once
 
 #include "Tile.h"
 class TrapDoorTile : public Tile {
@@ -33,4 +32,3 @@ public:
 	static bool attachesTo(int id);
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__TrapDoorTile_H__ */

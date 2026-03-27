@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__EntityTypes_H__
-#define NET_MINECRAFT_WORLD_ENTITY__EntityTypes_H__
+#pragma once
 
 #include "../../util/Mth.h"
 
@@ -126,4 +125,3 @@ public:
 
 */
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY__EntityTypes_H__*/

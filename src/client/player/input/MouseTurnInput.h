@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER_INPUT_MouseTurnInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER_INPUT_MouseTurnInput_H__
+#pragma once
 
 #include "ITurnInput.h"
 #include "../../../platform/input/Mouse.h"
@@ -40,4 +39,3 @@ private:
 	float _centerY;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER_INPUT_MouseTurnInput_H__*/

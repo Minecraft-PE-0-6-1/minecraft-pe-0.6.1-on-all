@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER__LocalPlayer_H__
-#define NET_MINECRAFT_CLIENT_PLAYER__LocalPlayer_H__
+#pragma once
 
 //package net.minecraft.client.player;
 
@@ -107,4 +106,3 @@ public:
 	void setSprinting(bool sprint) { sprinting = sprint; }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER__LocalPlayer_H__*/

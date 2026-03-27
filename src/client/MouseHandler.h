@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT__MouseHandler_H__
-#define NET_MINECRAFT_CLIENT__MouseHandler_H__
+#pragma once
 
 //package net.minecraft.client;
 
@@ -25,4 +24,3 @@ private:
 	ITurnInput* _turnInput;
 };
 
-#endif /*NET_MINECRAFT_CLIENT__MouseHandler_H__*/

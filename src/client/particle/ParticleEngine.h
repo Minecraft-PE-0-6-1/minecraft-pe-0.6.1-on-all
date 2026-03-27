@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__ParticleEngine_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__ParticleEngine_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -51,4 +50,3 @@ private:
     Random random;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__ParticleEngine_H__*/

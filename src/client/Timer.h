@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT__Timer_H__
-#define NET_MINECRAFT_CLIENT__Timer_H__
+#pragma once
 
 //package net.minecraft.client;
 #include "../platform/time.h"
@@ -121,4 +120,3 @@ private:
 	float adjustTime;
 };
 
-#endif /*NET_MINECRAFT_CLIENT__Timer_H__*/

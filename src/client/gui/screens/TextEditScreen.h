@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__TextEditScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__TextEditScreen_H__
+#pragma once
 
 //package net.minecraft.client.gui;
 
@@ -32,4 +31,3 @@ private:
 	ImageButton btnClose;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__TextEditScreen_H__*/

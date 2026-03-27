@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__Explosion_H__
-#define NET_MINECRAFT_WORLD_LEVEL__Explosion_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -35,4 +34,3 @@ private:
 
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__Explosion_H__*/

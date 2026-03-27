@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_SharedConstants_H__
-#define NET_MINECRAFT_SharedConstants_H__
+#pragma once
 
 #include <string>
 
@@ -31,4 +30,3 @@ namespace SharedConstants
 	//int FULLBRIGHT_LIGHTVALUE = 15 << 20 | 15 << 4;
 }
 
-#endif /*NET_MINECRAFT_SharedConstants_H__*/

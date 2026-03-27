@@ -1,5 +1,4 @@
-#ifndef COM_MOJANG_NBT__ListTag_H__
-#define COM_MOJANG_NBT__ListTag_H__
+#pragma once
 
 //package com.mojang.nbt;
 
@@ -168,4 +167,3 @@ public:
 	ListTag* tag;
 };
 
-#endif /*COM_MOJANG_NBT__ListTag_H__*/

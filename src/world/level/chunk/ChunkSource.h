@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_CHUNK__ChunkSource_H__
-#define NET_MINECRAFT_WORLD_LEVEL_CHUNK__ChunkSource_H__
+#pragma once
 
 //package net.minecraft.world.level.chunk;
 
@@ -43,4 +42,3 @@ public:
     virtual std::string gatherStats() = 0;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_CHUNK__ChunkSource_H__*/

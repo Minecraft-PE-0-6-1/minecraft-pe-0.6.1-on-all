@@ -1,5 +1,4 @@
-#ifndef __RAKNET_DEFINES_H
-#define __RAKNET_DEFINES_H
+#pragma once
 
 // If you want to change these defines, put them in RakNetDefinesOverrides so your changes are not lost when updating RakNet
 // The user should not edit this file
@@ -166,4 +165,3 @@
 
 //#define USE_THREADED_SEND
 
-#endif // __RAKNET_DEFINES_H

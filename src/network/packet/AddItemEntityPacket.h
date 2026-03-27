@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__AddItemEntityPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__AddItemEntityPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -75,4 +74,3 @@ private:
 	signed char _xa, _ya, _za;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__AddItemEntityPacket_H__*/

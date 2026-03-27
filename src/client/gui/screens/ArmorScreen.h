@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__ArmorScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__ArmorScreen_H__
+#pragma once
 
 #include "BaseContainerScreen.h"
 
@@ -76,4 +75,3 @@ private:
 	Player* player;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__ArmorScreen_H__*/

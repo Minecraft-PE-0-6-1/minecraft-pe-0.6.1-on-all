@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_INVENTORY__BaseContainerMenu_H__
-#define NET_MINECRAFT_WORLD_INVENTORY__BaseContainerMenu_H__
+#pragma once
 
 //package net.minecraft.world.inventory;
 
@@ -44,4 +43,3 @@ public:
 	ItemList lastSlots;
 };
 
-#endif /*NET_MINECRAFT_WORLD_INVENTORY__BaseContainerMenu_H__*/

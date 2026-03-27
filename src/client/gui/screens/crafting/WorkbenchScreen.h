@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS_CRAFT_WorkbenchScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS_CRAFT_WorkbenchScreen_H__
+#pragma once
 
 #include "PaneCraftingScreen.h"
 
@@ -14,4 +13,3 @@ private:
 	bool filterRecipe(const Recipe& r);
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS_CRAFT_WorkbenchScreen_H__*/

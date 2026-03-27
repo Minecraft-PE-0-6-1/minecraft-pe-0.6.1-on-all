@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__TickNextTickData_H__
-#define NET_MINECRAFT_WORLD_LEVEL__TickNextTickData_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -22,4 +21,3 @@ public:
 	TickNextTickData* setDelay(long l);
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__TickNextTickData_H__*/

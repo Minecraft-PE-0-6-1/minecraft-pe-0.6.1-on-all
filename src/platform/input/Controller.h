@@ -1,5 +1,4 @@
-#ifndef CONTROLLER_H__
-#define CONTROLLER_H__
+#pragma once
 
 #include "../log.h"
 
@@ -30,4 +29,3 @@ private:
 	static bool isTouchedValues[NUM_STICKS];
 };
 
-#endif /*CONTROLLER_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__CameraItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__CameraItem_H__
+#pragma once
 
 #include "Item.h"
 #include "ItemInstance.h"
@@ -23,4 +22,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__CameraItem_H__*/

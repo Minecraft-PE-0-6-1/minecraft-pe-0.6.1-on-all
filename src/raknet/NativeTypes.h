@@ -1,5 +1,4 @@
-#ifndef __NATIVE_TYPES_H
-#define __NATIVE_TYPES_H
+#pragma once
 
 #if defined(__GNUC__) || defined(__GCCXML__) || defined(__SNC__) || defined(__S3E__)
 #include <stdint.h>
@@ -20,4 +19,3 @@
 #endif
 
 
-#endif

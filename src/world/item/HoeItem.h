@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__HoeItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__HoeItem_H__
+#pragma once
 
 #include "Item.h"
 class HoeItem : public Item
@@ -14,4 +13,3 @@ protected:
 	Tier tier;
 };
 
-#endif /* NET_MINECRAFT_WORLD_ITEM__HoeItem_H__ */

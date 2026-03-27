@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__TntRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__TntRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -15,4 +14,3 @@ public:
 	TileRenderer tileRenderer;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__TntRenderer_H__*/

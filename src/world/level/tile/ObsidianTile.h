@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__ObsidianTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__ObsidianTile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -57,4 +56,3 @@ private:
     }*/
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__ObsidianTile_H__*/

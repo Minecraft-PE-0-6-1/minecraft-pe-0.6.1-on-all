@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__HumanoidMobRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__HumanoidMobRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -28,4 +27,3 @@ private:
 	// i guess ill keep this just in case seomthing breaks
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__HumanoidMobRenderer_H__*/

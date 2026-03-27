@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER__IMoveInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER__IMoveInput_H__
+#pragma once
 
 //package net.minecraft.client.player;
 
@@ -44,4 +43,3 @@ public:
 	bool isChangingFlightHeight;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER__IMoveInput_H__*/

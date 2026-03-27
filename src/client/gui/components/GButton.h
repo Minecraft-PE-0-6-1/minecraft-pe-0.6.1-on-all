@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__GButton_H__
-#define NET_MINECRAFT_CLIENT_GUI__GButton_H__
+#pragma once
 #include "Button.h"
 
 class GButton: public Button {
@@ -52,4 +51,3 @@ private:
 };
 
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__GButton_H__*/

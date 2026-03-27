@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__AddPlayerPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__AddPlayerPacket_H__
+#pragma once
 
 #include "../Packet.h"
 #include "../../world/entity/player/Player.h"
@@ -90,4 +89,3 @@ private:
 	const SynchedEntityData* _entityData;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__AddPlayerPacket_H__*/

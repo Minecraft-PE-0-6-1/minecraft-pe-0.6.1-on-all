@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_DIMENSION__Dimension_H__
-#define NET_MINECRAFT_WORLD_LEVEL_DIMENSION__Dimension_H__
+#pragma once
 
 //package net.minecraft.world.level.dimension;
 
@@ -61,4 +60,3 @@ public:
 	static Dimension* createDefaultDimension(LevelData* data);
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_DIMENSION__Dimension_H__*/

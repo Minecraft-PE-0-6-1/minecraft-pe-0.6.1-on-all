@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER_INPUT_TOUCHSCREEN_TouchInputHolder_H__
-#define NET_MINECRAFT_CLIENT_PLAYER_INPUT_TOUCHSCREEN_TouchInputHolder_H__
+#pragma once
 
 #include "../IInputHolder.h"
 #include "TouchscreenInput.h"
@@ -468,4 +467,3 @@ private:
 	static const int MovementLimit = 200; // per update
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER_INPUT_TOUCHSCREEN_TouchInputHolder_H__*/

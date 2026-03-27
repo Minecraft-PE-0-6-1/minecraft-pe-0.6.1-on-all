@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__GuiElementContainer_H__
-#define NET_MINECRAFT_CLIENT_GUI__GuiElementContainer_H__
+#pragma once
 #include "GuiElement.h"
 #include <vector>
 class Tesselator;
@@ -25,4 +24,3 @@ protected:
 	std::vector<GuiElement*> children;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__GuiElementContainer_H__*/

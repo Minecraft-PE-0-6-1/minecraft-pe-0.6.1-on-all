@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__Painting_H__
-#define NET_MINECRAFT_WORLD_ENTITY__Painting_H__
+#pragma once
 #include "Motive.h"
 #include "HangingEntity.h"
 class Painting : public HangingEntity {
@@ -24,4 +23,3 @@ public:
 	const Motive* motive;
 };
 
-#endif /* NET_MINECRAFT_WORLD_ENTITY__Painting_H__ */

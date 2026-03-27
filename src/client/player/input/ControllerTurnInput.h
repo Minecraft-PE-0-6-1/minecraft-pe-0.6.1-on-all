@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER_INPUT_ControllerTurnInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER_INPUT_ControllerTurnInput_H__
+#pragma once
 
 #include "ITurnInput.h"
 #include "../../../platform/input/Controller.h"
@@ -66,4 +65,3 @@ private:
 	bool wasActive;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER_INPUT_ControllerTurnInput_H__*/

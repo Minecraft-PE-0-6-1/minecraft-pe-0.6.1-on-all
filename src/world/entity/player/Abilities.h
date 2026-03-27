@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_PLAYER__Abilities_H__
-#define NET_MINECRAFT_WORLD_ENTITY_PLAYER__Abilities_H__
+#pragma once
 
 //package net.minecraft.world.entity.player;
 
@@ -44,4 +43,3 @@ public:
     bool instabuild;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_PLAYER__Abilities_H__*/

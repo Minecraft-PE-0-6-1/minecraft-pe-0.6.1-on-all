@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_STORAGE__RegionFile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_STORAGE__RegionFile_H__
+#pragma once
 
 #include <map>
 #include <string>
@@ -28,4 +27,3 @@ private:
 };
 
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_STORAGE__RegionFile_H__*/

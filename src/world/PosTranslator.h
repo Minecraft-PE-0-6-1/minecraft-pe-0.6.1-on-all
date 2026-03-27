@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_PosTranslator_H__
-#define NET_MINECRAFT_WORLD_PosTranslator_H__
+#pragma once
 
 //package net.minecraft;
 
@@ -33,4 +32,3 @@ public:
 	float xo, yo, zo;
 };
 
-#endif /*NET_MINECRAFT_WORLD_PosTranslator_H__*/

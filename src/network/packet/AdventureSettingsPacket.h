@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__AdventureSettingsPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__AdventureSettingsPacket_H__
+#pragma once
 
 #include "../Packet.h"
 #include "../../world/level/Level.h"
@@ -64,4 +63,3 @@ public:
 	bool isSet(Flags flag) const { return (flags & flag) != 0; }
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__AdventureSettingsPacket_H__*/

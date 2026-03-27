@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__HangingEntityItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__HangingEntityItem_H__
+#pragma once
 #include "Item.h"
 class HangingEntity;
 class HangingEntityItem : public Item {
@@ -13,4 +12,3 @@ private:
 	int entityType;
 };
 
-#endif /* NET_MINECRAFT_WORLD_ITEM__HangingEntityItem_H__ */

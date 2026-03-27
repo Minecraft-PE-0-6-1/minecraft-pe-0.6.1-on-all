@@ -1,5 +1,4 @@
-#ifndef SoundSystem_H__
-#define SoundSystem_H__
+#pragma once
 
 #include "../../world/level/tile/Tile.h"
 #include <string>
@@ -26,4 +25,3 @@ public:
 	virtual void playAt(const SoundDesc& desc, float x, float y, float z, float volume, float pitch){}
 };
 
-#endif /*SoundSystem_H__ */

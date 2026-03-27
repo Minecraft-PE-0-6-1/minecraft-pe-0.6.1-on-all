@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__TntTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__TntTile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -66,4 +65,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__TntTile_H__*/

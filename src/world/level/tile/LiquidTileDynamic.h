@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__LiquidTileDynamic_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__LiquidTileDynamic_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -227,4 +226,3 @@ private:
     int dist[NumDirections];
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__LiquidTileDynamic_H__*/

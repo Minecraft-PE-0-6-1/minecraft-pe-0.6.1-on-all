@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__ScreenChooser_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__ScreenChooser_H__
+#pragma once
 
 enum ScreenId {
 	SCREEN_NONE,
@@ -27,4 +26,3 @@ private:
 	MinecraftClient& _mc;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__ScreenChooser_H__*/

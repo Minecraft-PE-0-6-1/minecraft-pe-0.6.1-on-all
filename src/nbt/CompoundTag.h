@@ -1,5 +1,4 @@
-#ifndef COM_MOJANG_NBT__CompoundTag_H__
-#define COM_MOJANG_NBT__CompoundTag_H__
+#pragma once
 
 //package com.mojang.nbt;
 
@@ -239,4 +238,3 @@ private:
      TagMap tags;
 };
 
-#endif /*COM_MOJANG_NBT__CompoundTag_H__*/

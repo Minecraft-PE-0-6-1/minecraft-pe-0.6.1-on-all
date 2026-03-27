@@ -1,5 +1,4 @@
-#ifndef EGLCONFIGPRINTER_H__
-#define EGLCONFIGPRINTER_H__
+#pragma once
 
 #include <cstdio>
 #include <string>
@@ -122,4 +121,3 @@ public:
     }
 };
 
-#endif /*EGLCONFIGPRINTER_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__ScrollingPane_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__ScrollingPane_H__
+#pragma once
 
 #include "../GuiComponent.h"
 #include "ImageButton.h"
@@ -200,4 +199,3 @@ private:
 	float _ly;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__ScrollingPane_H__*/

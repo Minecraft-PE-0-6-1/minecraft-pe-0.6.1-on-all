@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_ANIMAL__WaterAnimal_H__
-#define NET_MINECRAFT_WORLD_ENTITY_ANIMAL__WaterAnimal_H__
+#pragma once
 
 //package net.minecraft.world.entity.animal;
 
@@ -43,4 +42,3 @@ protected:
     int getExperienceReward(Player* killedBy);
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_ANIMAL__WaterAnimal_H__*/

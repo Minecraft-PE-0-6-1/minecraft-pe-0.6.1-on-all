@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__DungeonFeature_H__
-#define NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__DungeonFeature_H__
+#pragma once
 
 #if 0
 
@@ -20,4 +19,3 @@ class DungeonFeature: public LargeFeature {
 };
 
 #endif
-#endif /*NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__DungeonFeature_H__*/

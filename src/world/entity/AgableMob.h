@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__AgableMob_H__
-#define NET_MINECRAFT_WORLD_ENTITY__AgableMob_H__
+#pragma once
 
 #include "PathfinderMob.h"
 
@@ -27,4 +26,3 @@ private:
 	static const int DATAFLAG_ISBABY = 0;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY__AgableMob_H__*/

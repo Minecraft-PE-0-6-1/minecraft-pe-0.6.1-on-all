@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_PROJECTILE__ThrownEgg_H__
-#define NET_MINECRAFT_WORLD_ENTITY_PROJECTILE__ThrownEgg_H__
+#pragma once
 
 //package net.minecraft.world.entity->projectile;
 
@@ -60,4 +59,3 @@ protected:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_PROJECTILE__ThrownEgg_H__*/

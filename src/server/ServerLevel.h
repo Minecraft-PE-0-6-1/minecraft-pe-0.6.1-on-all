@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__ServerLevel_H__
-#define NET_MINECRAFT_WORLD_LEVEL__ServerLevel_H__
+#pragma once
 
 #include "../world/level/Level.h"
 
@@ -17,4 +16,3 @@ protected:
 	bool allPlayersAreSleeping;
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL__ServerLevel_H__ */

@@ -1,5 +1,4 @@
-#ifndef _MINECRAFT_NETWORK_CLIENTSIDENETWORKHANDLER_H_
-#define _MINECRAFT_NETWORK_CLIENTSIDENETWORKHANDLER_H_
+#pragma once
 
 
 #include "NetEventCallback.h"
@@ -104,4 +103,3 @@ private:
 	bool chunksLoaded[NumRequestChunks];
 };
 
-#endif

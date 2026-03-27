@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_CULLING__Culler_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_CULLING__Culler_H__
+#pragma once
 
 //package net.minecraft.client.renderer.culling;
 
@@ -19,4 +18,3 @@ public:
 	virtual void prepare(float xOff, float yOff, float zOff) {}
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_CULLING__Culler_H__*/

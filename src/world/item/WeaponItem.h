@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__WeaponItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__WeaponItem_H__
+#pragma once
 
 //package net.minecraft.world.item;
 
@@ -79,4 +78,3 @@ private:
     const Tier& tier;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__WeaponItem_H__*/

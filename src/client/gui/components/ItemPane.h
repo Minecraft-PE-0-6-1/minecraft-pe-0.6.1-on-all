@@ -1,5 +1,4 @@
-#ifndef ITEMPANE_H__
-#define ITEMPANE_H__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -92,4 +91,3 @@ public:
 	NinePatchLayer* guiSlotItemSelected;
 };
 
-#endif /*ITEMPANE_H__*/

@@ -1,5 +1,4 @@
-#ifndef _MINECRAFT_NETWORK_RAKNETINSTANCE_H_
-#define _MINECRAFT_NETWORK_RAKNETINSTANCE_H_
+#pragma once
 
 #include <vector>
 #include <string>
@@ -115,4 +114,3 @@ private:
 	bool _isLoggedIn;
 };
 
-#endif /*_MINECRAFT_NETWORK_RAKNETINSTANCE_H_*/

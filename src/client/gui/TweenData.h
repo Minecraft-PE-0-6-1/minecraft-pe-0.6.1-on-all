@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__TweenData_H__
-#define NET_MINECRAFT_CLIENT_GUI__TweenData_H__
+#pragma once
 
 typedef struct TweenData {
 	float cur;
@@ -8,4 +7,3 @@ typedef struct TweenData {
 	float stop;
 } TweenData;
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__TweenData_H__*/

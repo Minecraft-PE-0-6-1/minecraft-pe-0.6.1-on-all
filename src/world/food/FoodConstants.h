@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_FOOD__FoodConstants_H__
-#define NET_MINECRAFT_WORLD_FOOD__FoodConstants_H__
+#pragma once
 
 //package net.minecraft.world.food;
 
@@ -13,4 +12,3 @@ public:
     static const int HEAL_LEVEL = 18;
 };
 
-#endif /*NET_MINECRAFT_WORLD_FOOD__FoodConstants_H__*/

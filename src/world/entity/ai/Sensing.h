@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_SENSING__Sensing_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_SENSING__Sensing_H__
+#pragma once
 
 //package net.minecraft.world.entity.ai.sensing;
 
@@ -35,4 +34,3 @@ private:
     EntitySet unseen;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_SENSING__Sensing_H__*/

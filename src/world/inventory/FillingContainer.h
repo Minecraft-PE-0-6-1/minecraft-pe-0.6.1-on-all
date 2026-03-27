@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_INVENTORY__FILLINGCONTAINER_H__
-#define NET_MINECRAFT_WORLD_INVENTORY__FILLINGCONTAINER_H__
+#pragma once
 
 #include "../Container.h"
 
@@ -104,4 +103,3 @@ protected:
 	bool _isCreative;
 };
 
-#endif /*NET_MINECRAFT_WORLD_INVENTORY__FILLINGCONTAINER_H__*/

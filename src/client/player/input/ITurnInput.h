@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER__ITurnInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER__ITurnInput_H__
+#pragma once
 
 #include "../../../platform/time.h"
 #include "../../IConfigListener.h"
@@ -49,4 +48,3 @@ private:
 	float _lastTime;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER__ITurnInput_H__*/

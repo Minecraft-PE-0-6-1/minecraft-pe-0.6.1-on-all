@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_CHUNK_STORAGE__MemoryChunkStorage_H__
-#define NET_MINECRAFT_WORLD_LEVEL_CHUNK_STORAGE__MemoryChunkStorage_H__
+#pragma once
 
 //package net.minecraft.world.level.chunk.storage;
 
@@ -7,4 +6,3 @@
 
 class MemoryChunkStorage: public ChunkStorage {};
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_CHUNK_STORAGE__MemoryChunkStorage_H__*/

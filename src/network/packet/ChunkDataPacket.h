@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__ChunkDataPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__ChunkDataPacket_H__
+#pragma once
 
 #include "../Packet.h"
 #include "../../world/level/chunk/LevelChunk.h"
@@ -74,4 +73,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__ChunkDataPacket_H__*/

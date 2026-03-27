@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__NinePatch_H__
-#define NET_MINECRAFT_CLIENT_GUI__NinePatch_H__
+#pragma once
 
 #include "ImageButton.h"
 #include "../../renderer/TextureData.h"
@@ -75,4 +74,3 @@ private:
 	int height;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__NinePatch_H__*/

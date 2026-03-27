@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM_CRAFTING__Recipes_H__
-#define NET_MINECRAFT_WORLD_ITEM_CRAFTING__Recipes_H__
+#pragma once
 
 //package net.minecraft.world.item.crafting;
 
@@ -95,4 +94,3 @@ Recipes::TypeList definition(char c0, T t, char c1, U u, char c2, V v, char c3, 
 }
 
 
-#endif /*NET_MINECRAFT_WORLD_ITEM_CRAFTING__Recipes_H__*/

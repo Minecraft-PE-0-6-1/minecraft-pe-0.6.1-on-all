@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__Mushroom_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__Mushroom_H__
+#pragma once
 
 #include "Bush.h"
 
@@ -17,4 +16,3 @@ public:
     bool canSurvive(Level* level, int x, int y, int z);
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__Mushroom_H__ */

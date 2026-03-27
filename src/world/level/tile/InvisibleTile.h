@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__InvisibleTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__InvisibleTile_H__
+#pragma once
 
 #include "Tile.h"
 
@@ -18,4 +17,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__InvisibleTile_H__*/

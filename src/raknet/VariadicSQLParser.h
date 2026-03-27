@@ -1,5 +1,4 @@
-#ifndef __VARIADIC_SQL_PARSER_H
-#define __VARIADIC_SQL_PARSER_H
+#pragma once
 
 #include "DS_List.h"
 
@@ -21,4 +20,3 @@ namespace VariadicSQLParser
 }
 
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__MelonTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__MelonTile_H__
+#pragma once
 #include "Tile.h"
 class MelonTile : public Tile {
 	typedef Tile super;
@@ -14,4 +13,3 @@ private:
 	static const int TEX_TOP = 9 + 8 * 16;
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__MelonTile_H__ */

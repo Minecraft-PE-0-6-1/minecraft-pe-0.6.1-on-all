@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__VertexDecl_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__VertexDecl_H__
+#pragma once
 
 typedef struct VertexDeclPTC
 {
@@ -18,4 +17,3 @@ typedef struct VertexDeclPTCN
 
 } VertexDeclPTCN;
 
-#endif /*#ifndef NET_MINECRAFT_CLIENT_RENDERER__VertexDecl_H__ */

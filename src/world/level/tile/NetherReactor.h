@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__NetherReactor_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__NetherReactor_H__
+#pragma once
 
 #include "EntityTile.h"
 
@@ -16,4 +15,3 @@ public:
 	bool allPlayersCloseToReactor( Level* level, int x, int y, int z );
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__NetherReactor_H__ */

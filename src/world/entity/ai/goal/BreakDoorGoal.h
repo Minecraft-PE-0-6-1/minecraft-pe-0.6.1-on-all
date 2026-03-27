@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__BreakDoorGoal_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__BreakDoorGoal_H__
+#pragma once
 
 //package net.minecraft.world.entity->ai.goal;
 
@@ -54,4 +53,3 @@ private:
     int breakTime;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__BreakDoorGoal_H__*/

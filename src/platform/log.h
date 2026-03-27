@@ -1,5 +1,4 @@
-#ifndef LOG_H__
-#define LOG_H__
+#pragma once
 
 #ifdef __cplusplus
 	#include <cstdio>
@@ -44,4 +43,3 @@
 	#define LOGVV(fmt, ...) __LOG_PUBLISH(__VA_ARGS__)
 #endif
 
-#endif /*LOG_H__*/

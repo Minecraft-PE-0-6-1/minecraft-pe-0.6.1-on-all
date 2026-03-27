@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_STORAGE__PlayerData_H__
-#define NET_MINECRAFT_WORLD_LEVEL_STORAGE__PlayerData_H__
+#pragma once
 
 #include "../../entity/player/Player.h"
 #include "../../entity/player/Inventory.h"
@@ -63,4 +62,3 @@ public:
 	int inventorySlots[Inventory::MAX_SELECTION_SIZE];
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_STORAGE__PlayerData_H__*/

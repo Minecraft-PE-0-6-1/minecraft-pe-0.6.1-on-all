@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__RespawnPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__RespawnPacket_H__
+#pragma once
 
 #include "../Packet.h"
 
@@ -44,4 +43,3 @@ public:
 	int entityId;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__RespawnPacket_H__*/

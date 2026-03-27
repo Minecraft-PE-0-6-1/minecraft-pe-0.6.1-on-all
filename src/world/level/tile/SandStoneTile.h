@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__SandStoneTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__SandStoneTile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -34,4 +33,3 @@ public:
 	static const int TYPE_SMOOTHSIDE  = 2;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__SandStoneTile_H__*/

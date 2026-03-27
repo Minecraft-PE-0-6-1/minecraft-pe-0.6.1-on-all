@@ -1,5 +1,4 @@
-#ifndef __RAK_STRING_H
-#define __RAK_STRING_H 
+#pragma once
 
 #include "Export.h"
 #include "DS_List.h"
@@ -304,4 +303,3 @@ protected:
 const RakNet::RakString RAK_DLL_EXPORT operator+(const RakNet::RakString &lhs, const RakNet::RakString &rhs);
 
 
-#endif

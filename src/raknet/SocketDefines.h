@@ -1,5 +1,4 @@
-#ifndef __SOCKET_DEFINES_H
-#define __SOCKET_DEFINES_H
+#pragma once
 
 /// Internal
 
@@ -66,4 +65,3 @@
 #define WSASendTo__ WSASendTo
 
 
-#endif

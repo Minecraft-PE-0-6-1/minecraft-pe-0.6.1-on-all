@@ -1,5 +1,4 @@
-#ifndef MEMUTILS_H__
-#define MEMUTILS_H__
+#pragma once
 
 template <class T>
 class Ref {
@@ -32,4 +31,3 @@ private:
 	short _count;
 };
 
-#endif /*MEMUTILS_H__*/

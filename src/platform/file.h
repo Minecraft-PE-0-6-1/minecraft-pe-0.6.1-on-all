@@ -1,5 +1,4 @@
-#ifndef FILE_H__
-#define FILE_H__
+#pragma once
 
 bool DeleteDirectory(const std::string&, bool noRecycleBin = true);
 
@@ -65,4 +64,3 @@ bool DeleteDirectory(const std::string& d, bool noRecycleBin /*true*/)
 
 #endif /*(ELSE) WIN32*/
 
-#endif /*FILE_H__*/

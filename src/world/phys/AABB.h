@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_PHYS__AABB_H__
-#define NET_MINECRAFT_WORLD_PHYS__AABB_H__
+#pragma once
 
 //package net.minecraft.world.phys;
 
@@ -246,4 +245,3 @@ public:
 	float x1, y1, z1;
 };
 
-#endif /*NET_MINECRAFT_WORLD_PHYS__AABB_H__*/

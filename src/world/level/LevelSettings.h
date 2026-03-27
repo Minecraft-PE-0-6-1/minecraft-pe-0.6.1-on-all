@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__LevelSettings_H__
-#define NET_MINECRAFT_WORLD_LEVEL__LevelSettings_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -61,4 +60,3 @@ private:
     const bool allowCheats;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__LevelSettings_H__*/

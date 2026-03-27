@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_CULLING__AllowAllCuller_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_CULLING__AllowAllCuller_H__
+#pragma once
 
 //package net.minecraft.client.renderer.culling;
 
@@ -26,4 +25,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_CULLING__AllowAllCuller_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_MONSTER__PigZombie_H__
-#define NET_MINECRAFT_WORLD_ENTITY_MONSTER__PigZombie_H__
+#pragma once
 
 #include "Zombie.h"
 class ItemInstance;
@@ -35,4 +34,3 @@ private:
 	ItemInstance weapon;
 };
 
-#endif /* NET_MINECRAFT_WORLD_ENTITY_MONSTER__PigZombie_H__ */

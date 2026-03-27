@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT__OptionStrings_H__
-#define NET_MINECRAFT_CLIENT__OptionStrings_H__
+#pragma once
 
 class OptionStrings {
 public:
@@ -33,4 +32,3 @@ public:
 
 };
 
-#endif /*NET_MINECRAFT_CLIENT__OptionsStrings_H__*/

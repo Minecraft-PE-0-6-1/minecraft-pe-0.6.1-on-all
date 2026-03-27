@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__SpiderModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__SpiderModel_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -165,4 +164,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__SpiderModel_H__*/

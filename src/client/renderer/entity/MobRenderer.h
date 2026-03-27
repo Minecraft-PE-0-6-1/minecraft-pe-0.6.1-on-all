@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__MobRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__MobRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -48,4 +47,3 @@ private:
 	Model* armor;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__MobRenderer_H__*/

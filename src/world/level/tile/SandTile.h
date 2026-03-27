@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__SandTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__SandTile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -54,4 +53,3 @@ private:
     void checkSlide(Level* level, int x, int y, int z);
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__SandTile_H__*/

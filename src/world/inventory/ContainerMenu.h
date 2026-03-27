@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_INVENTORY__ContainerMenu_H__
-#define NET_MINECRAFT_WORLD_INVENTORY__ContainerMenu_H__
+#pragma once
 
 //package net.minecraft.world.inventory;
 
@@ -27,4 +26,3 @@ protected:
 	int tileEntityId;
 };
 
-#endif /*NET_MINECRAFT_WORLD_INVENTORY__ContainerMenu_H__*/

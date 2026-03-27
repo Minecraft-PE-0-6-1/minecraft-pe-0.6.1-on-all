@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__MobFactory_H__
-#define NET_MINECRAFT_WORLD_ENTITY__MobFactory_H__
+#pragma once
 
 #include "EntityTypes.h"
 #include "animal/AnimalInclude.h"
@@ -87,4 +86,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY__MobFactory_H__*/

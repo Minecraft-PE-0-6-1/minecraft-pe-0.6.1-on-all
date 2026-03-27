@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__PlayerRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__PlayerRenderer_H__
+#pragma once
 
 #include "HumanoidMobRenderer.h"
 
@@ -27,4 +26,3 @@ private:
 };
 
 
-#endif /* NET_MINECRAFT_CLIENT_RENDERER_ENTITY__PlayerRenderer_H__ */

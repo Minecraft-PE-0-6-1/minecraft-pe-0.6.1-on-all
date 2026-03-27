@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__DistanceChunkSorter_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__DistanceChunkSorter_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -24,4 +23,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__DistanceChunkSorter_H__*/

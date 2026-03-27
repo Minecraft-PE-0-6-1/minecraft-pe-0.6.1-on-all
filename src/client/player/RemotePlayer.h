@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER__RemotePlayer_H__
-#define NET_MINECRAFT_CLIENT_PLAYER__RemotePlayer_H__
+#pragma once
 
 //package net.minecraft.client.player;
 
@@ -18,4 +17,3 @@ private:
 	bool hasStartedUsingItem;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER__RemotePlayer_H__*/

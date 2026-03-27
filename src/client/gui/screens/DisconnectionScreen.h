@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__DisconnectionScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__DisconnectionScreen_H__
+#pragma once
 
 #include "../Screen.h"
 #include "../Font.h"
@@ -54,4 +53,3 @@ private:
 	Button* _back;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__DisconnectionScreen_H__*/

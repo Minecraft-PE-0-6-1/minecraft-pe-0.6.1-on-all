@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_CHUNK__DataLayer_H__
-#define NET_MINECRAFT_WORLD_LEVEL_CHUNK__DataLayer_H__
+#pragma once
 
 //package net.minecraft.world.level.chunk;
 
@@ -72,4 +71,3 @@ public:
 	int slotMax;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_CHUNK__DataLayer_H__*/

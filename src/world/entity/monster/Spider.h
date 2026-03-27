@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_MONSTER__Spider_H__
-#define NET_MINECRAFT_WORLD_ENTITY_MONSTER__Spider_H__
+#pragma once
 
 //package net.minecraft.world.entity->monster;
 
@@ -59,4 +58,3 @@ protected:
     //void dropDeathLoot();
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_MONSTER__Spider_H__*/

@@ -1,5 +1,4 @@
-#ifndef _MINECRAFT_NETWORK_NETEVENTCALLBACK_H_
-#define _MINECRAFT_NETWORK_NETEVENTCALLBACK_H_
+#pragma once
 
 class AddItemEntityPacket;
 class AddPaintingPacket;
@@ -131,4 +130,3 @@ public:
 	Player* findPlayer(Level* level, int entityId, const RakNet::RakNetGUID* source);
 };
 
-#endif

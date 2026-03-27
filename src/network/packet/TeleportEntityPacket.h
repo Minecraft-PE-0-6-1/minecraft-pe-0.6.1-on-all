@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__TeleportEntityPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__TeleportEntityPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -74,4 +73,3 @@ public:
 	static const int WANT_RESPAWN = 1;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__TeleportEntityPacket_H__*/

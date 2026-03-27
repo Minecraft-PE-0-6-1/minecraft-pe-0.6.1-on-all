@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__CowModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__CowModel_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -12,4 +11,3 @@ public:
     CowModel();
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__CowModel_H__*/

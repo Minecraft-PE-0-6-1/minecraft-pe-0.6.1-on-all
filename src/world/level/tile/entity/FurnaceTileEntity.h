@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE_ENTITY__FurnaceTileEntity_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE_ENTITY__FurnaceTileEntity_H__
+#pragma once
 
 //package net.minecraft.world.level->tile.entity;
 
@@ -71,4 +70,3 @@ private:
 	bool finished;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE_ENTITY__FurnaceTileEntity_H__*/

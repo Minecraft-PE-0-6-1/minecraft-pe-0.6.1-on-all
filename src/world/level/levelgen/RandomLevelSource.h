@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__RandomLevelSource_H__
-#define NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__RandomLevelSource_H__
+#pragma once
 
 //package net.minecraft.world.level.levelgen;
 
@@ -122,4 +121,3 @@ public:
 };
 
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__RandomLevelSource_H__*/

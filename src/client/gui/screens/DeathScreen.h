@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__DeathScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__DeathScreen_H__
+#pragma once
 
 #include "../Screen.h"
 class Button;
@@ -27,4 +26,3 @@ private:
 	int _tick;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__DeathScreen_H__*/

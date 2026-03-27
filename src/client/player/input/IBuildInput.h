@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER_INPUT__IBuildInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER_INPUT__IBuildInput_H__
+#pragma once
 
 #include "../../IConfigListener.h"
 class Player;
@@ -42,4 +41,3 @@ public:
 	virtual bool tickBuild(Player*, BuildActionIntention* bai) { return false; }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER_INPUT__IBuildInput_H__*/

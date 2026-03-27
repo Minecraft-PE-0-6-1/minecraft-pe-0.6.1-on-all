@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__SignModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__SignModel_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -29,4 +28,3 @@ public:
     ModelPart cube2;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__SignModel_H__*/

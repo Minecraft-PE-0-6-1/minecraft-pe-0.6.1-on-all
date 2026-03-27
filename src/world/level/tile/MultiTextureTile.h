@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__MultiTextureTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__MultiTextureTile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -39,4 +38,3 @@ protected:
 	int _textureCount;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__ClothTile_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__UseItemPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__UseItemPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -83,4 +82,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__UseItemPacket_H__*/

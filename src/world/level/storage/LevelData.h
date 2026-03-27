@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_STORAGE__LevelData_H__
-#define NET_MINECRAFT_WORLD_LEVEL_STORAGE__LevelData_H__
+#pragma once
 
 //package net.minecraft.world.level.storage;
 
@@ -98,4 +97,3 @@ private:
 	int generatorVersion;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_STORAGE__LevelData_H__*/

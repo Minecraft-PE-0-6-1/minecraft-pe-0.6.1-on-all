@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__DirtyChunkSorter_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__DirtyChunkSorter_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -32,4 +31,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__DirtyChunkSorter_H__*/

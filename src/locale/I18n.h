@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_LOCALE__I18n_H__
-#define NET_MINECRAFT_LOCALE__I18n_H__
+#pragma once
 
 //package net.minecraft.locale;
 
@@ -28,4 +27,3 @@ private:
 	static Map _strings;
 };
 
-#endif /*NET_MINECRAFT_LOCALE__I18n_H__*/

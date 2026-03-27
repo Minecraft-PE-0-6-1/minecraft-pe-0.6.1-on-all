@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_MATERIAL__Material_H__
-#define NET_MINECRAFT_WORLD_LEVEL_MATERIAL__Material_H__
+#pragma once
 
 //package net.minecraft.world.level.material;
 
@@ -113,4 +112,3 @@ private:
 	bool _replaceable;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_MATERIAL__Material_H__*/

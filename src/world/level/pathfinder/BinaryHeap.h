@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_PATHFINDER__BinaryHeap_H__
-#define NET_MINECRAFT_WORLD_LEVEL_PATHFINDER__BinaryHeap_H__
+#pragma once
 
 //package net.minecraft.world.level->pathfinder;
 
@@ -198,4 +197,3 @@ private:
 	int _maxSize;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_PATHFINDER__BinaryHeap_H__*/

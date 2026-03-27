@@ -1,5 +1,4 @@
-#ifndef STRINGUTILS_H__
-#define STRINGUTILS_H__
+#pragma once
 
 #include <string>
 
@@ -24,4 +23,3 @@ int hashCode(const std::string& s);
 
 }; // end namespace Util
 
-#endif /*STRINGUTILS_H__*/

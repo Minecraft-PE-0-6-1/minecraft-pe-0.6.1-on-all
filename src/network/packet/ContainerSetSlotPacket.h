@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__ContainerSetSlotPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__ContainerSetSlotPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -61,4 +60,3 @@ public:
     ItemInstance item;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__ContainerSetSlotPacket_H__*/

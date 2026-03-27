@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_SOUND__SoundEngine_H__
-#define NET_MINECRAFT_CLIENT_SOUND__SoundEngine_H__
+#pragma once
 
 //package net.minecraft.client.sound;
 
@@ -65,4 +64,3 @@ private:
 	Minecraft* mc;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_SOUND__SoundEngine_H__*/

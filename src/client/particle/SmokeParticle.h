@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__SmokeParticle_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__SmokeParticle_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -66,4 +65,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__SmokeParticle_H__*/

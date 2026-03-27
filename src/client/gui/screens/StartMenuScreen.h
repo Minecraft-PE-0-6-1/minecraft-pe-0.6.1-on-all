@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__StartMenuScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__StartMenuScreen_H__
+#pragma once
 
 #include "../Screen.h"
 #include "../components/Button.h"
@@ -37,4 +36,3 @@ private:
 	std::string username;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__StartMenuScreen_H__*/

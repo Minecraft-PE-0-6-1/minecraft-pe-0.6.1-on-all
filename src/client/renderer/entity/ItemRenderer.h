@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__ItemRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__ItemRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -35,4 +34,3 @@ private:
 	Random random;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__ItemRenderer_H__*/

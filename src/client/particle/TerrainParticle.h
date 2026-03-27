@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__TerrainParticle_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__TerrainParticle_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -60,4 +59,3 @@ private:
 	Tile* tile;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__TerrainParticle_H__*/

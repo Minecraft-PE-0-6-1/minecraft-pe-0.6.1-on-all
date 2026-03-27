@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__CreeperModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__CreeperModel_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -79,4 +78,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__CreeperModel_H__*/

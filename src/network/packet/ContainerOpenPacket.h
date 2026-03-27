@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__ContainerOpenPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__ContainerOpenPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -44,4 +43,3 @@ public:
     unsigned char size;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__ContainerOpenPacket_H__*/

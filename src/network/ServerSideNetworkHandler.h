@@ -1,5 +1,4 @@
-#ifndef _MINECRAFT_NETWORK_SERVERSIDENETWORKHANDLER_H_
-#define _MINECRAFT_NETWORK_SERVERSIDENETWORKHANDLER_H_
+#pragma once
 
 
 #include "NetEventCallback.h"
@@ -81,4 +80,3 @@ private:
 	bool _allowIncoming;
 };
 
-#endif

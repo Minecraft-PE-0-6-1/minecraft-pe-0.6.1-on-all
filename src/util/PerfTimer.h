@@ -1,5 +1,4 @@
-#ifndef NET_UTIL__PerfTimer_H__
-#define NET_UTIL__PerfTimer_H__
+#pragma once
 
 #include <map>
 #include <vector>
@@ -65,4 +64,3 @@ private:
     static TimeMap times;
 };
 
-#endif /*NET_UTIL__PerfTimer_H__*/

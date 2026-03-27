@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__ChunkPos_H__
-#define NET_MINECRAFT_WORLD_LEVEL__ChunkPos_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -46,4 +45,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__ChunkPos_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT__OptionsFile_H__
-#define NET_MINECRAFT_CLIENT__OptionsFile_H__
+#pragma once
 
 //package net.minecraft.client;
 #include <string>
@@ -18,4 +17,3 @@ private:
 	std::string settingsPath;
 };
 
-#endif /* NET_MINECRAFT_CLIENT__OptionsFile_H__ */

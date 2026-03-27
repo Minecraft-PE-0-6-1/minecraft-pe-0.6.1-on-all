@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__Level_H__
-#define NET_MINECRAFT_WORLD_LEVEL__Level_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -340,4 +339,3 @@ private:
 	PendingList _pendingPlayerRemovals;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__Level_H__*/

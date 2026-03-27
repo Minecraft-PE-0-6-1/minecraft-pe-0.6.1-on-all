@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__ChestScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__ChestScreen_H__
+#pragma once
 
 #include "BaseContainerScreen.h"
 
@@ -69,4 +68,3 @@ private:
 	ChestTileEntity* chest;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__ChestScreen_H__*/

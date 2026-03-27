@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__Particle_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__Particle_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -43,4 +42,3 @@ protected:
     float rCol, gCol, bCol;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__Particle_H__*/

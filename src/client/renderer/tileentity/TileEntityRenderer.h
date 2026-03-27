@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_TILEENTITY__TileEntityRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_TILEENTITY__TileEntityRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.tileentity;
 
@@ -35,4 +34,3 @@ protected:
     TileEntityRenderDispatcher* tileEntityRenderDispatcher;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_TILEENTITY__TileEntityRenderer_H__*/

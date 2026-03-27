@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER__XperiaPlayInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER__XperiaPlayInput_H__
+#pragma once
 
 //package net.minecraft.client.player;
 
@@ -48,4 +47,3 @@ private:
 	bool wasSneakTouched;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER__XperiaPlayInput_H__*/

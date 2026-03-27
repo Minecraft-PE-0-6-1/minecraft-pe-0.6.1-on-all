@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__FenceGateTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__FenceGateTile_H__
+#pragma once
 
 #include "Tile.h"
 #include "LevelEvent.h"
@@ -95,4 +94,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__FenceGateTile_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_GOAL_TARGET__HurtByTargetGoal_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_GOAL_TARGET__HurtByTargetGoal_H__
+#pragma once
 
 //package net.minecraft.world.entity->ai.goal.target;
 
@@ -38,4 +37,3 @@ private:
 	bool alertSameType;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_GOAL_TARGET__HurtByTargetGoal_H__*/

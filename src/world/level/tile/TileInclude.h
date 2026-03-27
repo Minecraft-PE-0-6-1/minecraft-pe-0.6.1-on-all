@@ -1,5 +1,4 @@
-#ifndef TILE_INCLUDE_H__
-#define TILE_INCLUDE_H__
+#pragma once
 
 #include "Tile.h"
 
@@ -59,4 +58,3 @@
 #include "WebTile.h"
 #include "WorkbenchTile.h"
 
-#endif /* TILE_INCLUDE_H__ */

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_CHUNK__LevelChunk_H__
-#define NET_MINECRAFT_WORLD_LEVEL_CHUNK__LevelChunk_H__
+#pragma once
 
 //package net.minecraft.world.level.chunk;
 
@@ -139,4 +138,3 @@ protected:
 
     TEMap tileEntities;
 };
-#endif /*NET_MINECRAFT_WORLD_LEVEL_CHUNK__LevelChunk_H__*/

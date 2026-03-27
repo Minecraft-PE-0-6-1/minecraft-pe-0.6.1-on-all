@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD__Difficulty_H__
-#define NET_MINECRAFT_WORLD__Difficulty_H__
+#pragma once
 
 //package net.minecraft.world;
 
@@ -12,4 +11,3 @@ enum Difficulty {
 	COUNT
 };
 
-#endif /*NET_MINECRAFT_WORLD__Difficulty_H__*/

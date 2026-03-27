@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_STORAGE__LevelStorage_H__
-#define NET_MINECRAFT_WORLD_LEVEL_STORAGE__LevelStorage_H__
+#pragma once
 
 //package net.minecraft.world.level.storage;
 
@@ -36,4 +35,3 @@ public:
 	//PlayerIO getPlayerIO();
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_STORAGE__LevelStorage_H__*/

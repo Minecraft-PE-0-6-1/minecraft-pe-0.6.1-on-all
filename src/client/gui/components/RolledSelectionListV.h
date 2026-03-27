@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__RolledSelectionListV_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__RolledSelectionListV_H__
+#pragma once
 
 #include "../GuiComponent.h"
 class Minecraft;
@@ -91,4 +90,3 @@ private:
 	float _stickPixels;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__RolledSelectionListV_H__*/

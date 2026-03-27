@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__Vertex_H__
-#define NET_MINECRAFT_CLIENT_MODEL__Vertex_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -37,4 +36,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__Vertex_H__*/

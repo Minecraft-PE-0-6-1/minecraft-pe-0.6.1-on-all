@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__UsernameScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__UsernameScreen_H__
+#pragma once
 
 #include "../Screen.h"
 #include "../components/Button.h"
@@ -34,4 +33,3 @@ private:
     int _cursorBlink;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__UsernameScreen_H__*/

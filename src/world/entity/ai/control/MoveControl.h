@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_CONTROL__MoveControl_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_CONTROL__MoveControl_H__
+#pragma once
 
 //package net.minecraft.world.entity.ai.control;
 
@@ -35,4 +34,3 @@ private:
     bool _hasWanted;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_CONTROL__MoveControl_H__*/

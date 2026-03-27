@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__ChooseLevelScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__ChooseLevelScreen_H__
+#pragma once
 
 #include "../Screen.h"
 #include "../../../world/level/storage/LevelStorageSource.h"
@@ -18,4 +17,3 @@ private:
 	LevelSummaryList levels;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__ChooseLevelScreen_H__*/

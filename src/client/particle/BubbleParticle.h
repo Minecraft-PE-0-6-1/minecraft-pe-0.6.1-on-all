@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__BubbleParticle_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__BubbleParticle_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -48,4 +47,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__BubbleParticle_H__*/

@@ -1,5 +1,4 @@
-#ifndef __SUPER_FAST_HASH_H
-#define __SUPER_FAST_HASH_H
+#pragma once
 
 #include <stdio.h>
 #include "NativeTypes.h"
@@ -14,4 +13,3 @@ uint32_t SuperFastHashIncremental (const char * data, int len, unsigned int last
 uint32_t SuperFastHashFile (const char * filename);
 uint32_t SuperFastHashFilePtr (FILE *fp);
 
-#endif

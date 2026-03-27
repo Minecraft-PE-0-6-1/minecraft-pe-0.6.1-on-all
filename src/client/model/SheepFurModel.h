@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__SheepFurModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__SheepFurModel_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -21,4 +20,3 @@ private:
     float headXRot;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__SheepFurModel_H__*/

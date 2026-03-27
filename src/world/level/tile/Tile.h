@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__Tile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__Tile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -386,4 +385,3 @@ private:
 	std::string descriptionId;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__Tile_H__*/

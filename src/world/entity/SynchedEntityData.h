@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__SynchedEntityData_H__
-#define NET_MINECRAFT_WORLD_ENTITY__SynchedEntityData_H__
+#pragma once
 
 //package net.minecraft.world.entity;
 
@@ -248,4 +247,3 @@ private:
     bool _isDirty;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY__SynchedEntityData_H__*/

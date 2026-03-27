@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__HugeExplosionSeedParticle_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__HugeExplosionSeedParticle_H__
+#pragma once
 
 //package net.minecraft.client.particle;
 
@@ -37,4 +36,3 @@ private:
 	int lifeTime;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__HugeExplosionSeedParticle_H__*/

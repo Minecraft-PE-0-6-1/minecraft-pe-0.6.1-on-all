@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__FoliageColor_H__
-#define NET_MINECRAFT_WORLD_LEVEL__FoliageColor_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -33,4 +32,3 @@ private:
     //static int pixels[256*256];
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__FoliageColor_H__*/

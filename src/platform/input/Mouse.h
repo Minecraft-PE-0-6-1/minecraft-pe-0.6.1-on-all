@@ -1,5 +1,4 @@
-#ifndef MOUSE_H__
-#define MOUSE_H__
+#pragma once
 
 #include <vector>
 #include "../log.h"
@@ -109,4 +108,3 @@ private:
 	static MouseDevice _instance;
 };
 
-#endif//MOUSE_H__

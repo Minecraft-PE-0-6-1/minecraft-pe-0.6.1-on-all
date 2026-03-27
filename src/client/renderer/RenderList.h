@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__RenderList_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__RenderList_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -38,4 +37,3 @@ private:
 	int bufferLimit;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__RenderList_H__*/

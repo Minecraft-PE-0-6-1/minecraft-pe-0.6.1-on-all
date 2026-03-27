@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__ExplodePacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__ExplodePacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -73,4 +72,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__ExplodePacket_H__*/

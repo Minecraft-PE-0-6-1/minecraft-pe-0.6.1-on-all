@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER_INPUT_MouseBuildInput_H__
-#define NET_MINECRAFT_CLIENT_PLAYER_INPUT_MouseBuildInput_H__
+#pragma once
 
 #include "IBuildInput.h"
 #include "../../../platform/input/Mouse.h"
@@ -33,4 +32,3 @@ private:
 	int buildDelayTicks;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER_INPUT_MouseBuildInput_H__*/

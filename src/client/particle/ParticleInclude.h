@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PARTICLE__ParticleInclude_H__
-#define NET_MINECRAFT_CLIENT_PARTICLE__ParticleInclude_H__
+#pragma once
 
 #include "Particle.h"
 
@@ -14,4 +13,3 @@
 #include "HugeExplosionSeedParticle.h"
 #include "HugeExplosionParticle.h"
 
-#endif /*NET_MINECRAFT_CLIENT_PARTICLE__ParticleInclude_H__*/

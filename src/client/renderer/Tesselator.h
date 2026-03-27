@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__Tesselator_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__Tesselator_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -127,4 +126,3 @@ private:
 	IntGLMap map;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__Tesselator_H__*/

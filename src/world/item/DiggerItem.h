@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__DiggerItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__DiggerItem_H__
+#pragma once
 
 //package net.minecraft.world.item;
 
@@ -82,4 +81,3 @@ private:
 	bool _bTiles[256];
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__DiggerItem_H__*/

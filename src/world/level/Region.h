@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__Region_H__
-#define NET_MINECRAFT_WORLD_LEVEL__Region_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -36,4 +35,3 @@ private:
 	int size_z;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__Region_H__*/

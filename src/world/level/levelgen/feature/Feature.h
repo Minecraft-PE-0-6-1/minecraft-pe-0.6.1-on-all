@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__Feature_H__
-#define NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__Feature_H__
+#pragma once
 
 //package net.minecraft.world.level.levelgen.feature;
 
@@ -20,4 +19,3 @@ private:
 	bool doUpdate;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__Feature_H__*/

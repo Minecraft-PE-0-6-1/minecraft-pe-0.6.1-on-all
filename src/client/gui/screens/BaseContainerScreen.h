@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__BaseContainerScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI__BaseContainerScreen_H__
+#pragma once
 
 //package net.minecraft.client.gui.screens;
 
@@ -47,4 +46,3 @@ protected:
 	BaseContainerMenu* menu;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__BaseContainerScreen_H__*/

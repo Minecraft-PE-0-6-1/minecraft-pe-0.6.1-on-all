@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__Mob_H__
-#define NET_MINECRAFT_WORLD_ENTITY__Mob_H__
+#pragma once
 
 //package net.minecraft.world.entity;
 
@@ -267,4 +266,3 @@ private:
 	float speed;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY__Mob_H__*/

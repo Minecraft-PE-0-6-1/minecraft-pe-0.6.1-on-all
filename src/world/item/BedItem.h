@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__BedItem_H__
-#define NET_MINECRAFT_WORLD_ITEM__BedItem_H__
+#pragma once
 #include "Item.h"
 class Player;
 class ItemInstance;
@@ -11,4 +10,3 @@ public:
 	bool useOn(ItemInstance* itemInstance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ);
 };
 
-#endif /* NET_MINECRAFT_WORLD_ITEM__BedItem_H__ */

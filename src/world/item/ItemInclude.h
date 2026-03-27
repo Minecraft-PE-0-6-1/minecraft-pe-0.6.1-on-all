@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__ItemInclude_H__
-#define NET_MINECRAFT_WORLD_ITEM__ItemInclude_H__
+#pragma once
 
 #include "Item.h"
 #include "BedItem.h"
@@ -33,4 +32,3 @@
 #include "HangingEntityItem.h"
 #include "SignItem.h"
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__ItemInclude_H__*/

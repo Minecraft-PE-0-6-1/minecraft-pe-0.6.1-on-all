@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__Chunk_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__Chunk_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -71,4 +70,3 @@ private:
     bool _empty;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__Chunk_H__*/

@@ -1,5 +1,4 @@
-#ifndef LICENSECODES_H__
-#define LICENSECODES_H__
+#pragma once
 
 class LicenseCodes
 {

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__ZombieModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__ZombieModel_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -34,4 +33,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__ZombieModel_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__TreeTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__TreeTile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -64,4 +63,3 @@ protected:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__TreeTile_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__OptionsScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__OptionsScreen_H__
+#pragma once
 
 #include "../Screen.h"
 #include "../components/Button.h"
@@ -46,4 +45,3 @@ private:
 	int selectedCategory;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__OptionsScreen_H__*/

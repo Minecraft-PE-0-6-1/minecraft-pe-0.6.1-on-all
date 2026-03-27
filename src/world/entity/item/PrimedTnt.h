@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_ITEM__PrimedTnt_H__
-#define NET_MINECRAFT_WORLD_ENTITY_ITEM__PrimedTnt_H__
+#pragma once
 
 //package net.minecraft.world.entity.item;
 
@@ -33,4 +32,3 @@ public:
 	int life;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_ITEM__PrimedTnt_H__*/

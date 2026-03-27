@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__TownFeature_H__
-#define NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__TownFeature_H__
+#pragma once
 
 //package net.minecraft.world.level.levelgen;
 
@@ -10,4 +9,3 @@
     }
 }
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__TownFeature_H__*/

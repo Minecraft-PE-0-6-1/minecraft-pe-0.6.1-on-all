@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__TakeItemEntityPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__TakeItemEntityPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -39,4 +38,3 @@ public:
     int playerId;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__TakeItemEntityPacket_H__*/

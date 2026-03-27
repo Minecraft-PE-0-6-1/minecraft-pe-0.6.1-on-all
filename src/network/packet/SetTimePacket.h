@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__SetTimePacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__SetTimePacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -34,4 +33,3 @@ public:
 	int32_t time;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__SetTimePacket_H__*/

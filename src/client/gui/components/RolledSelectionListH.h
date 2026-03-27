@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__RolledSelectionListH_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__RolledSelectionListH_H__
+#pragma once
 
 #include "../GuiComponent.h"
 class MinecraftClient;
@@ -79,4 +78,3 @@ private:
 	float _lastxoo;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__RolledSelectionListH_H__*/

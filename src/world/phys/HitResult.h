@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_PHYS__HitResult_H__
-#define NET_MINECRAFT_WORLD_PHYS__HitResult_H__
+#pragma once
 
 //package net.minecraft.world.phys;
 
@@ -31,4 +30,3 @@ public:
 	bool indirectHit; // when targeting the block we're standing on, without actually looking at it
 };
 
-#endif /*NET_MINECRAFT_WORLD_PHYS__HitResult_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_CULLING__Frustum_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_CULLING__Frustum_H__
+#pragma once
 
 //package net.minecraft.client.renderer.culling;
 
@@ -169,4 +168,3 @@
         normalizePlane(m_Frustum, FRONT);
     }
 }
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_CULLING__Frustum_H__*/

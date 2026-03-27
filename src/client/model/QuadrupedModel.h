@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__QuadrupedModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__QuadrupedModel_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -25,4 +24,3 @@ protected:
 	float zHeadOffs;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__QuadrupedModel_H__*/

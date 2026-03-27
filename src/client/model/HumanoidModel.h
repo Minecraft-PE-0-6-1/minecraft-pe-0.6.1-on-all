@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__HumanoidModel_H__
-#define NET_MINECRAFT_CLIENT_MODEL__HumanoidModel_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -25,4 +24,3 @@ HumanoidModel(float g = 0, float yOffset = 0, int texW = 64, int texH = 32);
 	bool bowAndArrow;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__HumanoidModel_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL__ModelInclude_H__
-#define NET_MINECRAFT_CLIENT_MODEL__ModelInclude_H__
+#pragma once
 
 #include "HumanoidModel.h"
 
@@ -14,4 +13,3 @@
 
 #include "SignModel.h"
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL__ModelInclude_H__*/

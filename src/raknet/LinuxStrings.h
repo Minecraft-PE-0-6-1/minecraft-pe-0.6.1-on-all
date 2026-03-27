@@ -1,5 +1,4 @@
-#ifndef _GCC_WIN_STRINGS
-#define _GCC_WIN_STRINGS
+#pragma once
 
 
 
@@ -23,4 +22,3 @@
 	#endif
 
 
-#endif // _GCC_WIN_STRINGS

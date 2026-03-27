@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_STORAGE__LevelStorageSource_H__
-#define NET_MINECRAFT_WORLD_LEVEL_STORAGE__LevelStorageSource_H__
+#pragma once
 
 //package net.minecraft.world.level.storage;
 
@@ -57,4 +56,3 @@ public:
     virtual bool convertLevel(const std::string& levelId, ProgressListener* progress) = 0;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_STORAGE__LevelStorageSource_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__BedTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__BedTile_H__
+#pragma once
 
 #include "DirectionalTile.h"
 #include "../material/Material.h"
@@ -37,4 +36,3 @@ public:
 	static bool findStandUpPosition( Level* level, int x, int y, int z, int skipCount, Pos& position);
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__BedTile_H__ */

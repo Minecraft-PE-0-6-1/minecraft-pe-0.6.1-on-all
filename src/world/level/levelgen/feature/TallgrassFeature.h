@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__TallgrassFeature_H__
-#define NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__TallgrassFeature_H__
+#pragma once
 
 //package net.minecraft.world.level.levelgen.feature;
 
@@ -37,4 +36,3 @@ private:
 	int type;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__TallgrassFeature_H__*/

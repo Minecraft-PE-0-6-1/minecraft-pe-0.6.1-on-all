@@ -1,5 +1,4 @@
-#ifndef _MINECRAFT_INGAMEBLOCKSELECTIONSCREEN_H_
-#define _MINECRAFT_INGAMEBLOCKSELECTIONSCREEN_H_
+#pragma once
 
 #include "../Screen.h"
 #include "../../player/input/touchscreen/TouchAreaModel.h"
@@ -56,4 +55,3 @@ private:
 	RectangleArea _area;
 };
 
-#endif

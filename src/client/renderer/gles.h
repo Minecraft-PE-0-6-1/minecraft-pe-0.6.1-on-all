@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__gles_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__gles_H__
+#pragma once
 
 #include "../../platform/log.h"
 #include "../Options.h"
@@ -145,4 +144,3 @@ int glhUnProjectf(	float winx, float winy, float winz,
 
 
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__gles_H__ */

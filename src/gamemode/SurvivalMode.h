@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GAMEMODE__SurvivalMode_H__
-#define NET_MINECRAFT_CLIENT_GAMEMODE__SurvivalMode_H__
+#pragma once
 
 #include "GameMode.h"
 
@@ -28,4 +27,3 @@ private:
 	int zDestroyBlock;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GAMEMODE__SurvivalMode_H__*/

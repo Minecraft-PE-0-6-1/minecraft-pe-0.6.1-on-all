@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_PLAYER__TouchAreaModel_H__
-#define NET_MINECRAFT_CLIENT_PLAYER__TouchAreaModel_H__
+#pragma once
 
 #include "ITouchScreenModel.h"
 #include <vector>
@@ -336,4 +335,3 @@ private:
 	IArea* _b;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_PLAYER__TouchAreaModel_H__*/

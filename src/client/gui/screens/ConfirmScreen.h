@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__ConfirmScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__ConfirmScreen_H__
+#pragma once
 
 //package net.minecraft.client.gui;
 
@@ -37,4 +36,3 @@ private:
 	Button* noButton;  // 1
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__ConfirmScreen_H__*/

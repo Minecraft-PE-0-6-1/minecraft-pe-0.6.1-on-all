@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__FenceTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__FenceTile_H__
+#pragma once
 
 //package net.minecraft.world.level->tile;
 
@@ -114,4 +113,3 @@ public:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL->TILE__FenceTile_H__*/

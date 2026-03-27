@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__LevelListener_H__
-#define NET_MINECRAFT_WORLD_LEVEL__LevelListener_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -40,4 +39,3 @@ public:
     virtual void tileEntityChanged(int x, int y, int z, TileEntity* te) {}
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__LevelListener_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__SetEntityDataPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__SetEntityDataPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -61,4 +60,3 @@ private:
     SynchedEntityData::DataList packedItems;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__SetEntityDataPacket_H__*/

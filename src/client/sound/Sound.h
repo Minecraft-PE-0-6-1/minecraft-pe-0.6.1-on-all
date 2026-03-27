@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_SOUND__Sound_H__
-#define NET_MINECRAFT_CLIENT_SOUND__Sound_H__
+#pragma once
 
 //package net.minecraft.client.sound;
 
@@ -177,4 +176,3 @@ extern SoundDesc SA_fuse;
 #endif /*!PRE_ANDROID23 && !__APPLE__*/
 
 
-#endif /*NET_MINECRAFT_CLIENT_SOUND__Sound_H__*/

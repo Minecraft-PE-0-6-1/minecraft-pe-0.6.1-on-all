@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_CULLING__FrustumData_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_CULLING__FrustumData_H__
+#pragma once
 
 //package net.minecraft.client.renderer.culling;
 
@@ -94,4 +93,3 @@ public:
         return cubeInFrustum(aabb.x0, aabb.y0, aabb.z0, aabb.x1, aabb.y1, aabb.z1);
     }
 };
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_CULLING__FrustumData_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_CHUNK_STORAGE__ChunkStorage_H__
-#define NET_MINECRAFT_WORLD_LEVEL_CHUNK_STORAGE__ChunkStorage_H__
+#pragma once
 
 //package net.minecraft.world.level.chunk.storage;
 
@@ -27,4 +26,3 @@ public:
 	virtual void flush() {}
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_CHUNK_STORAGE__ChunkStorage_H__*/

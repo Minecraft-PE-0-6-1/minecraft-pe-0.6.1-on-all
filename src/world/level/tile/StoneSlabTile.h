@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__StoneSlabTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__StoneSlabTile_H__
+#pragma once
 
 //package net.minecraft.world.level.tile;
 
@@ -53,4 +52,3 @@ private:
 	bool fullSize;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__StoneSlabTile_H__*/

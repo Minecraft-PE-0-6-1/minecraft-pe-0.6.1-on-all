@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__LoginStatusPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__LoginStatusPacket_H__
+#pragma once
 
 #include "../Packet.h"
 
@@ -37,4 +36,3 @@ public:
 	int status;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__LoginStatusPacket_H__*/

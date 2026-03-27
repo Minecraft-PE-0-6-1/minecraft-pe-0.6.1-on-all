@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_ENTITY__SheepRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_ENTITY__SheepRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer.entity;
 
@@ -17,4 +16,3 @@ protected:
 	int prepareArmor(Mob* sheep, int layer, float a);
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__SheepRenderer_H__*/

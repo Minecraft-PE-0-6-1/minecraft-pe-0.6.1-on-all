@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER_TILEENTITY__TileEntityRenderDispatcher_H__
-#define NET_MINECRAFT_CLIENT_RENDERER_TILEENTITY__TileEntityRenderDispatcher_H__
+#pragma once
 
 //package net.minecraft.client.renderer.tileentity;
 
@@ -58,4 +57,3 @@ private:
 	RendererMap _renderers;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER_TILEENTITY__TileEntityRenderDispatcher_H__*/

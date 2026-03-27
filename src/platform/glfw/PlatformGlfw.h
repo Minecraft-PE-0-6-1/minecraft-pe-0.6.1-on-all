@@ -1,5 +1,4 @@
-#ifndef APPPLATFORM_GLFW_H__
-#define APPPLATFORM_GLFW_H__
+#pragma once
 
 #include <IPlatform.h>
 #include "platform/log.h"
@@ -72,4 +71,3 @@ private:
 
 	GLFWwindow* m_window;
 };
-#endif /*APPPLATFORM_GLFW_H__*/

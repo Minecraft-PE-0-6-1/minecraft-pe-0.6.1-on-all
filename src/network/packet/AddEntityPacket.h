@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__AddEntityPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__AddEntityPacket_H__
+#pragma once
 
 #include "../Packet.h"
 #include "../../world/entity/Entity.h"
@@ -90,4 +89,3 @@ private:
 	int _data;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__AddEntityPacket_H__*/

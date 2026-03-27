@@ -1,5 +1,4 @@
-#ifndef APPPLATFORM_IOS_H__
-#define APPPLATFORM_IOS_H__
+#pragma once
 
 #include <IPlatform.h>
 #include "client/renderer/gles.h"
@@ -63,4 +62,3 @@ private:
     minecraftpeViewController* _viewController;
 };
 
-#endif /*APPPLATFORM_IOS_H__*/

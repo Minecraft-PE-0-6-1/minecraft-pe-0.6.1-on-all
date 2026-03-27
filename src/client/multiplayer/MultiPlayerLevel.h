@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MULTIPLAYER__MultiPlayerLevel_H__
-#define NET_MINECRAFT_CLIENT_MULTIPLAYER__MultiPlayerLevel_H__
+#pragma once
 
 #include "../../world/Pos.h"
 #include "../../world/level/Level.h"
@@ -262,4 +261,3 @@ private:
     EntitySet reEntries;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MULTIPLAYER__MultiPlayerLevel_H__*/

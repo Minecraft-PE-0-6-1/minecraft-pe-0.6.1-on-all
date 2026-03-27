@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_BIOME__FlatBiome_H__
-#define NET_MINECRAFT_WORLD_LEVEL_BIOME__FlatBiome_H__
+#pragma once
 
 //package net.minecraft.world.level.biome;
 
@@ -8,4 +7,3 @@
 class FlatBiome: public Biome {
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_BIOME__FlatBiome_H__*/

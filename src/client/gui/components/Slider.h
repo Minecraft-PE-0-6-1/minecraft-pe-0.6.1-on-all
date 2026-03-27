@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_COMPONENTS__Slider_H__
-#define NET_MINECRAFT_CLIENT_GUI_COMPONENTS__Slider_H__
+#pragma once
 
 #include "GuiElement.h"
 #include "../../../client/Options.h"
@@ -45,4 +44,3 @@ protected:
 	OptionInt* m_option;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__Slider_H__*/

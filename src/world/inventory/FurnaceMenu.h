@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_INVENTORY__FurnaceMenu_H__
-#define NET_MINECRAFT_WORLD_INVENTORY__FurnaceMenu_H__
+#pragma once
 
 //package net.minecraft.world.inventory;
 
@@ -35,4 +34,3 @@ private:
 	int lastLitDuration;
 };
 
-#endif /*NET_MINECRAFT_WORLD_INVENTORY__FurnaceMenu_H__*/

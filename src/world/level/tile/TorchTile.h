@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__TorchTile_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__TorchTile_H__
+#pragma once
 
 //package net.minecraft.world.level->tile;
 
@@ -174,4 +173,3 @@ private:
 	}
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__TorchTile_H__*/

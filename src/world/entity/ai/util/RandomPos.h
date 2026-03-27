@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_UTIL__RandomPos_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_UTIL__RandomPos_H__
+#pragma once
 
 //package net.minecraft.world.entity.ai.util;
 
@@ -68,4 +67,3 @@ private:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_UTIL__RandomPos_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__LevelEventPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__LevelEventPacket_H__
+#pragma once
 
 //package net.minecraft.network.packet;
 
@@ -46,4 +45,3 @@ public:
     int data;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__LevelEventPacket_H__*/

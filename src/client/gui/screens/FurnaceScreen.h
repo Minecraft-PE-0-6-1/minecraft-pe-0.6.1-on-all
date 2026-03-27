@@ -1,5 +1,4 @@
-#ifndef _FURNACESCREEN_H__
-#define _FURNACESCREEN_H__
+#pragma once
 
 #include "BaseContainerScreen.h"
 
@@ -81,4 +80,3 @@ private:
 	FurnaceTileEntity* furnace;
 };
 
-#endif /*_FURNACESCREEN_H__*/

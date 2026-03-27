@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_PHYS__Vec3_H__
-#define NET_MINECRAFT_WORLD_PHYS__Vec3_H__
+#pragma once
 
 //package net.minecraft.world.phys;
 
@@ -228,4 +227,3 @@ public:
 	float x, y, z;
 };
 
-#endif /*NET_MINECRAFT_WORLD_PHYS__Vec3_H__*/

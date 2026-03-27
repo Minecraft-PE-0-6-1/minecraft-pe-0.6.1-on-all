@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__Screen_H__
-#define NET_MINECRAFT_CLIENT_GUI__Screen_H__
+#pragma once
 
 //package net.minecraft.client.gui;
 
@@ -80,4 +79,3 @@ private:
 	Button* clickedButton;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__Screen_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT__Minecraft_H__
-#define NET_MINECRAFT_CLIENT__Minecraft_H__
+#pragma once
 
 #include "client/Options.h"
 #include "client/Timer.h"
@@ -137,4 +136,3 @@ protected:
 	static bool _hasInitedStatics;
 };
 
-#endif /*NET_MINECRAFT_CLIENT__Minecraft_H__*/

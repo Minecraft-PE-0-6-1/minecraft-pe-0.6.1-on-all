@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT__Direction_H__
-#define NET_MINECRAFT__Direction_H__
+#pragma once
 
 //package net.minecraft;
 
@@ -25,4 +24,3 @@ public:
     static const int RELATIVE_DIRECTION_FACING[4][6];
 };
 
-#endif /*NET_MINECRAFT__Direction_H__*/

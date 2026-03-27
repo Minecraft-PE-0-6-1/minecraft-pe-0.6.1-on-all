@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__GameRenderer_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__GameRenderer_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -114,4 +113,3 @@ private:
 	IntRectangle screenScissorArea;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__GameRenderer_H__*/

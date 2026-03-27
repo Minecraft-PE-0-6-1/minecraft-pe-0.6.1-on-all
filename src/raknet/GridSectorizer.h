@@ -1,5 +1,4 @@
-#ifndef _GRID_SECTORIZER_H
-#define _GRID_SECTORIZER_H
+#pragma once
 
 //#define _USE_ORDERED_LIST
 
@@ -65,4 +64,3 @@ protected:
 #endif
 };
 
-#endif

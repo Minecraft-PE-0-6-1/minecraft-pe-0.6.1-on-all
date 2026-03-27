@@ -1,5 +1,4 @@
-#ifndef PERFORMANCE_H__
-#define PERFORMANCE_H__
+#pragma once
 
 #include "platform/time.h"
 
@@ -9,4 +8,3 @@ public:
     static StopwatchHandler watches;
 };
 
-#endif /*PERFORMANCE_H__*/

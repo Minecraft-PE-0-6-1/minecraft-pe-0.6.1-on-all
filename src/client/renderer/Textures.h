@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_RENDERER__Textures_H__
-#define NET_MINECRAFT_CLIENT_RENDERER__Textures_H__
+#pragma once
 
 //package net.minecraft.client.renderer;
 
@@ -77,4 +76,3 @@ private:
 	std::vector<DynamicTexture*> dynamicTextures;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_RENDERER__Textures_H__*/

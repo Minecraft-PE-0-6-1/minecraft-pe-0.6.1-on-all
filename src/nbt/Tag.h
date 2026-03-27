@@ -1,5 +1,4 @@
-#ifndef COM_MOJANG_NBT__Tag_H__
-#define COM_MOJANG_NBT__Tag_H__
+#pragma once
 
 //package com.mojang.nbt;
 
@@ -62,4 +61,3 @@ private:
     std::string name;
 };
 
-#endif /*COM_MOJANG_NBT__Tag_H__*/

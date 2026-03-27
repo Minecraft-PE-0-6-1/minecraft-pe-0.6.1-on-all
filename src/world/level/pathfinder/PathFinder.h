@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_PATHFINDER__PathFinder_H__
-#define NET_MINECRAFT_WORLD_LEVEL_PATHFINDER__PathFinder_H__
+#pragma once
 
 //package net.minecraft.world.level.pathfinder;
 
@@ -391,4 +390,3 @@ public:
 	bool avoidWater;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_PATHFINDER__PathFinder_H__*/

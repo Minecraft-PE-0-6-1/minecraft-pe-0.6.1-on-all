@@ -1,5 +1,4 @@
-#ifndef FEATURE_INCLUDE_H__
-#define FEATURE_INCLUDE_H__
+#pragma once
 
 #include "Feature.h"
 #include "CactusFeature.h"
@@ -11,4 +10,3 @@
 #include "ReedsFeature.h"
 #include "SpringFeature.h"
 
-#endif /*FEATURE_INCLUDE__H__*/

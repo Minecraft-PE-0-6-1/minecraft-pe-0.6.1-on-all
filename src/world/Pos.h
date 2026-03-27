@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_Pos_H__
-#define NET_MINECRAFT_WORLD_Pos_H__
+#pragma once
 
 //package net.minecraft;
 
@@ -190,4 +189,3 @@ public:
     int x, y, z;
 };
 
-#endif /*NET_MINECRAFT_WORLD_Pos_H__*/

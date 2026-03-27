@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_ANIMAL__Animal_H__
-#define NET_MINECRAFT_WORLD_ENTITY_ANIMAL__Animal_H__
+#pragma once
 
 //package net.minecraft.world.entity.animal;
 
@@ -36,4 +35,3 @@ private:
 	int inLove;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_ANIMAL__Animal_H__*/

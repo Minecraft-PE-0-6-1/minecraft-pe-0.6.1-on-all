@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS_CRAFT_PaneCraftingScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS_CRAFT_PaneCraftingScreen_H__
+#pragma once
 
 #include "../../Screen.h"
 #include "../../../../world/item/crafting/Recipes.h"
@@ -103,4 +102,3 @@ private:
 	NinePatchLayer* guiSlotCategorySelected;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS_CRAFT_PaneCraftingScreen_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL__LevelSource_H__
-#define NET_MINECRAFT_WORLD_LEVEL__LevelSource_H__
+#pragma once
 
 //package net.minecraft.world.level;
 
@@ -33,4 +32,3 @@ public:
 	virtual Biome* getBiome(int x, int z) = 0;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL__LevelSource_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GAMEMODE__CreatorMode_H__
-#define NET_MINECRAFT_CLIENT_GAMEMODE__CreatorMode_H__
+#pragma once
 
 //package net.minecraft.client.gamemode;
 
@@ -125,4 +124,3 @@ private:
 	Creator* _creator;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GAMEMODE__CreatorMode_H__*/

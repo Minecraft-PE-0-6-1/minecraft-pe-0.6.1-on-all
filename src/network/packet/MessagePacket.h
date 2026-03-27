@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__MessagePacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__MessagePacket_H__
+#pragma once
 
 #include "../Packet.h"
 
@@ -36,4 +35,3 @@ public:
 	}
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__MessagePacket_H__*/

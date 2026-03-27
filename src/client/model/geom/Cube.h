@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_MODEL_GEOM__Cube_H__
-#define NET_MINECRAFT_CLIENT_MODEL_GEOM__Cube_H__
+#pragma once
 
 //package net.minecraft.client.model;
 
@@ -26,4 +25,3 @@ private:
 	friend class ModelPart;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_MODEL_GEOM__Cube_H__*/

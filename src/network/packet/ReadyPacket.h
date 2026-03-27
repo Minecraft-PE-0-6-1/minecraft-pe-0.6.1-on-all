@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__ReadyPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__ReadyPacket_H__
+#pragma once
 
 #include "../Packet.h"
 
@@ -39,4 +38,3 @@ public:
     char type;
 };
 
-#endif /*#NET_MINECRAFT_NETWORK_PACKET__ReadyPacket_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__DoorInteractGoal_H__
-#define NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__DoorInteractGoal_H__
+#pragma once
 
 //package net.minecraft.world.entity.ai.goal;
 
@@ -76,4 +75,3 @@ private:
     float doorOpenDirX, doorOpenDirZ;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_AI_GOAL__DoorInteractGoal_H__*/

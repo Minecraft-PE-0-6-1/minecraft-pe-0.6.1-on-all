@@ -1,5 +1,4 @@
-#ifndef __LOCKLESS_TYPES_H
-#define __LOCKLESS_TYPES_H
+#pragma once
 
 #include "Export.h"
 #include "NativeTypes.h"
@@ -37,4 +36,3 @@ protected:
 
 };
 
-#endif

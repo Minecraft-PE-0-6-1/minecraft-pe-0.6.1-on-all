@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__TallGrass_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__TallGrass_H__
+#pragma once
 #include "Bush.h"
 class Pos;
 class TallGrass : public Bush {
@@ -21,4 +20,3 @@ public:
 	void playerDestroy(Level* level, Player* player, int x, int y, int z, int data);
 };
 
-#endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__TallGrass_H__ */

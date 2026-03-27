@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__ItemInstance_H__
-#define NET_MINECRAFT_WORLD_ITEM__ItemInstance_H__
+#pragma once
 
 //package net.minecraft.world.item;
 
@@ -114,4 +113,3 @@ private:
 	int auxValue;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ITEM__ItemInstance_H__*/

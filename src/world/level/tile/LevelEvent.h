@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_TILE__LevelEvent_H__
-#define NET_MINECRAFT_WORLD_LEVEL_TILE__LevelEvent_H__
+#pragma once
 
 class LevelEvent
 {
@@ -24,4 +23,3 @@ public:
 	static const int ALL_PLAYERS_SLEEPING = 9800;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__LevelEvent_H__*/

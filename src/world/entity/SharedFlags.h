@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY__SharedFlags_H__
-#define NET_MINECRAFT_WORLD_ENTITY__SharedFlags_H__
+#pragma once
 
 class SharedFlagsInformation {
 public:
@@ -14,4 +13,3 @@ public:
 	
 	static const unsigned int DATA_SHARED_FLAGS_ID = 0;
 };
-#endif /* NET_MINECRAFT_WORLD_ENTITY__SharedFlags_H__ */

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI_SCREENS__DemoChooseLevelScreen_H__
-#define NET_MINECRAFT_CLIENT_GUI_SCREENS__DemoChooseLevelScreen_H__
+#pragma once
 
 #include "ChooseLevelScreen.h"
 #include "../components/TextBox.h"
@@ -41,4 +40,3 @@ private:
 	TextBox tSeed;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS__DemoChooseLevelScreen_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_NETWORK_PACKET__DropItemPacket_H__
-#define NET_MINECRAFT_NETWORK_PACKET__DropItemPacket_H__
+#pragma once
 
 #include "../Packet.h"
 
@@ -42,4 +41,3 @@ public:
     ItemInstance item;
 };
 
-#endif /*NET_MINECRAFT_NETWORK_PACKET__DropItemPacket_H__*/

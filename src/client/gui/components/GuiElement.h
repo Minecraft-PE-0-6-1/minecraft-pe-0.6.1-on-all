@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_CLIENT_GUI__GuiElement_H__
-#define NET_MINECRAFT_CLIENT_GUI__GuiElement_H__
+#pragma once
 #include "../GuiComponent.h"
 
 class Tesselator;
@@ -31,4 +30,3 @@ public:
 	int height;
 };
 
-#endif /*NET_MINECRAFT_CLIENT_GUI__GuiElement_H__*/

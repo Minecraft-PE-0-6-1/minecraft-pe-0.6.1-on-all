@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__LargeCaveFeature_H__
-#define NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__LargeCaveFeature_H__
+#pragma once
 
 //package net.minecraft.world.level.levelgen;
 
@@ -177,4 +176,3 @@ protected:
     }
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_LEVELGEN__LargeCaveFeature_H__*/

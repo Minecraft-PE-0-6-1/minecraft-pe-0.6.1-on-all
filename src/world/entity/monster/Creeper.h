@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_MONSTER__Creeper_H__
-#define NET_MINECRAFT_WORLD_ENTITY_MONSTER__Creeper_H__
+#pragma once
 
 //package net.minecraft.world.entity.monster;
 
@@ -43,4 +42,3 @@ private:
 	static const int MAX_SWELL = 30;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_MONSTER__Creeper_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD__Container_H__
-#define NET_MINECRAFT_WORLD__Container_H__
+#pragma once
 
 //package net.minecraft.world;
 
@@ -59,4 +58,3 @@ public:
 	int containerType;
 };
 
-#endif /*NET_MINECRAFT_WORLD__Container_H__*/

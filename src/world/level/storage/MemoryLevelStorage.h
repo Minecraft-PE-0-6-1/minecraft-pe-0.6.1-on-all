@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_LEVEL_STORAGE__MemoryLevelStorage_H__
-#define NET_MINECRAFT_WORLD_LEVEL_STORAGE__MemoryLevelStorage_H__
+#pragma once
 
 //package net.minecraft.world.level.storage;
 
@@ -50,4 +49,3 @@ public:
 	MemoryChunkStorage* _storage;
 };
 
-#endif /*NET_MINECRAFT_WORLD_LEVEL_STORAGE__MemoryLevelStorage_H__*/

@@ -1,5 +1,4 @@
-#ifndef NET_MINECRAFT_WORLD_ENTITY_MONSTER__Zombie_H__
-#define NET_MINECRAFT_WORLD_ENTITY_MONSTER__Zombie_H__
+#pragma once
 
 //package net.minecraft.world.entity->monster;
 
@@ -41,4 +40,3 @@ protected:
 	bool _useNewAi;
 };
 
-#endif /*NET_MINECRAFT_WORLD_ENTITY_MONSTER__Zombie_H__*/
