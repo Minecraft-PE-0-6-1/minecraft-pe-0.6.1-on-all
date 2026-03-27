@@ -15,7 +15,7 @@ class ServerPlayer: public Player,
 {
     typedef Player super;
 public:
-    ServerPlayer(Minecraft* minecraft, Level* level);
+    ServerPlayer(Minecraft* minecraft, Level* level, bool proto);
 
 	~ServerPlayer();
 
@@ -44,10 +44,14 @@ public:
 
 	void completeUsingItem();
 	
-	// Getter and setter? Doesnt hear about that
-	// TODO: Getter and setter :trollface:
-	int lastMoveTicks = 0;
-	int ticksInAir = 0;
+	void setLastMoveTicks(int lastMoveTicks) { this->lastMoveTicks = lastMoveTicks; }
+	int getLastMoveTicks() { return lastMoveTicks; }
+
+	void setTicksInAir(int ticksInAir) { this->ticksInAir = ticksInAir; }
+	int getTicksInAir() { return ticksInAir; }
+
+	void setNewProto(bool proto) { isNewProto = proto; }
+	bool getProto() { return isNewProto; }
 private:
 	void nextContainerCounter();
 	void setContainerMenu( BaseContainerMenu* menu );
@@ -55,6 +59,11 @@ private:
 	Minecraft* _mc;
     int _prevHealth;
 	int _containerCounter;
+
+	int lastMoveTicks = 0;
+	int ticksInAir = 0;
+
+	bool isNewProto = false;
 };
 
 #endif /*ServerPlayer_H__*/

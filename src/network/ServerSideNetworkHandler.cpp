@@ -194,7 +194,6 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 
 	LOGI("LoginPacket\n");
 	
-	printf("%d", packet->clientNetworkVersion);
 	int loginStatus = LoginStatus::Success;
 	//
 	// Bad/incompatible client version
@@ -204,6 +203,9 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	if (oldClient || oldServer)
 		loginStatus = oldClient? LoginStatus::Failed_ClientOld : LoginStatus::Failed_ServerOld;
 
+	if (packet->newProto) {
+		printf("New proto! \n");
+	}
 	RakNet::BitStream bitStream;
 	LoginStatusPacket(loginStatus).write(&bitStream);
 	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
@@ -214,8 +216,9 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	//
 	// Valid client version
 	//
-	Player* newPlayer = new ServerPlayer(minecraft, level);
-
+	
+	Player* newPlayer = new ServerPlayer(minecraft, level, packet->newProto);
+	
 	minecraft->gameMode->initAbilities(newPlayer->abilities);
 	newPlayer->owner = source;
 	newPlayer->name = packet->clientName.C_String();
@@ -366,7 +369,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 		float vectorDist = sqrt( (packet->x - entity->x) * (packet->x - entity->x)  + 
 									(packet->y - entity->y) * (packet->y - entity->y) +
 									(packet->z - entity->z) * (packet->z - entity->z));
-		float speed = vectorDist / (minecraft->getTicks() - player->lastMoveTicks);
+		float speed = vectorDist / (minecraft->getTicks() - player->getLastMoveTicks());
 
 		if (speed < 2.5f) {
 			entity->xd = entity->yd = entity->zd = 0;
@@ -376,7 +379,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 			redistributePacket(packet, source);
 		}
 	
-		player->lastMoveTicks = minecraft->getTicks();
+		player->setLastMoveTicks(minecraft->getTicks());
 	}
 }
 
@@ -512,7 +515,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerAr
     if (!player) return;
     if (rakPeer->GetMyGUID() == player->owner) return;
 
-	LOGI("Equip armor: %i %i %i %i\n", packet->head, packet->torso, packet->legs, packet->feet);
+	// LOGI("Equip armor: %i %i %i %i\n", packet->head, packet->torso, packet->legs, packet->feet);
 
     packet->fillIn(player);
     redistributePacket(packet, source);

@@ -22,11 +22,12 @@
 #include "network/packet/SendInventoryPacket.h"
 #include "world/entity/player/Inventory.h"
 
-ServerPlayer::ServerPlayer( Minecraft* minecraft, Level* level )
+ServerPlayer::ServerPlayer( Minecraft* minecraft, Level* level, bool proto)
 :   super(level, minecraft->isCreativeMode()),
 	_mc(minecraft),
 	_prevHealth(-999),
-	_containerCounter(0)
+	_containerCounter(0),
+	isNewProto(proto)
 {
 	// hasFakeInventory = true;
 	footSize = 0;
