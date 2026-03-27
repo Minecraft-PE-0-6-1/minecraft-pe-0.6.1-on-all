@@ -203,9 +203,6 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	if (oldClient || oldServer)
 		loginStatus = oldClient? LoginStatus::Failed_ClientOld : LoginStatus::Failed_ServerOld;
 
-	if (packet->newProto) {
-		printf("New proto! \n");
-	}
 	RakNet::BitStream bitStream;
 	LoginStatusPacket(loginStatus).write(&bitStream);
 	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
@@ -252,6 +249,11 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
         ).write(&bitStream);
 
         rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+		
+		if (!packet->newProto) {
+			MessagePacket packet("You're using outdated client. Some features disabled.");
+			raknetInstance->send(packet);
+		}
 	}
 }
 
