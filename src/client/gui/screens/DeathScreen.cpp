@@ -1,9 +1,9 @@
-#include "DeathScreen.h"
-#include "ScreenChooser.h"
-#include "../components/Button.h"
-#include "../../Minecraft.h"
-#include "../../player/LocalPlayer.h"
-#include "../../../platform/time.h"
+#include "DeathScreen.hpp"
+#include "ScreenChooser.hpp"
+#include "client/gui/components/Button.hpp"
+#include "client/Minecraft.hpp"
+#include "client/player/LocalPlayer.hpp"
+#include "platform/time.hpp"
 
 static const int WAIT_TICKS = 30;
 

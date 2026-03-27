@@ -1,8 +1,8 @@
-#include "ScrollingPane.h"
-#include "../../renderer/gles.h"
-#include "../Gui.h"
-#include "../../../util/Mth.h"
-#include "../../../SharedConstants.h"
+#include "ScrollingPane.hpp"
+#include "client/renderer/gles.hpp"
+#include "client/gui/Gui.hpp"
+#include "util/Mth.hpp"
+#include "SharedConstants.hpp"
 
 #define STR(x) (x.toString().c_str())
 

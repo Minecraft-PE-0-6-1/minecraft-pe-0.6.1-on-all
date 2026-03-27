@@ -1,10 +1,10 @@
-#include "ChestRenderer.h"
-#include "TileEntityRenderer.h"
-#include "../gles.h"
-#include "../../model/ChestModel.h"
-#include "../../../world/level/tile/entity/ChestTileEntity.h"
-#include "../../../world/level/tile/ChestTile.h"
-#include "../../../util/Mth.h"
+#include "ChestRenderer.hpp"
+#include "TileEntityRenderer.hpp"
+#include "client/renderer/gles.hpp"
+#include "client/model/ChestModel.hpp"
+#include "world/level/tile/entity/ChestTileEntity.hpp"
+#include "world/level/tile/ChestTile.hpp"
+#include "util/Mth.hpp"
 
 
 void ChestRenderer::render( TileEntity* entity, float x, float y, float z, float a )

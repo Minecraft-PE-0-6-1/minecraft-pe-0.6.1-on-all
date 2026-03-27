@@ -1,7 +1,7 @@
-#include "OreRecipes.h"
-#include "Recipes.h"
-#include "../../level/tile/Tile.h"
-#include "../DyePowderItem.h"
+#include "OreRecipes.hpp"
+#include "Recipes.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/item/DyePowderItem.hpp"
 #include <utility>
 
 void OreRecipes::addRecipes(Recipes* r)

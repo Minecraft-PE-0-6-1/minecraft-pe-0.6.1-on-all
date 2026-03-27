@@ -1,10 +1,10 @@
-#include "UsernameScreen.h"
-#include "StartMenuScreen.h"
-#include "../../Minecraft.h"
-#include "../Font.h"
-#include "../components/Button.h"
-#include "../../../platform/input/Keyboard.h"
-#include "../../../AppPlatform.h"
+#include "UsernameScreen.hpp"
+#include "StartMenuScreen.hpp"
+#include "client/Minecraft.hpp"
+#include "client/gui/Font.hpp"
+#include "client/gui/components/Button.hpp"
+#include "platform/input/Keyboard.hpp"
+#include "AppPlatform.hpp"
 
 UsernameScreen::UsernameScreen()
 :   _btnDone(0, "Done"),

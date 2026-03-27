@@ -1,8 +1,8 @@
-#include "Animal.h"
-#include "../../level/Level.h"
-#include "../../level/tile/Tile.h"
+#include "Animal.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/Tile.hpp"
 
-#include "../../../nbt/CompoundTag.h"
+#include "nbt/CompoundTag.hpp"
 
 
 Animal::Animal( Level* level )

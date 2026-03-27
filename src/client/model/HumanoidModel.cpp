@@ -1,8 +1,8 @@
-#include "HumanoidModel.h"
-#include <Minecraft.h>
-#include "../../util/Mth.h"
-#include "../../world/entity/player/Player.h"
-#include "../../world/entity/player/Inventory.h"
+#include "HumanoidModel.hpp"
+#include <Minecraft.hpp>
+#include "util/Mth.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/entity/player/Inventory.hpp"
 
 HumanoidModel::HumanoidModel( float g /*= 0*/, float yOffset /*= 0*/, int texW /*= 64*/, int texH /*= 32*/ )
 :    holdingLeftHand(false),

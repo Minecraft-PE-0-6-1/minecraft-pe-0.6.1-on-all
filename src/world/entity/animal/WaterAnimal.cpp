@@ -1,5 +1,5 @@
-#include "WaterAnimal.h"
-#include "../../level/Level.h"
+#include "WaterAnimal.hpp"
+#include "world/level/Level.hpp"
 
 
 WaterAnimal::WaterAnimal( Level* level )

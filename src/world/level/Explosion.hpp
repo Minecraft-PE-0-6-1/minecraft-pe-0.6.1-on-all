@@ -1,0 +1,36 @@
+#pragma once
+
+//package net.minecraft.world.level;
+
+#include <set>
+
+#include "TilePos.hpp"
+#include "util/Random.hpp"
+
+class Level;
+class Entity;
+
+typedef std::set<TilePos> TilePosSet;
+
+class Explosion
+{
+public:
+    Explosion(Level* level, Entity* source, float x, float y, float z, float r);
+
+    void explode();
+    void finalizeExplosion();
+
+	float x, y, z;
+	float r;
+
+	TilePosSet toBlow;
+
+	bool fire;
+	Entity* source;
+
+private:
+	Random random;
+	Level* level;
+
+};
+

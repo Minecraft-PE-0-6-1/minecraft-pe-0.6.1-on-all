@@ -1,4 +1,4 @@
-#include "NinePatch.h"
+#include "NinePatch.hpp"
 
 NinePatchDescription::NinePatchDescription( float x, float y, float x1, float x2, float x3, float y1, float y2, float y3, float w, float e, float n, float s ) :   u0(x), u1(x + x1), u2(x + x2), u3(x + x3),
 	v0(y), v1(y + y1), v2(y + y2), v3(y + y3),

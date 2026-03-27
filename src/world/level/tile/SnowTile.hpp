@@ -1,0 +1,36 @@
+#pragma once
+
+//package net.minecraft.world.level->tile;
+
+#include "Tile.hpp"
+
+#include "world/level/material/Material.hpp"
+#include "world/item/Item.hpp"
+#include "util/Random.hpp"
+
+class SnowTile: public Tile
+{
+	typedef Tile super;
+public:
+    SnowTile(int id, int tex)
+    :   super(id, tex, Material::snow)
+    {
+        setTicking(true);
+    }
+
+	int getResource(int data, Random* random) {
+        return Item::snowBall->id;
+    }
+
+    int getResourceCount(Random* random) {
+        return 4;
+    }
+
+    void tick(Level* level, int x, int y, int z, Random* random) {
+        if (level->getBrightness(LightLayer::Block, x, y, z) > 11) {
+            this->spawnResources(level, x, y, z, level->getData(x, y, z), 0);
+            level->setTile(x, y, z, 0);
+        }
+    }
+};
+

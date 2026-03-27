@@ -1,9 +1,9 @@
-#include "ChatScreen.h"
-#include "DialogDefinitions.h"
-#include "../Gui.h"
-#include "../../Minecraft.h"
-#include "../../../AppPlatform.h"
-#include "../../../platform/log.h"
+#include "ChatScreen.hpp"
+#include "DialogDefinitions.hpp"
+#include "client/gui/Gui.hpp"
+#include "client/Minecraft.hpp"
+#include "AppPlatform.hpp"
+#include "platform/log.hpp"
 
 void ChatScreen::init() {
 	minecraft->platform()->createUserInput(DialogDefinitions::DIALOG_NEW_CHAT_MESSAGE);

@@ -1,4 +1,4 @@
-#include "Particle.h"
+#include "Particle.hpp"
 
 float
 	Particle::xOff = 0,

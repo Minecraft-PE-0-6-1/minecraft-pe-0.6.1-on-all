@@ -1,7 +1,7 @@
-#include "FurnaceMenu.h"
-#include "../entity/player/Player.h"
-#include "../item/ItemInstance.h"
-#include "../level/tile/entity/FurnaceTileEntity.h"
+#include "FurnaceMenu.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/item/ItemInstance.hpp"
+#include "world/level/tile/entity/FurnaceTileEntity.hpp"
 
 FurnaceMenu::FurnaceMenu( FurnaceTileEntity* furnace )
 :   super(ContainerType::FURNACE),

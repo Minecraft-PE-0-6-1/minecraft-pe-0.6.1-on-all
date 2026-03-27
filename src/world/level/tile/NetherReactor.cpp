@@ -1,8 +1,8 @@
-#include "NetherReactor.h"
-#include "../../entity/player/Player.h"
-#include "../Level.h"
-#include "entity/NetherReactorTileEntity.h"
-#include "NetherReactorPattern.h"
+#include "NetherReactor.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/level/Level.hpp"
+#include "entity/NetherReactorTileEntity.hpp"
+#include "NetherReactorPattern.hpp"
 NetherReactor::NetherReactor( int id, int tex, const Material* material ) : super(id, tex, material) { }
 
 bool NetherReactor::use( Level* level, int x, int y, int z, Player* player ) {

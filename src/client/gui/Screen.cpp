@@ -1,12 +1,12 @@
-#include "Screen.h"
-#include "components/Button.h"
-#include "components/TextBox.h"
-#include <Minecraft.h>
-#include "../renderer/Tesselator.h"
-#include "../sound/SoundEngine.h"
-#include "../../platform/input/Keyboard.h"
-#include "../../platform/input/Mouse.h"
-#include "../renderer/Textures.h"
+#include "Screen.hpp"
+#include "components/Button.hpp"
+#include "components/TextBox.hpp"
+#include <Minecraft.hpp>
+#include "client/renderer/Tesselator.hpp"
+#include "client/sound/SoundEngine.hpp"
+#include "platform/input/Keyboard.hpp"
+#include "platform/input/Mouse.hpp"
+#include "client/renderer/Textures.hpp"
 
 Screen::Screen()
 :   passEvents(false),

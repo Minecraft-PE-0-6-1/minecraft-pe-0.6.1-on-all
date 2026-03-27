@@ -1,13 +1,13 @@
-#include "PauseScreen.h"
-#include "StartMenuScreen.h"
-#include "../components/ImageButton.h"
-#include "../../Minecraft.h"
-#include "../../../util/Mth.h"
-#include "../../../network/RakNetInstance.h"
-#include "../../../network/ServerSideNetworkHandler.h"
-#include "client/Options.h"
-#include "client/gui/components/Button.h"
-#include "client/gui/screens/OptionsScreen.h"
+#include "PauseScreen.hpp"
+#include "StartMenuScreen.hpp"
+#include "client/gui/components/ImageButton.hpp"
+#include "client/Minecraft.hpp"
+#include "util/Mth.hpp"
+#include "network/RakNetInstance.hpp"
+#include "network/ServerSideNetworkHandler.hpp"
+#include "client/Options.hpp"
+#include "client/gui/components/Button.hpp"
+#include "client/gui/screens/OptionsScreen.hpp"
 
 PauseScreen::PauseScreen(bool wasBackPaused)
 :	saveStep(0),

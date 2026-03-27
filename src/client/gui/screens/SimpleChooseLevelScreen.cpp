@@ -1,13 +1,13 @@
-#include "SimpleChooseLevelScreen.h"
-#include "ProgressScreen.h"
-#include "ScreenChooser.h"
-#include "../components/Button.h"
-#include "../components/ImageButton.h"
-#include "../../Minecraft.h"
-#include "../../../world/level/LevelSettings.h"
-#include "../../../platform/time.h"
-#include "../../../platform/input/Keyboard.h"
-#include "../../../platform/log.h"
+#include "SimpleChooseLevelScreen.hpp"
+#include "ProgressScreen.hpp"
+#include "ScreenChooser.hpp"
+#include "client/gui/components/Button.hpp"
+#include "client/gui/components/ImageButton.hpp"
+#include "client/Minecraft.hpp"
+#include "world/level/LevelSettings.hpp"
+#include "platform/time.hpp"
+#include "platform/input/Keyboard.hpp"
+#include "platform/log.hpp"
 
 SimpleChooseLevelScreen::SimpleChooseLevelScreen(const std::string& levelName)
 :   bHeader(0),

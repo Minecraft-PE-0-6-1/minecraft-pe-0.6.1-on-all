@@ -1,6 +1,6 @@
-#include "ChickenRenderer.h"
-#include "../../../util/Mth.h"
-#include "../../../world/entity/animal/Chicken.h"
+#include "ChickenRenderer.hpp"
+#include "util/Mth.hpp"
+#include "world/entity/animal/Chicken.hpp"
 
 
 ChickenRenderer::ChickenRenderer( Model* model, float shadow )

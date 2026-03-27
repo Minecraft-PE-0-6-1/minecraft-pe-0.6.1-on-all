@@ -1,7 +1,7 @@
-#include "HeavyTile.h"
-#include "../Level.h"
-#include "../material/Material.h"
-#include "../../entity/item/FallingTile.h"
+#include "HeavyTile.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/entity/item/FallingTile.hpp"
 
 bool HeavyTile::instaFall = false;
 

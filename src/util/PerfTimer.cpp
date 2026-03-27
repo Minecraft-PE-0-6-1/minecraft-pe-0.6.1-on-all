@@ -1,5 +1,5 @@
-#include "PerfTimer.h"
-#include "../platform/time.h"
+#include "PerfTimer.hpp"
+#include "platform/time.hpp"
 #include <algorithm>
 
 /*static*/

@@ -1,6 +1,6 @@
-#include "KeyboardInput.h"
-#include "../../Options.h"
-#include "../../../world/entity/player/Player.h"
+#include "KeyboardInput.hpp"
+#include "client/Options.hpp"
+#include "world/entity/player/Player.hpp"
 
 KeyboardInput::KeyboardInput( Options* options )
 {

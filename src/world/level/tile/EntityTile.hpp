@@ -1,0 +1,26 @@
+#pragma once
+
+//package net.minecraft.world.level->tile;
+
+#include "Tile.hpp"
+
+class Level;
+class TileEntity;
+class Material;
+
+/*abstract*/
+class EntityTile: public Tile
+{
+    typedef Tile super;
+public:
+    virtual TileEntity* newTileEntity() = 0;
+
+    void onPlace(Level* level, int x, int y, int z);
+    void onRemove(Level* level, int x, int y, int z);
+
+    void triggerEvent(Level* level, int x, int y, int z, int b0, int b1);
+protected:
+    EntityTile(int id, const Material* material);
+    EntityTile(int id, int tex, const Material* material);
+};
+

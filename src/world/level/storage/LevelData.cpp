@@ -1,4 +1,4 @@
-#include "LevelData.h"
+#include "LevelData.hpp"
 
 LevelData::LevelData()
 :	xSpawn(128),

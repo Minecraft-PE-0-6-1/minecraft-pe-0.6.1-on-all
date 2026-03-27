@@ -1,9 +1,9 @@
-#include "ScrolledSelectionList.h"
-#include "../../Minecraft.h"
-#include "../../renderer/Tesselator.h"
-#include "../../renderer/gles.h"
-#include "../../../platform/input/Mouse.h"
-#include "../../renderer/Textures.h"
+#include "ScrolledSelectionList.hpp"
+#include "client/Minecraft.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "client/renderer/gles.hpp"
+#include "platform/input/Mouse.hpp"
+#include "client/renderer/Textures.hpp"
 
 static int Abs(int d) {
 	return d >= 0? d : -d;

@@ -1,6 +1,6 @@
-#include "Polygon.h"
-#include "../../renderer/Tesselator.h"
-#include "../../../world/phys/Vec3.h"
+#include "Polygon.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "world/phys/Vec3.hpp"
 
 PolygonQuad::PolygonQuad(VertexPT* v0, VertexPT* v1, VertexPT* v2, VertexPT* v3)
 :	_flipNormal(false)

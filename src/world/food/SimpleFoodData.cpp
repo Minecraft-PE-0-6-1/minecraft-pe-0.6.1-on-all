@@ -1,7 +1,7 @@
-#include "SimpleFoodData.h"
-#include "FoodConstants.h"
-#include "../item/FoodItem.h"
-#include "../entity/player/Player.h"
+#include "SimpleFoodData.hpp"
+#include "FoodConstants.hpp"
+#include "world/item/FoodItem.hpp"
+#include "world/entity/player/Player.hpp"
 
 SimpleFoodData::SimpleFoodData()
 :	foodLevel(0)

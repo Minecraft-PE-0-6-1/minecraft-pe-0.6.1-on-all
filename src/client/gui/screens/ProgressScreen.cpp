@@ -1,11 +1,11 @@
-#include "ProgressScreen.h"
-#include "DisconnectionScreen.h"
-#include "../Gui.h"
-#include "../Font.h"
-#include "../../Minecraft.h"
-#include "../../renderer/Tesselator.h"
-#include "../../../SharedConstants.h"
-#include "../../renderer/Textures.h"
+#include "ProgressScreen.hpp"
+#include "DisconnectionScreen.hpp"
+#include "client/gui/Gui.hpp"
+#include "client/gui/Font.hpp"
+#include "client/Minecraft.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "SharedConstants.hpp"
+#include "client/renderer/Textures.hpp"
 
 ProgressScreen::ProgressScreen()
 :	ticks(0)

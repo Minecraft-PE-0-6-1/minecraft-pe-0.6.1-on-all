@@ -1,4 +1,4 @@
-#include "SharedConstants.h"
+#include "SharedConstants.hpp"
 
 namespace Common {
 

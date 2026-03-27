@@ -1,9 +1,9 @@
-#include "DynamicTexture.h"
+#include "DynamicTexture.hpp"
 
 #include <cstring>
-#include "../Textures.h"
-#include "../../../world/level/tile/Tile.h"
-#include "../../../util/Mth.h"
+#include "client/renderer/Textures.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "util/Mth.hpp"
 
 //
 // DynamicTexture

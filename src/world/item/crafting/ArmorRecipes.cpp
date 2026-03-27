@@ -1,6 +1,6 @@
-#include "ArmorRecipes.h"
-#include "Recipes.h"
-#include "../../level/tile/Tile.h"
+#include "ArmorRecipes.hpp"
+#include "Recipes.hpp"
+#include "world/level/tile/Tile.hpp"
 
 static RowList shapes[] = {
 	// Helmet

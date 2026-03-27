@@ -1,7 +1,7 @@
-#include "Spider.h"
-#include "../../item/Item.h"
-#include "../../level/Level.h"
-#include "../../../util/Mth.h"
+#include "Spider.hpp"
+#include "world/item/Item.hpp"
+#include "world/level/Level.hpp"
+#include "util/Mth.hpp"
 
 Spider::Spider( Level* level )
 :   super(level),

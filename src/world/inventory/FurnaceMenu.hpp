@@ -1,0 +1,36 @@
+#pragma once
+
+//package net.minecraft.world.inventory;
+
+#include "BaseContainerMenu.hpp"
+#include <vector>
+
+class FurnaceTileEntity;
+class ItemInstance;
+
+class FurnaceMenu: public BaseContainerMenu
+{
+	typedef BaseContainerMenu super;
+public:
+    FurnaceMenu(FurnaceTileEntity* furnace);
+
+    virtual ~FurnaceMenu() {}
+
+    virtual void setSlot(int slot, ItemInstance* item);
+	virtual void setData(int id, int value);
+	virtual std::vector<ItemInstance> getItems();
+
+	virtual void broadcastChanges();
+	virtual void setListener(IContainerListener* listener);
+
+	virtual bool tileEntityDestroyedIsInvalid( int tileEntityId );
+
+	FurnaceTileEntity* furnace;
+
+	int furnaceTileEntityId;
+private:
+	int lastTickCount;
+	int lastLitTime;
+	int lastLitDuration;
+};
+

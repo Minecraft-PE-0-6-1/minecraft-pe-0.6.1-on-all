@@ -1,4 +1,4 @@
-#include "ArgumentsSettings.h"
+#include "ArgumentsSettings.hpp"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

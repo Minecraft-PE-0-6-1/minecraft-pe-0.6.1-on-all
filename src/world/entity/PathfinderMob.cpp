@@ -1,11 +1,11 @@
-#include "PathfinderMob.h"
-#include "../level/Level.h"
-#include "../phys/Vec3.h"
-#include "../../util/Mth.h"
-#include "../../util/PerfTimer.h"
-#include "../../SharedConstants.h"
+#include "PathfinderMob.hpp"
+#include "world/level/Level.hpp"
+#include "world/phys/Vec3.hpp"
+#include "util/Mth.hpp"
+#include "util/PerfTimer.hpp"
+#include "SharedConstants.hpp"
 
-#include "ai/Sensing.h"
+#include "ai/Sensing.hpp"
 
 
 PathfinderMob::PathfinderMob( Level* level )

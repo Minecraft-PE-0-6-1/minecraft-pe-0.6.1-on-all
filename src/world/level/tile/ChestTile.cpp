@@ -1,9 +1,9 @@
-#include "ChestTile.h"
-#include "entity/ChestTileEntity.h"
-#include "../Level.h"
-#include "../material/Material.h"
-#include "../../Facing.h"
-#include "../../entity/item/ItemEntity.h"
+#include "ChestTile.hpp"
+#include "entity/ChestTileEntity.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/Facing.hpp"
+#include "world/entity/item/ItemEntity.hpp"
 
 ChestTile::ChestTile( int id )
 :	super(id, Material::wood)

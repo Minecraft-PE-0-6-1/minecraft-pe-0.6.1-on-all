@@ -1,0 +1,28 @@
+#pragma once
+
+//package net.minecraft.world.item;
+
+#include "world/level/tile/Tile.hpp"
+#include "ItemInstance.hpp"
+
+class TreeTileItem: public TileItem
+{
+	typedef TileItem super;
+
+public:
+    TreeTileItem(int id)
+    :	super(id)
+	{
+        setMaxDamage(0);
+        setStackedByData(true);
+    }
+
+    int getIcon(const ItemInstance* itemInstance) {
+        return Tile::treeTrunk->getTexture(2, itemInstance->getAuxValue());
+    }
+
+    int getLevelDataForAuxValue(int auxValue) {
+        return auxValue;
+    }
+};
+

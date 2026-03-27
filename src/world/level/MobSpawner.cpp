@@ -1,17 +1,17 @@
-#include "MobSpawner.h"
+#include "MobSpawner.hpp"
 
 #include <algorithm>
 
-#include "Level.h"
-#include "biome/Biome.h"
-#include "material/Material.h"
-#include "../entity/EntityTypes.h"
-#include "../entity/MobFactory.h"
-#include "../entity/MobCategory.h"
-#include "../entity/player/Player.h"
+#include "Level.hpp"
+#include "biome/Biome.hpp"
+#include "material/Material.hpp"
+#include "world/entity/EntityTypes.hpp"
+#include "world/entity/MobFactory.hpp"
+#include "world/entity/MobCategory.hpp"
+#include "world/entity/player/Player.hpp"
 
-//#include "../entity/animal/Sheep.h"
-//#include "tile/BedTile.h"
+//#include "world/entity/animal/Sheep.hpp"
+//#include "tile/BedTile.hpp"
 
 std::map<ChunkPos, bool> MobSpawner::chunksToPoll;
 

@@ -1,4 +1,4 @@
-#include "Multitouch.h"
+#include "Multitouch.hpp"
 
 int
 	Multitouch::_index = -1,

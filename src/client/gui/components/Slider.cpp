@@ -1,9 +1,9 @@
-#include "Slider.h"
-#include "../../Minecraft.h"
-#include "../../renderer/Textures.h"
-#include "../Screen.h"
-#include "../../../locale/I18n.h"
-#include "../../../util/Mth.h"
+#include "Slider.hpp"
+#include "client/Minecraft.hpp"
+#include "client/renderer/Textures.hpp"
+#include "client/gui/Screen.hpp"
+#include "locale/I18n.hpp"
+#include "util/Mth.hpp"
 #include <algorithm>
 #include <assert.h>
 

@@ -1,8 +1,8 @@
-#include "Throwable.h"
-#include "../player/Player.h"
-#include "../../level/Level.h"
-#include "../../../util/Mth.h"
-#include "../../phys/HitResult.h"
+#include "Throwable.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/level/Level.hpp"
+#include "util/Mth.hpp"
+#include "world/phys/HitResult.hpp"
 
 Throwable::Throwable( Level* level )
 :	super(level)

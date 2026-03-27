@@ -1,4 +1,4 @@
-#include "EntityTileRenderer.h"
+#include "EntityTileRenderer.hpp"
 
 EntityTileRenderer* EntityTileRenderer::instance = new EntityTileRenderer();
 

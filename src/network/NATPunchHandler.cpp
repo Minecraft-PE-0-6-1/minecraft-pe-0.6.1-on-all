@@ -1,7 +1,7 @@
 #include "NATPunchHandler.h"
-#include "../raknet/TCPInterface.h"
-#include "../raknet/HTTPConnection.h"
-#include "PHPDirectoryServer2.h"
+#include "raknet/TCPInterface.h"
+#include "raknet/HTTPConnection.h"
+#include "PHPDirectoryServer2.hpp"
 
 using namespace RakNet;
 NATPuchHandler::NATPuchHandler() {

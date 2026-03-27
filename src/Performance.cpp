@@ -1,4 +1,4 @@
-#include "Performance.h"
+#include "Performance.hpp"
 
 /*static*/
 StopwatchHandler Performance::watches;

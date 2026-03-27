@@ -1,7 +1,7 @@
-#include "SoundEngine.h"
-#include "../Options.h"
-#include <Minecraft.h>
-#include "../../world/entity/Mob.h"
+#include "SoundEngine.hpp"
+#include "client/Options.hpp"
+#include <Minecraft.hpp>
+#include "world/entity/Mob.hpp"
 
 
 SoundEngine::SoundEngine( float maxDistance )

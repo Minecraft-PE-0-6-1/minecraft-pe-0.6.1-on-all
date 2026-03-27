@@ -1,9 +1,9 @@
-#include "ItemPane.h"
-#include "../Gui.h"
-#include "../../renderer/gles.h"
-#include "../../renderer/Tesselator.h"
-#include "NinePatch.h"
-#include "../../renderer/entity/ItemRenderer.h"
+#include "ItemPane.hpp"
+#include "client/gui/Gui.hpp"
+#include "client/renderer/gles.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "NinePatch.hpp"
+#include "client/renderer/entity/ItemRenderer.hpp"
 
 const int rgbActive = 0xfff0f0f0;
 const int rgbInactive = 0xc0635558;

@@ -1,17 +1,17 @@
-#include <Minecraft.h>
-#include "gamemode/CreativeMode.h"
-#include "gamemode/SurvivalMode.h"
-#include "gamemode/CreatorMode.h"
-#include "world/entity/player/Player.h"
-#include "world/item/Item.h"
-#include "world/item/ItemInstance.h"
-#include "world/item/crafting/Recipes.h"
-#include "world/level/Level.h"
-#include "world/level/tile/entity/TileEntity.h"
+#include <Minecraft.hpp>
+#include "gamemode/CreativeMode.hpp"
+#include "gamemode/SurvivalMode.hpp"
+#include "gamemode/CreatorMode.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/item/Item.hpp"
+#include "world/item/ItemInstance.hpp"
+#include "world/item/crafting/Recipes.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/entity/TileEntity.hpp"
 #include <string>
 #include <cstdlib>
-#include "client/gui/Screen.h"
-#include "world/level/storage/ExternalFileLevelStorageSource.h"
+#include "client/gui/Screen.hpp"
+#include "world/level/storage/ExternalFileLevelStorageSource.hpp"
 
 #if defined(APPLE_DEMO_PROMOTION)
     #define NO_NETWORK
@@ -20,32 +20,32 @@
 #if defined(RPI)
 	#define CREATORMODE
 #endif
-#include "network/RakNetInstance.h"
-#include "network/ClientSideNetworkHandler.h"
-#include "network/ServerSideNetworkHandler.h"
-//#include "network/Packet.h"
-#include "world/entity/player/Inventory.h"
-#include "world/level/tile/Tile.h"
-#include "world/level/storage/LevelStorageSource.h"
-#include "world/level/storage/LevelStorage.h"
-#include "world/level/chunk/ChunkSource.h"
+#include "network/RakNetInstance.hpp"
+#include "network/ClientSideNetworkHandler.hpp"
+#include "network/ServerSideNetworkHandler.hpp"
+//#include "network/Packet.hpp"
+#include "world/entity/player/Inventory.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/level/storage/LevelStorageSource.hpp"
+#include "world/level/storage/LevelStorage.hpp"
+#include "world/level/chunk/ChunkSource.hpp"
 
-#include "platform/CThread.h"
-#include <IPlatform.h>
-#include "util/PerfTimer.h"
-#include "util/PerfRenderer.h"
+#include "platform/CThread.hpp"
+#include <IPlatform.hpp>
+#include "util/PerfTimer.hpp"
+#include "util/PerfRenderer.hpp"
 
-#include "world/entity/MobFactory.h"
-#include "world/level/MobSpawner.h"
-#include "util/Mth.h"
-#include "world/entity/MobCategory.h"
-#include "server/ServerLevel.h"
+#include "world/entity/MobFactory.hpp"
+#include "world/level/MobSpawner.hpp"
+#include "util/Mth.hpp"
+#include "world/entity/MobCategory.hpp"
+#include "server/ServerLevel.hpp"
 
 #ifdef CREATORMODE
-#include "server/CreatorLevel.h"
+#include "server/CreatorLevel.hpp"
 #endif
 
-#include "network/command/CommandServer.h"
+#include "network/command/CommandServer.hpp"
 
 /*static*/
 const char* Minecraft::progressMessages[] = {

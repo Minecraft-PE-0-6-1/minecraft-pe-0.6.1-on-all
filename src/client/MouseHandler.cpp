@@ -1,5 +1,5 @@
-#include "MouseHandler.h"
-#include "player/input/ITurnInput.h"
+#include "MouseHandler.hpp"
+#include "player/input/ITurnInput.hpp"
 
 #ifdef RPI
 #include <SDL/SDL.h>

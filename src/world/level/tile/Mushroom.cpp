@@ -1,4 +1,4 @@
-#include "Mushroom.h"
+#include "Mushroom.hpp"
 
 Mushroom::Mushroom(int id, int tex)
 :   super(id, tex)

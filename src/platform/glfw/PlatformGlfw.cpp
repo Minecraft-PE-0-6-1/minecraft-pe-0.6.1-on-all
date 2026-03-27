@@ -1,14 +1,14 @@
-#include "PlatformGlfw.h"
-#include <IPlatform.h>
-#include "platform/input/Keyboard.h"
-#include "platform/input/Mouse.h"
+#include "PlatformGlfw.hpp"
+#include <IPlatform.hpp>
+#include "platform/input/Keyboard.hpp"
+#include "platform/input/Mouse.hpp"
 
-#include "platform/log.h"
+#include "platform/log.hpp"
 #include <GLFW/glfw3.h>
 #include <png.h>
 
-#include "platform/HttpClient.h"
-#include "util/StringUtils.h"
+#include "platform/HttpClient.hpp"
+#include "util/StringUtils.hpp"
 #include <fstream>
 #include <ctime>
 #include <vector>
@@ -18,7 +18,7 @@
 #include <shellapi.h>
 #endif
 
-#include "App.h"
+#include "App.hpp"
 
 
 bool PlatformGlfw::init() {

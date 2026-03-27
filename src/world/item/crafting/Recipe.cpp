@@ -1,6 +1,6 @@
-#include "Recipe.h"
-#include "../../../util/Mth.h"
-#include "../../level/tile/Tile.h"
+#include "Recipe.hpp"
+#include "util/Mth.hpp"
+#include "world/level/tile/Tile.hpp"
 
 void ItemPack::add( int id, int count /* = 1 */ )
 {

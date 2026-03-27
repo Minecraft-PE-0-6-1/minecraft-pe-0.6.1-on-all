@@ -1,9 +1,9 @@
 #ifndef NET_MINECRAFT_WORLD_ENTITY__MobCategory_H__
 #define NET_MINECRAFT_WORLD_ENTITY__MobCategory_H__
 
-#include "EntityTypes.h"
-#include "MobCategory.h"
-#include "../level/material/Material.h"
+#include "EntityTypes.hpp"
+#include "MobCategory.hpp"
+#include "world/level/material/Material.hpp"
 
 
 const MobCategory MobCategory::monster(

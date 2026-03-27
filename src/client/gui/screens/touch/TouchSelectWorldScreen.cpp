@@ -1,20 +1,20 @@
-#include "TouchSelectWorldScreen.h"
-#include "../StartMenuScreen.h"
-#include "../ProgressScreen.h"
-#include "../DialogDefinitions.h"
-#include "../../components/ImageButton.h" //weird!
-#include "../../../renderer/Textures.h"
-#include "../../../renderer/Tesselator.h"
-#include "../../../../world/level/LevelSettings.h"
-#include "../../../../AppPlatform.h"
-#include "../../../../util/StringUtils.h"
-#include "../../../../util/Mth.h"
-#include "../../../../platform/input/Mouse.h"
-#include "../../../../Performance.h"
+#include "TouchSelectWorldScreen.hpp"
+#include "client/gui/screens/StartMenuScreen.hpp"
+#include "client/gui/screens/ProgressScreen.hpp"
+#include "client/gui/screens/DialogDefinitions.hpp"
+#include "client/gui/components/ImageButton.hpp" //weird!
+#include "client/renderer/Textures.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "world/level/LevelSettings.hpp"
+#include "AppPlatform.hpp"
+#include "util/StringUtils.hpp"
+#include "util/Mth.hpp"
+#include "platform/input/Mouse.hpp"
+#include "Performance.hpp"
 
 #include <algorithm>
 #include <set>
-#include "../SimpleChooseLevelScreen.h"
+#include "client/gui/screens/SimpleChooseLevelScreen.hpp"
 
 namespace Touch {
 

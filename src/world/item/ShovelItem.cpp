@@ -1,5 +1,5 @@
-#include "ShovelItem.h"
-#include "../level/tile/Tile.h"
+#include "ShovelItem.hpp"
+#include "world/level/tile/Tile.hpp"
 
 ShovelItem::ShovelItem( int id, const Tier& tier )
 :   super(id, 1, tier)

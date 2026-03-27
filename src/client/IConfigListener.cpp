@@ -1,7 +1,7 @@
-#include "IConfigListener.h"
-#include "Minecraft.h"
+#include "IConfigListener.hpp"
+#include "Minecraft.hpp"
 #ifndef STANDALONE_SERVER
-#include "gui/Gui.h"
+#include "gui/Gui.hpp"
 #endif /* STANDALONE_SERVER */
 Config createConfig(Minecraft* mc) {
 	Config c;

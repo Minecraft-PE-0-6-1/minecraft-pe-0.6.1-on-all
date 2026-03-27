@@ -1,6 +1,6 @@
-#include "Level.h"
-#include "LightUpdate.h"
-#include "tile/Tile.h"
+#include "Level.hpp"
+#include "LightUpdate.hpp"
+#include "tile/Tile.hpp"
 
 //LightUpdate::LightUpdate()
 //:

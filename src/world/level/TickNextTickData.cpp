@@ -1,4 +1,4 @@
-#include "TickNextTickData.h"
+#include "TickNextTickData.hpp"
 
 long TickNextTickData::C = 0;
 

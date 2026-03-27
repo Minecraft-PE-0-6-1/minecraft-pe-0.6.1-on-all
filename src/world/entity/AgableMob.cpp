@@ -1,4 +1,4 @@
-#include "AgableMob.h"
+#include "AgableMob.hpp"
 
 AgableMob::AgableMob( Level* level )
 :   super(level),

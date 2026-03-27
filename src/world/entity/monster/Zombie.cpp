@@ -1,16 +1,16 @@
-#include "Zombie.h"
+#include "Zombie.hpp"
 
-#include "../../item/Item.h"
-#include "../../level/Level.h"
-#include "../../../util/Mth.h"
-//#include "../MobType.h"
-#include "../ai/goal/GoalSelector.h"
-#include "../ai/control/JumpControl.h"
-#include "../ai/goal/RandomStrollGoal.h"
-#include "../ai/goal/MeleeAttackGoal.h"
-#include "../ai/goal/target/NearestAttackableTargetGoal.h"
-#include "../ai/goal/target/HurtByTargetGoal.h"
-#include "../ai/goal/BreakDoorGoal.h"
+#include "world/item/Item.hpp"
+#include "world/level/Level.hpp"
+#include "util/Mth.hpp"
+//#include "world/entity/MobType.hpp"
+#include "world/entity/ai/goal/GoalSelector.hpp"
+#include "world/entity/ai/control/JumpControl.hpp"
+#include "world/entity/ai/goal/RandomStrollGoal.hpp"
+#include "world/entity/ai/goal/MeleeAttackGoal.hpp"
+#include "world/entity/ai/goal/target/NearestAttackableTargetGoal.hpp"
+#include "world/entity/ai/goal/target/HurtByTargetGoal.hpp"
+#include "world/entity/ai/goal/BreakDoorGoal.hpp"
 
 Zombie::Zombie( Level* level )
 :	super(level),

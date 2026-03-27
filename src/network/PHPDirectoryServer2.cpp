@@ -14,17 +14,17 @@
 /// License as published by the Free
 /// Software Foundation
 
-#include "PHPDirectoryServer2.h"
-#include "../raknet/HTTPConnection.h"
-#include "../raknet/RakSleep.h"
-#include "../raknet/RakString.h"
-#include "../raknet/RakNetTypes.h"
-#include "../raknet/GetTime.h"
-#include "../raknet/RakAssert.h"
+#include "PHPDirectoryServer2.hpp"
+#include "raknet/HTTPConnection.h"
+#include "raknet/RakSleep.h"
+#include "raknet/RakString.h"
+#include "raknet/RakNetTypes.h"
+#include "raknet/GetTime.h"
+#include "raknet/RakAssert.h"
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
-#include "../raknet/Itoa.h"
+#include "raknet/Itoa.h"
 
 // Column with this header contains the name of the game, passed to UploadTable()
 static const char *GAME_NAME_COMMAND="__GAME_NAME";

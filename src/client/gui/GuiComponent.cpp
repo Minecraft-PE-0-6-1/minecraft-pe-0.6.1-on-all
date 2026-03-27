@@ -1,8 +1,8 @@
-#include "GuiComponent.h"
+#include "GuiComponent.hpp"
 
-#include "../renderer/Tesselator.h"
-#include "../renderer/gles.h"
-#include "Font.h"
+#include "client/renderer/Tesselator.hpp"
+#include "client/renderer/gles.hpp"
+#include "Font.hpp"
 
 
 GuiComponent::GuiComponent()

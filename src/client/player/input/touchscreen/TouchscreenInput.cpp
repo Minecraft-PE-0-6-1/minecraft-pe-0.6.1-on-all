@@ -1,15 +1,15 @@
-#include "TouchscreenInput.h"
-#include "../../../Options.h"
-#include "../../../../platform/input/Multitouch.h"
-#include "../../../gui/Gui.h"
-#include "../../../renderer/Tesselator.h"
-#include "../../../../world/entity/player/Player.h"
+#include "TouchscreenInput.hpp"
+#include "client/Options.hpp"
+#include "platform/input/Multitouch.hpp"
+#include "client/gui/Gui.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "world/entity/player/Player.hpp"
 
-#include "../../../Minecraft.h"
-#include "../../../../platform/log.h"
-#include "../../../renderer/Textures.h"
-#include "../../../sound/SoundEngine.h"
-#include "client/gui/screens/ScreenChooser.h"
+#include "client/Minecraft.hpp"
+#include "platform/log.hpp"
+#include "client/renderer/Textures.hpp"
+#include "client/sound/SoundEngine.hpp"
+#include "client/gui/screens/ScreenChooser.hpp"
 
 
 // ARGHHHHHH WHY NOT FUCKING ENUM

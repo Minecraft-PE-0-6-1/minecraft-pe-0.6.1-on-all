@@ -1,6 +1,6 @@
-#include "Button.h"
-#include "../../Minecraft.h"
-#include "../../renderer/Textures.h"
+#include "Button.hpp"
+#include "client/Minecraft.hpp"
+#include "client/renderer/Textures.hpp"
 
 Button::Button(int id, const std::string& msg)
 :	GuiElement(true, true, 0, 0, 200, 24),

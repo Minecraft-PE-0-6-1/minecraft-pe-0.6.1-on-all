@@ -1,7 +1,7 @@
-#include "FallingTile.h"
-#include "../../level/Level.h"
-#include "../../../util/Random.h"
-#include "../../../nbt/CompoundTag.h"
+#include "FallingTile.hpp"
+#include "world/level/Level.hpp"
+#include "util/Random.hpp"
+#include "nbt/CompoundTag.hpp"
 
 
 FallingTile::FallingTile( Level* level )

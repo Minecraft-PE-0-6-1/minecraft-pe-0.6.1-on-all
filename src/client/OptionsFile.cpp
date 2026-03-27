@@ -1,8 +1,8 @@
-#include "OptionsFile.h"
+#include "OptionsFile.hpp"
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include <platform/log.h>
+#include <platform/log.hpp>
 
 #if defined(_WIN32)
     #include <direct.h>

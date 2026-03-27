@@ -1,16 +1,16 @@
 #if !defined(DEMO_MODE) && !defined(APPLE_DEMO_PROMOTION)
 
-#include "LevelData.h"
-#include "ExternalFileLevelStorageSource.h"
-#include "ExternalFileLevelStorage.h"
-#include "FolderMethods.h"
-#include "../../../platform/file.h"
-#include "../../../util/StringUtils.h"
+#include "LevelData.hpp"
+#include "ExternalFileLevelStorageSource.hpp"
+#include "ExternalFileLevelStorage.hpp"
+#include "FolderMethods.hpp"
+#include "platform/file.hpp"
+#include "util/StringUtils.hpp"
 #include <cstdio>
 #include <sys/types.h>
 
 #ifdef __APPLE__
-#include "MoveFolder.h"
+#include "MoveFolder.hpp"
 #endif
 
 static const char ILLEGAL_FILE_CHARACTERS[] = {

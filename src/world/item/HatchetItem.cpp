@@ -1,6 +1,6 @@
-#include "HatchetItem.h"
-#include "../level/material/Material.h"
-#include "../level/tile/Tile.h"
+#include "HatchetItem.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/level/tile/Tile.hpp"
 
 
 HatchetItem::HatchetItem( int id, const Tier& tier ) :   super(id, 3, tier)

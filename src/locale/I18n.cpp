@@ -1,9 +1,9 @@
-#include "I18n.h"
+#include "I18n.hpp"
 #include <sstream>
-#include <IPlatform.h>
-#include "../util/StringUtils.h"
-#include "../world/level/tile/Tile.h"
-#include "../world/item/ItemInstance.h"
+#include <IPlatform.hpp>
+#include "util/StringUtils.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/item/ItemInstance.hpp"
 #include <ctype.h>
 
 I18n::Map I18n::_strings;

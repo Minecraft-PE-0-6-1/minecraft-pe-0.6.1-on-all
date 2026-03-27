@@ -1,5 +1,5 @@
-#include "SandTile.h"
-#include "../../entity/item/FallingTile.h"
+#include "SandTile.hpp"
+#include "world/entity/item/FallingTile.hpp"
 
 bool SandTile::instaFall = false;
 

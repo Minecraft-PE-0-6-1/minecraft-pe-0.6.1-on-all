@@ -1,5 +1,5 @@
-#include "HitResult.h"
-#include "../entity/Entity.h"
+#include "HitResult.hpp"
+#include "world/entity/Entity.hpp"
 
 
 HitResult::HitResult()

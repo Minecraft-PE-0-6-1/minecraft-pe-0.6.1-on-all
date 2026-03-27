@@ -1,11 +1,11 @@
-//#include "ios/OpenALSupport.h"
-#include "SoundSystemAL.h"
-#include "../../util/Mth.h"
-#include "../../world/level/tile/Tile.h"
-#include "../../world/phys/Vec3.h"
-#include "../../client/sound/Sound.h"
+//#include "ios/OpenALSupport.hpp"
+#include "SoundSystemAL.hpp"
+#include "util/Mth.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/phys/Vec3.hpp"
+#include "client/sound/Sound.hpp"
 
-#include "../log.h"
+#include "platform/log.hpp"
 
 static const char* errIdString = 0;
 

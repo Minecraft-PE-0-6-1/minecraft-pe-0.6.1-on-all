@@ -1,10 +1,10 @@
-#include "Textures.h"
+#include "Textures.hpp"
 
-#include "TextureData.h"
-#include "ptexture/DynamicTexture.h"
-#include "../Options.h"
-#include "../../platform/time.h"
-#include "../../util/StringUtils.h"
+#include "TextureData.hpp"
+#include "ptexture/DynamicTexture.hpp"
+#include "client/Options.hpp"
+#include "platform/time.hpp"
+#include "util/StringUtils.hpp"
 
 /*static*/ int  Textures::textureChanges = 0;
 

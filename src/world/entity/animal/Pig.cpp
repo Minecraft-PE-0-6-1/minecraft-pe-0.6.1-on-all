@@ -1,5 +1,5 @@
-#include "Pig.h"
-#include "../player/Player.h"
+#include "Pig.hpp"
+#include "world/entity/player/Player.hpp"
 
 Pig::Pig( Level* level ) :	super(level)
 {

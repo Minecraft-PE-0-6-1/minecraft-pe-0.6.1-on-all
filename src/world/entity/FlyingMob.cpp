@@ -1,7 +1,7 @@
-#include "FlyingMob.h"
-#include "../level/Level.h"
-#include "../level/tile/Tile.h"
-#include "../../util/Mth.h"
+#include "FlyingMob.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "util/Mth.hpp"
 
 
 FlyingMob::FlyingMob( Level* level )

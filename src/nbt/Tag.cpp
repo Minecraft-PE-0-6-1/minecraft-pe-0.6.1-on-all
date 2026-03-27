@@ -1,16 +1,16 @@
-#include "Tag.h"
+#include "Tag.hpp"
 
-#include "EndTag.h"
-#include "ByteTag.h"
-#include "ShortTag.h"
-#include "IntTag.h"
-#include "LongTag.h"
-#include "FloatTag.h"
-#include "DoubleTag.h"
-#include "ByteArrayTag.h"
-#include "StringTag.h"
-#include "ListTag.h"
-#include "CompoundTag.h"
+#include "EndTag.hpp"
+#include "ByteTag.hpp"
+#include "ShortTag.hpp"
+#include "IntTag.hpp"
+#include "LongTag.hpp"
+#include "FloatTag.hpp"
+#include "DoubleTag.hpp"
+#include "ByteArrayTag.hpp"
+#include "StringTag.hpp"
+#include "ListTag.hpp"
+#include "CompoundTag.hpp"
 
 
 /*static*/ const std::string Tag::NullString = "";

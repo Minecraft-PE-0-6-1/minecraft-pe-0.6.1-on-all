@@ -1,3 +1,3 @@
-#include "Frustum.h"
+#include "Frustum.hpp"
 
 Frustum Frustum::frustum;

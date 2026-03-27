@@ -1,7 +1,7 @@
-#include "ItemInstance.h"
-#include "Item.h"
-#include "../level/tile/Tile.h"
-#include "../../nbt/CompoundTag.h"
+#include "ItemInstance.hpp"
+#include "Item.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "nbt/CompoundTag.hpp"
 
 ItemInstance::ItemInstance() {
 	init(0, 0, 0);

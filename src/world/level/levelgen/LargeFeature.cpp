@@ -1,5 +1,5 @@
-#include "LargeFeature.h"
-#include "../Level.h"
+#include "LargeFeature.hpp"
+#include "world/level/Level.hpp"
 
 LargeFeature::LargeFeature() :	radius(8)
 {

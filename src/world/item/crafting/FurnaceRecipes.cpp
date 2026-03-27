@@ -1,7 +1,7 @@
-#include "FurnaceRecipes.h"
-#include "../../level/tile/Tile.h"
-#include "../DyePowderItem.h"
-#include "../CoalItem.h"
+#include "FurnaceRecipes.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/item/DyePowderItem.hpp"
+#include "world/item/CoalItem.hpp"
 
 /*static*/
 FurnaceRecipes* FurnaceRecipes::instance = NULL;

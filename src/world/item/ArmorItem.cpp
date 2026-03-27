@@ -1,4 +1,4 @@
-#include "ArmorItem.h"
+#include "ArmorItem.hpp"
 
 //
 // ArmorMaterial

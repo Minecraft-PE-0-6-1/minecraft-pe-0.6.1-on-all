@@ -1,14 +1,14 @@
-#include "FurnaceTileEntity.h"
+#include "FurnaceTileEntity.hpp"
 
-#include "../FurnaceTile.h"
-#include "../../Level.h"
-#include "../../material/Material.h"
-#include "../../../Container.h"
-#include "../../../entity/player/Player.h"
-//#include "../../../item/crafting/FurnaceRecipes.h"
-#include "../../../item/ItemInstance.h"
-#include "../../../../nbt/ListTag.h"
-#include "../../../item/crafting/FurnaceRecipes.h"
+#include "world/level/tile/FurnaceTile.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/Container.hpp"
+#include "world/entity/player/Player.hpp"
+//#include "world/item/crafting/FurnaceRecipes.hpp"
+#include "world/item/ItemInstance.hpp"
+#include "nbt/ListTag.hpp"
+#include "world/item/crafting/FurnaceRecipes.hpp"
 
 FurnaceTileEntity::FurnaceTileEntity()
 :   super(TileEntityType::Furnace),

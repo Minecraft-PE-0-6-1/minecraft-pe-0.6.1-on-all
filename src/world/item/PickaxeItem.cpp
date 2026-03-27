@@ -1,6 +1,6 @@
-#include "PickaxeItem.h"
-#include "../level/material/Material.h"
-#include "../level/tile/Tile.h"
+#include "PickaxeItem.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/level/tile/Tile.hpp"
 
 PickaxeItem::PickaxeItem( int id, const Tier& tier ) :   super(id, 2, tier)
 {

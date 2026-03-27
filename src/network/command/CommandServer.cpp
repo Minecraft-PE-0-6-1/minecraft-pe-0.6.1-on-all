@@ -1,8 +1,8 @@
-#include "CommandServer.h"
-#include <Minecraft.h>
-#include "../../world/level/Level.h"
-#include "../../world/entity/Entity.h"
-#include "gamemode/CreatorMode.h"
+#include "CommandServer.hpp"
+#include <Minecraft.hpp>
+#include "world/level/Level.hpp"
+#include "world/entity/Entity.hpp"
+#include "gamemode/CreatorMode.hpp"
 
 #ifdef WIN32
 	#define SERR(x) (WSA ## x)
@@ -12,12 +12,12 @@
 	#include <unistd.h>
 #endif
 
-#include "../RakNetInstance.h"
-#include "../packet/ChatPacket.h"
-#include "../packet/AdventureSettingsPacket.h"
-#include <world/level/LevelSettings.h>
-#include <world/entity/player/Player.h>
-#include "../RakNetInstance.h"
+#include "network/RakNetInstance.hpp"
+#include "network/packet/ChatPacket.hpp"
+#include "network/packet/AdventureSettingsPacket.hpp"
+#include <world/level/LevelSettings.hpp>
+#include <world/entity/player/Player.hpp>
+#include "network/RakNetInstance.hpp"
 
 const std::string NullString;
 const std::string CommandServer::Ok("\n");

@@ -1,9 +1,9 @@
-#include "PlayerRenderer.h"
-#include "EntityRenderDispatcher.h"
-#include "../Textures.h"
-#include "../../../world/entity/player/Player.h"
-#include "../../../world/level/Level.h"
-#include "../../../world/item/ArmorItem.h"
+#include "PlayerRenderer.hpp"
+#include "EntityRenderDispatcher.hpp"
+#include "client/renderer/Textures.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/level/Level.hpp"
+#include "world/item/ArmorItem.hpp"
 
 static const std::string armorFilenames[10] = {
 	"armor/cloth_1.png",	"armor/cloth_2.png",

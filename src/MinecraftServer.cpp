@@ -1,6 +1,6 @@
-#include "MinecraftServer.h"
-#include <Minecraft.h>
-#include <network/RakNetInstance.h>
+#include "MinecraftServer.hpp"
+#include <Minecraft.hpp>
+#include <network/RakNetInstance.hpp>
 
 
 void MinecraftServer::hostMultiplayer(int port) {

@@ -1,14 +1,14 @@
-#include "JoinByIPScreen.h"
+#include "JoinByIPScreen.hpp"
 
-#include "JoinGameScreen.h"
-#include "StartMenuScreen.h"
-#include "ProgressScreen.h"
-#include "../Font.h"
-#include "../../../network/RakNetInstance.h"
-#include "client/Options.h"
-#include "client/gui/Screen.h"
-#include "client/gui/components/TextBox.h"
-#include "network/ClientSideNetworkHandler.h"
+#include "JoinGameScreen.hpp"
+#include "StartMenuScreen.hpp"
+#include "ProgressScreen.hpp"
+#include "client/gui/Font.hpp"
+#include "network/RakNetInstance.hpp"
+#include "client/Options.hpp"
+#include "client/gui/Screen.hpp"
+#include "client/gui/components/TextBox.hpp"
+#include "network/ClientSideNetworkHandler.hpp"
 
 JoinByIPScreen::JoinByIPScreen() :
     tIP(0, "Server IP"),

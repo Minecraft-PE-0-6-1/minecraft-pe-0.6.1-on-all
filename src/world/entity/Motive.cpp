@@ -1,4 +1,4 @@
-#include "Motive.h"
+#include "Motive.hpp"
 const Motive Motive::Kebab("Kebab", 16, 16, 0 * 16, 0 * 16);
 const Motive Motive::Aztec("Aztec", 16, 16, 1 * 16, 0 * 16);
 const Motive Motive::Alban("Alban", 16, 16, 2 * 16, 0 * 16);

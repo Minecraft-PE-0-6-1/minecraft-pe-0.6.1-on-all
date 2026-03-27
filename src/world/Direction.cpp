@@ -1,5 +1,5 @@
-#include "Direction.h"
-#include "Facing.h"
+#include "Direction.hpp"
+#include "Facing.hpp"
 
 const int Direction::DIRECTION_FACING[4] = {
 	Facing::SOUTH,

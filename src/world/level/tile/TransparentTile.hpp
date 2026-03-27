@@ -1,0 +1,38 @@
+#pragma once
+
+//package net.minecraft.world.level.tile;
+
+#include "Tile.hpp"
+#include "world/level/LevelSource.hpp"
+class Material;
+
+class TransparentTile: public Tile
+{
+public:
+    /*protected*/
+	bool allowSame;
+    
+    /*protected*/
+	TransparentTile(int id, int tex, const Material* material, bool allowSame)
+	:	Tile(id, tex, material)
+    {
+        this->allowSame = allowSame;
+    }
+    
+    bool isSolidRender()
+    {
+        return false;
+    }
+    
+    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face)
+    {
+        int id = level->getTile(x, y, z);
+        if (!allowSame && id == this->id) return false;
+        return Tile::shouldRenderFace(level, x, y, z, face);
+    }     
+
+    bool blocksLight() {
+        return false;
+    }
+};
+

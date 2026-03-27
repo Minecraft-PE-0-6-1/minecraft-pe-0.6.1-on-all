@@ -1,5 +1,5 @@
-#include "RegionFile.h"
-#include "../../../platform/log.h"
+#include "RegionFile.hpp"
+#include "platform/log.hpp"
 
 const int SECTOR_BYTES = 4096;
 const int SECTOR_INTS = SECTOR_BYTES / 4;

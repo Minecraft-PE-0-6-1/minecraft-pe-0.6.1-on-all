@@ -1,4 +1,4 @@
-#include "MinecraftClient.h"
+#include "MinecraftClient.hpp"
 
 int main() {
     MinecraftClient minecraft(App::CreatePlatform());

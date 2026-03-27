@@ -1,10 +1,10 @@
-#include "Monster.h"
+#include "Monster.hpp"
 
-#include "../player/Player.h"
-#include "../../level/Level.h"
-#include "../../Difficulty.h"
-#include "../../../util/Mth.h"
-//#include "../../effect/MobEffect.h"
+#include "world/entity/player/Player.hpp"
+#include "world/level/Level.hpp"
+#include "world/Difficulty.hpp"
+#include "util/Mth.hpp"
+//#include "world/effect/MobEffect.hpp"
 
 Monster::Monster(Level* level)
 :	super(level),

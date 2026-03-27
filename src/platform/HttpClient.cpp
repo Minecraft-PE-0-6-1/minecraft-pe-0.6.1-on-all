@@ -1,5 +1,5 @@
-#include "HttpClient.h"
-#include "log.h"
+#include "HttpClient.hpp"
+#include "log.hpp"
 
 #include <algorithm>
 #include <cctype>

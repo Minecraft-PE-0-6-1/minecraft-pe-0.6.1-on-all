@@ -1,17 +1,17 @@
-#include "IngameBlockSelectionScreen.h"
-#include "../../renderer/TileRenderer.h"
-#include "../../player/LocalPlayer.h"
-#include "../../renderer/gles.h"
-#include "../../Minecraft.h"
-#include "../../sound/SoundEngine.h"
-#include "../../../world/entity/player/Inventory.h"
-#include "../../../platform/input/Mouse.h"
+#include "IngameBlockSelectionScreen.hpp"
+#include "client/renderer/TileRenderer.hpp"
+#include "client/player/LocalPlayer.hpp"
+#include "client/renderer/gles.hpp"
+#include "client/Minecraft.hpp"
+#include "client/sound/SoundEngine.hpp"
+#include "world/entity/player/Inventory.hpp"
+#include "platform/input/Mouse.hpp"
 
-#include "../Gui.h"
-#include "../../renderer/Textures.h"
-#include <gamemode/GameMode.h>
-#include "ArmorScreen.h"
-#include "../components/Button.h"
+#include "client/gui/Gui.hpp"
+#include "client/renderer/Textures.hpp"
+#include <gamemode/GameMode.hpp>
+#include "ArmorScreen.hpp"
+#include "client/gui/components/Button.hpp"
 
 #if defined(__APPLE__)
     static const std::string demoVersionString("Not available in the Lite version");
@@ -141,8 +141,8 @@ int IngameBlockSelectionScreen::getSlotPosY(int slotY) {
 //}
 
 
-#include "../../../world/item/ItemInstance.h"
-#include "../../renderer/entity/ItemRenderer.h"
+#include "world/item/ItemInstance.hpp"
+#include "client/renderer/entity/ItemRenderer.hpp"
 
 void IngameBlockSelectionScreen::renderSlot(int slot, int x, int y, float a)
 {

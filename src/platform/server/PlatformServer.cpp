@@ -1,9 +1,9 @@
-#include "PlatformServer.h"
+#include "PlatformServer.hpp"
 
 #include <ctime>
 
-#include "App.h"
-#include "platform/time.h"
+#include "App.hpp"
+#include "platform/time.hpp"
 
 void PlatformServer::runMainLoop(App& app) {
     while (!app.wantToQuit()) {

@@ -1,5 +1,5 @@
-#include "KeyOption.h"
-#include <client/Minecraft.h>
+#include "KeyOption.hpp"
+#include <client/Minecraft.hpp>
 
 KeyOption::KeyOption(Minecraft* minecraft, OptionId optId) 
     : Touch::TButton((int)optId, Keyboard::getKeyName(minecraft->options.getIntValue(optId))) {}

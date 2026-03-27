@@ -1,0 +1,84 @@
+#pragma once
+
+//package net.minecraft.world.item;
+
+#include <string>
+
+#include "Item.hpp"
+#include "ItemInstance.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/Tile.hpp"
+
+#include "network/RakNetInstance.hpp"
+#include "network/packet/PlaceBlockPacket.hpp"
+
+class TileItem: public Item
+{
+	typedef Item super;
+
+	int tileId;
+public:
+    TileItem(int id_)
+	:	super(id_)
+	{
+        this->tileId = id_ + 256;
+        this->setIcon(Tile::tiles[id_ + 256]->getTexture(2));
+    }
+
+    int getTileId() {
+        return tileId;
+    }
+
+    bool useOn(ItemInstance* instance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) {
+		if (level->adventureSettings.immutableWorld) {
+			const Tile* tile = Tile::tiles[tileId];
+			if (tileId != ((Tile*)Tile::leaves)->id
+				&& tile->material != Material::plant) {
+					return false;
+			}
+		}
+
+		if (level->getTile(x, y, z) == Tile::topSnow->id) {
+            face = 0;
+        } else {
+			switch (face) {
+				case Facing::DOWN : y--; break;
+				case Facing::UP   : y++; break;
+				case Facing::NORTH: z--; break;
+				case Facing::SOUTH: z++; break;
+				case Facing::WEST : x--; break;
+				case Facing::EAST : x++; break;
+			}
+        }
+
+        if (instance->count == 0) return false;
+
+        if (level->mayPlace(tileId, x, y, z, false, face)) {
+            Tile* tile = Tile::tiles[tileId];
+			int data = tile->getPlacedOnFaceDataValue(level, x, y, z, face, clickX, clickY, clickZ, getLevelDataForAuxValue(instance->getAuxValue()));
+            if (level->setTileAndData(x, y, z, tileId, data)) {
+                Tile::tiles[tileId]->setPlacedBy(level, x, y, z, player);
+                level->playSound(x + 0.5f, y + 0.5f, z + 0.5f, tile->soundType->getStepSound(), (tile->soundType->getVolume() + 1) / 2, tile->soundType->getPitch() * 0.8f);
+
+/*
+				PlaceBlockPacket packet(player->entityId, x, y, z, face, tileId, instance->getAuxValue());
+				//LOGI("Place block at @ %d, %d, %d\n", x, y, z);
+				level->raknetInstance->send(packet);
+*/
+                instance->count--;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    std::string getDescriptionId(const ItemInstance* instance) const {
+        return Tile::tiles[tileId]->getDescriptionId();
+    }
+
+    std::string getDescriptionId() const {
+        return Tile::tiles[tileId]->getDescriptionId();
+    }
+};
+

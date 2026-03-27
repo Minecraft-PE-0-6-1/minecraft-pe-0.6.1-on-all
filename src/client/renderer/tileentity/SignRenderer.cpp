@@ -1,6 +1,6 @@
-#include "SignRenderer.h"
-#include "../../../world/level/tile/Tile.h"
-#include "../../../world/level/tile/entity/SignTileEntity.h"
+#include "SignRenderer.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/level/tile/entity/SignTileEntity.hpp"
 
 void SignRenderer::render( TileEntity* te, float x, float y, float z, float a )
 {

@@ -1,10 +1,10 @@
-#include "ArrowRenderer.h"
+#include "ArrowRenderer.hpp"
 
-#include "../Tesselator.h"
-#include "../Textures.h"
-#include "../gles.h"
-#include "../../../world/entity/Entity.h"
-#include "../../../world/entity/projectile/Arrow.h"
+#include "client/renderer/Tesselator.hpp"
+#include "client/renderer/Textures.hpp"
+#include "client/renderer/gles.hpp"
+#include "world/entity/Entity.hpp"
+#include "world/entity/projectile/Arrow.hpp"
 
 void ArrowRenderer::render(Entity* entity, float x, float y, float z, float rot, float a) {
 	bindTexture("item/arrows.png");

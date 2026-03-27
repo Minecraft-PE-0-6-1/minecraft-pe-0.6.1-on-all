@@ -1,10 +1,10 @@
-#include "LargeImageButton.h"
-#include "../../renderer/Tesselator.h"
-#include "../../Minecraft.h"
-#include "../../../util/Mth.h"
-#include "../../../platform/log.h"
-#include "../../../util/Mth.h"
-#include "../../renderer/Textures.h"
+#include "LargeImageButton.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "client/Minecraft.hpp"
+#include "util/Mth.hpp"
+#include "platform/log.hpp"
+#include "util/Mth.hpp"
+#include "client/renderer/Textures.hpp"
 
 
 LargeImageButton::LargeImageButton(int id, const std::string& msg)

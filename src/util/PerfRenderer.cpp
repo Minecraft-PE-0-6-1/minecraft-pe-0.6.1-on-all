@@ -1,11 +1,11 @@
-#include "PerfRenderer.h"
-#include "PerfTimer.h"
+#include "PerfRenderer.hpp"
+#include "PerfTimer.hpp"
 
-#include "Mth.h"
-#include "../client/gui/Font.h"
-#include "../client/renderer/gles.h"
-#include "../client/renderer/Tesselator.h"
-#include <Minecraft.h>
+#include "Mth.hpp"
+#include "client/gui/Font.hpp"
+#include "client/renderer/gles.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include <Minecraft.hpp>
 
 PerfRenderer::PerfRenderer( Minecraft* mc, Font* font )
 :   _mc(mc),

@@ -1,4 +1,4 @@
-#include "SynchedEntityData.h"
+#include "SynchedEntityData.hpp"
 
 
 SynchedEntityData::SynchedEntityData()

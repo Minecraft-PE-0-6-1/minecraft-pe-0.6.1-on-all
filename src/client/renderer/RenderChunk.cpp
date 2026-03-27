@@ -1,4 +1,4 @@
-#include "RenderChunk.h"
+#include "RenderChunk.hpp"
 
 int RenderChunk::runningId = 0;
 

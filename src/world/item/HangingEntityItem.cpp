@@ -1,10 +1,10 @@
-#include "HangingEntityItem.h"
-#include "../entity/HangingEntity.h"
-#include "../Facing.h"
-#include "../Direction.h"
-#include "../level/Level.h"
-#include "../entity/EntityFactory.h"
-#include "../entity/Painting.h"
+#include "HangingEntityItem.hpp"
+#include "world/entity/HangingEntity.hpp"
+#include "world/Facing.hpp"
+#include "world/Direction.hpp"
+#include "world/level/Level.hpp"
+#include "world/entity/EntityFactory.hpp"
+#include "world/entity/Painting.hpp"
 HangingEntityItem::HangingEntityItem( int id, int type ) : super(id), entityType(type) {
 
 }

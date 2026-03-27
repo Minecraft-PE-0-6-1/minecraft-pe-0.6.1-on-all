@@ -1,11 +1,11 @@
 #if 0
 
-#include "DungeonFeature.h"
+#include "DungeonFeature.hpp"
 
-#include "../Level.h"
-#include "../tile/Tile.h"
-#include "../../../util/Random.h"
-#include "../../../util/Mth.h"
+#include "world/level/Level.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "util/Random.hpp"
+#include "util/Mth.hpp"
 
 void DungeonFeature::addRoom( int xOffs, int zOffs, unsigned char* blocks, float xRoom, float yRoom, float zRoom )
 {

@@ -1,12 +1,12 @@
-#include "InventoryPane.h"
-#include "../Gui.h"
-#include "../../Minecraft.h"
-#include "../../player/input/touchscreen/TouchAreaModel.h"
-#include "../../renderer/entity/ItemRenderer.h"
-#include "../../renderer/Tesselator.h"
-#include "../../renderer/Textures.h"
-#include "../../../world/item/ItemInstance.h"
-#include "../../../world/entity/player/Inventory.h"
+#include "InventoryPane.hpp"
+#include "client/gui/Gui.hpp"
+#include "client/Minecraft.hpp"
+#include "client/player/input/touchscreen/TouchAreaModel.hpp"
+#include "client/renderer/entity/ItemRenderer.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "client/renderer/Textures.hpp"
+#include "world/item/ItemInstance.hpp"
+#include "world/entity/player/Inventory.hpp"
 
 namespace Touch {
 

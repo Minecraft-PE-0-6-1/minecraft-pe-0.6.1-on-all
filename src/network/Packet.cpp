@@ -1,8 +1,8 @@
 
-#include "Packet.h"
-#include "../world/level/chunk/LevelChunk.h"
+#include "Packet.hpp"
+#include "world/level/chunk/LevelChunk.hpp"
 
-#include "packet/PacketInclude.h"
+#include "packet/PacketInclude.hpp"
 
 Packet::Packet()
 :	priority(HIGH_PRIORITY),

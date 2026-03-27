@@ -1,6 +1,6 @@
-#include "Chicken.h"
-#include "../../item/Item.h"
-#include "../../level/Level.h"
+#include "Chicken.hpp"
+#include "world/item/Item.hpp"
+#include "world/level/Level.hpp"
 
 Chicken::Chicken( Level* level )
 :   super(level),

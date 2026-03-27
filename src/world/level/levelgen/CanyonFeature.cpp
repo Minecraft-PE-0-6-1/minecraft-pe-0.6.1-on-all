@@ -1,11 +1,11 @@
 #if 0
 
-#include "CanyonFeature.h"
+#include "CanyonFeature.hpp"
 
-#include "../Level.h"
-#include "../tile/Tile.h"
-#include "../../../util/Random.h"
-#include "../../../util/Mth.h"
+#include "world/level/Level.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "util/Random.hpp"
+#include "util/Mth.hpp"
 
 void CanyonFeature::addTunnel( int xOffs, int zOffs, unsigned char* blocks, float xCave, float yCave, float zCave, float thickness, float yRot, float xRot, int step, int dist, float yScale )
 {

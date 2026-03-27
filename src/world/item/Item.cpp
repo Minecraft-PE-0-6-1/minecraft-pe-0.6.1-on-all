@@ -1,7 +1,7 @@
-#include "ItemInclude.h"
-#include "ItemCategory.h"
-#include "../level/tile/Tile.h"
-#include "ItemInstance.h"
+#include "ItemInclude.hpp"
+#include "ItemCategory.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "ItemInstance.hpp"
 
 const std::string Item::ICON_DESCRIPTION_PREFIX("item.");
 Random Item::random;

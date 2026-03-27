@@ -1,6 +1,6 @@
-#include "Sheep.h"
-#include "../../item/DyePowderItem.h"
-#include "../../level/tile/LevelEvent.h"
+#include "Sheep.hpp"
+#include "world/item/DyePowderItem.hpp"
+#include "world/level/tile/LevelEvent.hpp"
 
 const float Sheep::COLOR[][3] = {
     { 1.0f, 1.0f, 1.0f }, // white

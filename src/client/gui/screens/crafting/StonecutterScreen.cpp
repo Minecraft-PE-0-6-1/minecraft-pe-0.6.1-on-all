@@ -1,7 +1,7 @@
-#include "StonecutterScreen.h"
-#include "CraftingFilters.h"
-#include "../../../../world/level/material/Material.h"
-#include "../../../../world/item/ItemCategory.h"
+#include "StonecutterScreen.hpp"
+#include "CraftingFilters.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/item/ItemCategory.hpp"
 
 StonecutterScreen::StonecutterScreen()
 :	super(Recipe::SIZE_3X3)

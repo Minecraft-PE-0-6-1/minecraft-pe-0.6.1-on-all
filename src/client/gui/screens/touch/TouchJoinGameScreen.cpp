@@ -1,9 +1,9 @@
-#include "TouchJoinGameScreen.h"
-#include "../StartMenuScreen.h"
-#include "../ProgressScreen.h"
-#include "../../Font.h"
-#include "../../../Minecraft.h"
-#include "../../../renderer/Textures.h"
+#include "TouchJoinGameScreen.hpp"
+#include "client/gui/screens/StartMenuScreen.hpp"
+#include "client/gui/screens/ProgressScreen.hpp"
+#include "client/gui/Font.hpp"
+#include "client/Minecraft.hpp"
+#include "client/renderer/Textures.hpp"
 
 namespace Touch {
 

@@ -1,16 +1,16 @@
-#include "RandomLevelSource.h"
+#include "RandomLevelSource.hpp"
 
-#include "feature/FeatureInclude.h"
-#include "../Level.h"
-#include "../ChunkPos.h"
-#include "../MobSpawner.h"
-#include "../biome/Biome.h"
-#include "../biome/BiomeSource.h"
-#include "../chunk/LevelChunk.h"
-#include "../material/Material.h"
-#include "../tile/Tile.h"
-#include "../tile/HeavyTile.h"
-#include "../../../util/Random.h"
+#include "feature/FeatureInclude.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/ChunkPos.hpp"
+#include "world/level/MobSpawner.hpp"
+#include "world/level/biome/Biome.hpp"
+#include "world/level/biome/BiomeSource.hpp"
+#include "world/level/chunk/LevelChunk.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/level/tile/HeavyTile.hpp"
+#include "util/Random.hpp"
 
 const float RandomLevelSource::SNOW_CUTOFF = 0.5f;
 const float RandomLevelSource::SNOW_SCALE = 0.3f;

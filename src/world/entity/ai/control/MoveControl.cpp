@@ -1,5 +1,5 @@
-#include "MoveControl.h"
-#include "JumpControl.h"
+#include "MoveControl.hpp"
+#include "JumpControl.hpp"
 
 const float MoveControl::MAX_TURN = 30;
 

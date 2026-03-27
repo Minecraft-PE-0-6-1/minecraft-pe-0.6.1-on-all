@@ -1,8 +1,8 @@
-#include "../Level.h"
-#include "../../phys/HitResult.h"
-#include "../../phys/Vec3.h"
-#include "../../Facing.h"
-#include "StairTile.h"
+#include "world/level/Level.hpp"
+#include "world/phys/HitResult.hpp"
+#include "world/phys/Vec3.hpp"
+#include "world/Facing.hpp"
+#include "StairTile.hpp"
 
 const int StairTile::DEAD_SPACES[8][2] = {
 	{2, 6}, {3, 7}, {2, 3}, {6, 7},

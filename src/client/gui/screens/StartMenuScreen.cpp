@@ -1,25 +1,25 @@
-#include "StartMenuScreen.h"
-#include "UsernameScreen.h"
-#include "SelectWorldScreen.h"
-#include "ProgressScreen.h"
-#include "JoinGameScreen.h"
-#include "OptionsScreen.h"
-#include "PauseScreen.h"
-#include "PrerenderTilesScreen.h" // test button
-#include "../components/ImageButton.h"
+#include "StartMenuScreen.hpp"
+#include "UsernameScreen.hpp"
+#include "SelectWorldScreen.hpp"
+#include "ProgressScreen.hpp"
+#include "JoinGameScreen.hpp"
+#include "OptionsScreen.hpp"
+#include "PauseScreen.hpp"
+#include "PrerenderTilesScreen.hpp" // test button
+#include "client/gui/components/ImageButton.hpp"
 
-#include "../../../util/Mth.h"
+#include "util/Mth.hpp"
 
-#include "../Font.h"
-#include "../components/ScrolledSelectionList.h"
+#include "client/gui/Font.hpp"
+#include "client/gui/components/ScrolledSelectionList.hpp"
 
-#include "../../Minecraft.h"
-#include "../../renderer/Tesselator.h"
-#include "../../../AppPlatform.h"
-#include "../../../LicenseCodes.h"
-#include "SimpleChooseLevelScreen.h"
-#include "../../renderer/Textures.h"
-#include "../../../SharedConstants.h"
+#include "client/Minecraft.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "AppPlatform.hpp"
+#include "LicenseCodes.hpp"
+#include "SimpleChooseLevelScreen.hpp"
+#include "client/renderer/Textures.hpp"
+#include "SharedConstants.hpp"
 
 // Some kind of default settings, might be overridden in ::init
 StartMenuScreen::StartMenuScreen()

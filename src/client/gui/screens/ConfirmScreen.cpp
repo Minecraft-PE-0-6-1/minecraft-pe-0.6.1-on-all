@@ -1,6 +1,6 @@
-#include "ConfirmScreen.h"
-#include "../components/Button.h"
-#include "../../Minecraft.h"
+#include "ConfirmScreen.hpp"
+#include "client/gui/components/Button.hpp"
+#include "client/Minecraft.hpp"
 
 ConfirmScreen::ConfirmScreen(Screen* parent_, const std::string& title1_, const std::string& title2_, int id_)
 :   parent(parent_),

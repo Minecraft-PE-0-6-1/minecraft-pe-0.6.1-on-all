@@ -1,8 +1,8 @@
-#include "TallGrass.h"
-#include "../FoliageColor.h"
-#include "../../entity/player/Player.h"
-#include "../../item/Item.h"
-#include "../../item/ShearsItem.h"
+#include "TallGrass.hpp"
+#include "world/level/FoliageColor.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/item/Item.hpp"
+#include "world/item/ShearsItem.hpp"
 
 TallGrass::TallGrass( int id, int tex ) : super(id, tex, Material::replaceable_plant) {
 	float ss = 0.4f;

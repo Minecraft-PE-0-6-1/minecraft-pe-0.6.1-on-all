@@ -1,5 +1,5 @@
-#include "NetherReactorPattern.h"
-#include "Tile.h"
+#include "NetherReactorPattern.hpp"
+#include "Tile.hpp"
 NetherReactorPattern::NetherReactorPattern( ) {
 	const int goldId = Tile::goldBlock->id;
 	const int stoneId = Tile::stoneBrick->id;

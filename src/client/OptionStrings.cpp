@@ -1,4 +1,4 @@
-#include "OptionStrings.h"
+#include "OptionStrings.hpp"
 
 const char* OptionStrings::Multiplayer_Username        = "mp_username";
 const char* OptionStrings::Multiplayer_ServerVisible   = "mp_server_visible_default";

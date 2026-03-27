@@ -1,10 +1,10 @@
-#include "Font.h"
+#include "Font.hpp"
 
-//#include "SharedConstants.h"
-#include "../Options.h"
-#include "../renderer/Textures.h"
-#include "../renderer/Tesselator.h"
-#include "../../util/Mth.h"
+//#include "SharedConstants.hpp"
+#include "client/Options.hpp"
+#include "client/renderer/Textures.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "util/Mth.hpp"
 #include <cstring>
 
 Font::Font( Options* options, const std::string& name, Textures* textures )

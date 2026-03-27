@@ -1,9 +1,9 @@
-#include "BedTile.h"
-#include "../Level.h"
-#include "../dimension/Dimension.h"
-#include "../../entity/player/Player.h"
-#include "../../Facing.h"
-#include "../../Direction.h"
+#include "BedTile.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/dimension/Dimension.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/Facing.hpp"
+#include "world/Direction.hpp"
 
 const int BedTile::HEAD_DIRECTION_OFFSETS[4][2] = {
 	{  0,  1 },

@@ -1,7 +1,7 @@
-#include "EntityTile.h"
-#include "entity/TileEntity.h"
-#include "../Level.h"
-#include "../material/Material.h"
+#include "EntityTile.hpp"
+#include "entity/TileEntity.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/material/Material.hpp"
 
 void EntityTile::onPlace( Level* level, int x, int y, int z )
 {

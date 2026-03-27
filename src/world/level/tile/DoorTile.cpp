@@ -1,8 +1,8 @@
-#include "DoorTile.h"
-#include "LevelEvent.h"
-#include "../Level.h"
-#include "../../item/Item.h"
-#include "../../entity/player/Player.h"
+#include "DoorTile.hpp"
+#include "LevelEvent.hpp"
+#include "world/level/Level.hpp"
+#include "world/item/Item.hpp"
+#include "world/entity/player/Player.hpp"
 
 DoorTile::DoorTile(int id, const Material* material)
 :	super(id, material)

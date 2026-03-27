@@ -1,4 +1,4 @@
-#include "CowModel.h"
+#include "CowModel.hpp"
 
 CowModel::CowModel()
 :	super(12, 0)

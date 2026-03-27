@@ -1,9 +1,9 @@
-#include "TripodCameraRenderer.h"
-#include "EntityRenderDispatcher.h"
-#include "../Tesselator.h"
-#include "../../Minecraft.h"
-#include "../../../world/entity/item/TripodCamera.h"
-#include "../../../world/level/material/Material.h"
+#include "TripodCameraRenderer.hpp"
+#include "EntityRenderDispatcher.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "client/Minecraft.hpp"
+#include "world/entity/item/TripodCamera.hpp"
+#include "world/level/material/Material.hpp"
 
 TripodCameraRenderer::TripodCameraRenderer()
 :	tripod(0, 15 * 16 + 3, Material::plant),

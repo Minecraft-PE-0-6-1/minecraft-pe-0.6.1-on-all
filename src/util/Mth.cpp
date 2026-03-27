@@ -1,9 +1,9 @@
-#include "Mth.h"
-#include "Random.h"
+#include "Mth.hpp"
+#include "Random.hpp"
 #include <cmath>
 #include <vector>
 
-#include "../Performance.h"
+#include "Performance.hpp"
 
 static Random _rand;
 

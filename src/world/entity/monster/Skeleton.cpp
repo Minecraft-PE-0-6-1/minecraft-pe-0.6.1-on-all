@@ -1,5 +1,5 @@
-#include "Skeleton.h"
-#include "../projectile/Arrow.h"
+#include "Skeleton.hpp"
+#include "world/entity/projectile/Arrow.hpp"
 
 Skeleton::Skeleton( Level* level )
 :   super(level),

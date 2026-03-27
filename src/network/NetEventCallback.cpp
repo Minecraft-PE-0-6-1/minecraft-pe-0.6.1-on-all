@@ -1,6 +1,6 @@
-#include "NetEventCallback.h"
-#include "../world/level/Level.h"
-#include "packet/RespawnPacket.h"
+#include "NetEventCallback.hpp"
+#include "world/level/Level.hpp"
+#include "packet/RespawnPacket.hpp"
 
 //
 // Common packet handling implementation for Client and Server

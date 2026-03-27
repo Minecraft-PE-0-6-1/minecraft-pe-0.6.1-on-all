@@ -1,8 +1,8 @@
-#include "RenderList.h"
+#include "RenderList.hpp"
 
-#include "gles.h"
-#include "RenderChunk.h"
-#include "Tesselator.h"
+#include "gles.hpp"
+#include "RenderChunk.hpp"
+#include "Tesselator.hpp"
 
 
 RenderList::RenderList()

@@ -1,4 +1,4 @@
-#include "Sound.h"
+#include "Sound.hpp"
 
 #if !defined(PRE_ANDROID23) && !defined(__APPLE__) && !defined(RPI)
 

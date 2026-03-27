@@ -1,5 +1,5 @@
-#include "AppPlatform_win32.h"
-#include "util/Mth.h"
+#include "AppPlatform_win32.hpp"
+#include "util/Mth.hpp"
 
 int AppPlatform_win32::getScreenWidth()  { return 854; }
 int AppPlatform_win32::getScreenHeight() { return 480; }

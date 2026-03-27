@@ -1,5 +1,5 @@
-#include "BaseContainerMenu.h"
-#include "../item/ItemInstance.h"
+#include "BaseContainerMenu.hpp"
+#include "world/item/ItemInstance.hpp"
 
 BaseContainerMenu::BaseContainerMenu( int containerType )
 :   containerId(-1),

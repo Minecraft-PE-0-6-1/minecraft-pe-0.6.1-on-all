@@ -1,9 +1,9 @@
 #if 0
 
-#include "UploadPhotoScreen.h"
-#include "../renderer/TileRenderer.h"
-#include "../player/LocalPlayer.h"
-#include "../../world/entity/player/Inventory.h"
+#include "UploadPhotoScreen.hpp"
+#include "client/gui/renderer/TileRenderer.hpp"
+#include "client/gui/player/LocalPlayer.hpp"
+#include "client/world/entity/player/Inventory.hpp"
 
 UploadPhotoScreen::UploadPhotoScreen()
 	:

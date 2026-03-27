@@ -1,4 +1,4 @@
-#include "FolderMethods.h"
+#include "FolderMethods.hpp"
 #include <string>
 
 #ifndef WIN32

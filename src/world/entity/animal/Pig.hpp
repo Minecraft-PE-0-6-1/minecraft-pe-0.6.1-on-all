@@ -1,0 +1,46 @@
+#pragma once
+
+//package net.minecraft.world.entity.animal;
+
+#include "Animal.hpp"
+
+class Player;
+
+class Pig: public Animal
+{
+	typedef Animal super;
+    static const int DATA_SADDLE_ID = 16;
+
+public:
+    Pig(Level* level);
+
+	int getEntityTypeId() const;
+
+    //void addAdditonalSaveData(CompoundTag* tag) {
+    //    super::addAdditonalSaveData(tag);
+    //    tag->putBoolean("Saddle", hasSaddle());
+    //}
+
+    //void readAdditionalSaveData(CompoundTag* tag) {
+    //    super::readAdditionalSaveData(tag);
+    //    setSaddle(tag->getBoolean("Saddle"));
+    //}
+
+    bool interact(Player* player);
+
+	int getMaxHealth();
+
+    bool hasSaddle();
+    void setSaddle(bool value);
+
+protected:
+    const char* getAmbientSound();
+    std::string getHurtSound();
+    std::string getDeathSound();
+
+	int getDeathLoot();
+
+    //@Override
+    Animal* getBreedOffspring(Animal* target);
+};
+

@@ -1,12 +1,12 @@
-#include "TileEntityRenderDispatcher.h"
-#include "ChestRenderer.h"
-#include "../Textures.h"
-#include "../../gui/Font.h"
-#include "../../../SharedConstants.h"
-#include "../../../world/entity/Mob.h"
-#include "../../../world/level/Level.h"
-#include "../../../world/level/tile/entity/TileEntity.h"
-#include "SignRenderer.h"
+#include "TileEntityRenderDispatcher.hpp"
+#include "ChestRenderer.hpp"
+#include "client/renderer/Textures.hpp"
+#include "client/gui/Font.hpp"
+#include "SharedConstants.hpp"
+#include "world/entity/Mob.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/entity/TileEntity.hpp"
+#include "SignRenderer.hpp"
 
 /*static*/
 TileEntityRenderDispatcher* TileEntityRenderDispatcher::instance = 0;

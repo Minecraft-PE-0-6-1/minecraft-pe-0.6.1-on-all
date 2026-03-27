@@ -1,7 +1,7 @@
-#include "TrapDoorTile.h"
-#include "../material/Material.h"
-#include "../Level.h"
-#include "LevelEvent.h"
+#include "TrapDoorTile.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/level/Level.hpp"
+#include "LevelEvent.hpp"
 TrapDoorTile::TrapDoorTile( int id, const Material* material ) : super(id, material) {
 	tex = 4 + 5 * 16;
 	if(material == Material::metal) tex++;

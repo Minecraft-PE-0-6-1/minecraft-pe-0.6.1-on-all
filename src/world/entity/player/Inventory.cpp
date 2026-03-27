@@ -1,12 +1,12 @@
-#include "Inventory.h"
-#include "../../level/material/Material.h"
-#include "../../level/tile/QuartzBlockTile.h"
-#include "../../level/tile/TreeTile.h"
-#include "../../level/tile/StoneSlabTile.h"
-#include "../../item/DyePowderItem.h"
-#include "../../item/crafting/Recipe.h"
-#include "../../item/CoalItem.h"
-#include "../../level/tile/SandStoneTile.h"
+#include "Inventory.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/level/tile/QuartzBlockTile.hpp"
+#include "world/level/tile/TreeTile.hpp"
+#include "world/level/tile/StoneSlabTile.hpp"
+#include "world/item/DyePowderItem.hpp"
+#include "world/item/crafting/Recipe.hpp"
+#include "world/item/CoalItem.hpp"
+#include "world/level/tile/SandStoneTile.hpp"
 
 Inventory::Inventory( Player* player, bool creativeMode )
 :   super(	36 + Inventory::MAX_SELECTION_SIZE,

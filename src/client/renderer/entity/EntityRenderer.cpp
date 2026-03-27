@@ -1,10 +1,10 @@
-#include "EntityRenderer.h"
+#include "EntityRenderer.hpp"
 
-#include "../Tesselator.h"
-#include "../Textures.h"
-#include "../gles.h"
-#include "../../../world/phys/AABB.h"
-#include "EntityRenderDispatcher.h"
+#include "client/renderer/Tesselator.hpp"
+#include "client/renderer/Textures.hpp"
+#include "client/renderer/gles.hpp"
+#include "world/phys/AABB.hpp"
+#include "EntityRenderDispatcher.hpp"
 
 EntityRenderDispatcher* EntityRenderer::entityRenderDispatcher = NULL;
 

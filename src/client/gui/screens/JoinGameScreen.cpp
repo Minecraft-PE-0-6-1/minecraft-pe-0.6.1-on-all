@@ -1,8 +1,8 @@
-#include "JoinGameScreen.h"
-#include "StartMenuScreen.h"
-#include "ProgressScreen.h"
-#include "../Font.h"
-#include "../../../network/RakNetInstance.h"
+#include "JoinGameScreen.hpp"
+#include "StartMenuScreen.hpp"
+#include "ProgressScreen.hpp"
+#include "client/gui/Font.hpp"
+#include "network/RakNetInstance.hpp"
 
 JoinGameScreen::JoinGameScreen()
 :	bJoin(  2, "Join Game"),

@@ -1,6 +1,6 @@
-#include "RemotePlayer.h"
-#include "../../world/entity/player/Inventory.h"
-#include "../../world/entity/SharedFlags.h"
+#include "RemotePlayer.hpp"
+#include "world/entity/player/Inventory.hpp"
+#include "world/entity/SharedFlags.hpp"
 
 RemotePlayer::RemotePlayer(Level* level, bool isCreative)
 :	Player(level, isCreative),

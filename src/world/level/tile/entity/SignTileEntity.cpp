@@ -1,6 +1,6 @@
-#include "SignTileEntity.h"
-#include "../../../../network/packet/SignUpdatePacket.h"
-#include "../../Level.h"
+#include "SignTileEntity.hpp"
+#include "network/packet/SignUpdatePacket.hpp"
+#include "world/level/Level.hpp"
 SignTileEntity::SignTileEntity()
 :   super(TileEntityType::Sign),
 	selectedLine(-1),

@@ -1,8 +1,8 @@
-#include "App.h"
-#include "IPlatform.h"
+#include "App.hpp"
+#include "IPlatform.hpp"
 
-#include "platform/server/PlatformServer.h"
-#include "platform/glfw/PlatformGlfw.h"
+#include "platform/server/PlatformServer.hpp"
+#include "platform/glfw/PlatformGlfw.hpp"
 
 std::unique_ptr<IPlatform> App::CreatePlatform() {
 #if defined(STANDALONE_SERVER)

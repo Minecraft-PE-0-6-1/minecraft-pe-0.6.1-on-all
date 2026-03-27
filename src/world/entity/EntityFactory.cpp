@@ -1,13 +1,13 @@
-#include "EntityFactory.h"
-#include "MobFactory.h"
-#include "../../nbt/CompoundTag.h"
+#include "EntityFactory.hpp"
+#include "MobFactory.hpp"
+#include "nbt/CompoundTag.hpp"
 
-#include "item/PrimedTnt.h"
-#include "projectile/Arrow.h"
-#include "projectile/ThrownEgg.h"
-#include "projectile/Snowball.h"
-#include "Painting.h"
-#include "item/FallingTile.h"
+#include "item/PrimedTnt.hpp"
+#include "projectile/Arrow.hpp"
+#include "projectile/ThrownEgg.hpp"
+#include "projectile/Snowball.hpp"
+#include "Painting.hpp"
+#include "item/FallingTile.hpp"
 
 Entity* EntityFactory::CreateEntity( int typeId, Level* level )
 {

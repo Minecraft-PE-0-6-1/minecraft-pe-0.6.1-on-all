@@ -1,11 +1,11 @@
-#include "RolledSelectionListH.h"
-#include "../../renderer/Tesselator.h"
-#include "../../renderer/gles.h"
-#include "../../../platform/input/Mouse.h"
-#include "../../../platform/input/Multitouch.h"
-#include "../../../util/Mth.h"
-#include "../../renderer/Textures.h"
-#include "MinecraftClient.h"
+#include "RolledSelectionListH.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "client/renderer/gles.hpp"
+#include "platform/input/Mouse.hpp"
+#include "platform/input/Multitouch.hpp"
+#include "util/Mth.hpp"
+#include "client/renderer/Textures.hpp"
+#include "MinecraftClient.hpp"
 
 
 RolledSelectionListH::RolledSelectionListH( MinecraftClient& minecraft, int width, int height, int x0, int x1, int y0, int y1, int itemWidth )

@@ -1,8 +1,8 @@
-#include "Creeper.h"
-#include "../Entity.h"
-#include "../../item/Item.h"
-#include "../../level/Level.h"
-#include "../../../nbt/CompoundTag.h"
+#include "Creeper.hpp"
+#include "world/entity/Entity.hpp"
+#include "world/item/Item.hpp"
+#include "world/level/Level.hpp"
+#include "nbt/CompoundTag.hpp"
 
 Creeper::Creeper( Level* level )
 :	super(level),

@@ -1,4 +1,4 @@
-#include "WeaponRecipes.h"
+#include "WeaponRecipes.hpp"
 
 static RowList shapes[] = {
 	Recipes::Shape(	"X", //

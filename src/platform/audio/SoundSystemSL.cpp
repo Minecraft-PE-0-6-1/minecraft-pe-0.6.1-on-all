@@ -1,12 +1,12 @@
-#include "SoundSystemSL.h"
+#include "SoundSystemSL.hpp"
 #include <SLES/OpenSLES_Platform.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
-#include "../../util/Mth.h"
-#include "../../world/level/tile/Tile.h"
-#include "../../world/phys/Vec3.h"
-#include "../../client/sound/Sound.h"
+#include "util/Mth.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/phys/Vec3.hpp"
+#include "client/sound/Sound.hpp"
 
-#include "../log.h"
+#include "platform/log.hpp"
 
 // Only one engine can be created at once. You CAN (if you really want)
 // start two games at once, then it will crash without objEngine being static.

@@ -1,8 +1,8 @@
-#include "MelonTile.h"
-#include "../material/Material.h"
-#include "../../../util/Random.h"
-#include "../../Facing.h"
-#include "../../item/Item.h"
+#include "MelonTile.hpp"
+#include "world/level/material/Material.hpp"
+#include "util/Random.hpp"
+#include "world/Facing.hpp"
+#include "world/item/Item.hpp"
 MelonTile::MelonTile( int id )
 :super(id, Material::vegetable){
 	tex = TEX;

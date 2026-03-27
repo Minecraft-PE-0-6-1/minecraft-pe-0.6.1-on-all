@@ -1,6 +1,6 @@
-#include "TripodCamera.h"
-#include "../player/Player.h"
-#include "../../level/Level.h"
+#include "TripodCamera.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/level/Level.hpp"
 
 
 TripodCamera::TripodCamera( Level* level, Player* owner, float x, float y, float z )

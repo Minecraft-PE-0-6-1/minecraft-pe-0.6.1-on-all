@@ -1,18 +1,18 @@
 #include <iostream>
-#include <IPlatform.h>
+#include <IPlatform.hpp>
 #include <memory>
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
 
-#include "MinecraftServer.h"
-#include "platform/server/PlatformServer.h"
-#include "world/level/LevelSettings.h"
-#include "world/level/Level.h"
-#include "server/ArgumentsSettings.h"
-#include "platform/time.h"
-#include "SharedConstants.h"
+#include "MinecraftServer.hpp"
+#include "platform/server/PlatformServer.hpp"
+#include "world/level/LevelSettings.hpp"
+#include "world/level/Level.hpp"
+#include "server/ArgumentsSettings.hpp"
+#include "platform/time.hpp"
+#include "SharedConstants.hpp"
 
 static App* g_app = 0;
 static int g_exitCode = 0;

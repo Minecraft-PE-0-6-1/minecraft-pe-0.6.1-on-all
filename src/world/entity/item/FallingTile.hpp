@@ -1,0 +1,38 @@
+#pragma once
+
+//package net.minecraft.world.entity.item;
+
+#include "world/entity/Entity.hpp"
+
+class Level;
+class CompoundTag;
+
+class FallingTile: public Entity
+{
+public:
+    FallingTile(Level* level);
+    FallingTile(Level* level, float x, float y, float z, int tile, int data = 0);
+
+    void init();
+
+    bool isPickable();
+
+    void tick();
+
+	int getEntityTypeId() const;
+
+	float getShadowHeightOffs();
+
+    Level* getLevel();
+
+protected:
+	void addAdditonalSaveData(CompoundTag* tag);
+    void readAdditionalSaveData(CompoundTag* tag);
+
+public:
+	int tile;
+    int data;
+
+    int time;
+};
+

@@ -1,8 +1,8 @@
-#include "CreatorMode.h"
-#include "world/entity/player/Player.h"
-#include "world/level/Level.h"
-#include <Minecraft.h>
-#include <world/entity/player/Abilities.h>
+#include "CreatorMode.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/level/Level.hpp"
+#include <Minecraft.hpp>
+#include <world/entity/player/Abilities.hpp>
 
 static const int DestructionTickDelay = 5;
 

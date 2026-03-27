@@ -1,20 +1,20 @@
-#include "SelectWorldScreen.h"
-#include "MinecraftClient.h"
-#include "StartMenuScreen.h"
-#include "ProgressScreen.h"
-#include "DialogDefinitions.h"
-#include "../../renderer/Tesselator.h"
-#include "../../../AppPlatform.h"
-#include "../../../util/StringUtils.h"
-#include "../../../util/Mth.h"
-#include "../../../platform/input/Mouse.h"
-#include "../../../Performance.h"
-#include "../../../world/level/LevelSettings.h"
+#include "SelectWorldScreen.hpp"
+#include "MinecraftClient.hpp"
+#include "StartMenuScreen.hpp"
+#include "ProgressScreen.hpp"
+#include "DialogDefinitions.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "AppPlatform.hpp"
+#include "util/StringUtils.hpp"
+#include "util/Mth.hpp"
+#include "platform/input/Mouse.hpp"
+#include "Performance.hpp"
+#include "world/level/LevelSettings.hpp"
 
 #include <algorithm>
 #include <set>
-#include "../../renderer/Textures.h"
-#include "SimpleChooseLevelScreen.h"
+#include "client/renderer/Textures.hpp"
+#include "SimpleChooseLevelScreen.hpp"
 
 static float Max(float a, float b) {
 	return a>b? a : b;

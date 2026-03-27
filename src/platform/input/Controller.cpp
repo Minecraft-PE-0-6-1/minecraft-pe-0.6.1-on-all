@@ -1,4 +1,4 @@
-#include "Controller.h"
+#include "Controller.hpp"
 
 static int   _abs(int x)   { return x>=0? x:-x; }
 static float _abs(float x) { return x>=0? x:-x; }

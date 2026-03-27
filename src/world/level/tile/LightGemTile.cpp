@@ -1,6 +1,6 @@
-#include "LightGemTile.h"
-#include "../../../util/Random.h"
-#include "../../item/Item.h"
+#include "LightGemTile.hpp"
+#include "util/Random.hpp"
+#include "world/item/Item.hpp"
 LightGemTile::LightGemTile( int id, int tex, const Material* material )
 : super(id, tex, material) 
 { }

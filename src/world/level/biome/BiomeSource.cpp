@@ -1,7 +1,7 @@
-#include "BiomeSource.h"
-#include "Biome.h"
-#include "../Level.h"
-#include "../ChunkPos.h"
+#include "BiomeSource.hpp"
+#include "Biome.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/ChunkPos.hpp"
 
 const float BiomeSource::zoom = 2 * 1;
 

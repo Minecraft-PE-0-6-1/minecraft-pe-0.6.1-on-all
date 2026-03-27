@@ -1,8 +1,8 @@
-#include "Material.h"
-#include "GasMaterial.h"
-#include "LiquidMaterial.h"
-#include "DecorationMaterial.h"
-#include "WebMaterial.h"
+#include "Material.hpp"
+#include "GasMaterial.hpp"
+#include "LiquidMaterial.hpp"
+#include "DecorationMaterial.hpp"
+#include "WebMaterial.hpp"
 #include <cstdlib>
 
 const Material* Material::air		= NULL;

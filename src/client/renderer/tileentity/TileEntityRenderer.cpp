@@ -1,9 +1,9 @@
-#include "TileEntityRenderer.h"
-#include "TileEntityRenderDispatcher.h"
-#include "../Textures.h"
-#include "../../gui/Font.h"
-#include "../../../world/level/Level.h"
-#include "../../../world/level/tile/entity/TileEntity.h"
+#include "TileEntityRenderer.hpp"
+#include "TileEntityRenderDispatcher.hpp"
+#include "client/renderer/Textures.hpp"
+#include "client/gui/Font.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/entity/TileEntity.hpp"
 
 TileEntityRenderer::TileEntityRenderer()
 :   tileEntityRenderDispatcher(NULL)

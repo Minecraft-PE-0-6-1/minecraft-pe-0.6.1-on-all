@@ -1,6 +1,6 @@
-#include "Options.h"
-#include "../world/Difficulty.h"
-#include <MinecraftClient.h>
+#include "Options.hpp"
+#include "world/Difficulty.hpp"
+#include <MinecraftClient.hpp>
 
 bool Options::debugGl = false;
 

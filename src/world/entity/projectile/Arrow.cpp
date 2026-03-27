@@ -1,13 +1,13 @@
-#include "Arrow.h"
-#include "../Mob.h"
-#include "../player/Player.h"
-#include "../../item/Item.h"
-#include "../../item/ItemInstance.h"
-#include "../../level/Level.h"
-#include "../../level/tile/Tile.h"
-#include "../../../util/Mth.h"
+#include "Arrow.hpp"
+#include "world/entity/Mob.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/item/Item.hpp"
+#include "world/item/ItemInstance.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "util/Mth.hpp"
 
-#include "../../../nbt/CompoundTag.h"
+#include "nbt/CompoundTag.hpp"
 
 const float Arrow::ARROW_BASE_DAMAGE = 2.0f;
 

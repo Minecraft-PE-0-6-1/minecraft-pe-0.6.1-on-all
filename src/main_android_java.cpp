@@ -1,11 +1,11 @@
-#include "App.h"
-#include "AppPlatform_android.h"
+#include "App.hpp"
+#include "AppPlatform_android.hpp"
 
 // JNI keycode constants
 #include <android/keycodes.h>
 
-//#include "main_android_java.h"
-#include "platform/input/Multitouch.h"
+//#include "main_android_java.hpp"
+#include "platform/input/Multitouch.hpp"
 #include <unistd.h>
 #include <pthread.h>
 

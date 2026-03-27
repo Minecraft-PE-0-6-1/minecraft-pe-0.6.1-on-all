@@ -1,11 +1,11 @@
-#include "Entity.h"
-#include "EntityPos.h"
-#include "../level/Level.h"
-#include "../level/tile/LiquidTile.h"
-#include "item/ItemEntity.h"
-#include "../item/ItemInstance.h"
-#include "../../nbt/CompoundTag.h"
-#include "../../util/PerfTimer.h"
+#include "Entity.hpp"
+#include "EntityPos.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/LiquidTile.hpp"
+#include "item/ItemEntity.hpp"
+#include "world/item/ItemInstance.hpp"
+#include "nbt/CompoundTag.hpp"
+#include "util/PerfTimer.hpp"
 
 int
 	Entity::entityCounter = 0;

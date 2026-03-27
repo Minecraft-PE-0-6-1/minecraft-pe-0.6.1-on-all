@@ -1,7 +1,7 @@
-#include "OptionsItem.h"
-#include "../../Minecraft.h"
-#include "../../../locale/I18n.h"
-#include "../../../util/Mth.h"
+#include "OptionsItem.hpp"
+#include "client/Minecraft.hpp"
+#include "locale/I18n.hpp"
+#include "util/Mth.hpp"
 OptionsItem::OptionsItem( OptionId optionId, std::string label, GuiElement* element )
 : GuiElementContainer(false, true, 0, 0, 24, 12),
   m_optionId(optionId),

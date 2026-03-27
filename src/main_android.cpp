@@ -1,5 +1,5 @@
-#include "App.h"
-#include "AppPlatform_android.h"
+#include "App.hpp"
+#include "AppPlatform_android.hpp"
 #include <android_native_app_glue.h>
 
 // Horrible, I know. / A

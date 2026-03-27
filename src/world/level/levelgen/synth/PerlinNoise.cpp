@@ -1,5 +1,5 @@
-#include "PerlinNoise.h"
-#include "ImprovedNoise.h"
+#include "PerlinNoise.hpp"
+#include "ImprovedNoise.hpp"
 
 void PerlinNoise::init( int levels )
 {

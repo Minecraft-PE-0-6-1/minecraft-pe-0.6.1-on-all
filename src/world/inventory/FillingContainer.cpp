@@ -1,9 +1,9 @@
-#include "FillingContainer.h"
-#include "../level/tile/TreeTile.h"
-#include "../item/crafting/Recipe.h"
-#include "../../util/Mth.h"
-#include "../../nbt/CompoundTag.h"
-#include "../level/tile/StoneSlabTile.h"
+#include "FillingContainer.hpp"
+#include "world/level/tile/TreeTile.hpp"
+#include "world/item/crafting/Recipe.hpp"
+#include "util/Mth.hpp"
+#include "nbt/CompoundTag.hpp"
+#include "world/level/tile/StoneSlabTile.hpp"
 
 #define MAGIX_VAL 255
 #define MAX_SLOTS 96

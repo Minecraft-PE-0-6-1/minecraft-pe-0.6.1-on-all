@@ -1,4 +1,4 @@
-#include "Synth.h"
+#include "Synth.hpp"
 
 Synth::~Synth()
 {

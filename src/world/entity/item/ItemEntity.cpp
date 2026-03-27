@@ -1,11 +1,11 @@
-#include "ItemEntity.h"
-#include "../../entity/player/Player.h"
-#include "../../item/ItemInstance.h"
-#include "../../level/Level.h"
-#include "../../level/material/Material.h"
-#include "../../level/tile/Tile.h"
-#include "../../../util/Mth.h"
-#include "../../../nbt/CompoundTag.h"
+#include "ItemEntity.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/item/ItemInstance.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "util/Mth.hpp"
+#include "nbt/CompoundTag.hpp"
 
 const int ItemEntity::LIFETIME = 5 * 60 * SharedConstants::TicksPerSecond; // Five minutes, changed in 0.3.3!
 

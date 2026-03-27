@@ -1,7 +1,7 @@
-#include "ContainerMenu.h"
-#include "../Container.h"
-#include "../entity/player/Player.h"
-#include "../item/ItemInstance.h"
+#include "ContainerMenu.hpp"
+#include "world/Container.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/item/ItemInstance.hpp"
 
 ContainerMenu::ContainerMenu( Container* container, int tileEntityId /* = -1 */ )
 :   super(ContainerType::CONTAINER),

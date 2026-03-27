@@ -1,13 +1,13 @@
-#include "ConsoleScreen.h"
-#include "../Gui.h"
-#include "../../Minecraft.h"
-#include "../../player/LocalPlayer.h"
-#include "../../../platform/input/Keyboard.h"
-#include "../../../world/level/Level.h"
-#include "../../../network/RakNetInstance.h"
-#include "../../../network/ServerSideNetworkHandler.h"
-#include "../../../network/packet/ChatPacket.h"
-#include "../../../platform/log.h"
+#include "ConsoleScreen.hpp"
+#include "client/gui/Gui.hpp"
+#include "client/Minecraft.hpp"
+#include "client/player/LocalPlayer.hpp"
+#include "platform/input/Keyboard.hpp"
+#include "world/level/Level.hpp"
+#include "network/RakNetInstance.hpp"
+#include "network/ServerSideNetworkHandler.hpp"
+#include "network/packet/ChatPacket.hpp"
+#include "platform/log.hpp"
 
 #include <sstream>
 #include <cstdlib>

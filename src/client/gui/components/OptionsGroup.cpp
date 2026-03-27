@@ -1,11 +1,11 @@
-#include "OptionsGroup.h"
-#include "../../Minecraft.h"
-#include "ImageButton.h"
-#include "OptionsItem.h"
-#include "Slider.h"
-#include "../../../locale/I18n.h"
-#include "TextOption.h"
-#include "KeyOption.h"
+#include "OptionsGroup.hpp"
+#include "client/Minecraft.hpp"
+#include "ImageButton.hpp"
+#include "OptionsItem.hpp"
+#include "Slider.hpp"
+#include "locale/I18n.hpp"
+#include "TextOption.hpp"
+#include "KeyOption.hpp"
 
 OptionsGroup::OptionsGroup( std::string labelID )  {
 	label = I18n::get(labelID);

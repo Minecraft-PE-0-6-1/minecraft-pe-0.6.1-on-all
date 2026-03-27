@@ -1,7 +1,7 @@
-#include "ItemSpriteRenderer.h"
-#include "EntityRenderDispatcher.h"
-#include "../Tesselator.h"
-#include "../../../world/entity/Entity.h"
+#include "ItemSpriteRenderer.hpp"
+#include "EntityRenderDispatcher.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "world/entity/Entity.hpp"
 
 
 ItemSpriteRenderer::ItemSpriteRenderer( int icon )

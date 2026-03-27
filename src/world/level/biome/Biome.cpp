@@ -1,11 +1,11 @@
-#include "BiomeInclude.h"
+#include "BiomeInclude.hpp"
 
-#include "../levelgen/feature/TreeFeature.h"
-#include "../levelgen/feature/TallgrassFeature.h"
+#include "world/level/levelgen/feature/TreeFeature.hpp"
+#include "world/level/levelgen/feature/TallgrassFeature.hpp"
 
-#include "../../entity/EntityTypes.h"
-#include "../../entity/MobCategory.h"
-#include "../../level/tile/TallGrass.h"
+#include "world/entity/EntityTypes.hpp"
+#include "world/entity/MobCategory.hpp"
+#include "world/level/tile/TallGrass.hpp"
 
 Biome* Biome::rainForest	 = NULL;
 Biome* Biome::swampland		 = NULL;

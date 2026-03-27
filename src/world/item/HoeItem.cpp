@@ -1,7 +1,7 @@
-#include "HoeItem.h"
-#include "../level/tile/Tile.h"
-#include "../level/Level.h"
-#include "../entity/item/ItemEntity.h"
+#include "HoeItem.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/level/Level.hpp"
+#include "world/entity/item/ItemEntity.hpp"
 
 HoeItem::HoeItem( int id, Tier tier ) : super(id), tier(tier) {
 	maxStackSize = 1;

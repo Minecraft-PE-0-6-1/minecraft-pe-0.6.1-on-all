@@ -1,9 +1,9 @@
-#include "CraftingFilters.h"
-#include "../../../../world/item/ItemInstance.h"
-#include "../../../../world/item/Item.h"
-#include "../../../../world/level/tile/Tile.h"
-#include "../../../../world/level/material/Material.h"
-#include "../../../../world/level/tile/StoneSlabTile.h"
+#include "CraftingFilters.hpp"
+#include "world/item/ItemInstance.hpp"
+#include "world/item/Item.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/level/tile/StoneSlabTile.hpp"
 
 namespace CraftingFilters {
 

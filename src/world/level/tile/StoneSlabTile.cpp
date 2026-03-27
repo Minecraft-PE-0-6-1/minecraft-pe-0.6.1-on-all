@@ -1,8 +1,8 @@
-#include "StoneSlabTile.h"
-#include "../../../util/Random.h"
-#include "../material/Material.h"
-#include "../Level.h"
-#include "../../Facing.h"
+#include "StoneSlabTile.hpp"
+#include "util/Random.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/level/Level.hpp"
+#include "world/Facing.hpp"
 
 const std::string StoneSlabTile::SLAB_NAMES[] = {
 	"stone", "sand", "wood", "cobble", "brick", "smoothStoneBrick"

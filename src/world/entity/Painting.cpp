@@ -1,6 +1,6 @@
-#include "Painting.h"
-#include "../level/Level.h"
-#include "../item/Item.h"
+#include "Painting.hpp"
+#include "world/level/Level.hpp"
+#include "world/item/Item.hpp"
 Painting::Painting( Level* level ) : super(level) {
 	entityRendererId = ER_PAINTING_RENDERER;
 }

@@ -1,11 +1,11 @@
-#include "MobRenderer.h"
-#include "EntityRenderDispatcher.h"
-#include "../../gui/Font.h"
-#include "../Tesselator.h"
-#include "../../Minecraft.h"
-#include "../../model/Model.h"
-#include "../../../world/entity/Mob.h"
-#include "../../../util/Mth.h"
+#include "MobRenderer.hpp"
+#include "EntityRenderDispatcher.hpp"
+#include "client/gui/Font.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "client/Minecraft.hpp"
+#include "client/model/Model.hpp"
+#include "world/entity/Mob.hpp"
+#include "util/Mth.hpp"
 
 MobRenderer::MobRenderer(Model* model, float shadow)
 :	model(model),

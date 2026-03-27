@@ -1,6 +1,6 @@
-#include "QuadrupedModel.h"
-#include "geom/ModelPart.h"
-#include "../../util/Mth.h"
+#include "QuadrupedModel.hpp"
+#include "geom/ModelPart.hpp"
+#include "util/Mth.hpp"
 
 QuadrupedModel::QuadrupedModel( int legSize, float g )
 :	yHeadOffs(8),

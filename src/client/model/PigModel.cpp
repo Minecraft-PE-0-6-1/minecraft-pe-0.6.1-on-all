@@ -1,4 +1,4 @@
-#include "PigModel.h"
+#include "PigModel.hpp"
 
 PigModel::PigModel( float g /*= 0*/ )
 :	super(6, g)

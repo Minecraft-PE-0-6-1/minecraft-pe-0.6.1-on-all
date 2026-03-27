@@ -1,7 +1,7 @@
-#include "HangingEntity.h"
-#include "../Direction.h"
-#include "../level/Level.h"
-#include "../level/material/Material.h"
+#include "HangingEntity.hpp"
+#include "world/Direction.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/material/Material.hpp"
 HangingEntity::HangingEntity( Level* level )
 	: super(level) {
 	init();

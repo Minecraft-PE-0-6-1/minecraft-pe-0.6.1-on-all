@@ -1,5 +1,5 @@
-#include "TextOption.h"
-#include <client/Minecraft.h>
+#include "TextOption.hpp"
+#include <client/Minecraft.hpp>
 
 TextOption::TextOption(Minecraft* minecraft, OptionId optId) 
     : TextBox((int)optId, minecraft->options.getOpt(optId)->getStringId()) 

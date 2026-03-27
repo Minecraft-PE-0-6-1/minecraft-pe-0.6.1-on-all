@@ -1,5 +1,5 @@
-#include "PrimedTnt.h"
-#include "../../../nbt/CompoundTag.h"
+#include "PrimedTnt.hpp"
+#include "nbt/CompoundTag.hpp"
 
 PrimedTnt::PrimedTnt( Level* level )
 :	super(level),

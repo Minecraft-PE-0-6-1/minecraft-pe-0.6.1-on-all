@@ -1,4 +1,4 @@
-#include "StemTile.h"
+#include "StemTile.hpp"
 StemTile::StemTile( int id, Tile* fruit )
 : super(id, 15 + 6 * 16),
   fruit(fruit) {

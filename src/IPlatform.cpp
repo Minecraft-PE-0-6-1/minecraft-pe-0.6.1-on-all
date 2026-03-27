@@ -1,5 +1,5 @@
-#include <IPlatform.h>
-#include <App.h>
+#include <IPlatform.hpp>
+#include <App.hpp>
 #include <fstream>
 
 void IPlatform::runMainLoop(App& app) {

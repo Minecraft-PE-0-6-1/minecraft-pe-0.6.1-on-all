@@ -1,9 +1,9 @@
-#include "PaintingRenderer.h"
-#include "../../../world/entity/Painting.h"
-#include "../../../world/Direction.h"
-#include "../Tesselator.h"
-#include "../Textures.h"
-#include "../gles.h"
+#include "PaintingRenderer.hpp"
+#include "world/entity/Painting.hpp"
+#include "world/Direction.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "client/renderer/Textures.hpp"
+#include "client/renderer/gles.hpp"
 
 void PaintingRenderer::render( Entity* entity, float x, float y, float z, float rot, float a ) {
 	glPushMatrix();

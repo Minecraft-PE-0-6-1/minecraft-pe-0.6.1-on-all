@@ -1,5 +1,5 @@
-#include "ImprovedNoise.h"
-#include "../../../../util/Random.h"
+#include "ImprovedNoise.hpp"
+#include "util/Random.hpp"
 
 ImprovedNoise::ImprovedNoise()
 {

@@ -1,7 +1,7 @@
-#include "SurvivalMode.h"
-#include <Minecraft.h>
-#include <world/level/Level.h>
-#include <world/entity/player/Abilities.h>
+#include "SurvivalMode.hpp"
+#include <Minecraft.hpp>
+#include <world/level/Level.hpp>
+#include <world/entity/player/Abilities.hpp>
 
 SurvivalMode::SurvivalMode( Minecraft& minecraft )
 :	super(minecraft),

@@ -1,6 +1,6 @@
-#include "CropTile.h"
-#include "Tile.h"
-#include "../../entity/item/ItemEntity.h"
+#include "CropTile.hpp"
+#include "Tile.hpp"
+#include "world/entity/item/ItemEntity.hpp"
 
 CropTile::CropTile( int id, int tex ) : super(id, tex) {
 	this->tex = tex;

@@ -1,7 +1,7 @@
-#include "ToolRecipes.h"
-#include "Recipes.h"
-#include "../ShearsItem.h"
-#include "../../level/tile/Tile.h"
+#include "ToolRecipes.hpp"
+#include "Recipes.hpp"
+#include "world/item/ShearsItem.hpp"
+#include "world/level/tile/Tile.hpp"
 
 
 static RowList shapes[] = {

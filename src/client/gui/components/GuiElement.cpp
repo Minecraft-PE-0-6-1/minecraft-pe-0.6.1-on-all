@@ -1,4 +1,4 @@
-#include "GuiElement.h"
+#include "GuiElement.hpp"
 
 GuiElement::GuiElement( bool active/*=false*/, bool visible/*=true*/, int x /*= 0*/, int y /*= 0*/, int width/*=24*/, int height/*=24*/ )
 : active(active),

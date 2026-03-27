@@ -1,27 +1,27 @@
-#include "Mob.h"
+#include "Mob.hpp"
 
 #include <cmath>
 
-#include "player/Player.h"
-#include "SharedFlags.h"
-#include "../entity/EntityEvent.h"
-#include "../level/Level.h"
-#include "../level/material/Material.h"
-#include "../level/tile/Tile.h"
-#include "../../util/Random.h"
-#include "../../util/PerfTimer.h"
+#include "player/Player.hpp"
+#include "SharedFlags.hpp"
+#include "world/entity/EntityEvent.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "util/Random.hpp"
+#include "util/PerfTimer.hpp"
 
-#include "../../nbt/CompoundTag.h"
+#include "nbt/CompoundTag.hpp"
 
-#include "../../network/RakNetInstance.h"
-#include "../../network/packet/MoveEntityPacket.h"
-#include "ai/control/MoveControl.h"
-#include "ai/control/JumpControl.h"
-#include "ai/PathNavigation.h"
-#include "ai/Sensing.h"
-#include "ai/goal/GoalSelector.h"
-#include "../../network/packet/SetEntityMotionPacket.h"
-#include "../item/ArmorItem.h"
+#include "network/RakNetInstance.hpp"
+#include "network/packet/MoveEntityPacket.hpp"
+#include "ai/control/MoveControl.hpp"
+#include "ai/control/JumpControl.hpp"
+#include "ai/PathNavigation.hpp"
+#include "ai/Sensing.hpp"
+#include "ai/goal/GoalSelector.hpp"
+#include "network/packet/SetEntityMotionPacket.hpp"
+#include "world/item/ArmorItem.hpp"
 
 
 Mob::Mob(Level* level)

@@ -1,6 +1,6 @@
-#include "StringUtils.h"
+#include "StringUtils.hpp"
 #include <algorithm>
-#include "../platform/log.h"
+#include "platform/log.hpp"
 
 namespace Util
 {

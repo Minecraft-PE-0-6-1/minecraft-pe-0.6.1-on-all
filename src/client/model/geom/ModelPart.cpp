@@ -1,8 +1,8 @@
-#include "ModelPart.h"
-#include "Cube.h"
-#include "../Model.h"
-#include "../../renderer/Tesselator.h"
-#include "../../../util/Mth.h"
+#include "ModelPart.hpp"
+#include "Cube.hpp"
+#include "client/model/Model.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "util/Mth.hpp"
 
 
 ModelPart::ModelPart( const std::string& id )

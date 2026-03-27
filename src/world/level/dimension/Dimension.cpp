@@ -1,13 +1,13 @@
-#include "Dimension.h"
-#include "NormalDayCycleDimension.h"
+#include "Dimension.hpp"
+#include "NormalDayCycleDimension.hpp"
 
-//#include "../levelgen/SimpleLevelSource.h"
-#include "../levelgen/RandomLevelSource.h"
-#include "../Level.h"
-#include "../biome/BiomeSource.h"
-#include "../chunk/ChunkSource.h"
-#include "../tile/Tile.h"
-#include "../../../util/Mth.h"
+//#include "world/level/levelgen/SimpleLevelSource.hpp"
+#include "world/level/levelgen/RandomLevelSource.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/biome/BiomeSource.hpp"
+#include "world/level/chunk/ChunkSource.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "util/Mth.hpp"
 
 
 Dimension::Dimension()
@@ -122,7 +122,7 @@ Dimension* Dimension::getNew( int id )
 //
 // DimensionFactory
 //
-#include "../storage/LevelData.h"
+#include "world/level/storage/LevelData.hpp"
 Dimension* DimensionFactory::createDefaultDimension(LevelData* data )
 {
 	int dimensionId = Dimension::NORMAL;

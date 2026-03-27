@@ -1,10 +1,10 @@
-#include "RolledSelectionListV.h"
-#include "../../Minecraft.h"
-#include "../../renderer/Tesselator.h"
-#include "../../renderer/gles.h"
-#include "../../../platform/input/Mouse.h"
-#include "../../../util/Mth.h"
-#include "../../renderer/Textures.h"
+#include "RolledSelectionListV.hpp"
+#include "client/Minecraft.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "client/renderer/gles.hpp"
+#include "platform/input/Mouse.hpp"
+#include "util/Mth.hpp"
+#include "client/renderer/Textures.hpp"
 
 
 RolledSelectionListV::RolledSelectionListV( Minecraft* minecraft_, int width_, int height_, int x0_, int x1_, int y0_, int y1_, int itemHeight_ )

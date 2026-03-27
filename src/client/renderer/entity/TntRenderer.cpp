@@ -1,7 +1,7 @@
-#include "TntRenderer.h"
-#include "../Tesselator.h"
-#include "../../../world/level/tile/Tile.h"
-#include "../../../world/entity/item/PrimedTnt.h"
+#include "TntRenderer.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/entity/item/PrimedTnt.hpp"
 
 
 TntRenderer::TntRenderer()

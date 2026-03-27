@@ -1,7 +1,7 @@
-#include "SheepModel.h"
-#include "geom/ModelPart.h"
-#include "../../world/entity/Mob.h"
-#include "../../world/entity/animal/Sheep.h"
+#include "SheepModel.hpp"
+#include "geom/ModelPart.hpp"
+#include "world/entity/Mob.hpp"
+#include "world/entity/animal/Sheep.hpp"
 
 SheepModel::SheepModel()
 :   super(12, 0)

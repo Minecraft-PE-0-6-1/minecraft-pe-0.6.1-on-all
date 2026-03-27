@@ -1,7 +1,7 @@
-#include "CreativeMode.h"
-#include <Minecraft.h>
-#include <world/level/Level.h>
-#include <world/entity/player/Abilities.h>
+#include "CreativeMode.hpp"
+#include <Minecraft.hpp>
+#include <world/level/Level.hpp>
+#include <world/entity/player/Abilities.hpp>
 
 static const int DestructionTickDelay = 5;
 

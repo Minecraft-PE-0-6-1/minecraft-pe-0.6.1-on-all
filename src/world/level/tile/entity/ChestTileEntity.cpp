@@ -1,8 +1,8 @@
-#include "ChestTileEntity.h"
-#include "../ChestTile.h"
-#include "../../Level.h"
-#include "../../../entity/player/Player.h"
-#include "../../../../nbt/NbtIo.h"
+#include "ChestTileEntity.hpp"
+#include "world/level/tile/ChestTile.hpp"
+#include "world/level/Level.hpp"
+#include "world/entity/player/Player.hpp"
+#include "nbt/NbtIo.hpp"
 
 ChestTileEntity::ChestTileEntity()
 :	super(TileEntityType::Chest),

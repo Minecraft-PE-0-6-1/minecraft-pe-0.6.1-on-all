@@ -1,4 +1,4 @@
-#include "Keyboard.h"
+#include "Keyboard.hpp"
 
 int Keyboard::_states[256] = {0};
 

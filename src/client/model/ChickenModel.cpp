@@ -1,5 +1,5 @@
-#include "ChickenModel.h"
-#include "../../world/entity/Entity.h"
+#include "ChickenModel.hpp"
+#include "world/entity/Entity.hpp"
 
 ChickenModel::ChickenModel()
 :   head(0, 0),

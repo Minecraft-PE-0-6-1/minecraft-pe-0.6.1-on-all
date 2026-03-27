@@ -1,8 +1,8 @@
-#include "Explosion.h"
+#include "Explosion.hpp"
 
-#include "Level.h"
-#include "tile/Tile.h"
-#include "../entity/Entity.h"
+#include "Level.hpp"
+#include "tile/Tile.hpp"
+#include "world/entity/Entity.hpp"
 
 
 Explosion::Explosion(Level* level, Entity* source, float x, float y, float z, float r)

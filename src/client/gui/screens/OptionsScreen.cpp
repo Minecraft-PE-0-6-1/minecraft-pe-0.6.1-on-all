@@ -1,15 +1,15 @@
-#include "OptionsScreen.h"
+#include "OptionsScreen.hpp"
 
-#include "StartMenuScreen.h"
-#include "UsernameScreen.h"
-#include "DialogDefinitions.h"
-#include "../../Minecraft.h"
-#include "../../../AppPlatform.h"
-#include "CreditsScreen.h"
+#include "StartMenuScreen.hpp"
+#include "UsernameScreen.hpp"
+#include "DialogDefinitions.hpp"
+#include "client/Minecraft.hpp"
+#include "AppPlatform.hpp"
+#include "CreditsScreen.hpp"
 
-#include "../components/ImageButton.h"
-#include "../components/OptionsGroup.h"
-#include "platform/input/Keyboard.h"
+#include "client/gui/components/ImageButton.hpp"
+#include "client/gui/components/OptionsGroup.hpp"
+#include "platform/input/Keyboard.hpp"
 
 OptionsScreen::OptionsScreen()
 	: btnClose(NULL),

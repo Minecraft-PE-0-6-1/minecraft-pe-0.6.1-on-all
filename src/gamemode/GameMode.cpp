@@ -1,14 +1,14 @@
-#include "GameMode.h"
-#include <Minecraft.h>
-#include <network/packet/UseItemPacket.h>
-#include <network/packet/PlayerActionPacket.h>
-#include <world/level/Level.h>
-#include <world/item/ItemInstance.h>
-#include <client/player/LocalPlayer.h>
-#include <client/Options.h>
-#include <network/RakNetInstance.h>
-#include <network/packet/RemoveBlockPacket.h>
-#include <world/level/material/Material.h>
+#include "GameMode.hpp"
+#include <Minecraft.hpp>
+#include <network/packet/UseItemPacket.hpp>
+#include <network/packet/PlayerActionPacket.hpp>
+#include <world/level/Level.hpp>
+#include <world/item/ItemInstance.hpp>
+#include <client/player/LocalPlayer.hpp>
+#include <client/Options.hpp>
+#include <network/RakNetInstance.hpp>
+#include <network/packet/RemoveBlockPacket.hpp>
+#include <world/level/material/Material.hpp>
 
 
 /*virtual*/

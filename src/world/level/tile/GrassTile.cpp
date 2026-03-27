@@ -1,6 +1,6 @@
-#include "GrassTile.h"
-#include "../material/Material.h"
-#include "../../entity/item/ItemEntity.h"
+#include "GrassTile.hpp"
+#include "world/level/material/Material.hpp"
+#include "world/entity/item/ItemEntity.hpp"
 
 GrassTile::GrassTile(int id)
 :	super(id, Material::dirt)

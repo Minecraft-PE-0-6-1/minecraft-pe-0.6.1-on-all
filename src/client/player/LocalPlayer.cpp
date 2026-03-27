@@ -1,29 +1,29 @@
-#include "LocalPlayer.h"
-#include <Minecraft.h>
-#include "../../world/entity/EntityEvent.h"
-#include "../../world/entity/player/Player.h"
-#include "../../world/inventory/BaseContainerMenu.h"
-#include "../../world/item/BowItem.h"
-#include "../../world/level/Level.h"
-#include "../../world/level/tile/Tile.h"
-#include "../../world/level/tile/entity/TileEntity.h"
-#include "../../world/level/material/Material.h"
-#include "../../network/packet/ContainerClosePacket.h"
-#include "../../network/packet/MovePlayerPacket.h"
-#include "../../network/packet/PlayerEquipmentPacket.h"
-#include "../../network/RakNetInstance.h"
-#include "../../network/packet/DropItemPacket.h"
-#include "../../network/packet/SetHealthPacket.h"
-#include "../../network/packet/SendInventoryPacket.h"
-#include "../../network/packet/EntityEventPacket.h"
-#include "../../network/packet/PlayerActionPacket.h"
+#include "LocalPlayer.hpp"
+#include <Minecraft.hpp>
+#include "world/entity/EntityEvent.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/inventory/BaseContainerMenu.hpp"
+#include "world/item/BowItem.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/level/tile/entity/TileEntity.hpp"
+#include "world/level/material/Material.hpp"
+#include "network/packet/ContainerClosePacket.hpp"
+#include "network/packet/MovePlayerPacket.hpp"
+#include "network/packet/PlayerEquipmentPacket.hpp"
+#include "network/RakNetInstance.hpp"
+#include "network/packet/DropItemPacket.hpp"
+#include "network/packet/SetHealthPacket.hpp"
+#include "network/packet/SendInventoryPacket.hpp"
+#include "network/packet/EntityEventPacket.hpp"
+#include "network/packet/PlayerActionPacket.hpp"
 #include <vector>
 #include <cctype>
-#include "../../platform/log.h"
-#include "../../platform/HttpClient.h"
-#include "../../platform/CThread.h"
-#include "../../util/StringUtils.h"
-#include "client/Options.h"
+#include "platform/log.hpp"
+#include "platform/HttpClient.hpp"
+#include "platform/CThread.hpp"
+#include "util/StringUtils.hpp"
+#include "client/Options.hpp"
 
 #if defined(_WIN32)
 #include <direct.h>
@@ -35,18 +35,18 @@
 #endif
 
 
-#include "../gui/Screen.h"
-#include "../gui/screens/FurnaceScreen.h"
-#include "../gui/screens/ChestScreen.h"
-#include "../gui/screens/crafting/WorkbenchScreen.h"
-#include "../gui/screens/crafting/StonecutterScreen.h"
-#include "../gui/screens/InBedScreen.h"
-#include "../gui/screens/TextEditScreen.h"
-#include "../particle/TakeAnimationParticle.h"
-#include "../../network/packet/AnimatePacket.h"
-#include "../../world/item/ArmorItem.h"
-#include "../../network/packet/PlayerArmorEquipmentPacket.h"
-#include <MinecraftClient.h>
+#include "client/gui/Screen.hpp"
+#include "client/gui/screens/FurnaceScreen.hpp"
+#include "client/gui/screens/ChestScreen.hpp"
+#include "client/gui/screens/crafting/WorkbenchScreen.hpp"
+#include "client/gui/screens/crafting/StonecutterScreen.hpp"
+#include "client/gui/screens/InBedScreen.hpp"
+#include "client/gui/screens/TextEditScreen.hpp"
+#include "client/particle/TakeAnimationParticle.hpp"
+#include "network/packet/AnimatePacket.hpp"
+#include "world/item/ArmorItem.hpp"
+#include "network/packet/PlayerArmorEquipmentPacket.hpp"
+#include <MinecraftClient.hpp>
 
 namespace {
 

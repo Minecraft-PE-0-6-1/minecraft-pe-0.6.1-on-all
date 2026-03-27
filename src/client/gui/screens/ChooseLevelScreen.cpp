@@ -1,7 +1,7 @@
-#include "ChooseLevelScreen.h"
+#include "ChooseLevelScreen.hpp"
 #include <algorithm>
 #include <set>
-#include "../../Minecraft.h"
+#include "client/Minecraft.hpp"
 
 void ChooseLevelScreen::init() {
 	loadLevelSource();

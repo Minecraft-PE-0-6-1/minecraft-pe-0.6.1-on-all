@@ -1,10 +1,10 @@
-#include "CreditsScreen.h"
-#include "StartMenuScreen.h"
-#include "OptionsScreen.h"
-#include "../../Minecraft.h"
-#include "../components/Button.h"
-#include "../components/ImageButton.h"
-#include "platform/input/Mouse.h"
+#include "CreditsScreen.hpp"
+#include "StartMenuScreen.hpp"
+#include "OptionsScreen.hpp"
+#include "client/Minecraft.hpp"
+#include "client/gui/components/Button.hpp"
+#include "client/gui/components/ImageButton.hpp"
+#include "platform/input/Mouse.hpp"
 
 CreditsScreen::CreditsScreen()
 : bHeader(NULL), btnBack(NULL)

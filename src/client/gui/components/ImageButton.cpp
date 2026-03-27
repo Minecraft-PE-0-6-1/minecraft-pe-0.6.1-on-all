@@ -1,10 +1,10 @@
-#include "ImageButton.h"
-#include "../../renderer/Tesselator.h"
-#include "../../Minecraft.h"
-#include "../../../platform/log.h"
-#include "../../../util/Mth.h"
-#include "../../renderer/Textures.h"
-#include <client/Option.h>
+#include "ImageButton.hpp"
+#include "client/renderer/Tesselator.hpp"
+#include "client/Minecraft.hpp"
+#include "platform/log.hpp"
+#include "util/Mth.hpp"
+#include "client/renderer/Textures.hpp"
+#include <client/Option.hpp>
 
 
 ImageButton::ImageButton(int id, const std::string& msg)

@@ -1,6 +1,6 @@
-#include "CreatorLevel.h"
-#include "../world/level/chunk/ChunkSource.h"
-#include "../util/PerfTimer.h"
+#include "CreatorLevel.hpp"
+#include "world/level/chunk/ChunkSource.hpp"
+#include "util/PerfTimer.hpp"
 
 CreatorLevel::CreatorLevel(LevelStorage* levelStorage, const std::string& levelName, const LevelSettings& settings, int generatorVersion, Dimension* fixedDimension /* = NULL */)
 :	super(levelStorage, levelName, settings, generatorVersion, fixedDimension)

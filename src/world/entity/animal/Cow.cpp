@@ -1,7 +1,7 @@
-#include "Cow.h"
-#include "../player/Player.h"
-#include "../../level/Level.h"
-#include "../../item/Item.h"
+#include "Cow.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/level/Level.hpp"
+#include "world/item/Item.hpp"
 
 Cow::Cow( Level* level )
 :	super(level)

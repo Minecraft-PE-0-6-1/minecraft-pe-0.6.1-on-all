@@ -1,14 +1,14 @@
-#include "TileEntity.h"
+#include "TileEntity.hpp"
 
 TileEntity::MapIdType TileEntity::idClassMap;
 TileEntity::MapTypeId TileEntity::classIdMap;
 
-#include "FurnaceTileEntity.h"
-#include "ChestTileEntity.h"
-#include "NetherReactorTileEntity.h"
-#include "../../Level.h"
-#include "../../../../nbt/CompoundTag.h"
-#include "SignTileEntity.h"
+#include "FurnaceTileEntity.hpp"
+#include "ChestTileEntity.hpp"
+#include "NetherReactorTileEntity.hpp"
+#include "world/level/Level.hpp"
+#include "nbt/CompoundTag.hpp"
+#include "SignTileEntity.hpp"
 
 int TileEntity::_runningId = 0;
 

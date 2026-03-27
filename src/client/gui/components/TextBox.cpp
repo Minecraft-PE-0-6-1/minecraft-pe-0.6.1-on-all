@@ -1,8 +1,8 @@
-#include "TextBox.h"
-#include "../Gui.h"
-#include "../../Minecraft.h"
-#include "../../../AppPlatform.h"
-#include "../../../platform/input/Mouse.h"
+#include "TextBox.hpp"
+#include "client/gui/Gui.hpp"
+#include "client/Minecraft.hpp"
+#include "AppPlatform.hpp"
+#include "platform/input/Mouse.hpp"
 
 // delegate constructors
 TextBox::TextBox(int id, const std::string& msg)

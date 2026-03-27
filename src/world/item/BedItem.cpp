@@ -1,9 +1,9 @@
-#include "BedItem.h"
-#include "../level/Level.h"
-#include "../level/tile/BedTile.h"
-#include "../entity/player/Player.h"
-#include "../Direction.h"
-#include "../Facing.h"
+#include "BedItem.hpp"
+#include "world/level/Level.hpp"
+#include "world/level/tile/BedTile.hpp"
+#include "world/entity/player/Player.hpp"
+#include "world/Direction.hpp"
+#include "world/Facing.hpp"
 bool BedItem::useOn( ItemInstance* itemInstance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ ) {
 	if(face != Facing::UP) {
 		return false;

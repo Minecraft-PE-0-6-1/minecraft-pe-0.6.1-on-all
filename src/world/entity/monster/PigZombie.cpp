@@ -1,9 +1,9 @@
-#include "PigZombie.h"
-#include "../../item/Item.h"
-#include "../../level/Level.h"
-#include "../../Difficulty.h"
-#include "../Entity.h"
-#include "../projectile/Arrow.h"
+#include "PigZombie.hpp"
+#include "world/item/Item.hpp"
+#include "world/level/Level.hpp"
+#include "world/Difficulty.hpp"
+#include "world/entity/Entity.hpp"
+#include "world/entity/projectile/Arrow.hpp"
 PigZombie::PigZombie( Level* level )
 	: super(level)
 	,  angerTime(0)

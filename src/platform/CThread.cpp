@@ -7,7 +7,7 @@
  *
  */
 
-#include "CThread.h"
+#include "CThread.hpp"
 
 
 

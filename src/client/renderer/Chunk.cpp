@@ -1,13 +1,13 @@
-#include "Chunk.h"
-#include "Tesselator.h"
-#include "TileRenderer.h"
-#include "culling/Culler.h"
-#include "../../world/entity/Entity.h"
-#include "../../world/level/tile/Tile.h"
-#include "../../world/level/Region.h"
-#include "../../world/level/chunk/LevelChunk.h"
-#include "../../util/Mth.h"
-//#include "../../platform/time.h"
+#include "Chunk.hpp"
+#include "Tesselator.hpp"
+#include "TileRenderer.hpp"
+#include "culling/Culler.hpp"
+#include "world/entity/Entity.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/level/Region.hpp"
+#include "world/level/chunk/LevelChunk.hpp"
+#include "util/Mth.hpp"
+//#include "platform/time.hpp"
 
 /*static*/ int Chunk::updates = 0;
 //static Stopwatch swRebuild;

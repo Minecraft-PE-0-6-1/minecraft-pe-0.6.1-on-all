@@ -1,8 +1,8 @@
-#include "FallingTileRenderer.h"
-#include "../TileRenderer.h"
-#include "../../../world/entity/item/FallingTile.h"
-#include "../../../world/level/tile/Tile.h"
-#include "../../../world/level/Level.h"
+#include "FallingTileRenderer.hpp"
+#include "client/renderer/TileRenderer.hpp"
+#include "world/entity/item/FallingTile.hpp"
+#include "world/level/tile/Tile.hpp"
+#include "world/level/Level.hpp"
 
 FallingTileRenderer::FallingTileRenderer() {
     this->shadowRadius = 0.5f;

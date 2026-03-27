@@ -1,4 +1,4 @@
-#include "Feature.h"
+#include "Feature.hpp"
 
 Feature::Feature( bool doUpdate /*= false*/ )
 :	doUpdate(doUpdate)

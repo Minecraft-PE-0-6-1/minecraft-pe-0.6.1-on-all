@@ -1,8 +1,8 @@
-#include "Region.h"
-#include "chunk/LevelChunk.h"
-#include "material/Material.h"
-#include "tile/Tile.h"
-#include "Level.h"
+#include "Region.hpp"
+#include "chunk/LevelChunk.hpp"
+#include "material/Material.hpp"
+#include "tile/Tile.hpp"
+#include "Level.hpp"
 
 Region::Region(Level* level, int x1, int y1, int z1, int x2, int y2, int z2) {
     this->level = level;
