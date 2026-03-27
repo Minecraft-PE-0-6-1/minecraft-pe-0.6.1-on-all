@@ -467,35 +467,34 @@ void PaneCraftingScreen::craftSelectedItem()
 		if (minecraft->isOnline()) {
 			WantCreatePacket packet(minecraft->player->entityId, resultItem.count, resultItem.getAuxValue(), resultItem.id);
 			minecraft->raknetInstance->send(packet);
-		} else {
-			// Remove all items required for the recipe and ...
-			for (unsigned int i = 0; i < currentItem->neededItems.size(); ++i) {
-				CItem::ReqItem& req = currentItem->neededItems[i];
-
-				// If the recipe allows any aux-value as ingredients, first deplete
-				// aux == 0 from inventory. Since I'm not sure if this always is
-				// correct, let's only do it for ingredient sandstone for now.
-				ItemInstance toRemove = req.item;
-
-				if (Tile::sandStone->id == req.item.id
-				&& Recipe::ANY_AUX_VALUE == req.item.getAuxValue()) {
-					toRemove.setAuxValue(0);
-					toRemove.count = minecraft->player->inventory->removeResource(toRemove, true);
-					toRemove.setAuxValue(Recipe::ANY_AUX_VALUE);
-				}
-
-				if (toRemove.count > 0) {
-					minecraft->player->inventory->removeResource(toRemove);
-				}
-			}
-			// ... add the new one! (in this order, to fill empty slots better)
-			// if it doesn't fit, throw it on the ground!
-			if (!minecraft->player->inventory->add(&resultItem)) {
-				minecraft->player->drop(new ItemInstance(resultItem), false);
-			}
-
-			recheckRecipes();
 		}
+		// Remove all items required for the recipe and ...
+		for (unsigned int i = 0; i < currentItem->neededItems.size(); ++i) {
+			CItem::ReqItem& req = currentItem->neededItems[i];
+
+			// If the recipe allows any aux-value as ingredients, first deplete
+			// aux == 0 from inventory. Since I'm not sure if this always is
+			// correct, let's only do it for ingredient sandstone for now.
+			ItemInstance toRemove = req.item;
+
+			if (Tile::sandStone->id == req.item.id
+			&& Recipe::ANY_AUX_VALUE == req.item.getAuxValue()) {
+				toRemove.setAuxValue(0);
+				toRemove.count = minecraft->player->inventory->removeResource(toRemove, true);
+				toRemove.setAuxValue(Recipe::ANY_AUX_VALUE);
+			}
+
+			if (toRemove.count > 0) {
+				minecraft->player->inventory->removeResource(toRemove);
+			}
+		}
+		// ... add the new one! (in this order, to fill empty slots better)
+		// if it doesn't fit, throw it on the ground!
+		if (!minecraft->player->inventory->add(&resultItem)) {
+			minecraft->player->drop(new ItemInstance(resultItem), false);
+		}
+
+		recheckRecipes();
 	}
 }
 
