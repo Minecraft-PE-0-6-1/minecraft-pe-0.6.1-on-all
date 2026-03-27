@@ -726,6 +726,21 @@ void Minecraft::tickInput() {
 			if (key == Keyboard::KEY_F3) {
 				options.toggle(OPTIONS_RENDER_DEBUG);
 			}
+			
+			// TODO: replace it with client /give command :face_vomiting:
+			if (key == Keyboard::KEY_F4) {
+				player->inventory->add(new ItemInstance(Tile::redBrick));
+				player->inventory->add(new ItemInstance(Item::ironIngot, 64));
+				player->inventory->add(new ItemInstance(Item::ironIngot, 34));
+				player->inventory->add(new ItemInstance(Tile::stonecutterBench));
+				player->inventory->add(new ItemInstance(Tile::workBench));
+				player->inventory->add(new ItemInstance(Tile::furnace));
+				player->inventory->add(new ItemInstance(Tile::wood, 54));
+				player->inventory->add(new ItemInstance(Item::stick, 14));
+				player->inventory->add(new ItemInstance(Item::coal, 31));
+				player->inventory->add(new ItemInstance(Tile::sand, 6));
+
+			}
 
 			if (key == Keyboard::KEY_F5) {
 				options.toggle(OPTIONS_THIRD_PERSON_VIEW);

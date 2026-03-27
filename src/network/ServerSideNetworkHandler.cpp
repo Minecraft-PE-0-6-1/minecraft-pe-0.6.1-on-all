@@ -5,6 +5,9 @@
 #include "../world/entity/player/Inventory.h"
 #include "../world/Container.h"
 #include "../world/inventory/BaseContainerMenu.h"
+#include "network/packet/ContainerSetSlotPacket.h"
+#include "network/packet/RemoveBlockPacket.h"
+#include "network/packet/UpdateBlockPacket.h"
 #include "network/packet/RemoveItemPacket.h"
 #include "network/packet/TakeItemPacket.h"
 #include "network/packet/WantCreatePacket.h"
@@ -18,6 +21,7 @@
 #include "../raknet/PacketPriority.h"
 #include "platform/log.h"
 #include "world/item/ItemInstance.h"
+#include "world/phys/Vec3.h"
 #include "world/item/crafting/Recipe.h"
 #include "world/item/crafting/Recipes.h"
 #include <cstddef>
@@ -214,6 +218,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	newPlayer->owner = source;
 	newPlayer->name = packet->clientName.C_String();
 	_pendingPlayers.push_back(newPlayer);
+
+	LOGI("Adding new player... isCreative: %i\n", minecraft->isCreativeMode());
 
 	// Reset the player so he doesn't spawn inside blocks
 	while (newPlayer->y > 0) {
@@ -449,29 +455,20 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerEq
 	// override the player's inventory
 	int slot = player->inventory->getSlot(packet->itemId, packet->itemAuxValue);
 
-	if (slot >= 0) {
-		// if (packet->itemId == 0) {
-		// 	player->inventory->clearSlot(slot);
-		// } else {
-		// 	// @note: 128 is an ugly hack for depletable items.
-		// 	// @todo: fix
-		// 	ItemInstance newItem(packet->itemId, 128, packet->itemAuxValue);
-		// 	player->inventory->replaceSlot(slot, &newItem);
-		// }
+	if (slot >= 0 && slot != packet->inventorySlot && packet->itemId != 0) {
+		LOGW("PlayerEquipmentPacket: Item in player inventory but slots doesn't match!");
+		packet->inventorySlot = slot;
+	}
 
-		player->inventory->moveToSelectedSlot(slot, true);
-	} else if (packet->itemId == 0) {
-		player->inventory->linkEmptySlot(player->inventory->selected);
-	} else {
-		LOGW("Warning: Remote player doesn't have his thing (or crafted it)!\n");
+	if (slot < 0 && packet->itemId != 0) {
+		LOGW("PlayerEquipmentPacket: Remote player doesn't have his thing (or crafted it)!\n");
 		return;
 	}
 
-	LOGI("Inventory:\n");
-	for (int i = 0; i < player->inventory->numTotalSlots; i++) {
-		auto item = player->inventory->getItem(i);
-		if (item) LOGI("\t %i: %s (%i)\n", i, item->getName().c_str(), item->count);
-	}
+	player->inventory->selectSlot(packet->selectedSlot);
+	player->inventory->linkSlot(packet->selectedSlot, packet->inventorySlot, true);
+
+	player->inventory->print();
 
 	redistributePacket(packet, source);
 }
@@ -553,7 +550,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCrea
 		wantCreate.count = packet->count;
 		wantCreate.setAuxValue(packet->auxValue);
 
-		Recipe* recipe = Recipes::getInstance()->getRecipeFor(wantCreate);
+		Recipe* recipe = Recipe::getInstance()->getRecipeFor(wantCreate);
 
 		std::vector<ItemInstance> items = recipe->getItemPack().getItemInstances();
 
@@ -600,7 +597,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 {
 	if (!level) return;
 
-	LOGI("UseItemPacket\n");
+	LOGI("UseItemPacket: id %i data %i\n", packet->itemId, packet->itemData);
 	Entity* entity = level->getEntity(packet->entityId);
 	if (entity && entity->isPlayer()) {
 		Player* player = (Player*) entity;
@@ -611,7 +608,30 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 		if (t && t->use(level, x, y, z, player)) return;
 		if (packet->item.isNull()) return;
 
-		ItemInstance* item = &packet->item;
+		ItemInstance* packetItem = &packet->item;
+
+		int slot = player->inventory->getSlot(packet->itemId, packet->itemData);
+
+		if (slot < 0) {
+			LOGW("UseItemPacket: Player doesn't have this item!\n");
+
+			auto pos = Vec3(packet->x, packet->y, packet->z);
+
+			if (ItemInstance::isBlock(packetItem)) {
+				LOGI("UseItemPacket: This is even block!!!\n");
+
+				pos.x += packet->clickX;
+				pos.y += packet->clickY;
+				pos.z += packet->clickZ;
+			}
+
+			UpdateBlockPacket refuse(pos.x, pos.y, pos.z, level->getTile(pos.x, pos.y, pos.z), level->getData(pos.x, pos.y, pos.z));
+			raknetInstance->send(refuse);
+
+			return;
+		}
+
+		ItemInstance* item = player->inventory->getItem(slot);
 
 		if(packet->face == 255) {
             // Special case: x,y,z means direction-of-action
@@ -621,6 +641,10 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 		else {
 			minecraft->gameMode->useItemOn(player, level, item, packet->x, packet->y, packet->z, packet->face,
 				Vec3(packet->clickX + packet->x, packet->clickY + packet->y, packet->clickZ + packet->z));
+		}
+
+		if (item && item->count <= 0) {
+			player->inventory->clearSlot(slot);
 		}
 		
 		//LOGW("Use Item not working! Out of synch?\n");
@@ -668,7 +692,7 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SendInv
 {
 	if (!level) return;
 
-	LOGI("Sent inventory:\n");
+	LOGI("SendInventoryPacket:\n");
 	for (int i = 0; i < packet->numItems; i++) {
 		LOGI("\t %i: %s (%i)\n", i, packet->items.at(i).getName().c_str(), packet->items.at(i).count);
 	}
@@ -693,7 +717,16 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, DropIte
 	Entity* entity = level->getEntity(packet->entityId);
 	if (entity && entity->isPlayer()) {
 		Player* p = (Player*)entity;
-		p->drop(new ItemInstance(packet->item), packet->dropType != 0);
+		// p->drop(new ItemInstance(packet->item), packet->dropType != 0);
+
+		int slot = p->inventory->getSlot(packet->item.id, packet->item.getAuxValue());
+
+		if (slot < 0) {
+			LOGW("DropItemPacket: player doesn't have these items!\n");
+			return;
+		}
+
+		p->inventory->dropSlot(slot, false, packet->dropType != 0);
 	}
 }
 
@@ -710,7 +743,16 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerSetSlotPacket* packet) {
 	if (!level) return;
-	LOGI("ContainerSetSlot: slot %i item %s\n", packet->slot, packet->item.getName().c_str());
+
+	const char* type = "unknown";
+
+	switch (packet->setType) {
+		case ContainerSetSlotPacket::SETTYPE_ADD: type = "add"; break;
+		case ContainerSetSlotPacket::SETTYPE_SET: type = "set"; break;
+		case ContainerSetSlotPacket::SETTYPE_TAKE: type = "take"; break;
+	};
+
+	LOGI("ContainerSetSlot: slot %i item %s type %s\n", packet->slot, packet->item.getName().c_str(), type);
 
 	Player* p = findPlayer(level, &source);
 	if (!p) return;
@@ -719,9 +761,77 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 		LOGW("User has no container!\n");
 		return;
 	}
-	if (p->containerMenu->containerId != packet->containerId)
-	{
+
+	if (p->containerMenu->containerId != packet->containerId) {
 		LOGW("Wrong container id: %d vs %d\n", p->containerMenu->containerId, packet->containerId);
+		return;
+	}
+
+	if (packet->item.count > 64) {
+		LOGW("ContainerSetSlotPacket: player tried to put more than 64");
+		return;
+	}
+
+	auto contItems = p->containerMenu->getItems();
+
+	// find same item in player inventory (used not in all cases)
+	int invSlot = p->inventory->getSlot(packet->item.id, packet->item.getAuxValue());
+	auto invItem = p->inventory->getItem(invSlot);
+
+	if (contItems.at(packet->slot).id == 0 && packet->item.id != 0) {
+		LOGI("ContainerSetSlotPacket: player tried to put items to slot %i\n", packet->slot);
+
+		if (invSlot < 0) {
+			LOGW("ContainerSetSlotPacket: player doesn't have this item\n");
+			return;
+		}
+
+		if (invItem->count < packet->item.count) {
+			LOGW("ContainerSetSlotPacket: player tried to put more than he have\n");
+			packet->item.count = invItem->count;
+		}
+
+		invItem->count -= packet->item.count;
+
+		if (invItem->count <= 0) {
+			p->inventory->removeItem(invItem);
+		}
+	} else if(contItems.at(packet->slot).id == packet->item.id) {
+		int deltaItem = packet->item.count - contItems.at(packet->slot).count;
+
+		if (deltaItem > 0) {
+			LOGI("ContainerSetSlotPacket: player tried to add %i items to slot %i\n", deltaItem, packet->slot);
+
+			auto invItem = p->inventory->getItem(invSlot);
+
+			if (invSlot < 0) {
+				LOGW("ContainerSetSlotPacket: player doesn't have this item\n");
+				return;
+			}
+
+			if (invItem->count < deltaItem) {
+				LOGW("ContainerSetSlotPacket: player tried to put more than he have");
+				packet->item.count -= (deltaItem - invItem->count);
+				deltaItem = invItem->count;
+			}
+
+			invItem->count -= deltaItem;
+
+			if (invItem->count <= 0) {
+				p->inventory->removeItem(invItem);
+			}
+		} else if (deltaItem < 0) {
+			LOGW("ContainerSetSlotPacket: player tried to take %i items from slot %i\n", -deltaItem, packet->slot);
+			p->inventory->add(new ItemInstance(packet->item.getItem(), -deltaItem, contItems.at(packet->slot).getAuxValue()));
+		}
+	} else if(contItems.at(packet->slot).id && !packet->item.id) {
+		LOGI("ContainerSetSlotPacket: player tried to take all items from slot %i\n", packet->slot);
+		packet->item.count = 0;
+		packet->item.setAuxValue(0);
+
+		p->inventory->add(new ItemInstance(contItems.at(packet->slot).getItem(), contItems.at(packet->slot).count, contItems.at(packet->slot).getAuxValue()));
+	} else {
+		LOGW("ContainerSetSlotPacket: illegal container operation in slot %i\n", packet->slot);
 		return;
 	}
 	
@@ -735,6 +845,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 		p->containerMenu->setSlot(packet->slot, &packet->item);
 		//p->containerMenu->setSlot(packet->slot, packet->item.isNull()? NULL : &packet->item);
 	}
+
+	p->inventory->print();
 }
 
 void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SetHealthPacket* packet )

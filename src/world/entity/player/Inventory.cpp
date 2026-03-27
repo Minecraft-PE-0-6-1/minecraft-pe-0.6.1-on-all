@@ -357,3 +357,12 @@ bool Inventory::removeItem( const ItemInstance* samePtr ) {
 	}
 	return false;
 }
+
+void Inventory::print() {
+	LOGI("%s's Inventory:\n", player->name.c_str());
+
+	for (int i = 0; i < numTotalSlots; i++) {
+		auto item = getItem(i);
+		if (item) LOGI("\t %i: %s (%i) %s\n", i, item->getName().c_str(), item->count, (player->inventory->getLinked(i))? "(Linked)" : "");
+	}
+}
