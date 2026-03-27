@@ -550,7 +550,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCrea
 		wantCreate.count = packet->count;
 		wantCreate.setAuxValue(packet->auxValue);
 
-		Recipe* recipe = Recipe::getInstance()->getRecipeFor(wantCreate);
+		Recipe* recipe = Recipes::getInstance()->getRecipeFor(wantCreate);
 
 		std::vector<ItemInstance> items = recipe->getItemPack().getItemInstances();
 
