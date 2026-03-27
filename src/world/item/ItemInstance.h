@@ -81,6 +81,8 @@ public:
 
 	static bool isArmorItem(const ItemInstance* instance);
 
+    static bool isBlock(const ItemInstance* instance);
+
     /**
      * Checks if this item is the same item as the other one, disregarding the
      * 'count' value.
