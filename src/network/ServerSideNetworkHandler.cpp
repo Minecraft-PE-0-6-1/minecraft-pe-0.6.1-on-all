@@ -566,7 +566,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCrea
 				for (int y = 0; y < items.size(); y++) {
 					auto itmRecipe = items.at(y);
 
-					if (itmRecipe.id == itm->id && itmRecipe.count == itm->count) {
+					if (itmRecipe.id == itm->id && itm->count >= itmRecipe.count) {
 						checkForExists.push_back(itm->id);
 					}
 				}
@@ -578,7 +578,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCrea
 
     		auto it = std::find(checkForExists.begin(), checkForExists.end(), item.id);
 
-			if (it == checkForExists.end()) {
+			if (it == checkForExists.end() && checkForExists.size() > 1) {
 				return;
 			}
 		}
