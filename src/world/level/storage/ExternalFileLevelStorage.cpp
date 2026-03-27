@@ -1,3 +1,6 @@
+#include <cstddef>
+#include <fstream>
+#include <ios>
 #if !defined(DEMO_MODE) && !defined(APPLE_DEMO_PROMOTION)
 
 #include "LevelData.h"
@@ -88,6 +91,9 @@ ExternalFileLevelStorage::ExternalFileLevelStorage(const std::string& levelId, c
 {
 	createFolderIfNotExists(levelPath.c_str());
 
+	std::string playerFolder = levelPath + "/players";
+	createFolderIfNotExists(playerFolder.c_str());
+
 	std::string datFileName   = levelPath + "/" + fnLevelDat;
 	std::string levelFileName = levelPath + "/" + fnPlayerDat;
 	loadedLevelData = new LevelData();
@@ -113,6 +119,7 @@ void ExternalFileLevelStorage::saveLevelData(LevelData& levelData, std::vector<P
 
 void ExternalFileLevelStorage::saveLevelData( const std::string& levelPath, LevelData& levelData, std::vector<Player*>* players )
 {
+	// @todo: completely rewrite
 	std::string directory = levelPath + "/";
     std::string tmpFile = directory + fnLevelDatNew;
     std::string datFile = directory + fnLevelDat;
@@ -141,6 +148,67 @@ void ExternalFileLevelStorage::saveLevelData( const std::string& levelPath, Leve
 
     // Remove the temporary save, if the rename didn't do it
     remove(tmpFile.c_str());
+
+	// Save players
+	// fuck mojang for that
+	if (!players || players->empty()) {
+		return;
+	}
+
+	for (auto& player : *players) {
+		if (player != NULL) {
+			savePlayer(*player, directory);
+		}
+	}
+}
+
+void ExternalFileLevelStorage::savePlayer(Player& player, const std::string& worldDir) {
+	std::string playerPath = worldDir + "/players/" + player.name + ".dat";
+
+	LOGI("Saving player %s to %s...\n", player.name.c_str(), playerPath.c_str());
+
+	RakNet::BitStream data;
+	RakDataOutput buf(data);
+	CompoundTag playerTag;
+	player.saveWithoutId(&playerTag);
+
+	NbtIo::write(&playerTag, &buf);
+
+	std::ofstream file(playerPath, std::ios::out | std::ios::binary);
+	file.write((const char*)data.GetData(), (size_t)data.GetNumberOfBytesUsed());
+}
+
+bool ExternalFileLevelStorage::loadPlayer(Player& player, const std::string& worldDir) {
+	std::string playerPath = worldDir + "/players/" + player.name + ".dat";
+
+	LOGI("Loading player %s from %s...\n", player.name.c_str(), playerPath.c_str());
+
+	std::ifstream file(playerPath, std::ios::in | std::ios::binary);
+	if (!file.is_open()) {
+		return false;
+	}
+
+	std::vector<uint8_t> data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+	RakNet::BitStream bitStream(data.data(), data.size(), false);
+	RakDataInput stream(bitStream);
+
+	CompoundTag* tag = NbtIo::read(&stream);
+	if (tag) {
+		player.load(tag);
+		tag->deleteChildren();
+		delete tag;
+	}
+
+	return true;
+}
+
+void ExternalFileLevelStorage::savePlayer(Player& player) {
+	ExternalFileLevelStorage::savePlayer(player, levelPath);
+}
+
+bool ExternalFileLevelStorage::loadPlayer(Player& player) {
+	return ExternalFileLevelStorage::loadPlayer(player, levelPath);
 }
 
 LevelData* ExternalFileLevelStorage::prepareLevel(Level* _level)

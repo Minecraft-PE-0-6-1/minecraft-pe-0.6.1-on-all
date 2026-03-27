@@ -395,6 +395,11 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SendInve
 		auto items = packet->items;
 		
 		minecraft->player->inventory->replace(items);
+
+		for (int i = 0; i < packet->linkedSlot.size(); i++) {
+			minecraft->player->inventory->linkSlot(i, packet->linkedSlot[i].inventorySlot, true);
+			LOGI("%i -> %i\n", packet->linkedSlot[i].inventorySlot, i);
+		}
 	}
 }
 

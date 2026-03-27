@@ -68,6 +68,7 @@ bool SurvivalMode::destroyBlock( int x, int y, int z, int face ) {
 			minecraft->player->inventory->clearSlot(minecraft->player->inventory->selected);
 		}
 	}
+	
 	if (changed && couldDestroy) {
 		ItemInstance instance(t, 1, data);
 		Tile::tiles[t]->playerDestroy(minecraft->level, minecraft->player, x, y, z, data);

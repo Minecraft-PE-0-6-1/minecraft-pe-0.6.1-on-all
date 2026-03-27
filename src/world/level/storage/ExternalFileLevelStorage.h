@@ -67,6 +67,19 @@ public:
 	void saveGame(Level* level);
     void saveAll(Level* level, std::vector<LevelChunk*>& levelChunks);
 
+	/**
+	 * @brief Save player to <world name>/player/<player name>.dat file
+	 */
+	static void savePlayer(Player& player, const std::string& worldDir);
+
+	/**
+	 * @brief Load player from <world name>/player/<player name>.dat file
+	 */
+	static bool loadPlayer(Player& player, const std::string& worldDir);
+
+	virtual void savePlayer(Player& player);
+	virtual bool loadPlayer(Player& player);
+
 	virtual void tick();
 	virtual void flush() {}
 private:

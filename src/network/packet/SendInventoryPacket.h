@@ -3,13 +3,13 @@
 
 #include "../Packet.h"
 #include "world/entity/player/Inventory.h"
+#include "world/inventory/FillingContainer.h"
+#include <array>
 
 class SendInventoryPacket: public Packet
 {
 public:
-	SendInventoryPacket()
-	{
-	}
+	SendInventoryPacket() {}
 
 	SendInventoryPacket(Player* player, bool dropItems)
 	:	entityId(player->entityId),
@@ -22,9 +22,14 @@ public:
 			ItemInstance* item = inv->getItem(i);
 			items.push_back(item? *item : ItemInstance());
         }
+
         for (int i = 0; i < NumArmorItems; ++i) {
             ItemInstance* item = player->getArmor(i);
             items.push_back(item? *item : ItemInstance());
+        }
+
+		for (int i = 0; i < inv->numLinkedSlots; ++i) {
+            linkedSlot[i] = inv->linkedSlots[i];
         }
 	}
 
@@ -40,6 +45,13 @@ public:
         // Armor
         for (int i = 0; i < NumArmorItems; ++i)
             PacketUtil::writeItemInstance(items[i + numItems], bitStream);
+
+		int lSlots = Inventory::MAX_SELECTION_SIZE;
+
+		// Linked slots
+		bitStream->Write(lSlots);
+		for (int i = 0; i < lSlots; ++i)
+            bitStream->Write(linkedSlot[i]);
 	}
 
 	void read(RakNet::BitStream* bitStream)
@@ -51,6 +63,12 @@ public:
         // Inventory, Armor
 		for (int i = 0; i < numItems + NumArmorItems; ++i)
 			items.push_back(PacketUtil::readItemInstance(bitStream));
+
+		// Linked slots
+		int lSlots = 0;
+		bitStream->Read(lSlots);
+		for (int i = 0; i < lSlots; ++i)
+            bitStream->Read(linkedSlot[i]);
 	}
 
 	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
@@ -62,6 +80,8 @@ public:
 	std::vector<ItemInstance> items;
 	short numItems;
 	unsigned char extra;
+
+	std::array<FillingContainer::LinkedSlot, Inventory::MAX_SELECTION_SIZE> linkedSlot;
 
 	static const int ExtraDrop = 1;
     static const int NumArmorItems = 4;

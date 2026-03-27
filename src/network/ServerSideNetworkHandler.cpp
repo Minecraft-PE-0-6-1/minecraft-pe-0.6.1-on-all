@@ -22,6 +22,7 @@
 #include "../raknet/PacketPriority.h"
 #include "platform/log.h"
 #include "world/item/ItemInstance.h"
+#include "world/level/storage/LevelStorage.h"
 #include "world/phys/Vec3.h"
 #include "world/item/crafting/Recipe.h"
 #include "world/item/crafting/Recipes.h"
@@ -169,6 +170,8 @@ void ServerSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 
 		if (player->owner == guid)
 		{
+			minecraft->level->getLevelStorage()->savePlayer(*player);
+
 			std::string message = player->name;
 			message += " disconnected from the game";
 			displayGameMessage(message);
@@ -318,6 +321,36 @@ void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID
 			delete packet;
 		}
 	}
+
+	if (!minecraft->level->getLevelStorage()->loadPlayer(*newPlayer)) {
+		LOGW("Failed to load %s data\n", newPlayer->name.c_str());
+	}
+
+	// Credits to EpikIzCool
+	bitStream.Reset();
+	MovePlayerPacket mv(newPlayer->entityId, newPlayer->x, newPlayer->y - newPlayer->heightOffset,
+		newPlayer->z, newPlayer->xRot, newPlayer->yRot);
+	mv.write(&bitStream);
+
+	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+	
+	bitStream.Reset();
+	SetHealthPacket hp(newPlayer->health);
+	hp.write(&bitStream);
+	
+	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+	
+	if (newPlayer->hasRespawnPosition()) {
+		bitStream.Reset();
+		SetSpawnPositionPacket sp(newPlayer->getRespawnPosition());
+		sp.write(&bitStream);
+		rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+	}
+
+	bitStream.Reset();
+	SendInventoryPacket(newPlayer, false).write(&bitStream);
+	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+
 
 	// Additional packets
 	// * set spawn
