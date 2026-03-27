@@ -569,10 +569,14 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCrea
 				}
 			}
 		}
-
+		
+		if (checkForExists.empty()) {
+			return;
+		}
+		
 		for (int i = 0; i < items.size(); i++) {
 			auto item = items.at(i);
-
+			
     		auto it = std::find(checkForExists.begin(), checkForExists.end(), item.id);
 
 			if (it == checkForExists.end() && checkForExists.size() > 1) {
