@@ -461,7 +461,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveBl
 				}
 			}
 
-			oldTile->spawnResources(level, x, y, z, data, 1); //@todo
+			// oldTile->spawnResources(level, x, y, z, data, 1); //@todo
 			oldTile->playerDestroy(level, player, x, y, z, data);
 		}
 			
