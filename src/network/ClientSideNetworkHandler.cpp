@@ -352,6 +352,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AddItemE
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TakeItemEntityPacket* packet) {
+	printf("TakeItemEntityPacket \n");
 	if (!level) return;
 
 	Entity* e = level->getEntity(packet->itemId);
@@ -852,6 +853,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SetHealt
 	if (!level || !minecraft->player)
 		return;
 
+	printf("SetHealthPacket \n");
 	minecraft->player->hurtTo(packet->health);
 }
 

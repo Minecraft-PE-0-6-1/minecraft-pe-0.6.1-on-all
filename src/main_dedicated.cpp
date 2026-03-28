@@ -30,20 +30,29 @@ void signal_callback_handler(int signum) {
 int main(int numArguments, char* pszArgs[]) {
 	ArgumentsSettings aSettings(numArguments, pszArgs);
 	if(aSettings.getShowHelp()) {
+		// TODO: Map with args and print it with std::cout and for loop
+		// TODO: World size setting
+
 		ArgumentsSettings defaultSettings(0, NULL);
+
 		printf("Minecraft Pockect Edition Server %s\n", Common::getGameVersionString("").c_str());
 		printf("-------------------------------------------------------\n");
+
 		printf("--cachepath - Path to where the server can store temp stuff (not sure if this is used) [default: \"%s\"]\n", defaultSettings.getCachePath().c_str());
 		printf("--externalpath - The path to the place where the server should store the levels. [default: \"%s\"]\n", defaultSettings.getExternalPath().c_str());
 		printf("--levelname - The name of the server [default: \"%s\"]\n", defaultSettings.getLevelName().c_str());
+		printf("--gamemode - The name of the gamemode [default: \"%s\"]\n", defaultSettings.getGamemode().c_str());
 		printf("--leveldir - The name of the server [default: \"%s\"]\n", defaultSettings.getLevelDir().c_str());
 		printf("--help - Shows this message.\n");
 		printf("--port - The port to run the server on. [default: %d]\n", defaultSettings.getPort());
 		printf("--serverkey - The key that the server should use for API calls. [default: \"%s\"]\n", defaultSettings.getServerKey().c_str());
+
 		printf("-------------------------------------------------------\n");
+
 		return 0;
 	}
 	printf("Level Name: %s\n", aSettings.getLevelName().c_str());
+
 	AppContext appContext;
 	appContext.platform = new AppPlatform();
 	App* app = new MAIN_CLASS();

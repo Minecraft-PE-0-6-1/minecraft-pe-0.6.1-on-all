@@ -72,6 +72,7 @@ void ServerPlayer::take( Entity* e, int orgCount ) {
 	TakeItemEntityPacket packet(e->entityId, entityId);
 	// SendInventoryPacket packet(this, false);
 	_mc->raknetInstance->send(packet);
+	printf("TakeItemEntityPacket \n");
 
 	LOGI("Inventory:\n");
 	for (int i = 0; i < inventory->numLinkedSlots; i++) {

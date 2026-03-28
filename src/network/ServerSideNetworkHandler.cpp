@@ -414,14 +414,16 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 									(packet->y - entity->y) * (packet->y - entity->y) +
 									(packet->z - entity->z) * (packet->z - entity->z));
 		float speed = vectorDist / (minecraft->getTicks() - player->getLastMoveTicks());
-
-		if (speed < 2.5f) {
-			entity->xd = entity->yd = entity->zd = 0;
-			entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
 		
+		// TODO: Replace with Entity::move()
+		// if (speed < 2.5f) {
+			entity->xd = entity->yd = entity->zd = 0;
+			entity->move(packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
+			// entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
+			
 			// broadcast this packet to other clients
 			redistributePacket(packet, source);
-		}
+		//}
 	
 		player->setLastMoveTicks(minecraft->getTicks());
 	}
@@ -459,7 +461,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveBl
 				}
 			}
 
-			//oldTile->spawnResources(level, x, y, z, data, 1); //@todo
+			oldTile->spawnResources(level, x, y, z, data, 1); //@todo
 			oldTile->playerDestroy(level, player, x, y, z, data);
 		}
 			
@@ -934,19 +936,19 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 
 void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SetHealthPacket* packet )
 {
-	LOGI("SetHealthPacket\n");
+	LOGI("net idi nahui\n");
 
-	for (unsigned int i = 0; i < level->players.size(); ++i) {
-		Player* p = level->players[i];
-		if (p->owner == source) {
-			if (packet->health <= -32) {
-				int diff = packet->health - SetHealthPacket::HEALTH_MODIFY_OFFSET;
-				if (diff > 0) p->hurt(NULL, diff);
-				else if (diff < 0) p->heal(-diff);
-			}
-			break;
-		}
-	}
+	// for (unsigned int i = 0; i < level->players.size(); ++i) {
+	// 	Player* p = level->players[i];
+	// 	if (p->owner == source) {
+	// 		if (packet->health <= -32) {
+	// 			int diff = packet->health - SetHealthPacket::HEALTH_MODIFY_OFFSET;
+	// 			if (diff > 0) p->hurt(NULL, diff);
+	// 			else if (diff < 0) p->heal(-diff);
+	// 		}
+	// 		break;
+	// 	}
+	// }
 }
 
 void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SignUpdatePacket* packet ) {

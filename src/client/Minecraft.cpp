@@ -553,7 +553,7 @@ void Minecraft::tick(int nTick, int maxTick) {
 			level->tickEntities();
 			level->tick();
 #ifndef STANDALONE_SERVER
-			TIMER_POP_PUSH("animateTick");
+			TIMER_POP_PUSH("animateTick");	
 			if (player) {
 				level->animateTick(Mth::floor(player->x), Mth::floor(player->y), Mth::floor(player->z));
 			}
