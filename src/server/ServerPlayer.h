@@ -52,6 +52,8 @@ public:
 
 	void setNewProto(bool proto) { isNewProto = proto; }
 	bool getProto() { return isNewProto; }
+
+	virtual void causeFallDamage(float distance);
 private:
 	void nextContainerCounter();
 	void setContainerMenu( BaseContainerMenu* menu );

@@ -175,3 +175,12 @@ void ServerPlayer::displayClientMessage( const std::string& messageId ) {
 	ChatPacket package(messageId);
 	_mc->raknetInstance->send(owner, package);
 }
+
+void ServerPlayer::causeFallDamage(float distance) {
+	int dmg = (int) ceil((distance - 3));
+	if (dmg > 0) {
+		SetHealthPacket packet(SetHealthPacket::HEALTH_MODIFY_OFFSET + dmg);
+		_mc->raknetInstance->send(owner, packet);
+	}
+	super::causeFallDamage(distance);
+}
