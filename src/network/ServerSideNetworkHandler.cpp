@@ -418,8 +418,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 		
 		// TODO: Replace with Entity::move()
 		// if (speed < 2.5f) {
-			printf("Packet do: %f, %f, %f \n", packet->x, packet->y, packet->z);
-			printf("Entity do: %f, %f, %f \n", entity->x, entity->y, entity->z);
+			printf("Packet before: %f, %f, %f \n", packet->x, packet->y, packet->z);
+			printf("Entity before: %f, %f, %f \n", entity->x, entity->y, entity->z);
 			printf("Delta: %f %f %f \n", packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
 			player->xd = player->yd = player->zd = 0;
 			player->move(packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
