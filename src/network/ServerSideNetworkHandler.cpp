@@ -416,26 +416,31 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 									(packet->z - entity->z) * (packet->z - entity->z));
 		float speed = vectorDist / (minecraft->getTicks() - player->getLastMoveTicks());
 		
-		player->xRot = packet->xRot;
-		player->yRot = packet->yRot;
+		player->xRot = player->xRotO = packet->xRot;
+		player->yRot = player->yRotO = packet->yRot;
 
-		packet->y += 1.62f;
+		// packet->y += 1.62f;
 
-		if (speed < 2.5f) {
-			LOGI("Packet before: %f, %f, %f \n", packet->x, packet->y, packet->z);
+		// if (speed < 2.5f) {
+			LOGI("Packets: %f, %f, %f \n", packet->x, packet->y, packet->z);
 			LOGI("Entity before: %f, %f, %f \n", entity->x, entity->y, entity->z);
-			LOGI("Delta: %f %f %f \n", packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
-			player->xd = player->yd = player->zd = 0;
-			player->move(packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
+			LOGI("OnGround: %d \n", entity->onGround);
+			//player->xd = player->yd = player->zd = 0;
+
+			player->setxxa(packet->x);
+			player->setYya(packet->z);
+			// player->move(packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
+			
 			// player->travel(packet->x - entity->x, packet->z - entity->z);
-			LOGI("Entity after: %f, %f, %f \n", entity->x, entity->y, entity->z);
 			// entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
+			LOGI("Entity after: %f, %f, %f \n", entity->x, entity->y, entity->z);
+			
 			// broadcast this packet to other clients
 			redistributePacket(packet, source);
-		} else {
-			MovePlayerPacket refuse(player->entityId, player->x, player->y, player->z, player->xRot, player->yRot);
-			raknetInstance->send(refuse);
-		}
+		// } else {
+		    //MovePlayerPacket refuse(player->entityId, player->x, player->y, player->z, player->xRot, player->yRot);
+		    //raknetInstance->send(refuse);
+		// }
 	
 		player->setLastMoveTicks(minecraft->getTicks());
 	}

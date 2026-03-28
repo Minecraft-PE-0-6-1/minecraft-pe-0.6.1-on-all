@@ -728,8 +728,8 @@ bool Mob::isWaterMob()
 
 void Mob::aiStep()
 {
+	printf("%f %f \n", xxa, yya);
 	//@todo? 30 lines of code here in java version
-
 	TIMER_PUSH("ai");
 	if (isImmobile()) {
 		jumping = false;

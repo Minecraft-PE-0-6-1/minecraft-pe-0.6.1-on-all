@@ -49,6 +49,7 @@ void ServerPlayer::stopSleepInBed(bool forcefulWakeUp, bool updateLevelList, boo
 void ServerPlayer::aiStep() {
     updateAttackAnim();
     super::aiStep();
+	Mob::aiStep();
 }
 
 void ServerPlayer::tick() {

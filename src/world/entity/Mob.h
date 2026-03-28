@@ -223,6 +223,9 @@ protected:
 	double xc, yc, zc;
 
 public:
+	void setxxa(float xxa) { this->xxa = xxa; }
+	void setyya(float yya) { this->yya = yya; }
+
 	// Cape position accessors (for renderers)
 	double getCapeX() const { return xCape; }
 	double getCapeY() const { return yCape; }
