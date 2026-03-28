@@ -29,6 +29,7 @@
 #include "world/item/crafting/Recipe.h"
 #include "world/item/crafting/Recipes.h"
 #include <cstddef>
+#include <cstdio>
 #ifndef STANDALONE_SERVER
 #include "../client/sound/SoundEngine.h"
 #endif
@@ -410,17 +411,20 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 	{
 		ServerPlayer* player = (ServerPlayer*) getPlayer(source);
 
-		float vectorDist = sqrt( (packet->x - entity->x) * (packet->x - entity->x)  + 
-									(packet->y - entity->y) * (packet->y - entity->y) +
-									(packet->z - entity->z) * (packet->z - entity->z));
-		float speed = vectorDist / (minecraft->getTicks() - player->getLastMoveTicks());
+		// float vectorDist = sqrt( (packet->x - entity->x) * (packet->x - entity->x)  + 
+		// 							(packet->y - entity->y) * (packet->y - entity->y) +
+		// 							(packet->z - entity->z) * (packet->z - entity->z));
+		// float speed = vectorDist / (minecraft->getTicks() - player->getLastMoveTicks());
 		
 		// TODO: Replace with Entity::move()
 		// if (speed < 2.5f) {
-			entity->xd = entity->yd = entity->zd = 0;
-			entity->move(packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
+			printf("Packet do: %f, %f, %f \n", packet->x, packet->y, packet->z);
+			printf("Entity do: %f, %f, %f \n", entity->x, entity->y, entity->z);
+			printf("Delta: %f %f %f \n", packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
+			player->xd = player->yd = player->zd = 0;
+			player->move(packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
+			printf("Entity after: %f, %f, %f \n", entity->x, entity->y, entity->z);
 			// entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
-			
 			// broadcast this packet to other clients
 			redistributePacket(packet, source);
 		//}

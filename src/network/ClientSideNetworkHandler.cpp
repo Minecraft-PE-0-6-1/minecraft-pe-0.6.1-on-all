@@ -99,6 +99,7 @@ void ClientSideNetworkHandler::onUnableToConnect()
 
 void ClientSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 {
+	// TODO: Good disconnecting
 	LOGI("onDisconnect\n");
 	if (level)
 	{
@@ -398,7 +399,6 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SendInventoryPacket* packet) {
 	if (!level) return;
 
-	// TODO: Linked slots
 	if (packet->entityId == minecraft->player->entityId) {
 		auto items = packet->items;
 		
