@@ -730,7 +730,6 @@ void Gui::renderDebugInfo() {
 
 	// Position
 	float px = p->x, py = p->y - p->heightOffset, pz = p->z;
-	posTranslator.to(px, py, pz);
 	int bx = (int)floorf(px), by = (int)floorf(py), bz = (int)floorf(pz);
 	int cx = bx >> 4, cz = bz >> 4;
 

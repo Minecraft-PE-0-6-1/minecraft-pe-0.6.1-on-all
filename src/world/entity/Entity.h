@@ -129,6 +129,7 @@ public:
 	virtual bool isHangingEntity();
 
 	virtual int getAuxData();
+	virtual void checkFallDamage(float ya, bool onGround);
 
 protected:
 	virtual void setRot(float yRot, float xRot);
@@ -137,7 +138,6 @@ protected:
 	virtual void resetPos(bool clearMore);
 	virtual void outOfWorld();
 
-	virtual void checkFallDamage(float ya, bool onGround);
 	virtual void causeFallDamage(float fallDamage2);
 	virtual void markHurt();
 

@@ -406,38 +406,45 @@ void ServerSideNetworkHandler::onReady_RequestedChunks(const RakNet::RakNetGUID&
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlayerPacket* packet)
 {
 	if (!level) return;
-
+	
 	//LOGI("MovePlayerPacket\n");
-	if (Entity* entity = level->getEntity(packet->entityId))
-	{
+	if (Entity* entity = level->getEntity(packet->entityId)) {
 		ServerPlayer* player = (ServerPlayer*) getPlayer(source);
 
 		float vectorDist = sqrt( (packet->x - entity->x) * (packet->x - entity->x)  + 
 									(packet->z - entity->z) * (packet->z - entity->z));
 		float speed = vectorDist / (minecraft->getTicks() - player->getLastMoveTicks());
-		
-		player->xRot = player->xRotO = packet->xRot;
-		player->yRot = player->yRotO = packet->yRot;
 
-		// packet->y += 1.62f;
-
-		// if (speed < 2.5f) {
-			LOGI("Packets: %f, %f, %f \n", packet->x, packet->y, packet->z);
+		if (speed < 1.f) {
+			LOGI("Packet: %f, %f, %f \n", packet->x, packet->y, packet->z);
 			LOGI("Entity before: %f, %f, %f \n", entity->x, entity->y, entity->z);
 			LOGI("OnGround: %d \n", entity->onGround);
-			//player->xd = player->yd = player->zd = 0;
 
-			player->setxxa(packet->x);
-			player->setYya(packet->z);
-			// player->move(packet->x - entity->x, packet->y - entity->y, packet->z - entity->z);
+			// @note: packet->y contains y with subtracted entity->heightOffset
+			float ya = packet->y - entity->y - entity->heightOffset;
+
+			LOGI("y: %f \n", ya);
+
+			float yaOrg = ya;
+
+			// @BIGWARNING @fixme: blocks around work as shit
+			std::vector<AABB>& aABBs = level->getCubes(entity, entity->bb.expand(0, ya, 0));
 			
-			// player->travel(packet->x - entity->x, packet->z - entity->z);
-			// entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
+			for (unsigned int i = 0; i < aABBs.size(); i++)
+				ya = aABBs[i].clipYCollide(entity->bb, ya);
+
+			bool og = yaOrg != ya && yaOrg < 0;
+			
+			entity->onGround = og;
+			entity->checkFallDamage(ya, og);
+			entity->xd = entity->yd = entity->zd = 0;	
+			entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
+
 			LOGI("Entity after: %f, %f, %f \n", entity->x, entity->y, entity->z);
 			
 			// broadcast this packet to other clients
 			redistributePacket(packet, source);
-		// } else {
+		} // else {
 		    //MovePlayerPacket refuse(player->entityId, player->x, player->y, player->z, player->xRot, player->yRot);
 		    //raknetInstance->send(refuse);
 		// }
