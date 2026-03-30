@@ -2,6 +2,7 @@
 #include "Options.h"
 #include "client/Options.h"
 #include "client/player/input/IBuildInput.h"
+#include "commands/CommandManager.hpp"
 #include "platform/input/Keyboard.h"
 #include "world/item/Item.h"
 #include "world/item/ItemInstance.h"
@@ -175,7 +176,8 @@ Minecraft::Minecraft() :
 	_powerVr(false),
 	commandPort(4711),
 	reserved_d1(0),reserved_d2(0),
-	reserved_f1(0),reserved_f2(0), options(this)
+	reserved_f1(0),reserved_f2(0), options(this),
+	m_commandManager()
 {
 //#ifdef ANDROID
 
@@ -1596,4 +1598,12 @@ void Minecraft::optionUpdated(OptionId option, int value ) {
         // reapply screen scaling using current window size
         setSize(width, height);
     }
+}
+
+void Minecraft::addMessage(const std::string& msg) {
+#ifndef STANDALONE_SERVER
+	gui.addMessage(msg);
+#else 
+	LOGI("%s", msg.c_str());
+#endif
 }

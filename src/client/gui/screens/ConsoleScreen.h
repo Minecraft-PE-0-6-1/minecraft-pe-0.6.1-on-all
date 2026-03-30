@@ -25,7 +25,6 @@ public:
 
 private:
     void execute();
-    std::string processCommand(const std::string& cmd);
 
     std::string _input;
     int         _cursorBlink; // tick counter for cursor blink

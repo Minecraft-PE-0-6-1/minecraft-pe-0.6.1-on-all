@@ -2,6 +2,7 @@
 #define NET_MINECRAFT_CLIENT__Minecraft_H__
 
 #include "Options.h"
+#include "commands/CommandManager.hpp"
 #ifndef STANDALONE_SERVER
 #include "MouseHandler.h"
 #include "gui/Gui.h"
@@ -122,10 +123,14 @@ public:
 	void optionUpdated(OptionId option, int value);
 
 	int getTicks() { return ticks; }
+
+	void addMessage(const std::string& msg);
 #ifdef __APPLE__
     bool _isSuperFast;
     bool isSuperFast() { return _isSuperFast; }
 #endif
+
+	CommandManager& commandManager() { return m_commandManager; }
 
 protected:
 	void _levelGenerated();
@@ -227,6 +232,8 @@ private:
 
 	PerfRenderer* _perfRenderer;
 	CommandServer* _commandServer;
+
+	CommandManager m_commandManager;
 };
 
 #endif /*NET_MINECRAFT_CLIENT__Minecraft_H__*/

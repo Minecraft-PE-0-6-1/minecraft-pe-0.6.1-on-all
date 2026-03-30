@@ -211,6 +211,7 @@ file(GLOB SERVER_SOURCES
     "src/world/level/tile/entity/*.cpp"
 
     "src/world/phys/HitResult.cpp"
+    "src/commands/*.cpp"
 ) 
 
 file(GLOB CLIENT_SOURCES 
@@ -292,6 +293,8 @@ file(GLOB CLIENT_SOURCES
 
     "src/AppPlatform_glfw.cpp"
     "src/main.cpp"
+
+    "src/commands/*.cpp"
 )
 
 if (${PLATFORM} STREQUAL "Desktop")
