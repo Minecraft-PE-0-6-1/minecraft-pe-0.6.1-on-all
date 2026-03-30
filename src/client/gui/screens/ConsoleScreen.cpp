@@ -66,7 +66,7 @@ void ConsoleScreen::execute()
     if (_input[0] == '/') {
         // Command
         _input = Util::stringTrim(_input.substr(1));
-        minecraft->commandManager().execute(*minecraft, _input);
+        minecraft->commandManager().execute(*minecraft, *minecraft->player, _input);
     } else {
         // @ai @rewrite
         if (minecraft->netCallback && minecraft->raknetInstance->isServer()) {

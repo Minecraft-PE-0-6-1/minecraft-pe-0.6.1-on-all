@@ -6,6 +6,7 @@
 #include "commands/Command.hpp"
 #include "commands/CommandHelp.hpp"
 #include "commands/CommandKick.hpp"
+#include "commands/CommandOp.hpp"
 #include "network/packet/ChatPacket.h"
 #include "network/RakNetInstance.h"
 #include "world/level/Level.h"
@@ -19,6 +20,7 @@ CommandManager::CommandManager() {
 void CommandManager::registerAllCommands() {
     m_commands.push_back(new CommandHelp());
     m_commands.push_back(new CommandKick());
+    m_commands.push_back(new CommandOp());
 }
 
 std::vector<std::string> CommandManager::getListAllCommands() {
@@ -31,7 +33,7 @@ std::vector<std::string> CommandManager::getListAllCommands() {
     return ret;
 }
 
-void CommandManager::execute(Minecraft& mc, const std::string& input) {
+void CommandManager::execute(Minecraft& mc, Player& player, const std::string& input) {
     std::istringstream ss(input);
     std::string cmd;
 
@@ -51,7 +53,7 @@ void CommandManager::execute(Minecraft& mc, const std::string& input) {
     while (ss >> tok) args.push_back(tok);
     
     if (!mc.level->isClientSide || (*it)->getFlags() & CommandFlags::COMMAND_FLAG_SINGLEPLAYER_ONLY) {
-        (*it)->execute(mc, args);
+        (*it)->execute(mc, player, args);
     } else {
         ChatPacket packet("/" + input);
         mc.raknetInstance->send(packet);

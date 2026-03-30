@@ -9,7 +9,11 @@
 
 CommandKick::CommandKick() : Command("kick") {}
 
-void CommandKick::execute(Minecraft& mc, const std::vector<std::string>& args) {
+void CommandKick::execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) {
+    if (!isPlayerOp(mc, player)) {
+        return mc.addMessage("You aren't enough priveleged to run this command");
+    }
+    
     if (args.empty()) {
         return printHelp(mc);
     }

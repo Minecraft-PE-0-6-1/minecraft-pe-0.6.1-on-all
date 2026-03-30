@@ -277,6 +277,8 @@ void Minecraft::setLevel(Level* level, const std::string& message /* ="" */, Loc
 			}
 		}
 		this->level = level;
+		// So uhhh
+		level->ops.emplace(options.getStringValue(OPTIONS_USERNAME));
 		_hasSignaledGeneratingLevelFinished = false;
 #ifdef STANDALONE_SERVER
 		const bool threadedLevelCreation = false;

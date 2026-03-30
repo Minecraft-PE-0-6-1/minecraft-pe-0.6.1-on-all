@@ -8,13 +8,16 @@ enum CommandFlags {
 };
 
 class Minecraft;
+class Player;
 
 class Command {
 public:
     const std::string& getName() { return m_name; }
     const CommandFlags getFlags() { return m_flags; }
 
-    virtual void execute(Minecraft& mc, const std::vector<std::string>& args) = 0;
+    bool isPlayerOp(Minecraft& mc, Player& player);
+
+    virtual void execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) = 0;
     virtual void printHelp(Minecraft& mc) = 0;
 
 protected:

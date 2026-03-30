@@ -5,7 +5,7 @@
 
 CommandHelp::CommandHelp() : Command("help") {}
 
-void CommandHelp::execute(Minecraft& mc, const std::vector<std::string>& args) {
+void CommandHelp::execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) {
     if (args.empty()) {
         auto cmds = mc.commandManager().getListAllCommands();
 

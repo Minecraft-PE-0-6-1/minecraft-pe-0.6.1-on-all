@@ -1,8 +1,8 @@
 #include "Command.hpp"
 
-class CommandHelp : public Command {
+class CommandOp : public Command {
 public:
-    CommandHelp();
+    CommandOp();
 
     void execute(Minecraft& mc, Player& player, const std::vector<std::string>& args);
     void printHelp(Minecraft& mc);

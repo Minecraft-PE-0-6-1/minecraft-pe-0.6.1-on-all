@@ -307,6 +307,9 @@ public:
 	Dimension* dimension;
 	IRakNetInstance* raknetInstance;
 	Random random;
+
+	std::set<std::string> ops;
+
 protected:
 	bool isFindingSpawn;
 
