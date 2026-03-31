@@ -411,45 +411,27 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 	if (Entity* entity = level->getEntity(packet->entityId)) {
 		ServerPlayer* player = (ServerPlayer*) getPlayer(source);
 
-		float vectorDist = sqrt( (packet->x - entity->x) * (packet->x - entity->x)  + 
-									(packet->z - entity->z) * (packet->z - entity->z));
-		float speed = vectorDist / (minecraft->getTicks() - player->getLastMoveTicks());
+		int timeElapsed = minecraft->getTicks() - player->getLastMoveTicks();
 
-		if (speed < 1.f) {
-			LOGI("Packet: %f, %f, %f \n", packet->x, packet->y, packet->z);
-			LOGI("Entity before: %f, %f, %f \n", entity->x, entity->y, entity->z);
-			LOGI("OnGround: %d \n", entity->onGround);
+		if (timeElapsed > 0) {
+			float dist = player->distanceTo(packet->x, player->y, packet->z);
+			float speed = dist / (minecraft->getTicks() - player->getLastMoveTicks());
+			player->setLastMoveTicks(minecraft->getTicks());
 
-			// @note: packet->y contains y with subtracted entity->heightOffset
-			float ya = packet->y - entity->y - entity->heightOffset;
+			float maxSpeed = (minecraft->isCreativeMode()) ? 1.65f : 1.f;
 
-			LOGI("y: %f \n", ya);
+			if (speed > maxSpeed) {
+				MovePlayerPacket refuse(player->entityId, player->x, player->y, player->z, player->xRot, player->yRot);
+		    	return raknetInstance->send(refuse);
+			}
+		}
 
-			float yaOrg = ya;
-
-			// @BIGWARNING @fixme: blocks around work as shit
-			std::vector<AABB>& aABBs = level->getCubes(entity, entity->bb.expand(0, ya, 0));
-			
-			for (unsigned int i = 0; i < aABBs.size(); i++)
-				ya = aABBs[i].clipYCollide(entity->bb, ya);
-
-			bool og = yaOrg != ya && yaOrg < 0;
-			
-			entity->onGround = og;
-			entity->checkFallDamage(ya, og);
-			entity->xd = entity->yd = entity->zd = 0;	
-			entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
-
-			LOGI("Entity after: %f, %f, %f \n", entity->x, entity->y, entity->z);
-			
-			// broadcast this packet to other clients
-			redistributePacket(packet, source);
-		} // else {
-		    //MovePlayerPacket refuse(player->entityId, player->x, player->y, player->z, player->xRot, player->yRot);
-		    //raknetInstance->send(refuse);
-		// }
+		entity->xd = entity->yd = entity->zd = 0;	
+		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
+		
+		// broadcast this packet to other clients
+		redistributePacket(packet, source);
 	
-		player->setLastMoveTicks(minecraft->getTicks());
 	}
 }
 

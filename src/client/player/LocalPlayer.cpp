@@ -438,7 +438,7 @@ void LocalPlayer::tick() {
 	{
 		if (std::abs(x - sentX) > .1f || std::abs(y - sentY) > .01f || std::abs(z - sentZ) > .1f || std::abs(sentRotX - xRot) > 1 || std::abs(sentRotY - yRot) > 1)
 		{
-			MovePlayerPacket packet(entityId, xxa, y - heightOffset, yya, xRot, yRot);
+			MovePlayerPacket packet(entityId, x, y - heightOffset, z, xRot, yRot);
 			minecraft->raknetInstance->send(packet);
 			sentX = x;
 			sentY = y;
