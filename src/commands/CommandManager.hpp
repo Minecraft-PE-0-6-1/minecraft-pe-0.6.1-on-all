@@ -10,7 +10,7 @@ public:
 
     std::vector<std::string> getListAllCommands();
 
-    void execute(Minecraft& mc, Player& player, const std::string& input);
+    std::string execute(Minecraft& mc, Player& player, const std::string& input);
 
     Command* getCommand(const std::string& name);
 

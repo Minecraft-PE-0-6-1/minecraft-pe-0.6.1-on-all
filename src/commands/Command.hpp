@@ -17,8 +17,8 @@ public:
 
     bool isPlayerOp(Minecraft& mc, Player& player);
 
-    virtual void execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) = 0;
-    virtual void printHelp(Minecraft& mc) = 0;
+    virtual std::string execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) = 0;
+    virtual std::string help(Minecraft& mc) = 0;
 
 protected:
     Command(const std::string& name, CommandFlags flags = (CommandFlags)0) : m_name(name), m_flags(flags) {}

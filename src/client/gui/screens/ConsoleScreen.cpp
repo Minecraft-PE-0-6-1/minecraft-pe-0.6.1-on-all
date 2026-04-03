@@ -66,7 +66,11 @@ void ConsoleScreen::execute()
     if (_input[0] == '/') {
         // Command
         _input = Util::stringTrim(_input.substr(1));
-        minecraft->commandManager().execute(*minecraft, *minecraft->player, _input);
+        
+        std::istringstream iss(minecraft->commandManager().execute(*minecraft, *minecraft->player, _input));
+        for (std::string line; std::getline(iss, line); ) {
+            minecraft->gui.addMessage(line);
+        }
     } else {
         // @ai @rewrite
         if (minecraft->netCallback && minecraft->raknetInstance->isServer()) {
@@ -75,7 +79,7 @@ void ConsoleScreen::execute()
             ChatPacket chatPkt(_input);
             minecraft->raknetInstance->send(chatPkt);
         } else {
-            minecraft->gui.addMessage(_input);
+            minecraft->gui.addMessage("<" + minecraft->player->name + "> " + _input);
         }
     }
 

@@ -9,13 +9,13 @@
 
 CommandOp::CommandOp() : Command("op") {}
 
-void CommandOp::execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) {
+std::string CommandOp::execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) {
     if (!isPlayerOp(mc, player)) {
-        return mc.addMessage("You aren't enough priveleged to run this command");
+        return "You aren't enough priveleged to run this command";
     }
     
     if (args.empty()) {
-        return printHelp(mc);
+        return help(mc);
     }
 
     auto it = std::find_if(mc.level->players.begin(), mc.level->players.end(), [args] (auto& it) -> bool {
@@ -23,13 +23,13 @@ void CommandOp::execute(Minecraft& mc, Player& player, const std::vector<std::st
     });
 
     if (mc.level->ops.find(args[0]) != mc.level->ops.end()) {
-        return mc.addMessage("op: player " + args[0] + " already opped");
+        return "op: player " + args[0] + " already opped";
     }
 
     mc.level->ops.emplace((*it)->name);
-    mc.addMessage("op: successfully opped player " + args[0]);
+    return "op: successfully opped player " + args[0];
 }
 
-void CommandOp::printHelp(Minecraft& mc) {
-    mc.addMessage("Usage: /op <player>");
+std::string CommandOp::help(Minecraft& mc) {
+    return "Usage: /op <player>";
 }

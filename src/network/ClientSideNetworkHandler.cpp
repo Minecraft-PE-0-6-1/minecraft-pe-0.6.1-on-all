@@ -949,7 +949,11 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 void ClientSideNetworkHandler::handle( const RakNet::RakNetGUID& source, ChatPacket* packet )
 {
 #ifndef STANDALONE_SERVER
-	minecraft->gui.displayClientMessage(packet->message);
+	// minecraft->gui.displayClientMessage(packet->message);
+	std::istringstream iss(packet->message);
+	for (std::string line; std::getline(iss, line); ) {
+		minecraft->gui.addMessage(line);
+	}
 #endif
 }
 

@@ -33,7 +33,7 @@ std::vector<std::string> CommandManager::getListAllCommands() {
     return ret;
 }
 
-void CommandManager::execute(Minecraft& mc, Player& player, const std::string& input) {
+std::string CommandManager::execute(Minecraft& mc, Player& player, const std::string& input) {
     std::istringstream ss(input);
     std::string cmd;
 
@@ -44,7 +44,7 @@ void CommandManager::execute(Minecraft& mc, Player& player, const std::string& i
     });
 
     if (it == m_commands.end()) {
-        return mc.addMessage("Command /" + cmd + " not found");
+        return "Command /" + cmd + " not found";
     }
 
     std::vector<std::string> args;
@@ -53,11 +53,13 @@ void CommandManager::execute(Minecraft& mc, Player& player, const std::string& i
     while (ss >> tok) args.push_back(tok);
     
     if (!mc.level->isClientSide || (*it)->getFlags() & CommandFlags::COMMAND_FLAG_SINGLEPLAYER_ONLY) {
-        (*it)->execute(mc, player, args);
+        return (*it)->execute(mc, player, args);
     } else {
         ChatPacket packet("/" + input);
         mc.raknetInstance->send(packet);
     }
+
+    return "";
 }
 
 Command* CommandManager::getCommand(const std::string& name) {

@@ -71,6 +71,12 @@ private:
 	 * @brief Send packet to all players
 	 */
 	void redistributePacket(Packet* packet, const RakNet::RakNetGUID& fromPlayer);
+
+	/**
+	 * @brief Send packer private with GUID
+	 */
+	void sendPrivate(Packet& packet, const RakNet::RakNetGUID& source);
+
 	Player* getPlayer(const RakNet::RakNetGUID& source);
 
 	Minecraft*					minecraft;

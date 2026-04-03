@@ -2,26 +2,34 @@
 #include "commands/Command.hpp"
 #include "CommandManager.hpp"
 #include <client/Minecraft.h>
+#include <sstream>
 
 CommandHelp::CommandHelp() : Command("help") {}
 
-void CommandHelp::execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) {
+std::string CommandHelp::execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) {
     if (args.empty()) {
         auto cmds = mc.commandManager().getListAllCommands();
 
-        mc.addMessage("Usage: /help <command>");
-        mc.addMessage("List of all commands:");
+        std::ostringstream output;
+
+        output << "List of all commands:" << std::endl;
         
         for (auto& cmd : cmds) {
-            mc.addMessage(" - " + cmd);
+            output << " - " + cmd << std::endl;;
         }
-    } else {
-        Command* cmd = mc.commandManager().getCommand(args[0]);
 
-        if (cmd != nullptr) {
-            cmd->printHelp(mc);
-        }
+        return output.str();
     }
+
+    Command* cmd = mc.commandManager().getCommand(args[0]);
+
+    if (cmd != nullptr) {
+        return cmd->help(mc);
+    }
+
+    return "help: command " + args[0] + " not found";
 }
 
-void CommandHelp::printHelp(Minecraft& mc) {}
+std::string CommandHelp::help(Minecraft& mc) {
+    return "Usage: /help <command>";
+}

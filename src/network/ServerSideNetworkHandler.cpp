@@ -5,6 +5,7 @@
 #include "../world/entity/player/Inventory.h"
 #include "../world/Container.h"
 #include "../world/inventory/BaseContainerMenu.h"
+#include "network/packet/ChatPacket.h"
 #include "network/packet/ContainerSetSlotPacket.h"
 #include "network/packet/LoginStatusPacket.h"
 #include "network/packet/MovePlayerPacket.h"
@@ -24,6 +25,7 @@
 #include "../raknet/PacketPriority.h"
 #include "platform/log.h"
 #include "util/Mth.h"
+#include "util/StringUtils.h"
 #include "world/item/ItemInstance.h"
 #include "world/level/storage/LevelStorage.h"
 #include "world/phys/Vec3.h"
@@ -154,7 +156,18 @@ void ServerSideNetworkHandler::displayGameMessage(const std::string& message)
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChatPacket* packet)
 {
-	displayGameMessage(packet->message);
+	auto player = getPlayer(source);
+
+	if (player == nullptr) return; // TODO maybe kick?
+	
+	if (packet->message[0] == '/') {
+		// This is a command
+
+		ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, Util::stringTrim(packet->message.substr(1))));
+		return sendPrivate(resp, source);
+	}
+
+	displayGameMessage("<" + player->name + "> " + packet->message);
 }
 
 void ServerSideNetworkHandler::onNewClient(const RakNet::RakNetGUID& clientGuid)
@@ -1019,4 +1032,10 @@ Player* ServerSideNetworkHandler::getPlayer( const RakNet::RakNetGUID& source ) 
     for (unsigned int i = 0; i < level->players.size(); ++i)
         if (source == level->players[i]->owner) return level->players[i];
     return NULL;
+}
+
+void ServerSideNetworkHandler::sendPrivate(Packet& packet, const RakNet::RakNetGUID& source) {
+	RakNet::BitStream bitStream;
+	packet.write(&bitStream);
+	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
 }
