@@ -111,7 +111,7 @@ ScrollingPane::~ScrollingPane() {
 	delete[] selected;
 }
 
-//void ScrollingPane::init(Minecraft* mc, int width, int height) {
+//void ScrollingPane::init(MinecraftClient& mc, int width, int height) {
 //	this->mc = mc;
 //	this->width = width;
 //	this->height = height;

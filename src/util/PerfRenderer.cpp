@@ -66,7 +66,7 @@ void PerfRenderer::renderFpsMeter( float tickTime )
 	glMatrixMode(GL_PROJECTION);
 	glEnable2(GL_COLOR_MATERIAL);
 	glLoadIdentity2();
-	glOrthof(0, (GLfloat)_mc->width, (GLfloat)_mc->height, 0, 1000, 3000);
+	glOrthof(0, (GLfloat)_mc.getScreenWidth(), (GLfloat)_mc.getScreenHeight(), 0, 1000, 3000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity2();
 	glTranslatef2(0, 0, -2000);
@@ -79,16 +79,16 @@ void PerfRenderer::renderFpsMeter( float tickTime )
 	int hh1 = (int) (usPer60Fps / 200);
 	float count = (float)frameTimes.size();
 	t.color(0x20000000);
-	t.vertex(0, (float)(_mc->height - hh1), 0);
-	t.vertex(0, (float)_mc->height, 0);
-	t.vertex(count, (float)_mc->height, 0);
-	t.vertex(count, (float)(_mc->height - hh1), 0);
+	t.vertex(0, (float)(_mc.getScreenHeight() - hh1), 0);
+	t.vertex(0, (float)_mc.getScreenHeight(), 0);
+	t.vertex(count, (float)_mc.getScreenHeight(), 0);
+	t.vertex(count, (float)(_mc.getScreenHeight() - hh1), 0);
 
 	t.color(0x20200000);
-	t.vertex(0, (float)(_mc->height - hh1 * 2), 0);
-	t.vertex(0, (float)(_mc->height - hh1), 0);
-	t.vertex(count, (float)(_mc->height - hh1), 0);
-	t.vertex(count, (float)(_mc->height - hh1 * 2), 0);
+	t.vertex(0, (float)(_mc.getScreenHeight() - hh1 * 2), 0);
+	t.vertex(0, (float)(_mc.getScreenHeight() - hh1), 0);
+	t.vertex(count, (float)(_mc.getScreenHeight() - hh1), 0);
+	t.vertex(count, (float)(_mc.getScreenHeight() - hh1 * 2), 0);
 
 	t.draw();
 	float totalTime = 0;
@@ -98,10 +98,10 @@ void PerfRenderer::renderFpsMeter( float tickTime )
 	int hh = (int) (totalTime / 200 / frameTimes.size());
 	t.begin();
 	t.color(0x20400000);
-	t.vertex(0, (float)(_mc->height - hh), 0);
-	t.vertex(0, (float)_mc->height, 0);
-	t.vertex(count, (float)_mc->height, 0);
-	t.vertex(count, (float)(_mc->height - hh), 0);
+	t.vertex(0, (float)(_mc.getScreenHeight() - hh), 0);
+	t.vertex(0, (float)_mc.getScreenHeight(), 0);
+	t.vertex(count, (float)_mc.getScreenHeight(), 0);
+	t.vertex(count, (float)(_mc.getScreenHeight() - hh), 0);
 	t.draw();
 
 	t.begin(GL_LINES);
@@ -120,23 +120,23 @@ void PerfRenderer::renderFpsMeter( float tickTime )
 		float time = 10 * 1000 * frameTimes[i] / 200;
 		float time2 = 10 * 1000 * tickTimes[i] / 200;
 
-		t.vertex(i + 0.5f, _mc->height - time + 0.5f, 0);
-		t.vertex(i + 0.5f, _mc->height + 0.5f, 0);
+		t.vertex(i + 0.5f, _mc.getScreenHeight() - time + 0.5f, 0);
+		t.vertex(i + 0.5f, _mc.getScreenHeight() + 0.5f, 0);
 
-		// if (_mc->frameTimes[i]>nsPer60Fps) {
+		// if (_mc.frameTimes[i]>nsPer60Fps) {
 		t.color(0xff000000 + cc * 65536 + cc * 256 + cc * 1);
 		// } else {
 		// t.color(0xff808080 + cc/2 * 256);
 		// }
-		t.vertex(i + 0.5f, _mc->height - time + 0.5f, 0);
-		t.vertex(i + 0.5f, _mc->height - (time - time2) + 0.5f, 0);
+		t.vertex(i + 0.5f, _mc.getScreenHeight() - time + 0.5f, 0);
+		t.vertex(i + 0.5f, _mc.getScreenHeight() - (time - time2) + 0.5f, 0);
 	}
 	t.draw();
 	//t.end();
 
 	int r = 160;
-	int x = _mc->width - r - 10;
-	int y = _mc->height - r * 2;
+	int x = _mc.getScreenWidth() - r - 10;
+	int y = _mc.getScreenHeight() - r * 2;
 	glEnable(GL_BLEND);
 	t.begin();
 	t.color(0x000000, 200);
@@ -193,9 +193,9 @@ void PerfRenderer::renderFpsMeter( float tickTime )
 			msg << node.name << " ";
 		}
 		int col = 0xffffff;
-		_font->drawShadow(msg.str(), (float)(x - r), (float)(y - r / 2 - 16), col);
+		_font.drawShadow(msg.str(), (float)(x - r), (float)(y - r / 2 - 16), col);
 		std::string msg2 = toPercentString(node.globalPercentage);
-		_font->drawShadow(msg2, (float)(x + r - _font->width(msg2)), (float)(y - r / 2 - 16), col);
+		_font.drawShadow(msg2, (float)(x + r - _font.width(msg2)), (float)(y - r / 2 - 16), col);
 	}
 
 	for (unsigned int i = 0; i < list.size(); i++) {
@@ -210,12 +210,12 @@ void PerfRenderer::renderFpsMeter( float tickTime )
 		msg << result.name;
 		float xx = (float)(x - r);
 		float yy = (float)(y + r/2 + i * 8 + 20);
-		_font->drawShadow(msg.str(), xx, yy, result.getColor());
+		_font.drawShadow(msg.str(), xx, yy, result.getColor());
 		std::string msg2 = toPercentString(result.percentage);
 		//LOGI("name: %s: perc: %f == %s @ %d, %d\n", msg.str().c_str(), result.percentage, msg2.c_str(), xx, yy);
-		_font->drawShadow(msg2, xx - 50 - _font->width(msg2), yy, result.getColor());
+		_font.drawShadow(msg2, xx - 50 - _font.width(msg2), yy, result.getColor());
 		msg2 = toPercentString(result.globalPercentage);
-		_font->drawShadow(msg2, xx - _font->width(msg2), yy, result.getColor());
+		_font.drawShadow(msg2, xx - _font.width(msg2), yy, result.getColor());
 	}
 }
 

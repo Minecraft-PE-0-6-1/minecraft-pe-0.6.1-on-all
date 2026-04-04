@@ -1,6 +1,6 @@
 #include "LargeImageButton.hpp"
 #include "client/renderer/Tesselator.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "util/Mth.hpp"
 #include "platform/log.hpp"
 #include "util/Mth.hpp"
@@ -26,14 +26,14 @@ void LargeImageButton::setupDefault() {
 	height = 72;
 }
 
-void LargeImageButton::render(Minecraft* minecraft, int xm, int ym) {
+void LargeImageButton::render(MinecraftClient& minecraft, int xm, int ym) {
 	if (!visible) return;
 
-	Font* font = minecraft->font;
+	Font* font = minecraft.font();
 
-	//minecraft->textures->loadAndBindTexture("gui/gui.png");
+	//minecraft.textures().loadAndBindTexture("gui/gui.png");
 	glColor4f2(1, 1, 1, 1);
-	bool hovered = active && (minecraft->useTouchscreen()? (_currentlyDown && xm >= x && ym >= y && xm < x + width && ym < y + height) : isInside(xm, ym));
+	bool hovered = active && (minecraft.useTouchscreen()? (_currentlyDown && xm >= x && ym >= y && xm < x + width && ym < y + height) : isInside(xm, ym));
 
 	//printf("ButtonId: %d - Hovered? %d (cause: %d, %d, %d, %d, <> %d, %d)\n", id, hovered, x, y, x+w, y+h, xm, ym);
 	//int yImage = getYImage(hovered || selected);
@@ -43,7 +43,7 @@ void LargeImageButton::render(Minecraft* minecraft, int xm, int ym) {
 
 	renderBg(minecraft, xm, ym);
 
-	TextureId texId = (_imageDef.name.length() > 0)? minecraft->textures->loadAndBindTexture(_imageDef.name) : Textures::InvalidId;
+	TextureId texId = (_imageDef.name.length() > 0)? minecraft.textures().loadAndBindTexture(_imageDef.name) : Textures::InvalidId;
 	if ( Textures::isTextureIdValid(texId) ) {
 		const ImageDef& d = _imageDef;
 		Tesselator& t = Tesselator::instance;
@@ -69,7 +69,7 @@ void LargeImageButton::render(Minecraft* minecraft, int xm, int ym) {
 
 			const IntRectangle* src = _imageDef.getSrc();
 			if (src) {
-				const TextureData* d = minecraft->textures->getTemporaryTextureData(texId);
+				const TextureData* d = minecraft.textures().getTemporaryTextureData(texId);
 				if (d != NULL) {
 					float u0 = (src->x+(hovered?src->w:0)) / (float)d->w;
 					float u1 = (src->x+(hovered?2*src->w:src->w)) / (float)d->w;

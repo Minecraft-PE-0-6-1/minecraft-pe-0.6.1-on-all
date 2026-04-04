@@ -46,7 +46,7 @@ public:
 
 	ScrollingPane(int flags, const IntRectangle& boundingBox, const IntRectangle& itemRect, int columns, int numItems, float screenScale = 1.0f, const IntRectangle& itemBoundingRect = IntRectangle(0,0,0,0));
 	~ScrollingPane();
-	//void init(Minecraft*, int width, int height);
+	//void init(MinecraftClient&, int width, int height);
 	void tick();
 	void render(int xm, int ym, float alpha);
 

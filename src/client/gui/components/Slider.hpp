@@ -7,10 +7,10 @@
 class Slider : public GuiElement {
 	typedef GuiElement super;
 public:
-	virtual void render( Minecraft* minecraft, int xm, int ym );
-	virtual void mouseClicked( Minecraft* minecraft, int x, int y, int buttonNum );
-	virtual void mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum );
-	virtual void tick(Minecraft* minecraft);
+	virtual void render( MinecraftClient& minecraft, int xm, int ym );
+	virtual void mouseClicked( MinecraftClient& minecraft, int x, int y, int buttonNum );
+	virtual void mouseReleased( MinecraftClient& minecraft, int x, int y, int buttonNum );
+	virtual void tick(MinecraftClient& minecraft);
 
 protected:
 	Slider(OptionId optId);
@@ -24,9 +24,9 @@ protected:
 
 class SliderFloat : public Slider {
 public:
-	SliderFloat(Minecraft* minecraft, OptionId option);
+	SliderFloat(MinecraftClient& minecraft, OptionId option);
 
-	virtual void mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum ) override;	
+	virtual void mouseReleased( MinecraftClient& minecraft, int x, int y, int buttonNum ) override;	
 
 protected:
 	OptionFloat* m_option;
@@ -35,10 +35,10 @@ protected:
 
 class SliderInt : public Slider {
 public:
-	SliderInt(Minecraft* minecraft, OptionId option);
+	SliderInt(MinecraftClient& minecraft, OptionId option);
 
-	virtual void render( Minecraft* minecraft, int xm, int ym ) override;
-	virtual void mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum ) override;
+	virtual void render( MinecraftClient& minecraft, int xm, int ym ) override;
+	virtual void mouseReleased( MinecraftClient& minecraft, int x, int y, int buttonNum ) override;
 
 protected:
 	OptionInt* m_option;

@@ -6,7 +6,7 @@
 #include "GuiComponent.hpp"
 
 class Font;
-class Minecraft;
+class MinecraftClient;
 class Button;
 class TextBox;
 struct IntRectangle;
@@ -14,11 +14,11 @@ struct IntRectangle;
 class Screen: public GuiComponent
 {
 public:
-	Screen();
+	Screen(MinecraftClient& minecraft);
 
     virtual void render(int xm, int ym, float a);
 
-    void init(Minecraft* minecraft, int width, int height);
+    void init(int width, int height);
 	virtual void init();
 
     void setSize(int width, int height);
@@ -67,7 +67,7 @@ public:
 	bool passEvents;
 	//GuiParticles* particles;
 protected:
-	Minecraft* minecraft;
+	MinecraftClient& minecraft;
 	std::vector<Button*> buttons;
 	std::vector<TextBox*> textBoxes;
 

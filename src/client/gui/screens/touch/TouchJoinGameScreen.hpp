@@ -3,7 +3,7 @@
 #include "client/gui/Screen.hpp"
 #include "client/gui/components/Button.hpp"
 #include "client/gui/components/RolledSelectionListV.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "platform/input/Multitouch.hpp"
 #include "network/RakNetInstance.hpp"
 
@@ -20,7 +20,7 @@ class AvailableGamesList : public RolledSelectionListV
 	friend class JoinGameScreen;
 
 public:
-	AvailableGamesList(Minecraft* _minecraft, int _width, int _height)
+	AvailableGamesList(MinecraftClient& _minecraft, int _width, int _height)
 	:	RolledSelectionListV(_minecraft, _width, _height, 0, _width, 24, _height, 34),
 		selectedItem(-1),
 		startSelected(-1)

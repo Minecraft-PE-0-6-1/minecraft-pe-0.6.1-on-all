@@ -22,7 +22,7 @@ public:
 
     static const int TEXTURE_COUNT = 4;
 
-    ParticleEngine(Level* level, Textures* textures);
+    ParticleEngine(Level* level, Textures& textures);
 	~ParticleEngine();
 
     void add(Particle* p);

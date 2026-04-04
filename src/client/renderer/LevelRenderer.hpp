@@ -107,7 +107,7 @@ public:
 private:
 	int xChunks, yChunks, zChunks;
     int chunkLists;
-    Minecraft* mc;
+    MinecraftClient& mc;
 
 	bool occlusionCheck;
 	int lastViewDistance;

@@ -3,7 +3,7 @@
 #include "client/gui/Screen.hpp"
 #include "client/gui/Font.hpp"
 #include "client/gui/components/Button.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include <string>
 
 class DisconnectionScreen: public Screen
@@ -20,7 +20,7 @@ public:
 	}
 
 	void init() {
-		if (/* minecraft->useTouchscreen() */ true)
+		if (/* minecraft.useTouchscreen() */ true)
 			_back = new Touch::TButton(1, "Ok");
 		else
 			_back = new Button(1, "Ok");
@@ -37,13 +37,13 @@ public:
 		renderBackground();
 		super::render(xm, ym, a);
 
-		int center = (width - minecraft->font->width(_msg)) / 2;
-		minecraft->font->drawShadow(_msg, (float)center, (float)(height / 2 - 32), 0xffffffff);
+		int center = (width - minecraft.font()->width(_msg)) / 2;
+		minecraft.font()->drawShadow(_msg, (float)center, (float)(height / 2 - 32), 0xffffffff);
 	}
 
 	void buttonClicked(Button* button) {
 		if (button->id == _back->id) {
-			minecraft->leaveGame();
+			minecraft.leaveGame();
 		}
 	}
 	bool isInGameScreen() { return false; }

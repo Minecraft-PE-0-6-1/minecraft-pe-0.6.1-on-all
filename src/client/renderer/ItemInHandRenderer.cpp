@@ -24,7 +24,7 @@
 
 //static StopwatchHandler handler;
 
-ItemInHandRenderer::ItemInHandRenderer( Minecraft* mc )
+ItemInHandRenderer::ItemInHandRenderer( MinecraftClient& mc )
 :	mc(mc),
 	lastSlot(-1),
 	height(0),
@@ -51,7 +51,7 @@ void ItemInHandRenderer::tick()
 	oHeight = height;
 	item.id = 0;
 
-	ItemInstance* itemInHand = mc->player->inventory->getSelected();
+	ItemInstance* itemInHand = mc.player->inventory->getSelected();
 	if (itemInHand && itemInHand->count > 0) {
 		item.id = itemInHand->id;
 		item.setAuxValue(itemInHand->getAuxValue());
@@ -122,10 +122,10 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 
 			if (item->id < 256) {
 				renderObject.texture = "terrain.png";
-				//mc->textures->loadAndBindTexture("terrain.png");
+				//mc.textures().loadAndBindTexture("terrain.png");
 			} else {
 				renderObject.texture = "gui/items.png";
-				//mc->textures->loadAndBindTexture("gui/items.png");
+				//mc.textures().loadAndBindTexture("gui/items.png");
 			}
 			// glDisable2(GL_LIGHTING);
 			Tesselator& t = Tesselator::instance;
@@ -217,7 +217,7 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 			glRotatef2(45 + 290, 0, 0, 1);
 			glTranslatef2(-15 / 16.0f, -1 / 16.0f, 0);
 		}
-		mc->textures->loadAndBindTexture(renderObject.texture);
+		mc.textures().loadAndBindTexture(renderObject.texture);
 
 		drawArrayVT_NoState(renderObject.chunk.vboId, renderObject.chunk.vertexCount);
 		if (renderObject.isFlat)
@@ -235,7 +235,7 @@ void ItemInHandRenderer::render( float a )
 	//w.start();
 
 	float h = oHeight + (height - oHeight) * a;
-	Player* player = mc->player;
+	Player* player = mc.player;
 	// if (selectedTile==NULL) return;
 
 	glPushMatrix2();
@@ -243,7 +243,7 @@ void ItemInHandRenderer::render( float a )
 	glRotatef2(player->yRotO + (player->yRot - player->yRotO) * a, 0, 1, 0);
 	glPopMatrix2();
 
-	float br = mc->level->getBrightness(Mth::floor(player->x), Mth::floor(player->y), Mth::floor(player->z));
+	float br = mc.level->getBrightness(Mth::floor(player->x), Mth::floor(player->y), Mth::floor(player->z));
 
 	ItemInstance* item;// = selectedItem;
 	//if (player.fishing != NULL) {
@@ -354,7 +354,7 @@ void ItemInHandRenderer::render( float a )
 		glRotatef2(-swing3 * 20, 0, 0, 1);
 		// glRotatef2(-swing2 * 80, 1, 0, 0);
 
-		mc->textures->loadAndBindTexture(player->getTexture());
+		mc.textures().loadAndBindTexture(player->getTexture());
 		glTranslatef2(-1.0f, +3.6f, +3.5f);
 		glRotatef2(120, 0, 0, 1);
 		glRotatef2(180 + 20, 1, 0, 0);
@@ -362,7 +362,7 @@ void ItemInHandRenderer::render( float a )
 		glScalef2(1.5f / 24.0f * 16, 1.5f / 24.0f * 16, 1.5f / 24.0f * 16);
 		glTranslatef2(5.6f, 0, 0);
 
-		EntityRenderer* er = EntityRenderDispatcher::getInstance()->getRenderer(mc->player);
+		EntityRenderer* er = EntityRenderDispatcher::getInstance()->getRenderer(mc.player);
 		HumanoidMobRenderer* playerRenderer = (HumanoidMobRenderer*) er;
 		float ss = 1;
 		glScalef2(ss, ss, ss);
@@ -377,26 +377,26 @@ void ItemInHandRenderer::render( float a )
 void ItemInHandRenderer::renderScreenEffect( float a )
 {
 	glDisable2(GL_ALPHA_TEST);
-	if (mc->player->isOnFire()) {
-		mc->textures->loadAndBindTexture("terrain.png");
+	if (mc.player->isOnFire()) {
+		mc.textures().loadAndBindTexture("terrain.png");
 		renderFire(a);
 	}
 
-	if (mc->player->isInWall()) // Inside a tile
+	if (mc.player->isInWall()) // Inside a tile
 	{
-		int x = Mth::floor(mc->player->x);
-		int y = Mth::floor(mc->player->y);
-		int z = Mth::floor(mc->player->z);
+		int x = Mth::floor(mc.player->x);
+		int y = Mth::floor(mc.player->y);
+		int z = Mth::floor(mc.player->z);
 
-		mc->textures->loadAndBindTexture("terrain.png");
-		int tile = mc->level->getTile(x, y, z);
+		mc.textures().loadAndBindTexture("terrain.png");
+		int tile = mc.level->getTile(x, y, z);
 		if (Tile::tiles[tile] != NULL) {
 			renderTex(a, Tile::tiles[tile]->getTexture(2));
 		}
 	}
 
-	//     if (mc->player->isUnderLiquid(Material::water)) {
-	//mc->textures->loadAndBindTexture("misc/water.png");
+	//     if (mc.player->isUnderLiquid(Material::water)) {
+	//mc.textures().loadAndBindTexture("misc/water.png");
 	//         renderWater(a);
 	//     }
 	glEnable2(GL_ALPHA_TEST);
@@ -416,7 +416,7 @@ void ItemInHandRenderer::renderTex( float a, int tex )
 {
 	Tesselator& t = Tesselator::instance;
 
-	float br;// = mc->player->getBrightness(a);
+	float br;// = mc.player->getBrightness(a);
 	br = 0.1f;
 	glColor4f2(br, br, br, 0.5f);
 
@@ -450,7 +450,7 @@ void ItemInHandRenderer::renderWater( float a )
 {
 	Tesselator& t = Tesselator::instance;
 
-	float br = mc->player->getBrightness(a);
+	float br = mc.player->getBrightness(a);
 	glColor4f2(br, br, br, 0.5f);
 	glEnable2(GL_BLEND);
 	glBlendFunc2(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -465,8 +465,8 @@ void ItemInHandRenderer::renderWater( float a )
 	float y1 = +1;
 	float z0 = -0.5f;
 
-	float uo = -mc->player->yRot / 64.0f;
-	float vo = +mc->player->xRot / 64.0f;
+	float uo = -mc.player->yRot / 64.0f;
+	float vo = +mc.player->xRot / 64.0f;
 
 	t.begin();
 	t.vertexUV(x0, y0, z0, size + uo, size + vo);

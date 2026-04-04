@@ -9,7 +9,7 @@
 
 class Options;
 class Player;
-class Minecraft;
+class MinecraftClient;
 class PolygonArea;
 
 // @todo: extract a separate MoveInput (-> merge XperiaPlayInput)
@@ -26,7 +26,7 @@ public:
 	static const int KEY_CRAFT = 6;
 	static const int NumKeys = 7;
 
-    TouchscreenInput_TestFps(Minecraft* mc, Options* options);
+    TouchscreenInput_TestFps(MinecraftClient& mc, Options* options);
 	~TouchscreenInput_TestFps();
 
 	void onConfigChanged(const Config& c);
@@ -53,7 +53,7 @@ private:
 	bool _northJump;
 	bool _renderFlightImage;
 	TouchAreaModel _model;
-	Minecraft* _minecraft;
+	MinecraftClient& _minecraft;
 
 	RectangleArea* aLeft;
 	RectangleArea* aRight;

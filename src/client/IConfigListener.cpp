@@ -1,16 +1,12 @@
 #include "IConfigListener.hpp"
-#include "Minecraft.hpp"
-#ifndef STANDALONE_SERVER
+#include <MinecraftClient.hpp>
+
 #include "gui/Gui.hpp"
-#endif /* STANDALONE_SERVER */
-Config createConfig(Minecraft* mc) {
-	Config c;
-	#ifndef STANDALONE_SERVER
-	c.setScreenSize(mc->width, mc->height, Gui::GuiScale);
-	#endif
-	c.pixelCalc   = mc->pixelCalc;
-	c.pixelCalcUi = mc->pixelCalcUi;
-	c.minecraft = mc;
-	c.options   = &mc->options;
+
+Config::Config(MinecraftClient& mc) : minecraft(mc), options(mc.options()), pixelCalc(mc.pixelCalc()), pixelCalcUi(mc.pixelCalcUi()) {}
+
+Config createConfig(MinecraftClient& mc) {
+	Config c(mc);
+	c.setScreenSize(mc.getScreenWidth(), mc.getScreenHeight(), Gui::GuiScale);
 	return c;
 }

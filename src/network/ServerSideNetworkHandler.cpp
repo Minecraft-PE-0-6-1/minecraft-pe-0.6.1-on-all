@@ -163,7 +163,7 @@ void ServerSideNetworkHandler::redistributePacket(Packet* packet, const RakNet::
 void ServerSideNetworkHandler::displayGameMessage(const std::string& message)
 {
 #ifndef STANDALONE_SERVER
-	minecraft->gui.addMessage(message);
+	minecraft.gui().addMessage(message);
 #else
 	LOGI("%s\n", message.c_str());
 #endif
@@ -238,7 +238,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	//
 	Player* newPlayer = new ServerPlayer(minecraft, level);
 
-	minecraft->gameMode->initAbilities(newPlayer->abilities);
+	minecraft.gameMode->initAbilities(newPlayer->abilities);
 	newPlayer->owner = source;
 	newPlayer->name = packet->clientName.C_String();
 	_pendingPlayers.push_back(newPlayer);
@@ -256,7 +256,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
         RakNet::BitStream bitStream;
 
         // @todo: Read from LevelData?
-		int gameType = minecraft->isCreativeMode()
+		int gameType = minecraft.isCreativeMode()
 			? GameType::Creative
 			: GameType::Survival;
 
@@ -321,7 +321,7 @@ void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID
 
 	level->addEntity(newPlayer);
 #ifndef STANDALONE_SERVER
-	minecraft->gui.addMessage(newPlayer->name + " joined the game");
+	minecraft.gui().addMessage(newPlayer->name + " joined the game");
 #else
 	LOGW("%s joined the game\n", newPlayer->name.c_str());
 #endif
@@ -405,7 +405,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveBl
 	if (oldTile != NULL && changed) {
 		level->playSound(x + 0.5f, y + 0.5f, z + 0.5f, oldTile->soundType->getBreakSound(), (oldTile->soundType->getVolume() + 1) / 2, oldTile->soundType->getPitch() * 0.8f);
 
-		if (minecraft->gameMode->isSurvivalType() && player->canDestroy(oldTile))
+		if (minecraft.gameMode->isSurvivalType() && player->canDestroy(oldTile))
 			//oldTile->spawnResources(level, x, y, z, data, 1); //@todo
 			oldTile->playerDestroy(level, player, x, y, z, data);
 
@@ -454,7 +454,7 @@ void ServerSideNetworkHandler::levelGenerated( Level* level )
 	
 	level->addListener(this);
 #ifndef STANDALONE_SERVER
-	allowIncomingConnections(minecraft->options.getBooleanValue(OPTIONS_SERVER_VISIBLE));
+	allowIncomingConnections(minecraft.options.getBooleanValue(OPTIONS_SERVER_VISIBLE));
 #else
 	allowIncomingConnections(true);
 #endif
@@ -508,11 +508,11 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Interact
 		Player* player = (Player*) src;
 		if (InteractPacket::Attack == packet->action) {
 			player->swing();
-			minecraft->gameMode->attack(player, entity);
+			minecraft.gameMode->attack(player, entity);
 		}
 		if (InteractPacket::Interact == packet->action) {
 			player->swing();
-			minecraft->gameMode->interact(player, entity);
+			minecraft.gameMode->interact(player, entity);
 		}
 
 		redistributePacket(packet, source);
@@ -568,10 +568,10 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 		if(packet->face == 255) {
             // Special case: x,y,z means direction-of-action
             player->aimDirection.set(packet->x / 32768.0f, packet->y / 32768.0f, packet->z / 32768.0f);
-			minecraft->gameMode->useItem(player, level, item);
+			minecraft.gameMode->useItem(player, level, item);
 		}
 		else {
-			minecraft->gameMode->useItemOn(player, level, item, packet->x, packet->y, packet->z, packet->face,
+			minecraft.gameMode->useItemOn(player, level, item, packet->x, packet->y, packet->z, packet->face,
 				Vec3(packet->clickX + packet->x, packet->clickY + packet->y, packet->clickZ + packet->z));
 		}
 		
@@ -597,7 +597,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerAc
 	if (entity && entity->isPlayer()) {
 		Player* player = (Player*) entity;
 		if(packet->action == PlayerActionPacket::RELEASE_USE_ITEM) {
-			minecraft->gameMode->releaseUsingItem(player);
+			minecraft.gameMode->releaseUsingItem(player);
 			return;
 		}
 		else if(packet->action == PlayerActionPacket::STOP_SLEEPING) {
@@ -646,7 +646,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 	Player* p = findPlayer(level, &source);
 	if (!p) return;
 
-	// // if (p != minecraft->player)
+	// // if (p != minecraft.player())
 	// 	static_cast<ServerPlayer*>(p)->doCloseContainer();
 
 	if (auto sp = dynamic_cast<ServerPlayer*>(p))
@@ -716,7 +716,7 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SignUpd
 void ServerSideNetworkHandler::allowIncomingConnections( bool doAllow )
 {
 	if (doAllow) {
-		raknetInstance->announceServer(minecraft->getServerName());
+		raknetInstance->announceServer(minecraft.getServerName());
 	} else {
 		raknetInstance->announceServer("");
 	}

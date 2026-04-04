@@ -1,7 +1,7 @@
 
 #include "client/gui/Screen.hpp"
 #include "client/gui/components/Button.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/gui/components/ImageButton.hpp"
 #include "client/gui/components/TextBox.hpp"
 

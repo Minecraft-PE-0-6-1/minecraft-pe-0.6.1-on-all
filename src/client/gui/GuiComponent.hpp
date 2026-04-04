@@ -4,7 +4,6 @@
 
 #include <string>
 class Font;
-class Minecraft;
 
 class GuiComponent
 {
@@ -12,8 +11,8 @@ public:
 	GuiComponent();
 	virtual ~GuiComponent();
 
-	void drawString(Font* font, const std::string& str, int x, int y, int color);
-	void drawCenteredString(Font* font, const std::string& str, int x, int y, int color);
+	void drawString(Font& font, const std::string& str, int x, int y, int color);
+	void drawCenteredString(Font& font, const std::string& str, int x, int y, int color);
 
 	void blit(int x, int y, int sx, int sy, int w, int h, int sw=0, int sh=0);
 	void blit(float x, float y, int sx, int sy, float w, float h, int sw=0, int sh=0);
@@ -27,6 +26,5 @@ protected:
 	void fillHorizontalGradient(float x0, float y0, float x1, float y1, int col1, int col2);
 
 	float blitOffset;
-	
 };
 

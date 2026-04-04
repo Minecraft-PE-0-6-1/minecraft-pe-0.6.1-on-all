@@ -36,7 +36,7 @@ NinePatchDescription NinePatchDescription::createSymmetrical( int texWidth, int 
 	return patch;
 }
 
-NinePatchLayer::NinePatchLayer(const NinePatchDescription& desc, const std::string& imageName, Textures* textures, float w, float h)
+NinePatchLayer::NinePatchLayer(const NinePatchDescription& desc, const std::string& imageName, Textures& textures, float w, float h)
 	:	desc(desc),
 	imageName(imageName),
 	textures(textures),

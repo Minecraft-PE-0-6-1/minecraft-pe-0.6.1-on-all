@@ -1,5 +1,6 @@
 #include "Button.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
+#include <cstddef>
 #include "client/renderer/Textures.hpp"
 
 Button::Button(int id, const std::string& msg)
@@ -29,12 +30,12 @@ Button::Button( int id, int x, int y, int w, int h, const std::string& msg )
 {
 }
 
-void Button::render( Minecraft* minecraft, int xm, int ym )
+void Button::render( MinecraftClient& minecraft, int xm, int ym )
 {
 	if (!visible) return;
 
 	/*
-	minecraft->textures->loadAndBindTexture("gui/gui.png");
+	minecraft.textures().loadAndBindTexture("gui/gui.png");
 	glColor4f2(1, 1, 1, 1);
 
 	//printf("ButtonId: %d - Hovered? %d (cause: %d, %d, %d, %d, <> %d, %d)\n", id, hovered, x, y, x+w, y+h, xm, ym);
@@ -52,7 +53,7 @@ void Button::released( int mx, int my ) {
     _currentlyDown = false;
 }
 
-bool Button::clicked( Minecraft* minecraft, int mx, int my )
+bool Button::clicked( MinecraftClient& minecraft, int mx, int my )
 {
 	return active && mx >= x && my >= y && mx < x + width && my < y + height;
 }
@@ -69,22 +70,27 @@ int Button::getYImage( bool hovered )
 	return res;
 }
 
-void Button::renderFace(Minecraft* mc, int xm, int ym) {
-	Font* font = mc->font;
+void Button::renderFace(MinecraftClient& mc, int xm, int ym) {
+	Font* font = mc.font();
+	
+	if (font == nullptr) {
+		return;
+	}
+
 	if (!active) {
-		drawCenteredString(font, msg, x + width / 2, y + (height - 8) / 2, 0xffa0a0a0);
+		drawCenteredString(*font, msg, x + width / 2, y + (height - 8) / 2, 0xffa0a0a0);
 	} else {
 		if (hovered(mc, xm, ym) || selected) {
-			drawCenteredString(font, msg, x + width / 2, y + (height - 8) / 2, 0xffffa0);
+			drawCenteredString(*font, msg, x + width / 2, y + (height - 8) / 2, 0xffffa0);
 		} else {
-			drawCenteredString(font, msg, x + width / 2, y + (height - 8) / 2, 0xe0e0e0);
+			drawCenteredString(*font, msg, x + width / 2, y + (height - 8) / 2, 0xe0e0e0);
 		}
 	}
 }
 
-void Button::renderBg( Minecraft* minecraft, int xm, int ym )
+void Button::renderBg( MinecraftClient& minecraft, int xm, int ym )
 {
-	minecraft->textures->loadAndBindTexture("gui/gui.png");
+	minecraft.textures().loadAndBindTexture("gui/gui.png");
 	glColor4f2(1, 1, 1, 1);
 
 	//printf("ButtonId: %d - Hovered? %d (cause: %d, %d, %d, %d, <> %d, %d)\n", id, hovered, x, y, x+w, y+h, xm, ym);
@@ -94,8 +100,8 @@ void Button::renderBg( Minecraft* minecraft, int xm, int ym )
 	blit(x + width / 2, y, 200 - width / 2, 46 + yImage * 20, width / 2, height, 0, 20);
 }
 
-bool Button::hovered(Minecraft* minecraft, int xm , int ym) {
-	return minecraft->useTouchscreen()? (_currentlyDown && isInside(xm, ym)) : isInside(xm, ym);
+bool Button::hovered(MinecraftClient& minecraft, int xm , int ym) {
+	return minecraft.useTouchscreen()? (_currentlyDown && isInside(xm, ym)) : isInside(xm, ym);
 }
 
 bool Button::isInside( int xm, int ym ) {
@@ -141,12 +147,12 @@ TButton::TButton( int id, int x, int y, int w, int h, const std::string& msg )
 {
 }
 
-void TButton::renderBg( Minecraft* minecraft, int xm, int ym )
+void TButton::renderBg( MinecraftClient& minecraft, int xm, int ym )
 {
-	bool hovered = active && (minecraft->useTouchscreen()? (_currentlyDown && xm >= x && ym >= y && xm < x + width && ym < y + height) : isInside(xm, ym));
+	bool hovered = active && (minecraft.useTouchscreen()? (_currentlyDown && xm >= x && ym >= y && xm < x + width && ym < y + height) : isInside(xm, ym));
 	// bool hovered = active && (_currentlyDown && isInside(xm, ym));
 
-	minecraft->textures->loadAndBindTexture("gui/touchgui.png");
+	minecraft.textures().loadAndBindTexture("gui/touchgui.png");
 
 	//printf("ButtonId: %d - Hovered? %d (cause: %d, %d, %d, %d, <> %d, %d)\n", id, hovered, x, y, x+w, y+h, xm, ym);
 	if (active)
@@ -187,19 +193,22 @@ THeader::THeader( int id, int x, int y, int w, int h, const std::string& msg )
 	active = false;
 }
 
-void THeader::render( Minecraft* minecraft, int xm, int ym ) {
-	Font* font = minecraft->font;
+void THeader::render( MinecraftClient& minecraft, int xm, int ym ) {
+	Font* font = minecraft.font();
 	renderBg(minecraft, xm, ym);
 	
 	int xx = x + width/2;
 	if (xText != -99999)
 		xx = xText;
-	drawCenteredString(font, msg, xx, y + (height - 8) / 2, 0xe0e0e0);
+
+	if (font != nullptr) {
+		drawCenteredString(*font, msg, xx, y + (height - 8) / 2, 0xe0e0e0);
+	}
 }
 
-void THeader::renderBg( Minecraft* minecraft, int xm, int ym )
+void THeader::renderBg( MinecraftClient& minecraft, int xm, int ym )
 {
-	minecraft->textures->loadAndBindTexture("gui/touchgui.png");
+	minecraft.textures().loadAndBindTexture("gui/touchgui.png");
 
 	//printf("ButtonId: %d - Hovered? %d (cause: %d, %d, %d, %d, <> %d, %d)\n", id, hovered, x, y, x+w, y+h, xm, ym);
 	glColor4f2(1, 1, 1, 1);

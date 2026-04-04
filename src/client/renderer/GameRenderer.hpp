@@ -8,14 +8,14 @@
 #include "world/phys/Vec3.hpp"
 #include "client/gui/components/ImageButton.hpp"
 
-class Minecraft;
+class MinecraftClient;
 class Entity;
 class ItemInHandRenderer;
 class LevelRenderer;
 class GameRenderer
 {
 public:
-	GameRenderer(Minecraft* mc_);
+	GameRenderer(MinecraftClient& mc_);
 	~GameRenderer();
 
 	void pick(float a);
@@ -54,7 +54,7 @@ public:
 	ItemInHandRenderer* itemInHandRenderer;
 
 private:
-	Minecraft* mc;
+	MinecraftClient& mc;
 
 	float renderDistance;
 	int _tick;

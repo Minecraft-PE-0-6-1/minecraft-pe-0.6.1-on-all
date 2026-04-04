@@ -6,7 +6,7 @@
 #include "client/renderer/RenderChunk.hpp"
 #include "world/item/ItemInstance.hpp"
 
-class Minecraft;
+class MinecraftClient;
 
 typedef struct RenderCall {
 	int itemId;
@@ -19,7 +19,7 @@ typedef struct RenderCall {
 class ItemInHandRenderer
 {
 public:
-    ItemInHandRenderer(Minecraft* mc);
+    ItemInHandRenderer(MinecraftClient& mc);
 
 	void tick();
 
@@ -43,7 +43,7 @@ private:
 	int lastSlot;
 	ItemInstance item;
 
-	Minecraft* mc;
+	MinecraftClient& mc;
 	//ItemInstance* selectedItem;
 	float height;
 	float oHeight;

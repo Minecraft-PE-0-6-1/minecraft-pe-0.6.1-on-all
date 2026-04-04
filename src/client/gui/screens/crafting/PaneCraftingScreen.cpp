@@ -2,7 +2,7 @@
 #include "client/gui/screens/touch/TouchStartMenuScreen.hpp"
 #include "client/gui/Screen.hpp"
 #include "client/gui/components/NinePatch.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/player/LocalPlayer.hpp"
 #include "client/renderer/Tesselator.hpp"
 #include "client/renderer/entity/ItemRenderer.hpp"
@@ -37,10 +37,10 @@ public:
 		statePressed(statePressed)
 	{}
 
-	void renderBg(Minecraft* minecraft, int xm, int ym) {
+	void renderBg(MinecraftClient& minecraft, int xm, int ym) {
 		//fill(x+1, y+1, x+w-1, y+h-1, 0xff999999);
 		
-		bool hovered = active && (minecraft->useTouchscreen()?
+		bool hovered = active && (minecraft.useTouchscreen()?
 			(_currentlyDown && xm >= x && ym >= y && xm < x + width && ym < y + height) : isInside(xm, ym));
 
 		if (hovered || *selectedPtr == this)
@@ -103,13 +103,13 @@ void PaneCraftingScreen::init() {
 	btnClose.setImageDef(def, true);
 	btnClose.scaleWhenPressed = false;
 
-	btnCraft.init(minecraft->textures);
+	btnCraft.init(minecraft.textures);
 
 	buttons.push_back(&btnCraft);
 	buttons.push_back(&btnClose);
 
 	// GUI patches
-	NinePatchFactory builder(minecraft->textures, "gui/spritesheet.png");
+	NinePatchFactory builder(minecraft.textures() "gui/spritesheet.png");
 
 	guiBackground   = builder.createSymmetrical(IntRectangle(0, 0, 16, 16), 4, 4);
 	guiPaneFrame    = builder.createSymmetrical(IntRectangle(0, 20, 8, 8), 1, 2)->setExcluded(1 << 4);
@@ -230,7 +230,7 @@ void PaneCraftingScreen::render(int xm, int ym, float a) {
 			CItem::ReqItem& req = currentItem->neededItems[i];
 			reqItem = req.item;
 			if (reqItem.getAuxValue() == -1) reqItem.setAuxValue(0);
-			ItemRenderer::renderGuiItem(NULL, minecraft->textures, &reqItem, xx, yy, 16, 16, true);
+			ItemRenderer::renderGuiItem(NULL, minecraft.textures() &reqItem, xx, yy, 16, 16, true);
 		}
 		t.endOverrideAndDraw();
 
@@ -251,17 +251,17 @@ void PaneCraftingScreen::render(int xm, int ym, float a) {
 
 			buf[bufIndex] = 0;
 			if (req.enough())
-				minecraft->font->drawShadow(buf, xx, yy, rgbActive);
+				minecraft.font()->drawShadow(buf, xx, yy, rgbActive);
 			else {
-				minecraft->font->draw(buf, xx+1, yy+1, rgbInactiveShadow);
-				minecraft->font->draw(buf, xx, yy, rgbInactive);
+				minecraft.font()->draw(buf, xx+1, yy+1, rgbInactiveShadow);
+				minecraft.font()->draw(buf, xx, yy, rgbInactive);
 			}
 		}
 		t.resetScale();
 		t.endOverrideAndDraw();
 
-		//minecraft->font->drawWordWrap(currentItemDesc, rightBx + 2, (float)btnCraft.y + btnCraft.h + 6, descFrameWidth-4, rgbActive);
-		minecraft->font->drawWordWrap(currentItemDesc, (float)btnCraft.x, (float)(btnCraft.y + btnCraft.height + 6), (float)btnCraft.width, rgbActive);
+		//minecraft.font()->drawWordWrap(currentItemDesc, rightBx + 2, (float)btnCraft.y + btnCraft.h + 6, descFrameWidth-4, rgbActive);
+		minecraft.font()->drawWordWrap(currentItemDesc, (float)btnCraft.x, (float)(btnCraft.y + btnCraft.height + 6), (float)btnCraft.width, rgbActive);
 	}
 	//glDisable2(GL_ALPHA_TEST);
 }
@@ -271,7 +271,7 @@ void PaneCraftingScreen::buttonClicked(Button* button) {
 		craftSelectedItem();
 
 	if (button == &btnClose)
-		minecraft->setScreen(NULL);
+		minecraft.setScreen(NULL);
 
 	// Did we click a category?
 	if (button->id >= 100 && button->id < 200) {
@@ -311,8 +311,8 @@ static bool sortCanCraftPredicate(const CItem* a, const CItem* b) {
 void PaneCraftingScreen::recheckRecipes() {
 	ItemPack ip;
 
-	if (minecraft->player && minecraft->player->inventory) {
-		Inventory* inv = (minecraft->player)->inventory;
+	if (minecraft.player() && minecraft.player()->inventory) {
+		Inventory* inv = (minecraft.player())->inventory;
 
 		for (int i = Inventory::MAX_SELECTION_SIZE; i < inv->getContainerSize(); ++i) {
 			if (ItemInstance* item = inv->getItem(i))
@@ -404,8 +404,8 @@ void PaneCraftingScreen::onItemSelected(int buttonIndex, CItem* item) {
 		const int NumCategoryItems = _categories[buttonIndex].size();
 
 		if (pane) delete pane;
-		pane = new ItemPane(this, minecraft->textures, paneRect, NumCategoryItems, height, minecraft->height);
-		pane->f = minecraft->font;
+		pane = new ItemPane(this, minecraft.textures() paneRect, NumCategoryItems, height, minecraft.getScreenHeight());
+		pane->f = minecraft.font();
 
 		currentCategory = buttonIndex;
 	}
@@ -422,8 +422,8 @@ void PaneCraftingScreen::clearCategoryItems()
 void PaneCraftingScreen::keyPressed( int eventKey )
 {
 	if (eventKey == Keyboard::KEY_ESCAPE || eventKey == Keyboard::KEY_E) {
-		minecraft->setScreen(NULL);
-		//minecraft->grabMouse();
+		minecraft.setScreen(NULL);
+		//minecraft.grabMouse();
 	} else {
 		super::keyPressed(eventKey);
 	}
@@ -438,7 +438,7 @@ void PaneCraftingScreen::craftSelectedItem()
 
 	ItemInstance resultItem = currentItem->item;
 
-	if (minecraft->player) {
+	if (minecraft.player()) {
 		// Remove all items required for the recipe and ...
 		for (unsigned int i = 0; i < currentItem->neededItems.size(); ++i) {
 			CItem::ReqItem& req = currentItem->neededItems[i];
@@ -451,18 +451,18 @@ void PaneCraftingScreen::craftSelectedItem()
             if (Tile::sandStone->id == req.item.id
              && Recipe::ANY_AUX_VALUE == req.item.getAuxValue()) {
                  toRemove.setAuxValue(0);
-                 toRemove.count = minecraft->player->inventory->removeResource(toRemove, true);
+                 toRemove.count = minecraft.player()->inventory->removeResource(toRemove, true);
                  toRemove.setAuxValue(Recipe::ANY_AUX_VALUE);
             }
 
             if (toRemove.count > 0) {
-                minecraft->player->inventory->removeResource(toRemove);
+                minecraft.player()->inventory->removeResource(toRemove);
             }
 		}
 		// ... add the new one! (in this order, to fill empty slots better)
 		// if it doesn't fit, throw it on the ground!
-		if (!minecraft->player->inventory->add(&resultItem)) {
-			minecraft->player->drop(new ItemInstance(resultItem), false);
+		if (!minecraft.player()->inventory->add(&resultItem)) {
+			minecraft.player()->drop(new ItemInstance(resultItem), false);
 		}
 
 		recheckRecipes();
@@ -541,12 +541,12 @@ IntRectangle CraftButton::getItemPos( int i )
 	return IntRectangle();
 }
 
-void CraftButton::renderBg(Minecraft* minecraft, int xm, int ym) {
+void CraftButton::renderBg(MinecraftClient& minecraft, int xm, int ym) {
 	if (!bg || !bgSelected)
 		return;
 	//fill(x+1, y+1, x+w-1, y+h-1, 0xff999999);
 
-	bool hovered = active && (minecraft->useTouchscreen()?
+	bool hovered = active && (minecraft.useTouchscreen()?
 		(_currentlyDown && xm >= x && ym >= y && xm < x + width && ym < y + height) : isInside(xm, ym));
 
 	if (hovered || selected)

@@ -10,7 +10,7 @@ class Level;
 class Font;
 class Textures;
 class ItemInHandRenderer;
-class Minecraft;
+class MinecraftClient;
 class Textures;
 class Options;
 class Entity;
@@ -37,7 +37,7 @@ public:
 	EntityRenderer* getRenderer( EntityRendererId rendererId );
 
     void setLevel(Level* level);
-	void setMinecraft(Minecraft* minecraft);
+	void setMinecraft(MinecraftClient& minecraft);
 
     float distanceToSqr(float x, float y, float z);
 
@@ -55,7 +55,7 @@ public:
 
 	Textures* textures;
 	Level* level;
-	Minecraft* minecraft;
+	MinecraftClient& minecraft;
 	Mob* cameraEntity;
 
 	float playerRotY;

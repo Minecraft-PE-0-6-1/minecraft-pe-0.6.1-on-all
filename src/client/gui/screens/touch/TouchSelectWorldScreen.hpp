@@ -6,7 +6,7 @@
 #include "client/gui/components/ImageButton.hpp"
 #include "client/gui/components/Button.hpp"
 #include "client/gui/components/RolledSelectionListH.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "world/level/storage/LevelStorageSource.hpp"
 
 
@@ -20,7 +20,7 @@ class SelectWorldScreen;
 class TouchWorldSelectionList : public RolledSelectionListH
 {
 public:
-	TouchWorldSelectionList(Minecraft* _minecraft, int _width, int _height);
+	TouchWorldSelectionList(MinecraftClient& _minecraft, int _width, int _height);
 	virtual void tick();
 	void stepLeft();
 	void stepRight();

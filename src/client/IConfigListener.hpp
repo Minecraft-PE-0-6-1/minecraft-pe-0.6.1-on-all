@@ -1,11 +1,14 @@
 #pragma once
 
 #include "PixelCalc.hpp"
-class Minecraft;
+
+class MinecraftClient;
 class Options;
 
 class Config {
 public:
+    Config(MinecraftClient& mc);
+
     // Screen dimensions and world-to-screen conversion
     void setScreenSize(int width, int height, float scale) {
         this->width = width;
@@ -24,14 +27,14 @@ public:
     int guiWidth;
     int guiHeight;
 
-    PixelCalc pixelCalc;
-    PixelCalc pixelCalcUi;
+    PixelCalc& pixelCalc;
+    PixelCalc& pixelCalcUi;
 
-    Minecraft* minecraft;
-    Options* options;
+    MinecraftClient& minecraft;
+    Options& options;
 };
 
-Config createConfig(Minecraft* mc);
+Config createConfig(MinecraftClient& mc);
 
 // Interface for Configuration-Changed listener
 // This can mean (for instance);

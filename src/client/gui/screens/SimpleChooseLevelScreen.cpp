@@ -3,7 +3,7 @@
 #include "ScreenChooser.hpp"
 #include "client/gui/components/Button.hpp"
 #include "client/gui/components/ImageButton.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "world/level/LevelSettings.hpp"
 #include "platform/time.hpp"
 #include "platform/input/Keyboard.hpp"
@@ -56,7 +56,7 @@ void SimpleChooseLevelScreen::init()
         def.setSrc(IntRectangle(150, 0, (int)def.width, (int)def.height));
         bBack->setImageDef(def, true);
     }
-    if (/* minecraft->useTouchscreen() */ true) {
+    if (/* minecraft.useTouchscreen() */ true) {
         bGamemode = new Touch::TButton(1, "Survival mode");
         bCheats  = new Touch::TButton(4, "Cheats: Off");
         bCreate  = new Touch::TButton(3, "Create");
@@ -155,11 +155,11 @@ void SimpleChooseLevelScreen::render( int xm, int ym, float a )
         modeDesc = "Unlimited resources and flying";
     }
     if (modeDesc) {
-        drawCenteredString(minecraft->font, modeDesc, width / 2, bGamemode->y + bGamemode->height + 4, 0xffcccccc);
+        drawCenteredString(minecraft.font(), modeDesc, width / 2, bGamemode->y + bGamemode->height + 4, 0xffcccccc);
     }
 
-    drawString(minecraft->font, "World name:", tLevelName.x, tLevelName.y - Font::DefaultLineHeight - 2, 0xffcccccc);
-    drawString(minecraft->font, "World seed:", tSeed.x, tSeed.y - Font::DefaultLineHeight - 2, 0xffcccccc);
+    drawString(minecraft.font(), "World name:", tLevelName.x, tLevelName.y - Font::DefaultLineHeight - 2, 0xffcccccc);
+    drawString(minecraft.font(), "World seed:", tSeed.x, tSeed.y - Font::DefaultLineHeight - 2, 0xffcccccc);
 
     Screen::render(xm, ym, a);
     glDisable2(GL_BLEND);
@@ -231,22 +231,22 @@ void SimpleChooseLevelScreen::buttonClicked( Button* button )
         }
         std::string levelId = getUniqueLevelName(tLevelName.text);
         LevelSettings settings(seed, gamemode, cheatsEnabled);
-        minecraft->selectLevel(levelId, levelId, settings);
-        minecraft->hostMultiplayer();
-        minecraft->setScreen(new ProgressScreen());
+        minecraft.selectLevel(levelId, levelId, settings);
+        minecraft.hostMultiplayer();
+        minecraft.setScreen(new ProgressScreen());
         hasChosen = true;
         return;
     }
 
     if (button == bBack) {
-        minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+        minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
     }
 }
 
 void SimpleChooseLevelScreen::keyPressed(int eventKey)
 {
     if (eventKey == Keyboard::KEY_ESCAPE) {
-        minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+        minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
         return;
     }
     // let base class handle navigation and text box keys
@@ -255,6 +255,6 @@ void SimpleChooseLevelScreen::keyPressed(int eventKey)
 
 bool SimpleChooseLevelScreen::handleBackEvent(bool isDown) {
 	if (!isDown)
-		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+		minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
 	return true; 
 }

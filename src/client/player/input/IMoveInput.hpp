@@ -4,7 +4,7 @@
 
 #include "client/IConfigListener.hpp"
 class Player;
-class Minecraft;
+class MinecraftClient;
 
 class IMoveInput
 {

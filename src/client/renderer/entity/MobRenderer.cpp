@@ -2,7 +2,7 @@
 #include "EntityRenderDispatcher.hpp"
 #include "client/gui/Font.hpp"
 #include "client/renderer/Tesselator.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/model/Model.hpp"
 #include "world/entity/Mob.hpp"
 #include "util/Mth.hpp"
@@ -220,7 +220,7 @@ void MobRenderer::renderNameTag(Mob* mob, const std::string& name, float x, floa
 
 	glDisable2(GL_TEXTURE_2D);
 	t.begin();
-	int w = font->width(name) / 2;
+	int w = font.width(name) / 2;
 	t.color(0.0f, 0.0f, 0.0f, 0.25f);
 	t.vertex(-(float)w - 1, -1, 0);
 	t.vertex(-(float)w - 1, +8, 0);
@@ -229,12 +229,12 @@ void MobRenderer::renderNameTag(Mob* mob, const std::string& name, float x, floa
 	//t.end();
 	t.draw();
 	glEnable2(GL_TEXTURE_2D);
-	const float fnameWidth = (float)font->width(name) / -2;
-	font->draw(name, fnameWidth, 0, 0x20ffffff);
+	const float fnameWidth = (float)font.width(name) / -2;
+	font.draw(name, fnameWidth, 0, 0x20ffffff);
 	glEnable2(GL_DEPTH_TEST);
 
 	glDepthMask(true);
-	font->draw(name, (float) fnameWidth, 0, 0xffffffff);
+	font.draw(name, (float) fnameWidth, 0, 0xffffffff);
 	glDisable2(GL_BLEND);
 	glColor4f2(1, 1, 1, 1);
 	glPopMatrix2();

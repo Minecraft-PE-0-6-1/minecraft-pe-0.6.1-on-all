@@ -193,7 +193,7 @@ SoundDesc SoundEngine::_pp(const std::string& fn) {
     return SoundDesc();
 }
 
-void SoundEngine::init( Minecraft* mc, Options* options )
+void SoundEngine::init( MinecraftClient& mc, Options* options )
 {
 	this->mc = mc;
 	this->options = options;

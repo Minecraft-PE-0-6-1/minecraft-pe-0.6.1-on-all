@@ -25,20 +25,20 @@ void JoinGameScreen::buttonClicked(Button* button)
 		if (isIndexValid(gamesList->selectedItem))
 		{
 			PingedCompatibleServer selectedServer = gamesList->copiedServerList[gamesList->selectedItem];
-			minecraft->joinMultiplayer(selectedServer);
+			minecraft.joinMultiplayer(selectedServer);
 			{
 				bJoin.active = false;
 				bBack.active = false;
-				minecraft->setScreen(new ProgressScreen());
+				minecraft.setScreen(new ProgressScreen());
 			}
 		}
-		//minecraft->locateMultiplayer();
-		//minecraft->setScreen(new JoinGameScreen());
+		//minecraft.locateMultiplayer();
+		//minecraft.setScreen(new JoinGameScreen());
 	}
 	if (button->id == bBack.id)
 	{
-		minecraft->cancelLocateMultiplayer();
-		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+		minecraft.cancelLocateMultiplayer();
+		minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
 	}
 }
 
@@ -46,8 +46,8 @@ bool JoinGameScreen::handleBackEvent(bool isDown)
 {
 	if (!isDown)
 	{
-		minecraft->cancelLocateMultiplayer();
-		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+		minecraft.cancelLocateMultiplayer();
+		minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
 	}
 	return true;
 }
@@ -60,7 +60,7 @@ bool JoinGameScreen::isIndexValid( int index )
 
 void JoinGameScreen::tick()
 {
-	const ServerList& orgServerList = minecraft->raknetInstance->getServerList();
+	const ServerList& orgServerList = minecraft.raknetInstance->getServerList();
 	ServerList serverList;
 	for (unsigned int i = 0; i < orgServerList.size(); ++i)
 		if (orgServerList[i].name.GetLength() > 0)
@@ -108,7 +108,7 @@ void JoinGameScreen::init()
 	buttons.push_back(&bJoin);
 	buttons.push_back(&bBack);
 
-	minecraft->raknetInstance->clearServerList();
+	minecraft.raknetInstance->clearServerList();
 	gamesList = new AvailableGamesList(minecraft, width, height);
 
 #ifdef ANDROID
@@ -134,7 +134,7 @@ void JoinGameScreen::setupPositions() {
 
 void JoinGameScreen::render( int xm, int ym, float a )
 {
-	bool hasNetwork = minecraft->platform()->isNetworkEnabled(true);
+	bool hasNetwork = minecraft.platform()->isNetworkEnabled(true);
 #ifdef WIN32
 	hasNetwork = hasNetwork && !GetAsyncKeyState(VK_TAB);
 #endif
@@ -149,18 +149,18 @@ void JoinGameScreen::render( int xm, int ym, float a )
 #else
 		std::string s = "Scanning for WiFi Games...";
 #endif
-		drawCenteredString(minecraft->font, s, width / 2, 8, 0xffffffff);
+		drawCenteredString(minecraft.font(), s, width / 2, 8, 0xffffffff);
 
-		const int textWidth = minecraft->font->width(s);
+		const int textWidth = minecraft.font()->width(s);
 		const int spinnerX = width/2 + textWidth / 2 + 6;
 
 		static const char* spinnerTexts[] = {"-", "\\", "|", "/"};
 		int n = ((int)(5.5f * getTimeS()) % 4);
-		drawCenteredString(minecraft->font, spinnerTexts[n], spinnerX, 8, 0xffffffff);
+		drawCenteredString(minecraft.font(), spinnerTexts[n], spinnerX, 8, 0xffffffff);
 	} else {
 		std::string s = "WiFi is disabled";
 		const int yy = height / 2 - 8;
-		drawCenteredString(minecraft->font, s, width / 2, yy, 0xffffffff);
+		drawCenteredString(minecraft.font(), s, width / 2, yy, 0xffffffff);
 	}
 }
 

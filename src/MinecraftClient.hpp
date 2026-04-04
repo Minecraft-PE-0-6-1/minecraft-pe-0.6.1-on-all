@@ -66,16 +66,16 @@ public:
 	void optionUpdated(OptionId option, float value) override;
 	void optionUpdated(OptionId option, int value) override;
 
-    LocalPlayer* getPlayer() { return player; }
-    Font* getFont() { return font; }
+    LocalPlayer* player() { return m_player; }
+    Font* font() { return m_font; }
     Textures& textures() { return m_textures; }
     Options& options() { return m_options;}
     Screen* getScreen() { return m_screen; }
     Gui& gui() { return m_gui; }
     ParticleEngine* getParticleEngine() {return particleEngine; }
 
-    int getScreenWidth() { return width; }
-    int getScreenHeigth() { return height; }
+    int getScreenWidth() { return m_width; }
+    int getScreenHeight() { return m_height; }
 
     virtual void hostMultiplayer(int port) override;
 
@@ -92,26 +92,34 @@ public:
 
     void onBlockDestroyed(Player* player, int x, int y, int z, int face) override;
 
+    ScreenChooser& screenChooser() { return m_screenChooser; }
+
+    PixelCalc& pixelCalc() { return m_pixelCalc; }
+    PixelCalc& pixelCalcUi() { return m_pixelCalcUi; }
+
+    IInputHolder* inputHolder() { return m_inputHolder; }
+    SoundEngine* soundEngine() { return m_soundEngine; }
+
 protected:
     void _reloadInput();
     void _levelGenerated() override;
 
-    int width = 1, height = 1;
+    int m_width = 1, m_height = 1;
 
-	Font* font = nullptr;
+	Font* m_font = nullptr;
     // @warn This is unsafe cuz Gui may call some MinecraftClient method while MinecraftClient is not ready 
     MouseHandler mouseHandler;
 
     LevelRenderer*  levelRenderer = nullptr;
 	GameRenderer*   gameRenderer = nullptr;
 	ParticleEngine* particleEngine = nullptr;
-	SoundEngine*    soundEngine = nullptr;
+	SoundEngine*    m_soundEngine = nullptr;
     PerfRenderer* _perfRenderer = nullptr;
 
 	bool mouseGrabbed = false;
 
-    PixelCalc pixelCalc;
-    PixelCalc pixelCalcUi;
+    PixelCalc m_pixelCalc;
+    PixelCalc m_pixelCalcUi;
 
     Screen* m_screen = nullptr;
 
@@ -123,9 +131,8 @@ protected:
 
     volatile bool pause = false;
 
-    // @todo make static
-    LocalPlayer*	player = nullptr;
-	IInputHolder*	inputHolder = nullptr;
+    LocalPlayer*	m_player = nullptr;
+	IInputHolder*	m_inputHolder = nullptr;
 	Mob*			cameraTargetPlayer = nullptr;
 
     bool _supportsNonTouchscreen = false;
@@ -136,7 +143,7 @@ protected:
 
     Textures m_textures{m_options, *m_platform};
 
-    ScreenChooser screenChooser{*this};
+    ScreenChooser m_screenChooser{*this};
 
     Gui m_gui{*this};
 };

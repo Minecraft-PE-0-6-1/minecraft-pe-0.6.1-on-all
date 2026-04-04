@@ -1136,10 +1136,6 @@ std::vector<AABB>& Level::getCubes(const Entity* source, const AABB& box_) { //@
                     }
                 }
             }
-			else
-			{
-				//int breakPoint = 0;
-			}
         }
 	/*
     float r = 0.25;

@@ -1,7 +1,7 @@
 #include "TripodCameraRenderer.hpp"
 #include "EntityRenderDispatcher.hpp"
 #include "client/renderer/Tesselator.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "world/entity/item/TripodCamera.hpp"
 #include "world/level/material/Material.hpp"
 
@@ -46,7 +46,7 @@ void TripodCameraRenderer::render(Entity* cam_, float x, float y, float z, float
 	bindTexture("item/camera.png");
 	cameraCube.render(1.0f / 16.0f);
 
-	bool isCurrentlyPicked = entityRenderDispatcher->minecraft->hitResult.entity == cam;
+	bool isCurrentlyPicked = entityRenderDispatcher->minecraft.hitResult.entity == cam;
 
 	const float flashLife = getFlashTime(cam, a);
 

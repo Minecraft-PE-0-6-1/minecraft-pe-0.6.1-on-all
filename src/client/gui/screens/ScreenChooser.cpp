@@ -13,7 +13,7 @@
 #include "touch/TouchJoinGameScreen.hpp"
 #include "touch/TouchIngameBlockSelectionScreen.hpp"
 
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 
 #include <client/gui/screens/UsernameScreen.hpp>
 
@@ -22,7 +22,7 @@ Screen* ScreenChooser::createScreen( ScreenId id )
 	Screen* screen = NULL;
 
 	// :sob:
-	if (/* _mc->useTouchscreen() */ true) {
+	if (/* _mc.useTouchscreen() */ true) {
 		switch (id) {
 		case SCREEN_STARTMENU:	     screen = new Touch::StartMenuScreen();	break;
 		case SCREEN_SELECTWORLD:     screen = new Touch::SelectWorldScreen();break;

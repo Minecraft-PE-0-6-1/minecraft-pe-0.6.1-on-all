@@ -5,7 +5,7 @@
 #include "world/level/Level.hpp"
 #include "NinecraftApp.hpp"
 
-ParticleEngine::ParticleEngine(Level* level, Textures* textures)
+ParticleEngine::ParticleEngine(Level* level, Textures& textures)
 :	level(level),
 	textures(textures)
 {

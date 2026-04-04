@@ -1,7 +1,7 @@
 #include "InBedScreen.hpp"
 #include "ScreenChooser.hpp"
 #include "client/gui/components/Button.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/player/LocalPlayer.hpp"
 #include "platform/time.hpp"
 
@@ -17,7 +17,7 @@ InBedScreen::~InBedScreen() {
 }
 
 void InBedScreen::init() {
-	if (/* minecraft->useTouchscreen() */ true) {
+	if (/* minecraft.useTouchscreen() */ true) {
 		bWakeUp = new Touch::TButton(1, "Leave Bed");
 	} else {
 		bWakeUp = new Button(1, "Leave Bed");
@@ -43,7 +43,7 @@ void InBedScreen::render( int xm, int ym, float a ) {
 
 void InBedScreen::buttonClicked( Button* button ) {
 	if (button == bWakeUp) {
-		minecraft->player->stopSleepInBed(true, true, true);
-		minecraft->setScreen(NULL);
+		minecraft.player()->stopSleepInBed(true, true, true);
+		minecraft.setScreen(NULL);
 	}
 }

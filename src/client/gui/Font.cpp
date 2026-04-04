@@ -7,7 +7,7 @@
 #include "util/Mth.hpp"
 #include <cstring>
 
-Font::Font( Options* options, const std::string& name, Textures* textures )
+Font::Font( Options* options, const std::string& name, Textures& textures )
 :	options(options),
 	fontTexture(0),
 	fontName(name),
@@ -23,7 +23,7 @@ Font::Font( Options* options, const std::string& name, Textures* textures )
 }
 
 
-//Font::Font( Options* options, const std::string& name, Textures* textures, int imgW, int imgH, int x, int y, int cols, int rows, unsigned char charOffset )
+//Font::Font( Options* options, const std::string& name, Textures& textures, int imgW, int imgH, int x, int y, int cols, int rows, unsigned char charOffset )
 //:	options(options),
 //	fontTexture(0),
 //	fontName(name),

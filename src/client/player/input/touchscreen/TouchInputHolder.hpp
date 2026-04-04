@@ -54,10 +54,10 @@ public:
 	static const int MODE_OFFSET = 1;
 	static const int MODE_DELTA  = 2;
 
-	UnifiedTurnBuild(int turnMode, int width, int height, float maxMovementDelta, float sensitivity, IInputHolder* holder, Minecraft* minecraft)
+	UnifiedTurnBuild(int turnMode, int width, int height, float maxMovementDelta, float sensitivity, IInputHolder* holder, MinecraftClient& minecraft)
 	:	mode(turnMode),
 		_holder(holder),
-		_options(&minecraft->options),
+		_options(&minecraft.options),
 		cxO(0), cyO(0),
 		wasActive(false),
 		_totalMoveDelta(0),
@@ -90,12 +90,12 @@ public:
 	virtual void onConfigChanged(const Config& c) {
 		if (false && _options->getBooleanValue(OPTIONS_IS_JOY_TOUCH_AREA)) {
 			int touchWidth = c.width - (int)inventoryArea._x1;
-			if (touchWidth > (int)c.minecraft->pixelCalc.millimetersToPixels(60))
-				touchWidth = (int)c.minecraft->pixelCalc.millimetersToPixels(60);
+			if (touchWidth > (int)c.minecraft.pixelCalc.millimetersToPixels(60))
+				touchWidth = (int)c.minecraft.pixelCalc.millimetersToPixels(60);
 
 			int touchHeight = (int)(c.height * 0.4f);
-			if (touchHeight > (int)c.minecraft->pixelCalc.millimetersToPixels(40))
-				touchHeight = (int)c.minecraft->pixelCalc.millimetersToPixels(40);
+			if (touchHeight > (int)c.minecraft.pixelCalc.millimetersToPixels(40))
+				touchHeight = (int)c.minecraft.pixelCalc.millimetersToPixels(40);
 
 			joyTouchArea._x0 = (float)(c.width  - touchWidth);
 			joyTouchArea._y0 = (float)(c.height - touchHeight);
@@ -403,7 +403,7 @@ private:
 	Options* _options;
 };
 
-class Minecraft;
+class MinecraftClient;
 
 #if defined(_MSC_VER)
 	#pragma warning( disable : 4355 ) // 'this' pointer in initialization list which is perfectly legal
@@ -412,10 +412,10 @@ class Minecraft;
 class TouchInputHolder: public IInputHolder
 {
 public:
-	TouchInputHolder(Minecraft* mc, Options* options)
+	TouchInputHolder(MinecraftClient& mc, Options* options)
 	:	_mc(mc),
 		_move(mc, options),
-		_turnBuild(UnifiedTurnBuild::MODE_DELTA, mc->width, mc->height, (float)MovementLimit, 1, this, mc)
+		_turnBuild(UnifiedTurnBuild::MODE_DELTA, mc.getScreenWidth(), mc.getScreenHeight(), (float)MovementLimit, 1, this, mc)
 	{
 		onConfigChanged(createConfig(mc));
 	}
@@ -426,7 +426,7 @@ public:
 		_move.onConfigChanged(c);
 		_turnBuild.moveArea = _move.getRectangleArea();
 		_turnBuild.pauseArea = _move.getPauseRectangleArea();
-		_turnBuild.inventoryArea = _mc->gui.getRectangleArea( _mc->options.getBooleanValue(OPTIONS_IS_LEFT_HANDED)? 1 : -1 );
+		_turnBuild.inventoryArea = _mc.gui().getRectangleArea( _mc.options.getBooleanValue(OPTIONS_IS_LEFT_HANDED)? 1 : -1 );
 		_turnBuild.setSensitivity(c.options->getBooleanValue(OPTIONS_IS_JOY_TOUCH_AREA)? 1.8f : 1.0f);
 		((ITurnInput*)&_turnBuild)->onConfigChanged(c);
 	}
@@ -462,7 +462,7 @@ private:
 	TouchscreenInput_TestFps _move;
 	UnifiedTurnBuild _turnBuild;
 
-	Minecraft* _mc;
+	MinecraftClient& _mc;
 
 	static const int MovementLimit = 200; // per update
 };

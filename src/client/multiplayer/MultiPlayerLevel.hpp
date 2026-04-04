@@ -54,17 +54,17 @@ public:
 		updateSkyDarken();
 
         for (int i = 0; i < 10 && !reEntries.empty(); i++) {
-			EntitySet::iterator it = reEntries.begin();
+			auto it = reEntries.begin();
             Entity* e = *it;//reEntries.iterator().next();
             reEntries.erase(it);
 
 			//if (!entities.contains(e)) addEntity(e);
-			EntityList::iterator jt = std::find(entities.begin(), entities.end(), e);
+			auto jt = std::find(entities.begin(), entities.end(), e);
 			if (jt == entities.end())
 				addEntity(e);
         }
 
-        for (ResetInfoList::iterator it = updatesToReset.begin(); it != updatesToReset.end();) {
+        for (auto it = updatesToReset.begin(); it != updatesToReset.end();) {
             ResetInfo& r = *it;
             if (--r.ticks == 0) {
                 super::setTileAndDataNoUpdate(r.x, r.y, r.z, r.tile, r.data);
@@ -76,7 +76,7 @@ public:
     }
 
     void clearResetRegion(int x0, int y0, int z0, int x1, int y1, int z1) {
-        for (ResetInfoList::iterator it = updatesToReset.begin(); it != updatesToReset.end();) {
+        for (auto it = updatesToReset.begin(); it != updatesToReset.end();) {
             ResetInfo& r = *it;
             if (r.x >= x0 && r.y >= y0 && r.z >= z0 && r.x <= x1 && r.y <= y1 && r.z <= z1) {
                 it = updatesToReset.erase(it);
@@ -141,7 +141,7 @@ public:
     }
 
     Entity* removeEntity(int id) {
-        EntityIdMap::iterator it = entitiesById.find(id);
+        auto it = entitiesById.find(id);
         if (it != entitiesById.end()) {
             Entity* e = it->second;
             entitiesById.erase(it);
@@ -208,7 +208,7 @@ protected:
 
     void entityAdded(Entity* e) {
         super::entityAdded(e);
-		EntitySet::iterator it = reEntries.find(e);
+		auto it = reEntries.find(e);
 		if (it != reEntries.end()) {
             reEntries.erase(it);
         }
@@ -216,7 +216,7 @@ protected:
 
     void entityRemoved(Entity* e) {
         super::entityRemoved(e);
-		EntitySet::iterator it = forced.find(e);
+		auto it = forced.find(e);
 		if (it != forced.end()) {
 			if (e->isAlive()) {
 				reEntries.insert(e);

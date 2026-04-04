@@ -7,7 +7,7 @@
 #include "client/gui/components/ScrolledSelectionList.hpp"
 #include "client/gui/components/GuiElement.hpp"
 
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/renderer/Tesselator.hpp"
 #include "client/renderer/Textures.hpp"
 #include "client/renderer/TextureData.hpp"
@@ -85,7 +85,7 @@ void StartMenuScreen::init()
 	// always show base version string
 	std::string versionString = Common::getGameVersionString();
 
-	std::string _username = minecraft->options.getStringValue(OPTIONS_USERNAME);
+	std::string _username = minecraft.options().getStringValue(OPTIONS_USERNAME);
 	if (_username.empty()) _username = "unknown";
 
 	username = "Username: " + _username;
@@ -127,8 +127,8 @@ void StartMenuScreen::setupPositions() {
 	bQuit.x = width - bQuit.width;
 	bQuit.y = 0;
 
-	copyrightPosX = width - minecraft->font->width(copyright) - 1;
-	versionPosX = (width - minecraft->font->width(version)) / 2;// - minecraft->font->width(version) - 2;
+	copyrightPosX = width - minecraft.font()->width(copyright) - 1;
+	versionPosX = (width - minecraft.font()->width(version)) / 2;// - minecraft.font()->width(version) - 2;
 }
 
 void StartMenuScreen::buttonClicked(::Button* button) {
@@ -136,27 +136,27 @@ void StartMenuScreen::buttonClicked(::Button* button) {
 	if (button->id == bHost.id)
 	{
 		#if defined(DEMO_MODE) || defined(APPLE_DEMO_PROMOTION)
-			minecraft->setScreen( new SimpleChooseLevelScreen("_DemoLevel") );
+			minecraft.setScreen( new SimpleChooseLevelScreen("_DemoLevel") );
 		#else
-			minecraft->screenChooser.setScreen(SCREEN_SELECTWORLD);
+			minecraft.screenChooser.setScreen(SCREEN_SELECTWORLD);
 		#endif
 	}
 	if (button->id == bJoin.id)
 	{
         #ifdef APPLE_DEMO_PROMOTION
-            minecraft->platform()->createUserInput(DialogDefinitions::DIALOG_DEMO_FEATURE_DISABLED);
+            minecraft.platform()->createUserInput(DialogDefinitions::DIALOG_DEMO_FEATURE_DISABLED);
         #else
-            minecraft->locateMultiplayer();
-            minecraft->screenChooser.setScreen(SCREEN_JOINGAME);
+            minecraft.locateMultiplayer();
+            minecraft.screenChooser.setScreen(SCREEN_JOINGAME);
         #endif
 	}
 	if (button->id == bOptions.id)
 	{
-		minecraft->setScreen(new OptionsScreen());
+		minecraft.setScreen(new OptionsScreen());
 	}
 	if (button == &bQuit)
 	{
-		minecraft->quit();
+		minecraft.quit();
 	}
 }
 
@@ -172,14 +172,14 @@ void StartMenuScreen::render( int xm, int ym, float a )
     glEnable2(GL_BLEND);
 
 #if defined(RPI)
-	TextureId id = minecraft->textures->loadTexture("gui/pi_title.png");
+	TextureId id = minecraft.textures().loadTexture("gui/pi_title.png");
 #else
-	TextureId id = minecraft->textures->loadTexture("gui/title.png");
+	TextureId id = minecraft.textures().loadTexture("gui/title.png");
 #endif
-	const TextureData* data = minecraft->textures->getTemporaryTextureData(id);
+	const TextureData* data = minecraft.textures().getTemporaryTextureData(id);
 
 	if (data) {
-		minecraft->textures->bind(id);
+		minecraft.textures().bind(id);
 
 		const float x = (float)width / 2;
 		const float y = 4;
@@ -200,7 +200,7 @@ void StartMenuScreen::render( int xm, int ym, float a )
 		drawString(font, version, versionPosX, (int)(y+h)+2, /*50,*/ 0xffcccccc);//0x666666);
 		drawString(font, copyright, copyrightPosX, height - 10, 0xffffff);
 		glColor4f2(1, 1, 1, 1);
-		if (Textures::isTextureIdValid(minecraft->textures->loadAndBindTexture("gui/logo/github.png")))
+		if (Textures::isTextureIdValid(minecraft.textures().loadAndBindTexture("gui/logo/github.png")))
 			blit(2, height - 10, 0, 0, 8, 8, 256, 256);
 		drawString(font, "Kolyah35/minecraft-pe-0.6.1", 12, height - 10, 0xffcccccc);
 		//patch->draw(t, 0, 20);
@@ -212,17 +212,17 @@ void StartMenuScreen::render( int xm, int ym, float a )
 
 void StartMenuScreen::mouseClicked(int x, int y, int buttonNum) {
 	const int logoX = 2;
-	const int logoW = 8 + 2 + font->width("Kolyah35/minecraft-pe-0.6.1");
+	const int logoW = 8 + 2 + font.width("Kolyah35/minecraft-pe-0.6.1");
 	const int logoY = height - 10;
 	const int logoH = 10;
 	if (x >= logoX && x <= logoX + logoW && y >= logoY && y <= logoY + logoH)
-		minecraft->platform()->openURL("https://gitea.sffempire.ru/Kolyah35/minecraft-pe-0.6.1");
+		minecraft.platform()->openURL("https://gitea.sffempire.ru/Kolyah35/minecraft-pe-0.6.1");
 	else
 		Screen::mouseClicked(x, y, buttonNum);
 }
 
 bool StartMenuScreen::handleBackEvent( bool isDown ) {
-	minecraft->quit();
+	minecraft.quit();
 	return true;
 }
 

@@ -1,5 +1,5 @@
 #include "ScrolledSelectionList.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/renderer/Tesselator.hpp"
 #include "client/renderer/gles.hpp"
 #include "platform/input/Mouse.hpp"
@@ -9,7 +9,7 @@ static int Abs(int d) {
 	return d >= 0? d : -d;
 }
 
-ScrolledSelectionList::ScrolledSelectionList( Minecraft* _minecraft, int _width, int _height, int _y0, int _y1, int _itemHeight )
+ScrolledSelectionList::ScrolledSelectionList( MinecraftClient& _minecraft, int _width, int _height, int _y0, int _y1, int _itemHeight )
 :	minecraft(_minecraft),
 	width(_width),
 	height(_height),
@@ -267,7 +267,7 @@ void ScrolledSelectionList::render( int xm, int ym, float a )
 void ScrolledSelectionList::renderHoleBackground( float y0, float y1, int a0, int a1 )
 {
 	Tesselator& t = Tesselator::instance;
-	minecraft->textures->loadAndBindTexture("gui/background.png");
+	minecraft.textures().loadAndBindTexture("gui/background.png");
 	glColor4f2(1.0f, 1, 1, 1);
 	float s = 32;
 	t.begin();
@@ -283,7 +283,7 @@ void ScrolledSelectionList::renderHoleBackground( float y0, float y1, int a0, in
 void ScrolledSelectionList::renderDirtBackground()
 {
 	Tesselator& t = Tesselator::instance;
-	minecraft->textures->loadAndBindTexture("gui/background.png");
+	minecraft.textures().loadAndBindTexture("gui/background.png");
 	glColor4f2(1.0f, 1, 1, 1);
 	float s = 32;
 	t.begin();

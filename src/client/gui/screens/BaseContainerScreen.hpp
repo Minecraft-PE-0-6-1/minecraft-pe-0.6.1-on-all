@@ -4,7 +4,7 @@
 
 #include <vector>
 #include "client/gui/Screen.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/player/LocalPlayer.hpp"
 
 class BaseContainerMenu;
@@ -13,26 +13,23 @@ class BaseContainerScreen: public Screen
 {
     typedef Screen super;
 public:
-	BaseContainerScreen(BaseContainerMenu* menu)
-	:  menu(menu)
-    {
-    }
+	BaseContainerScreen(MinecraftClient& mc, BaseContainerMenu* menu) : Screen(mc), menu(menu) {}
 
 	virtual void init() {
         super::init();
-        minecraft->player->containerMenu = menu;
+        minecraft.player()->containerMenu = menu;
     }
 
 	virtual void tick() {
 		super::tick();
-		if (!minecraft->player->isAlive() || minecraft->player->removed)
-			minecraft->player->closeContainer();
+		if (!minecraft.player()->isAlive() || minecraft.player()->removed)
+			minecraft.player()->closeContainer();
 	}
 
 	virtual void keyPressed( int eventKey )
 	{
 		if (eventKey == Keyboard::KEY_ESCAPE) {
-			minecraft->player->closeContainer();
+			minecraft.player()->closeContainer();
 		} else {
 			super::keyPressed(eventKey);
 		}

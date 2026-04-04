@@ -1,7 +1,7 @@
 #include "DeathScreen.hpp"
 #include "ScreenChooser.hpp"
 #include "client/gui/components/Button.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/player/LocalPlayer.hpp"
 #include "platform/time.hpp"
 
@@ -23,7 +23,7 @@ DeathScreen::~DeathScreen()
 
 void DeathScreen::init()
 {
-	if (/* minecraft->useTouchscreen() */ true) {
+	if (/* minecraft.useTouchscreen() */ true) {
 		bRespawn = new Touch::TButton(1, "Respawn!");
 		bTitle = new Touch::TButton(2, "Main menu");
 	} else {
@@ -71,13 +71,13 @@ void DeathScreen::buttonClicked( Button* button )
 
 	if (button == bRespawn) {
 		//RespawnPacket packet();
-		//minecraft->raknetInstance->send(packet);
+		//minecraft.raknetInstance->send(packet);
 
-		minecraft->player->respawn();
-		//minecraft->raknetInstance->send();
-		minecraft->setScreen(NULL);
+		minecraft.player()->respawn();
+		//minecraft.raknetInstance->send();
+		minecraft.setScreen(NULL);
 	}
 
 	if (button == bTitle)
-		minecraft->leaveGame();
+		minecraft.leaveGame();
 }

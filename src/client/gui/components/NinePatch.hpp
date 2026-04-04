@@ -4,7 +4,6 @@
 #include "client/renderer/TextureData.hpp"
 #include "client/renderer/Textures.hpp"
 #include "client/renderer/Tesselator.hpp"
-#include "client/Minecraft.hpp"
 
 class Tesselator;
 
@@ -30,7 +29,7 @@ class NinePatchLayer: public GuiElement
 {
 	struct CachedQuad;
 public:
-    NinePatchLayer(const NinePatchDescription& desc, const std::string& imageName, Textures* textures, float w = 32, float h = 32);
+    NinePatchLayer(const NinePatchDescription& desc, const std::string& imageName, Textures& textures, float w = 32, float h = 32);
 	virtual ~NinePatchLayer() {};
 	void setSize(float w, float h);
     
@@ -63,12 +62,12 @@ private:
 
 class NinePatchFactory {
 public:
-	NinePatchFactory(Textures* textures, const std::string& imageName );
+	NinePatchFactory(Textures& textures, const std::string& imageName );
 
 	NinePatchLayer* createSymmetrical(const IntRectangle& src, int xCutAt, int yCutAt, float w = 32.0f, float h = 32.0f);
 
 private:
-	Textures* textures;
+	Textures& textures;
 	std::string imageName;
 	int width;
 	int height;

@@ -163,7 +163,7 @@ void EntityRenderDispatcher::setLevel( Level* level )
 	this->level = level;
 }
 
-void EntityRenderDispatcher::setMinecraft( Minecraft* minecraft )
+void EntityRenderDispatcher::setMinecraft( MinecraftClient& minecraft )
 {
 	this->minecraft = minecraft;
 }

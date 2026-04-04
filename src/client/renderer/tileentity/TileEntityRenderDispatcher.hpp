@@ -25,7 +25,7 @@ public:
 	static void destroy();
 
 	void setLevel(Level* level);
-    void prepare(Level* level, Textures* textures, Font* font, Mob* player, float a);
+    void prepare(Level* level, Textures& textures, Font* font, Mob* player, float a);
 
     void render(TileEntity* e, float a);
     void render(TileEntity* entity, float x, float y, float z, float a);

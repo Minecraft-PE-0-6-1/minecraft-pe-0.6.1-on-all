@@ -21,7 +21,7 @@ SoundEngine::~SoundEngine()
 
 }
 
-void SoundEngine::init( Minecraft* mc, Options* options )
+void SoundEngine::init( MinecraftClient& mc, Options* options )
 {
 	this->mc = mc;
 	this->options = options;
@@ -196,13 +196,13 @@ void SoundEngine::play(const std::string& name, float x, float y, float z, float
 	if ((volume *= options->getProgressValue(OPTIONS_SOUND_VOLUME)) <= 0) return;
 
 	volume *= _getVolumeMult(x, y, z);
-	mc->platform()->playSound(name, volume, pitch);
+	mc.platform()->playSound(name, volume, pitch);
 }
 void SoundEngine::playUI(const std::string& name, float volume, float pitch) {
 	if ((volume *= options->getProgressValue(OPTIONS_SOUND_VOLUME)) <= 0) return;
 
 	//volume *= 2.0f;
-	mc->platform()->playSound(name, volume, pitch);
+	mc.platform()->playSound(name, volume, pitch);
 }
 #elif defined(__APPLE__)
 void SoundEngine::play(const std::string& name, float x, float y, float z, float volume, float pitch) {

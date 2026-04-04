@@ -5,7 +5,7 @@
 #include "client/renderer/Tesselator.hpp"
 #include "world/entity/player/Player.hpp"
 
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "platform/log.hpp"
 #include "client/renderer/Textures.hpp"
 #include "client/sound/SoundEngine.hpp"
@@ -64,7 +64,7 @@ static void Transformed(int n, float* x, float* y, float* dx, float* dy, float x
 	//}
 }
 
-TouchscreenInput_TestFps::TouchscreenInput_TestFps( Minecraft* mc, Options* options )
+TouchscreenInput_TestFps::TouchscreenInput_TestFps( MinecraftClient& mc, Options* options )
 :	_minecraft(mc),
 	_options(options),
 	_northJump(false),
@@ -129,7 +129,7 @@ void TouchscreenInput_TestFps::onConfigChanged(const Config& c) {
 	float Bh = Bw;//0.15f;
     
     // If too large (like playing on Tablet)
-    PixelCalc& pc = _minecraft->pixelCalc;
+    PixelCalc& pc = _minecraft.pixelCalc;
     if (pc.pixelsToMillimeters(Bw) > 200) { //14
         Bw = Bh = pc.millimetersToPixels(200); //14
     }
@@ -162,7 +162,7 @@ void TouchscreenInput_TestFps::onConfigChanged(const Config& c) {
 	xx = BaseX + 2 * Bw; yy = BaseY + Bh;
 	_model.addArea(AREA_DPAD_E, aRight = new RectangleArea(xx, yy, xx+Bw, yy+Bh));
 
-    float maxPixels = _minecraft->pixelCalc.millimetersToPixels(10);
+    float maxPixels = _minecraft.pixelCalc.millimetersToPixels(10);
     // float btnSize = Mth::Min(18 * Gui::GuiScale, maxPixels);
 	float btnSize = pc.millimetersToPixels(18 * Gui::GuiScale);
 	_model.addArea(AREA_PAUSE, aPause = new RectangleArea(w - 4 - btnSize, 4, w - 4, 4 + btnSize));
@@ -312,15 +312,15 @@ void TouchscreenInput_TestFps::tick( Player* player )
 		}
 		else if (areaId == AREA_PAUSE) {
 			if (Multitouch::isReleased(p)) {
-                _minecraft->soundEngine->playUI("random.click", 1, 1);
-				_minecraft->screenChooser.setScreen(SCREEN_PAUSE);
+                _minecraft.soundEngine()->playUI("random.click", 1, 1);
+				_minecraft.screenChooser.setScreen(SCREEN_PAUSE);
             }
 		}
 		else if (areaId == AREA_CHAT) {
 			if (Multitouch::isReleased(p)) {
-                _minecraft->soundEngine->playUI("random.click", 1, 1);
-				_minecraft->screenChooser.setScreen(SCREEN_CONSOLE);
-				_minecraft->platform()->showKeyboard();
+                _minecraft.soundEngine()->playUI("random.click", 1, 1);
+				_minecraft.screenChooser.setScreen(SCREEN_CONSOLE);
+				_minecraft.platform()->showKeyboard();
             }
 		}
 
@@ -409,7 +409,7 @@ void TouchscreenInput_TestFps::render( float a ) {
 
 	glEnable2(GL_BLEND);
 	glBlendFunc2(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	_minecraft->textures->loadAndBindTexture("gui/gui.png");
+	_minecraft.textures().loadAndBindTexture("gui/gui.png");
 	
 	//glDisable2(GL_TEXTURE_2D);
 
@@ -506,7 +506,7 @@ void TouchscreenInput_TestFps::rebuild() {
 		drawRectangleArea(t, aJump, imageU + imageSize * 4, imageV, (float)imageSize);
 	}
 	
-	if (!_minecraft->screen) {
+	if (!_minecraft.screen) {
 		t.colorABGR(0xFFFFFFFF);
 		// if (isButtonDown(AREA_PAUSE))  t.colorABGR(cPressedPause);
 		// else						   t.colorABGR(cReleasedPause);

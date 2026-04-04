@@ -15,7 +15,7 @@ class OptionsItem: public GuiElementContainer
 	typedef GuiElementContainer super;
 public:
 	OptionsItem(OptionId optionId, std::string label, GuiElement* element);
-	virtual void render(Minecraft* minecraft, int xm, int ym);
+	virtual void render(MinecraftClient& minecraft, int xm, int ym);
 	void setupPositions();
 
 private:

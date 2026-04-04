@@ -18,7 +18,7 @@ class PrerenderTilesScreen: public Screen
 {
 public:
 	void init() {
-		Player p(minecraft->level, true);
+		Player p(minecraft.level, true);
 		Inventory _inventory(&p, true);
 		Inventory* inventory = &_inventory;
 
@@ -93,21 +93,21 @@ public:
 			int y = j/16 * 16;
 
 			//Tesselator::instance.color(0xffffffff);
-			//minecraft->textures->loadAndBindTexture("gui/gui2.png");
+			//minecraft.textures().loadAndBindTexture("gui/gui2.png");
 			//glColor4f2(0.2f, 0.5f, 0.2f, 1);
 			//blit(x, y, 4 + 20 * (i%9), 4, 16, 16, 15, 15);
 			//glColor4f2(1, 1, 1, 1);
 
 			if (item->id < 256 && TileRenderer::canRender(Tile::tiles[item->id]->getRenderShape())) {
 				LOGI("0, %d, %d, %d, 0\n", j, item->id, item->getAuxValue());
-				ItemRenderer::renderGuiItemCorrect(minecraft->font, minecraft->textures, item, x, y);
+				ItemRenderer::renderGuiItemCorrect(minecraft.font(), minecraft.textures() item, x, y);
 			} else if (item->getIcon() >= 0) {
 				LOGI("1, %d, %d, %d, %d\n", j, item->id, item->getAuxValue(), item->getIcon());
 			}
 			++j;
 		}*/
 		int j = 0;
-		for(std::vector<ItemInstance>::iterator i = mItems.begin(); i != mItems.end(); ++i) {
+		for(auto i = mItems.begin(); i != mItems.end(); ++i) {
 			ItemInstance* item = &(*i);
 
 			//LOGI("desc: %d - %s. %d\n", i, item->toString().c_str());
@@ -116,7 +116,7 @@ public:
 			int y = j/16 * 16;
 			if (item->id < 256 && TileRenderer::canRender(Tile::tiles[item->id]->getRenderShape())) {
 				LOGI("0, %d, %d, %d, 0\n", j, item->id, item->getAuxValue());
-				ItemRenderer::renderGuiItemCorrect(minecraft->font, minecraft->textures, item, x, y);
+				ItemRenderer::renderGuiItemCorrect(minecraft.font(), minecraft.textures() item, x, y);
 			} else if (item->getIcon() >= 0) {
 				LOGI("1, %d, %d, %d, %d\n", j, item->id, item->getAuxValue(), item->getIcon());
 			}
@@ -139,7 +139,7 @@ public:
 		if (item->getAuxValue() < 0) return;
 
 		bool found = false;
-		for(std::vector<ItemInstance>::iterator i = mItems.begin(); i != mItems.end(); ++i) {
+		for(auto i = mItems.begin(); i != mItems.end(); ++i) {
 			ItemInstance *jitem = &*i;
 			if(jitem->id != item->id) continue;
 			if(jitem->isStackedByData() && jitem->getAuxValue() != item->getAuxValue()) continue;

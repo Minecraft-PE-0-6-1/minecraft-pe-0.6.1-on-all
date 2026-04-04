@@ -13,10 +13,10 @@ selectedItem(0)
 
 void UploadPhotoScreen::init()
 {
-	int currentSelection = minecraft->player->inventory->getSelectedItemId();
+	int currentSelection = minecraft.player()->inventory->getSelectedItemId();
 	for (int i = 0; i < Inventory::INVENTORY_SIZE; i++)
 	{
-		if (currentSelection == minecraft->player->inventory->getSelectionSlotItemId(i + Inventory::SELECTION_SIZE))
+		if (currentSelection == minecraft.player()->inventory->getSelectionSlotItemId(i + Inventory::SELECTION_SIZE))
 		{
 			selectedItem = i;
 			break;
@@ -31,7 +31,7 @@ void UploadPhotoScreen::renderSlots()
 
 	blitOffset = -90;
 
-	minecraft->textures->loadAndBindTexture("gui/gui.png");
+	minecraft.textures().loadAndBindTexture("gui/gui.png");
 	for (int r = 0; r < Inventory::INVENTORY_ROWS; r++)
 	{
 		blit(width / 2 - 182 / 2, height - 22 * 3 - 22 * r, 0, 0, 182, 22);
@@ -56,7 +56,7 @@ void UploadPhotoScreen::renderSlots()
 
 void UploadPhotoScreen::renderSlot(int slot, int x, int y, float a)
 {
-	int itemId = minecraft->player->inventory->getSelectionSlotItemId(slot);
+	int itemId = minecraft.player()->inventory->getSelectionSlotItemId(slot);
 	if (itemId < 0) return;
 
 	const bool fancy = false;
@@ -68,7 +68,7 @@ void UploadPhotoScreen::renderSlot(int slot, int x, int y, float a)
 			Tile* tile = Tile::tiles[itemId];
 			if (tile == NULL) return;
 
-			minecraft->textures->loadAndBindTexture("terrain.png");
+			minecraft.textures().loadAndBindTexture("terrain.png");
 
 			int textureId = tile->getTexture(2, 0);
 			blit(x, y, textureId % 16 * 16, textureId / 16 * 16, 16, 16);
@@ -82,7 +82,7 @@ void UploadPhotoScreen::keyPressed(int eventKey)
 	int selX = selectedItem % Inventory::SELECTION_SIZE;
 	int selY = selectedItem / Inventory::SELECTION_SIZE;
 
-	Options& o = minecraft->options;
+	Options& o = minecraft.options;
 	if (eventKey == o.keyLeft.key && selX > 0)
 	{
 		selectedItem -= 1;
@@ -130,7 +130,7 @@ void UploadPhotoScreen::mouseClicked(int x, int y, int buttonNum) {
 		if (slot >= 0 && slot < Inventory::INVENTORY_SIZE)
 		{
 			selectedItem = slot;
-			//minecraft->soundEngine->playUI("random.click", 1, 1);
+			//minecraft.soundEngine()->playUI("random.click", 1, 1);
 		}
 	}
 }
@@ -149,7 +149,7 @@ void UploadPhotoScreen::mouseReleased(int x, int y, int buttonNum)
 
 void UploadPhotoScreen::selectSlotAndClose()
 {
-	Inventory* inventory = minecraft->player->inventory;
+	Inventory* inventory = minecraft.player()->inventory;
 
 	int itemId = inventory->getSelectionSlotItemId(selectedItem + Inventory::SELECTION_SIZE);
 	int i = 0;
@@ -170,8 +170,8 @@ void UploadPhotoScreen::selectSlotAndClose()
 	inventory->setSelectionSlotItemId(0, itemId);
 	inventory->selectSlot(0);
 
-	minecraft->soundEngine->playUI("random.click", 1, 1);
-	minecraft->setScreen(NULL);
+	minecraft.soundEngine()->playUI("random.click", 1, 1);
+	minecraft.setScreen(NULL);
 }
 
 #endif

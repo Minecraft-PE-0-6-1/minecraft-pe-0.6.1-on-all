@@ -3,7 +3,7 @@
 #include "client/gui/Screen.hpp"
 #include "client/gui/components/Button.hpp"
 #include "client/gui/components/ScrolledSelectionList.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "network/RakNetInstance.hpp"
 
 
@@ -18,7 +18,7 @@ class AvailableGamesList : public ScrolledSelectionList
 
 public:
 
-	AvailableGamesList(Minecraft* _minecraft, int _width, int _height)
+	AvailableGamesList(MinecraftClient& _minecraft, int _width, int _height)
 	:	ScrolledSelectionList(_minecraft, _width, _height, 24, _height - 30, 28)
 	{
 	}
@@ -35,8 +35,8 @@ protected:
 	{
 		const PingedCompatibleServer& s = copiedServerList[i];
 		unsigned int color = s.isSpecial? 0xff00b0 : 0xffffa0;
-		drawString(minecraft->font, s.name.C_String(), x, y + 2, color);
-		drawString(minecraft->font, s.address.ToString(false), x, y + 16, 0xffffa0);
+		drawString(minecraft.font(), s.name.C_String(), x, y + 2, color);
+		drawString(minecraft.font(), s.address.ToString(false), x, y + 16, 0xffffa0);
 	}
 };
 

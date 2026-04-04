@@ -40,7 +40,7 @@ void TileEntityRenderDispatcher::destroy()
 	}
 }
 
-void TileEntityRenderDispatcher::prepare( Level* level, Textures* textures, Font* font, Mob* player, float a )
+void TileEntityRenderDispatcher::prepare( Level* level, Textures& textures, Font* font, Mob* player, float a )
 {
 	if (this->level != level)
 		setLevel(level);

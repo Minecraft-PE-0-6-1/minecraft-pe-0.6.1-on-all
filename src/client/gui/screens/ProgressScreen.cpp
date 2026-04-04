@@ -2,7 +2,7 @@
 #include "DisconnectionScreen.hpp"
 #include "client/gui/Gui.hpp"
 #include "client/gui/Font.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/renderer/Tesselator.hpp"
 #include "SharedConstants.hpp"
 #include "client/renderer/Textures.hpp"
@@ -14,15 +14,15 @@ ProgressScreen::ProgressScreen()
 
 void ProgressScreen::render( int xm, int ym, float a )
 {
-	if (minecraft->isLevelGenerated()) {
-		minecraft->setScreen(NULL);
+	if (minecraft.isLevelGenerated()) {
+		minecraft.setScreen(NULL);
 		return;
 	}
 
 	Tesselator& t = Tesselator::instance;
 	renderBackground();
 
-	minecraft->textures->loadAndBindTexture("gui/background.png");
+	minecraft.textures().loadAndBindTexture("gui/background.png");
 
 	const float s = 32;
 	t.begin();
@@ -33,7 +33,7 @@ void ProgressScreen::render( int xm, int ym, float a )
 	t.vertexUV(0, 0, 0, 0, 0);
 	t.draw();
 
-	int i = minecraft->progressStagePercentage;
+	int i = minecraft.progressStagePercentage;
 
 	if (i >= 0) {
 		int w = 100;
@@ -63,26 +63,26 @@ void ProgressScreen::render( int xm, int ym, float a )
     glEnable2(GL_BLEND);
 
 	const char* title = "Generating world";
-	minecraft->font->drawShadow(title, (float)((width - minecraft->font->width(title)) / 2), (float)(height / 2 - 4 - 16), 0xffffff);
+	minecraft.font()->drawShadow(title, (float)((width - minecraft.font()->width(title)) / 2), (float)(height / 2 - 4 - 16), 0xffffff);
 
-	const char* status = minecraft->getProgressMessage();
-	const int progressWidth = minecraft->font->width(status);
+	const char* status = minecraft.getProgressMessage();
+	const int progressWidth = minecraft.font()->width(status);
 	const int progressLeft  = (width - progressWidth) / 2;
 	const int progressY = height / 2 - 4 + 8;
-	minecraft->font->drawShadow(status, (float)progressLeft, (float)progressY, 0xffffff);
+	minecraft.font()->drawShadow(status, (float)progressLeft, (float)progressY, 0xffffff);
 
 #if APPLE_DEMO_PROMOTION
-	drawCenteredString(minecraft->font, "This demonstration version", width/2, progressY + 36, 0xffffff);
-    drawCenteredString(minecraft->font, "does not allow saving games", width/2, progressY + 46, 0xffffff);
+	drawCenteredString(minecraft.font(), "This demonstration version", width/2, progressY + 36, 0xffffff);
+    drawCenteredString(minecraft.font(), "does not allow saving games", width/2, progressY + 46, 0xffffff);
 #endif
     
 	// If we're locating the server, show our famous spinner!
-	bool isLocating = (minecraft->getProgressStatusId() == 0);
+	bool isLocating = (minecraft.getProgressStatusId() == 0);
 	if (isLocating) {
 		const int spinnerX = progressLeft + progressWidth + 6;
 		static const char* spinnerTexts[] = {"-", "\\", "|", "/"};
 		int n = ((int)(5.5f * getTimeS()) % 4);
-		drawCenteredString(minecraft->font, spinnerTexts[n], spinnerX, progressY, 0xffffffff);
+		drawCenteredString(minecraft.font(), spinnerTexts[n], spinnerX, progressY, 0xffffffff);
 	}
 
     glDisable2(GL_BLEND);
@@ -93,7 +93,7 @@ bool ProgressScreen::isInGameScreen() { return false; }
 
 void ProgressScreen::tick() {
 	// After 10 seconds of not connecting -> write an error message and go back
-	if (++ticks == 10 * SharedConstants::TicksPerSecond && minecraft->getProgressStatusId() == 0) {
-		minecraft->setScreen( new DisconnectionScreen("Could not connect to server. Try again.") );
+	if (++ticks == 10 * SharedConstants::TicksPerSecond && minecraft.getProgressStatusId() == 0) {
+		minecraft.setScreen( new DisconnectionScreen("Could not connect to server. Try again.") );
 	}
 }

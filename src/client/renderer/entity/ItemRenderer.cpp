@@ -166,10 +166,10 @@ int ItemRenderer::getAtlasPos(const ItemInstance* item) {
 }
 
 /*static*/
-void ItemRenderer::renderGuiItem(Font* font, Textures* textures, const ItemInstance* item, float x, float y, bool fancy) {
+void ItemRenderer::renderGuiItem(Font* font, Textures& textures, const ItemInstance* item, float x, float y, bool fancy) {
 	renderGuiItem(font, textures, item, x, y, 16, 16, fancy);
 }
-void ItemRenderer::renderGuiItem(Font* font, Textures* textures, const ItemInstance* item, float x, float y, float w, float h, bool fancy) {
+void ItemRenderer::renderGuiItem(Font* font, Textures& textures, const ItemInstance* item, float x, float y, float w, float h, bool fancy) {
 	if (item == NULL) {
 		//LOGW("item is NULL @ ItemRenderer::renderGuiItem\n");
 		return;
@@ -261,7 +261,7 @@ void ItemRenderer::fillRect(Tesselator& t, float x, float y, float w, float h, i
 }
 
 
-void ItemRenderer::renderGuiItemCorrect(Font* font, Textures* textures, const ItemInstance* item, int x, int y) {
+void ItemRenderer::renderGuiItemCorrect(Font* font, Textures& textures, const ItemInstance* item, int x, int y) {
 	if (item == NULL)
 		return;
 

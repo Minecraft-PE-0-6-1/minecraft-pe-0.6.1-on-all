@@ -25,11 +25,11 @@ public:
 		layers.push_back(std::make_pair(e, layerId));
 	}
 
-	void render( Minecraft* minecraft, int xm, int ym )
+	void render( MinecraftClient& minecraft, int xm, int ym )
 	{
 		if (!visible) return;
 
-		bool isHovered = minecraft->isTouchscreen()?
+		bool isHovered = minecraft.isTouchscreen()?
 			(_currentlyDown && xm >= x && ym >= y && xm < x + width && ym < y + height): false;
 
 		int layer = isHovered? LayerSelected : LayerDefault;

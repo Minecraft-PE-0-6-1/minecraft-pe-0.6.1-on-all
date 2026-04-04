@@ -57,8 +57,8 @@ public:
 	ImageButton(int id, const std::string& msg, const ImageDef& imageDef);
 	void setImageDef(const ImageDef& imageDef, bool setButtonSize);
 
-	void render(Minecraft* minecraft, int xm, int ym);
-	void renderBg(Minecraft* minecraft, int xm, int ym) {}
+	void render(MinecraftClient& minecraft, int xm, int ym);
+	void renderBg(MinecraftClient& minecraft, int xm, int ym) {}
 
 protected:
 	virtual void setupDefault();
@@ -85,7 +85,7 @@ public:
 protected:
 	bool isSecondImage(bool hovered) { return _secondImage; }
 
-	virtual void mouseClicked( Minecraft* minecraft, int x, int y, int buttonNum );
+	virtual void mouseClicked( MinecraftClient& minecraft, int x, int y, int buttonNum );
 
 private:
 	OptionId m_optId;

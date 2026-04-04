@@ -2,7 +2,7 @@
 #include "client/gui/screens/StartMenuScreen.hpp"
 #include "client/gui/screens/ProgressScreen.hpp"
 #include "client/gui/Font.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/renderer/Textures.hpp"
 
 namespace Touch {
@@ -44,16 +44,16 @@ void AvailableGamesList::renderItem( int i, int x, int y, int h, Tesselator& t )
 		glEnable2(GL_TEXTURE_2D);
         glColor4f2(1,1,1,1);
         glEnable2(GL_BLEND);
-		minecraft->textures->loadAndBindTexture("gui/badge/minecon140.png");
+		minecraft.textures().loadAndBindTexture("gui/badge/minecon140.png");
 		blit(xx2, y + 6, 0, 0, 37, 8, 140, 240);
 	}
 
-	drawString(minecraft->font, s.name.C_String(), xx1, y + 4 + 2, color);
-	drawString(minecraft->font, s.address.ToString(false), xx2, y + 18, color2);
+	drawString(minecraft.font(), s.name.C_String(), xx1, y + 4 + 2, color);
+	drawString(minecraft.font(), s.address.ToString(false), xx2, y + 18, color2);
 
 	/*
-	drawString(minecraft->font, copiedServerList[i].name.C_String(), (int)x0 + 24, y + 4, color);
-	drawString(minecraft->font, copiedServerList[i].address.ToString(false), (int)x0 + 24, y + 18, color);
+	drawString(minecraft.font(), copiedServerList[i].name.C_String(), (int)x0 + 24, y + 4, color);
+	drawString(minecraft.font(), copiedServerList[i].address.ToString(false), (int)x0 + 24, y + 18, color);
 	*/
 }
 
@@ -84,7 +84,7 @@ void JoinGameScreen::init()
 	buttons.push_back(&bJoinByIp);
 	buttons.push_back(&bHeader);
 
-	minecraft->raknetInstance->clearServerList();
+	minecraft.raknetInstance->clearServerList();
 	gamesList = new AvailableGamesList(minecraft, width, height);
 
 #ifdef ANDROID
@@ -119,25 +119,25 @@ void JoinGameScreen::buttonClicked(Button* button)
 		if (isIndexValid(gamesList->selectedItem))
 		{
 			PingedCompatibleServer selectedServer = gamesList->copiedServerList[gamesList->selectedItem];
-			minecraft->joinMultiplayer(selectedServer);
+			minecraft.joinMultiplayer(selectedServer);
 			{
 				bJoin.active = false;
 				bBack.active = false;
-				minecraft->setScreen(new ProgressScreen());
+				minecraft.setScreen(new ProgressScreen());
 			}
 		}
-		//minecraft->locateMultiplayer();
-		//minecraft->setScreen(new JoinGameScreen());
+		//minecraft.locateMultiplayer();
+		//minecraft.setScreen(new JoinGameScreen());
 	}
 	if(button->id == bJoinByIp.id) {
-		minecraft->cancelLocateMultiplayer();
-		minecraft->screenChooser.setScreen(SCREEN_JOINBYIP);
+		minecraft.cancelLocateMultiplayer();
+		minecraft.screenChooser.setScreen(SCREEN_JOINBYIP);
 	}
 
 	if (button->id == bBack.id)
 	{
-		minecraft->cancelLocateMultiplayer();
-		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+		minecraft.cancelLocateMultiplayer();
+		minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
 	}
 }
 
@@ -145,8 +145,8 @@ bool JoinGameScreen::handleBackEvent(bool isDown)
 {
 	if (!isDown)
 	{
-		minecraft->cancelLocateMultiplayer();
-		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+		minecraft.cancelLocateMultiplayer();
+		minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
 	}
 	return true;
 }
@@ -166,7 +166,7 @@ void JoinGameScreen::tick()
 
 	//gamesList->tick();
 
-	const ServerList& orgServerList = minecraft->raknetInstance->getServerList();
+	const ServerList& orgServerList = minecraft.raknetInstance->getServerList();
 	ServerList serverList;
 	for (unsigned int i = 0; i < orgServerList.size(); ++i)
 		if (orgServerList[i].name.GetLength() > 0)
@@ -211,7 +211,7 @@ void JoinGameScreen::tick()
 
 void JoinGameScreen::render( int xm, int ym, float a )
 {
-	bool hasNetwork = minecraft->platform()->isNetworkEnabled(true);
+	bool hasNetwork = minecraft.platform()->isNetworkEnabled(true);
 #ifdef WIN32
 	hasNetwork = hasNetwork && !GetAsyncKeyState(VK_TAB);
 #endif
@@ -225,16 +225,16 @@ void JoinGameScreen::render( int xm, int ym, float a )
 
 	if (hasNetwork) {
 		std::string s = "Scanning for WiFi Games...";
-		drawCenteredString(minecraft->font, s, baseX, 8, 0xffffffff);
+		drawCenteredString(minecraft.font(), s, baseX, 8, 0xffffffff);
 
-		const int textWidth = minecraft->font->width(s);
+		const int textWidth = minecraft.font()->width(s);
 		const int spinnerX = baseX + textWidth / 2 + 6;
 
 		static const char* spinnerTexts[] = {"-", "\\", "|", "/"};
 		int n = ((int)(5.5f * getTimeS()) % 4);
-		drawCenteredString(minecraft->font, spinnerTexts[n], spinnerX, 8, 0xffffffff);
+		drawCenteredString(minecraft.font(), spinnerTexts[n], spinnerX, 8, 0xffffffff);
 	} else {
-		drawCenteredString(minecraft->font, "WiFi is disabled", baseX, 8, 0xffffffff);
+		drawCenteredString(minecraft.font(), "WiFi is disabled", baseX, 8, 0xffffffff);
 	}
 }
 

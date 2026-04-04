@@ -1,7 +1,7 @@
 #include "CreditsScreen.hpp"
 #include "StartMenuScreen.hpp"
 #include "OptionsScreen.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/gui/components/Button.hpp"
 #include "client/gui/components/ImageButton.hpp"
 #include "platform/input/Mouse.hpp"
@@ -67,7 +67,7 @@ void CreditsScreen::tick() {
     // move text upward
     _scrollY -= _scrollSpeed;
     // if text has scrolled off the top, restart
-    float totalHeight = _lines.size() * (minecraft->font->lineHeight + 8);
+    float totalHeight = _lines.size() * (minecraft.font()->lineHeight + 8);
     if (_scrollY + totalHeight < 0) {
         _scrollY = height;
     }
@@ -82,9 +82,9 @@ void CreditsScreen::tick() {
 void CreditsScreen::render(int xm, int ym, float a) {
     renderBackground();
     int w = width;
-    Font* font = minecraft->font;
+    Font* font = minecraft.font();
     float y = _scrollY;
-    const float lineHeight = font->lineHeight + 8;
+    const float lineHeight = font.lineHeight + 8;
     for (size_t i = 0; i < _lines.size(); ++i) {
         const std::string& line = _lines[i];
         // use color-tag-aware drawing, centre by total width
@@ -93,7 +93,7 @@ void CreditsScreen::render(int xm, int ym, float a) {
         // underline hyperlink lines manually
         if (line.find("http") != std::string::npos || line.find("discord.gg") != std::string::npos) {
             float x0 = w/2 - lineWidth/2;
-            float y0 = y + font->lineHeight - 1;
+            float y0 = y + font.lineHeight - 1;
             this->fill(x0, y0, x0 + lineWidth, y0 + 1, 0xffffffff);
         }
         y += lineHeight;
@@ -104,13 +104,13 @@ void CreditsScreen::render(int xm, int ym, float a) {
 
 void CreditsScreen::buttonClicked(Button* button) {
     if (button->id == 1) {
-        minecraft->setScreen(new OptionsScreen());
+        minecraft.setScreen(new OptionsScreen());
     }
 }
 
 void CreditsScreen::mouseClicked(int x, int y, int buttonNum) {
     // map click to a line in the scrolling text
-    const float lineHeight = minecraft->font->lineHeight + 8;
+    const float lineHeight = minecraft.font()->lineHeight + 8;
     for (size_t i = 0; i < _lines.size(); ++i) {
         float lineY = _scrollY + i * lineHeight;
         if (y >= lineY && y < lineY + lineHeight) {
@@ -122,7 +122,7 @@ void CreditsScreen::mouseClicked(int x, int y, int buttonNum) {
                 // extract until space
                 size_t end = line.find(' ', start);
                 std::string url = line.substr(start, (end == std::string::npos) ? std::string::npos : end - start);
-                minecraft->platform()->openURL(url);
+                minecraft.platform()->openURL(url);
                 return;
             }
         }

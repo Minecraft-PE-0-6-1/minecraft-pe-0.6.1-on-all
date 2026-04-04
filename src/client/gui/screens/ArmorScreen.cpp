@@ -1,7 +1,7 @@
 #include "ArmorScreen.hpp"
 #include "client/gui/Screen.hpp"
 #include "client/gui/components/NinePatch.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/player/LocalPlayer.hpp"
 #include "client/renderer/Tesselator.hpp"
 #include "client/renderer/entity/ItemRenderer.hpp"
@@ -73,7 +73,7 @@ ArmorScreen::~ArmorScreen() {
 void ArmorScreen::init() {
 	super::init();
 
-	player = minecraft->player;
+	player = minecraft.player();
 
 	ImageDef def;
 	def.name = "gui/spritesheet.png";
@@ -95,7 +95,7 @@ void ArmorScreen::init() {
 		buttons.push_back(armorButtons[i]);
 
 	// GUI - nine patches
-	NinePatchFactory builder(minecraft->textures, "gui/spritesheet.png");
+	NinePatchFactory builder(minecraft.textures() "gui/spritesheet.png");
 
 	guiBackground   = builder.createSymmetrical(IntRectangle(0, 0, 16, 16), 4, 4);
 	guiSlot         = builder.createSymmetrical(IntRectangle(0, 32, 8, 8), 3, 3, 20, 20);
@@ -200,7 +200,7 @@ void ArmorScreen::render(int xm, int ym, float a) {
 
 void ArmorScreen::buttonClicked(Button* button) {
 	if (button == &btnClose) {
-		minecraft->setScreen(NULL);
+		minecraft.setScreen(NULL);
 	}
 
 	if (button->id >= 0 && button->id <= 3) {
@@ -252,8 +252,8 @@ std::vector<const ItemInstance*> ArmorScreen::getItems( const Touch::InventoryPa
 void ArmorScreen::updateItems() {
 	armorItems.clear();
 
-	for (int i = Inventory::MAX_SELECTION_SIZE; i < minecraft->player->inventory->getContainerSize(); ++i) {
-		ItemInstance* item = minecraft->player->inventory->getItem(i);
+	for (int i = Inventory::MAX_SELECTION_SIZE; i < minecraft.player()->inventory->getContainerSize(); ++i) {
+		ItemInstance* item = minecraft.player()->inventory->getItem(i);
 		if (ItemInstance::isArmorItem(item))
 			armorItems.push_back(item);
 	}
@@ -281,13 +281,13 @@ void ArmorScreen::drawSlotItemAt( Tesselator& t, int slot, const ItemInstance* i
 	guiSlot->draw(t, xx, yy);
 
 	if (item && !item->isNull()) {
-		ItemRenderer::renderGuiItem(minecraft->font, minecraft->textures, item, xx + 2, yy, true);
+		ItemRenderer::renderGuiItem(minecraft.font(), minecraft.textures() item, xx + 2, yy, true);
         glDisable2(GL_TEXTURE_2D);
         ItemRenderer::renderGuiItemDecorations(item, xx + 2, yy + 3);
         glEnable2(GL_TEXTURE_2D);
-		//minecraft->gui.renderSlotText(item, xx + 3, yy + 3, true, true);
+		//minecraft.gui().renderSlotText(item, xx + 3, yy + 3, true, true);
 	} else {
-        minecraft->textures->loadAndBindTexture("gui/items.png");
+        minecraft.textures().loadAndBindTexture("gui/items.png");
         blit(x + 2, y, 15 * 16, slot * 16, 16, 16, 16, 16);
     }
 }
@@ -297,14 +297,14 @@ void ArmorScreen::takeAndClearSlot( int slot ) {
 	if (!item)
 		return;
 
-	int oldSize = minecraft->player->inventory->getNumEmptySlots();
+	int oldSize = minecraft.player()->inventory->getNumEmptySlots();
 
-	if (!minecraft->player->inventory->add(item))
-		minecraft->player->drop(new ItemInstance(*item), false);
+	if (!minecraft.player()->inventory->add(item))
+		minecraft.player()->drop(new ItemInstance(*item), false);
 
 	player->setArmor(slot, NULL);
 
-	int newSize = minecraft->player->inventory->getNumEmptySlots();
+	int newSize = minecraft.player()->inventory->getNumEmptySlots();
 	setIfNotSet(doRecreatePane, newSize != oldSize);
 }
 
@@ -319,7 +319,7 @@ void ArmorScreen::renderPlayer(float xo, float yo) {
 	glRotatef(180, 0, 0, 1);
 	//glDisable(GL_DEPTH_TEST);
 
-	Player* player = (Player*) minecraft->player;
+	Player* player = (Player*) minecraft.player();
 	float oybr = player->yBodyRot;
 	float oyr = player->yRot;
 	float oxr = player->xRot;

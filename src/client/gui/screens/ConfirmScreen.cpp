@@ -1,6 +1,6 @@
 #include "ConfirmScreen.hpp"
 #include "client/gui/components/Button.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 
 ConfirmScreen::ConfirmScreen(Screen* parent_, const std::string& title1_, const std::string& title2_, int id_)
 :   parent(parent_),
@@ -31,7 +31,7 @@ ConfirmScreen::~ConfirmScreen() {
 
 void ConfirmScreen::init()
 {
-	if (/* minecraft->useTouchscreen() */ true) {
+	if (/* minecraft.useTouchscreen() */ true) {
 		yesButton = new Touch::TButton(0, 0, 0, yesButtonText),
 		noButton  = new Touch::TButton(1, 0, 0, noButtonText);
 	} else {

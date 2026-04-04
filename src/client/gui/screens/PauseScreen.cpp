@@ -1,7 +1,7 @@
 #include "PauseScreen.hpp"
 #include "StartMenuScreen.hpp"
 #include "client/gui/components/ImageButton.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "util/Mth.hpp"
 #include "network/RakNetInstance.hpp"
 #include "network/ServerSideNetworkHandler.hpp"
@@ -48,7 +48,7 @@ PauseScreen::~PauseScreen() {
 }
 
 void PauseScreen::init() {
-	if (/* minecraft->useTouchscreen() */ true) {
+	if (/* minecraft.useTouchscreen() */ true) {
 		bContinue = new Touch::TButton(1, "Back to game");
 		bOptions = new Touch::TButton(5, "Options");
 		bQuit = new Touch::TButton(2, "Quit to title");
@@ -67,9 +67,9 @@ void PauseScreen::init() {
 	buttons.push_back(bContinue);
 	buttons.push_back(bQuit);
 	buttons.push_back(bOptions);
-	// bSound.updateImage(&minecraft->options);
-	bThirdPerson.updateImage(&minecraft->options);
-	bHideGui.updateImage(&minecraft->options);
+	// bSound.updateImage(&minecraft.options);
+	bThirdPerson.updateImage(&minecraft.options);
+	bHideGui.updateImage(&minecraft.options);
 	// buttons.push_back(&bSound);
 	buttons.push_back(&bThirdPerson);
     //buttons.push_back(&bHideGui);
@@ -79,8 +79,8 @@ void PauseScreen::init() {
     
     #if !defined(APPLE_DEMO_PROMOTION) && !defined(RPI)
 	if (true || !wasBackPaused) {
-		if (minecraft->raknetInstance) {
-			if (minecraft->raknetInstance->isServer()) {
+		if (minecraft.raknetInstance) {
+			if (minecraft.raknetInstance->isServer()) {
 				updateServerVisibilityText();
 				buttons.push_back(bServerVisibility);
 			}
@@ -142,7 +142,7 @@ void PauseScreen::tick() {
 void PauseScreen::render(int xm, int ym, float a) {
 	renderBackground();
 
-	//bool isSaving = !minecraft->level.pauseSave(saveStep++);
+	//bool isSaving = !minecraft.level.pauseSave(saveStep++);
 	//if (isSaving || visibleTime < 20) {
 	//	float col = ((visibleTime % 10) + a) / 10.0f;
 	//	col = Mth::sin(col * Mth::PI * 2) * 0.2f + 0.8f;
@@ -158,21 +158,21 @@ void PauseScreen::render(int xm, int ym, float a) {
 
 void PauseScreen::buttonClicked(Button* button) {
 	if (button->id == bContinue->id) {
-		minecraft->setScreen(NULL);
-		//minecraft->grabMouse();
+		minecraft.setScreen(NULL);
+		//minecraft.grabMouse();
 	}
     if (button->id == bQuit->id) {
-		minecraft->leaveGame();
+		minecraft.leaveGame();
     }
 	if (button->id == bQuitAndSaveLocally->id) {
-		minecraft->leaveGame(true);
+		minecraft.leaveGame(true);
 	}
 	if (button->id == bOptions->id) {
-		minecraft->setScreen(new OptionsScreen());
+		minecraft.setScreen(new OptionsScreen());
 	}
 	if (button->id == bServerVisibility->id) {
-		if (minecraft->raknetInstance && minecraft->netCallback && minecraft->raknetInstance->isServer()) {
-			ServerSideNetworkHandler* ss = (ServerSideNetworkHandler*) minecraft->netCallback;
+		if (minecraft.raknetInstance && minecraft.netCallback && minecraft.raknetInstance->isServer()) {
+			ServerSideNetworkHandler* ss = (ServerSideNetworkHandler*) minecraft.netCallback;
 			bool allows = !ss->allowsIncomingConnections();
 			ss->allowIncomingConnections(allows);
 
@@ -181,20 +181,20 @@ void PauseScreen::buttonClicked(Button* button) {
 	}
 
 	if (button->id == OptionButton::ButtonId) {
-		((OptionButton*)button)->toggle(&minecraft->options);
+		((OptionButton*)button)->toggle(&minecraft.options);
 	}
 
 	//if (button->id == bThirdPerson->id) {
-	//	minecraft->options.thirdPersonView = !minecraft->options.thirdPersonView;
+	//	minecraft.options().thirdPersonView = !minecraft.options().thirdPersonView;
 	//}
 }
 
 void PauseScreen::updateServerVisibilityText()
 {
-	if (!minecraft->raknetInstance || !minecraft->raknetInstance->isServer())
+	if (!minecraft.raknetInstance || !minecraft.raknetInstance->isServer())
 		return;
 
-	ServerSideNetworkHandler* ss = (ServerSideNetworkHandler*) minecraft->netCallback;
+	ServerSideNetworkHandler* ss = (ServerSideNetworkHandler*) minecraft.netCallback;
 	bServerVisibility->msg = ss->allowsIncomingConnections()?
 		"Server is visible"
 	:   "Server is invisible";

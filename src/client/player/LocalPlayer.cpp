@@ -552,8 +552,8 @@ void LocalPlayer::closeContainer() {
 
 //@Override
 void LocalPlayer::move(float xa, float ya, float za) {
-    //@note: why is this == minecraft.player needed?
-    if (this == minecraft.getPlayer()  && minecraft.options().getBooleanValue(OPTIONS_IS_FLYING)) {
+    //@note: why is this == minecraft.player() needed?
+    if (this == minecraft.player()  && minecraft.options().getBooleanValue(OPTIONS_IS_FLYING)) {
         noPhysics = true;
         float tmp = walkDist; // update
         calculateFlight((float) xa, (float) ya, (float) za);
@@ -666,9 +666,9 @@ void LocalPlayer::hurtTo( int newHealth )
 		lastHealth = health;
 		invulnerableTime = invulnerableDuration;
 
-		minecraft.getPlayer()->bypassArmor = true;
+		minecraft.player()->bypassArmor = true;
 		actuallyHurt(dmg);
-		minecraft.getPlayer()->bypassArmor = false;
+		minecraft.player()->bypassArmor = false;
 
 		hurtTime = hurtDuration = 10;
 	}

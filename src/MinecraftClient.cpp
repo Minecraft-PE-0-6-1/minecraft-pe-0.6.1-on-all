@@ -1,6 +1,6 @@
 #include "Minecraft.hpp"
 #include "client/Options.hpp"
-#include "client/gamemode/GameMode.hpp"
+#include "gamemode/GameMode.hpp"
 #include "client/gui/screens/ChatScreen.hpp"
 #include "client/gui/screens/ConsoleScreen.hpp"
 #include "client/gui/screens/DeathScreen.hpp"
@@ -104,7 +104,7 @@ void MinecraftClient::init() {
 
 	checkGlError("Init complete");
 
-	screenChooser.setScreen(SCREEN_STARTMENU);
+	m_screenChooser.setScreen(SCREEN_STARTMENU);
 
 	if (options.getBooleanValue(OPTIONS_FIRST_LAUNCH)) {
 		options.toggle(OPTIONS_FIRST_LAUNCH);
@@ -321,7 +321,7 @@ void MinecraftClient::onGraphicsReset() {
 
 	m_textures.clear();
 	
-	font->onGraphicsReset();
+	font.onGraphicsReset();
 	gui.onGraphicsReset();
 
 	if (levelRenderer) levelRenderer->onGraphicsReset();
@@ -532,7 +532,7 @@ void MinecraftClient::tickInput() {
 			}
 
 			if (key == Keyboard::KEY_E) {
-				screenChooser.setScreen(SCREEN_BLOCKSELECTION);
+				m_screenChooser.setScreen(SCREEN_BLOCKSELECTION);
 			}
 
 			if (!getScreen && key == Keyboard::KEY_T && level) {
@@ -832,7 +832,7 @@ void MinecraftClient::pauseGame(bool isBackPaused) {
 	pause = canFreeze;
 
 	if (getScreen != NULL) return;
-	screenChooser.setScreen(isBackPaused? SCREEN_PAUSEPREV : SCREEN_PAUSE);
+	m_screenChooser.setScreen(isBackPaused? SCREEN_PAUSEPREV : SCREEN_PAUSE);
 }
 
 void MinecraftClient::gameLostFocus() {
@@ -855,7 +855,7 @@ void MinecraftClient::setScreen( Screen* screen ) {
 	if (screen != NULL && screen->isErrorScreen())
 		return;
 	if (screen == NULL && level == NULL)
-		screen = screenChooser.createScreen(SCREEN_STARTMENU);
+		screen = m_screenChooser.createScreen(SCREEN_STARTMENU);
 
 	if (this->getScreen != NULL) {
 		this->getScreen->removed();
@@ -1052,7 +1052,7 @@ void MinecraftClient::_levelGenerated() {
 	this->cameraTargetPlayer = player;
 
 	if (player == NULL) {
-		player = new LocalPlayer(minecraft, level, minecraft.options.getStringValue(OPTIONS_USERNAME), level->dimension->id, isCreativeType());
+		player = new LocalPlayer(minecraft, level, minecraft.options().getStringValue(OPTIONS_USERNAME), level->dimension->id, isCreativeType());
 		gameMode->initPlayer(player);
 	}
 

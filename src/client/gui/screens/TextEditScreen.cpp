@@ -1,7 +1,7 @@
 #include "TextEditScreen.hpp"
 #include "world/level/tile/entity/SignTileEntity.hpp"
 #include "AppPlatform.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/renderer/tileentity/TileEntityRenderDispatcher.hpp"
 #include "client/renderer/Tesselator.hpp"
 #include "client/renderer/Textures.hpp"
@@ -18,7 +18,7 @@ TextEditScreen::~TextEditScreen() {
 }
 void TextEditScreen::init() {
 	super::init();
-	minecraft->platform()->showKeyboard();
+	minecraft.platform()->showKeyboard();
 	isShowingKeyboard = true;
 	ImageDef def;
 	def.name = "gui/spritesheet.png";
@@ -41,9 +41,9 @@ void TextEditScreen::setupPositions() {
 bool TextEditScreen::handleBackEvent( bool isDown ) {
     sign->setChanged();
 	Packet* signUpdatePacket = sign->getUpdatePacket();
-	minecraft->raknetInstance->send(signUpdatePacket);
-	minecraft->platform()->hideKeyboard();
-	minecraft->setScreen(NULL);
+	minecraft.raknetInstance->send(signUpdatePacket);
+	minecraft.platform()->hideKeyboard();
+	minecraft.setScreen(NULL);
 	return true;
 }
 
@@ -59,17 +59,17 @@ void TextEditScreen::render( int xm, int ym, float a ) {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();
-	glOrthof(0.0f, (float)minecraft->width, (float)minecraft->height, 0,  -1, 1);
+	glOrthof(0.0f, (float)minecraft.getScreenWidth(), (float)minecraft.getScreenHeight(), 0,  -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	
-	minecraft->textures->loadAndBindTexture("item/sign.png");
+	minecraft.textures().loadAndBindTexture("item/sign.png");
     glColor4f2(1, 1, 1, 1);
 
 	static float minUV[] = {0.03126f, 0.06249f};
     static float maxUV[] = {0.39063f, 0.4374f};
-	float scale = ((minecraft->height / 2) / 32) * 0.9f;
+	float scale = ((minecraft.getScreenHeight() / 2) / 32) * 0.9f;
 	
-	glTranslatef(minecraft->width / 2.0f, 5.0f, 0.0f);
+	glTranslatef(minecraft.getScreenWidth() / 2.0f, 5.0f, 0.0f);
 	glScalef2(scale,scale,1);
 	t.begin(GL_QUADS);
 	t.vertexUV(-32, 0, 0.0f,minUV[0],minUV[1]);
@@ -88,13 +88,13 @@ void TextEditScreen::render( int xm, int ym, float a ) {
 		std::string msg = sign->messages[i];
 		if (i == sign->selectedLine && msg.length() < 14) {
 			std::string s = "> " + msg + " <";
-			font->draw(s, -(float)font->width(s) / 2.0f, 10.0f * i, 0xFF000000, false);
+			font.draw(s, -(float)font.width(s) / 2.0f, 10.0f * i, 0xFF000000, false);
 		} else {
-			font->draw(msg, -(float)font->width(msg) / 2.0f, 10.0f * i, 0xFF000000, false);
+			font.draw(msg, -(float)font.width(msg) / 2.0f, 10.0f * i, 0xFF000000, false);
 		}
 	}
 	sign->selectedLine  = -1;
-	//font->draw("Hej", minecraft->width / 2, 100, 0xFFFFFFFF, false);
+	//font.draw("Hej", minecraft.getScreenWidth() / 2, 100, 0xFFFFFFFF, false);
 	
 	glPopMatrix();
 	glEnable(GL_CULL_FACE);

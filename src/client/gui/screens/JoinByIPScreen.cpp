@@ -28,21 +28,21 @@ void JoinByIPScreen::buttonClicked(Button* button)
 {
 	if (button->id == bJoin.id)
 	{            
-        minecraft->isLookingForMultiplayer = true;
-	    minecraft->netCallback = new ClientSideNetworkHandler(minecraft, minecraft->raknetInstance);
+        minecraft.isLookingForMultiplayer = true;
+	    minecraft.netCallback = new ClientSideNetworkHandler(minecraft, minecraft.raknetInstance);
 
-        minecraft->joinMultiplayerFromString(tIP.text);
+        minecraft.joinMultiplayerFromString(tIP.text);
         {
-			minecraft->options.set(OPTIONS_LAST_IP, tIP.text);
+			minecraft.options().set(OPTIONS_LAST_IP, tIP.text);
             bJoin.active = false;
             bBack.active = false;
-            minecraft->setScreen(new ProgressScreen());
+            minecraft.setScreen(new ProgressScreen());
         }
 	}
 	if (button->id == bBack.id)
 	{
-		minecraft->cancelLocateMultiplayer();
-		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+		minecraft.cancelLocateMultiplayer();
+		minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
 	}
 }
 
@@ -50,7 +50,7 @@ bool JoinByIPScreen::handleBackEvent(bool isDown)
 {
 	if (!isDown)
 	{
-		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+		minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
 	}
 	return true;
 }
@@ -82,7 +82,7 @@ void JoinByIPScreen::init()
     tabButtons.push_back(&bHeader);
 #endif
 
-	tIP.text = minecraft->options.getStringValue(OPTIONS_LAST_IP);
+	tIP.text = minecraft.options().getStringValue(OPTIONS_LAST_IP);
 }
 
 void JoinByIPScreen::setupPositions() {
@@ -116,7 +116,7 @@ void JoinByIPScreen::render( int xm, int ym, float a )
 void JoinByIPScreen::keyPressed(int eventKey)
 {
     if (eventKey == Keyboard::KEY_ESCAPE) {
-        minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+        minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
         return;
     }
     // let base class handle navigation and text box keys

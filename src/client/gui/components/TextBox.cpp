@@ -1,6 +1,6 @@
 #include "TextBox.hpp"
 #include "client/gui/Gui.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "AppPlatform.hpp"
 #include "platform/input/Mouse.hpp"
 
@@ -21,25 +21,25 @@ TextBox::TextBox(int id, int x, int y, int w, int h, const std::string& msg)
 {
 }
 
-void TextBox::setFocus(Minecraft* minecraft) {
+void TextBox::setFocus(MinecraftClient& minecraft) {
     if (!focused) {
-        minecraft->platform()->showKeyboard();
+        minecraft.platform()->showKeyboard();
         focused = true;
         blinkTicks = 0;
         blink = false;
     }
 }
 
-bool TextBox::loseFocus(Minecraft* minecraft) {
+bool TextBox::loseFocus(MinecraftClient& minecraft) {
     if (focused) {
-        minecraft->platform()->hideKeyboard();
+        minecraft.platform()->hideKeyboard();
         focused = false;
         return true;
     }
     return false;
 }
 
-void TextBox::mouseClicked(Minecraft* minecraft, int x, int y, int buttonNum) {
+void TextBox::mouseClicked(MinecraftClient& minecraft, int x, int y, int buttonNum) {
     if (buttonNum == MouseAction::ACTION_LEFT) {
         if (pointInside(x, y)) {
             setFocus(minecraft);
@@ -49,19 +49,19 @@ void TextBox::mouseClicked(Minecraft* minecraft, int x, int y, int buttonNum) {
     }
 }
 
-void TextBox::charPressed(Minecraft* minecraft, char c)  {
+void TextBox::charPressed(MinecraftClient& minecraft, char c)  {
     if (focused && c >= 32 && c < 127 && (int)text.size() < 256) {
         text.push_back(c);
     }
 }
 
-void TextBox::keyPressed(Minecraft* minecraft, int key) {
+void TextBox::keyPressed(MinecraftClient& minecraft, int key) {
     if (focused && key == Keyboard::KEY_BACKSPACE && !text.empty()) {
         text.pop_back();
     }
 }
 
-void TextBox::tick(Minecraft* minecraft) {
+void TextBox::tick(MinecraftClient& minecraft) {
     blinkTicks++;
     if (blinkTicks >= 5) {
         blink = !blink;
@@ -69,7 +69,7 @@ void TextBox::tick(Minecraft* minecraft) {
     }
 }
 
-void TextBox::render(Minecraft* minecraft, int xm, int ym) {
+void TextBox::render(MinecraftClient& minecraft, int xm, int ym) {
     // textbox like in beta 1.7.3
     // change appearance when focused so the user can tell it's active
     // active background darker gray with a subtle border
@@ -81,7 +81,7 @@ void TextBox::render(Minecraft* minecraft, int xm, int ym) {
     glEnable2(GL_SCISSOR_TEST);
     glScissor(
         Gui::GuiScale * (x + 2), 
-        minecraft->height - Gui::GuiScale * (y + height - 2), 
+        minecraft.getScreenHeight() - Gui::GuiScale * (y + height - 2), 
         Gui::GuiScale * (width - 2), 
         Gui::GuiScale * (height - 2)
     );
@@ -89,12 +89,12 @@ void TextBox::render(Minecraft* minecraft, int xm, int ym) {
 	int _y = y + (height - Font::DefaultLineHeight) / 2;
 
     if (text.empty() && !focused) {
-        drawString(minecraft->font, hint, x + 2, _y, 0xff5e5e5e);
+        drawString(minecraft.font(), hint, x + 2, _y, 0xff5e5e5e);
     }
 
     if (focused && blink) text.push_back('_');
 
-    drawString(minecraft->font, text, x + 2, _y, 0xffffffff);
+    drawString(minecraft.font(), text, x + 2, _y, 0xffffffff);
 
     if (focused && blink) text.pop_back();
 

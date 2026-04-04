@@ -3,7 +3,7 @@
 #include "ScrollingPane.hpp"
 #include "ImageButton.hpp"
 
-class Minecraft;
+class MinecraftClient;
 class ItemInstance;
 class Font;
 class IArea;
@@ -16,7 +16,7 @@ class InventoryPane: public ScrollingPane
 {
 	typedef ScrollingPane super;
 public:
-	InventoryPane(IInventoryPaneCallback* screen, Minecraft* mc, const IntRectangle& rect, int paneWidth, float clickMarginH, int numItems, int itemSize, int itemBorderSize);
+	InventoryPane(IInventoryPaneCallback* screen, MinecraftClient& mc, const IntRectangle& rect, int paneWidth, float clickMarginH, int numItems, int itemSize, int itemBorderSize);
 	~InventoryPane();
 
 	void tick();
@@ -30,7 +30,7 @@ public:
 	int paneWidth;
 	IArea* _clickArea;
 	IInventoryPaneCallback* screen;
-	Minecraft* mc;
+	MinecraftClient& mc;
 
 	int fillMarginX;
 	int fillMarginY;

@@ -1,5 +1,5 @@
 #include "OptionsGroup.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "ImageButton.hpp"
 #include "OptionsItem.hpp"
 #include "Slider.hpp"
@@ -14,7 +14,7 @@ OptionsGroup::OptionsGroup( std::string labelID )  {
 void OptionsGroup::setupPositions() {
 	// First we write the header and then we add the items
 	int curY = y + 18;
-	for(std::vector<GuiElement*>::iterator it = children.begin(); it != children.end(); ++it) {
+	for(auto it = children.begin(); it != children.end(); ++it) {
 		(*it)->width = width - 5;
 		
 		(*it)->y = curY;
@@ -25,17 +25,17 @@ void OptionsGroup::setupPositions() {
 	height = curY;
 }
 
-void OptionsGroup::render( Minecraft* minecraft, int xm, int ym ) {
+void OptionsGroup::render( MinecraftClient& minecraft, int xm, int ym ) {
 	float padX = 10.0f;
 	float padY = 5.0f;
 	
-	minecraft->font->draw(label, (float)x + padX, (float)y + padY, 0xffffffff, false);
+	minecraft.font()->draw(label, (float)x + padX, (float)y + padY, 0xffffffff, false);
 
 	super::render(minecraft, xm, ym);
 }
 
-OptionsGroup& OptionsGroup::addOptionItem(OptionId optId, Minecraft* minecraft ) {
-	auto option = minecraft->options.getOpt(optId);
+OptionsGroup& OptionsGroup::addOptionItem(OptionId optId, MinecraftClient& minecraft ) {
+	auto option = minecraft.options().getOpt(optId);
 
 	if (option == nullptr) return *this;
 
@@ -51,7 +51,7 @@ OptionsGroup& OptionsGroup::addOptionItem(OptionId optId, Minecraft* minecraft )
 
 // TODO: wrap this copypaste shit into templates
 
-void OptionsGroup::createToggle(OptionId optId, Minecraft* minecraft ) {
+void OptionsGroup::createToggle(OptionId optId, MinecraftClient& minecraft ) {
 	ImageDef def;
 
 	def.setSrc(IntRectangle(160, 206, 39, 20));
@@ -61,9 +61,9 @@ void OptionsGroup::createToggle(OptionId optId, Minecraft* minecraft ) {
 	
 	OptionButton* element = new OptionButton(optId);
 	element->setImageDef(def, true);
-	element->updateImage(&minecraft->options);
+	element->updateImage(&minecraft.options);
 	
-	std::string itemLabel = I18n::get(minecraft->options.getOpt(optId)->getStringId());
+	std::string itemLabel = I18n::get(minecraft.options().getOpt(optId)->getStringId());
 	
 	OptionsItem* item = new OptionsItem(optId, itemLabel, element);
 	
@@ -71,44 +71,44 @@ void OptionsGroup::createToggle(OptionId optId, Minecraft* minecraft ) {
 	setupPositions();
 }
 
-void OptionsGroup::createProgressSlider(OptionId optId, Minecraft* minecraft ) {
+void OptionsGroup::createProgressSlider(OptionId optId, MinecraftClient& minecraft ) {
 	Slider* element = new SliderFloat(minecraft, optId);
 	element->width = 100;
 	element->height = 20;
 
-	std::string itemLabel = I18n::get(minecraft->options.getOpt(optId)->getStringId());
+	std::string itemLabel = I18n::get(minecraft.options().getOpt(optId)->getStringId());
 	OptionsItem* item = new OptionsItem(optId, itemLabel, element);
 	addChild(item);
 	setupPositions();
 }
 
-void OptionsGroup::createStepSlider(OptionId optId, Minecraft* minecraft ) {
+void OptionsGroup::createStepSlider(OptionId optId, MinecraftClient& minecraft ) {
 	Slider* element = new SliderInt(minecraft, optId);
 	element->width = 100;
 	element->height = 20;
-	std::string itemLabel = I18n::get(minecraft->options.getOpt(optId)->getStringId());
+	std::string itemLabel = I18n::get(minecraft.options().getOpt(optId)->getStringId());
 	OptionsItem* item = new OptionsItem(optId, itemLabel, element);
 	addChild(item);
 	setupPositions();
 }
 
-void OptionsGroup::createTextbox(OptionId optId, Minecraft* minecraft) {
+void OptionsGroup::createTextbox(OptionId optId, MinecraftClient& minecraft) {
 	TextBox* element = new TextOption(minecraft, optId);
 	element->width = 100;
 	element->height = 20;
 
-	std::string itemLabel = I18n::get(minecraft->options.getOpt(optId)->getStringId());
+	std::string itemLabel = I18n::get(minecraft.options().getOpt(optId)->getStringId());
 	OptionsItem* item = new OptionsItem(optId, itemLabel, element);
 	addChild(item);
 	setupPositions();
 }
 
-void OptionsGroup::createKey(OptionId optId, Minecraft* minecraft) {
+void OptionsGroup::createKey(OptionId optId, MinecraftClient& minecraft) {
 	KeyOption* element = new KeyOption(minecraft, optId);
 	element->width = 50;
 	element->height = 20;
 
-	std::string itemLabel = I18n::get(minecraft->options.getOpt(optId)->getStringId());
+	std::string itemLabel = I18n::get(minecraft.options().getOpt(optId)->getStringId());
 	OptionsItem* item = new OptionsItem(optId, itemLabel, element);
 	addChild(item);
 	setupPositions();

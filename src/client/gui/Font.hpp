@@ -13,8 +13,8 @@ class Options;
 class Font
 {
 public:
-    Font(Options* options, const std::string& name, Textures* textures);
-	//Font(Options* options, const std::string& name, Textures* textures, int imgW, int imgH, int x, int y, int cols, int rows, unsigned char charOffset);
+    Font(Options* options, const std::string& name, Textures& textures);
+	//Font(Options* options, const std::string& name, Textures& textures, int imgW, int imgH, int x, int y, int cols, int rows, unsigned char charOffset);
 	
 	void init(Options* options);
 	void onGraphicsReset();

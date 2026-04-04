@@ -27,7 +27,7 @@ void SurvivalMode::continueDestroyBlock(Player* player, int x, int y, int z, int
 		if ((++destroyTicks & 3) == 1) {
 #ifndef STANDALONE_SERVER
 			if (tile != NULL) {
-				minecraft->soundEngine->play(tile->soundType->getStepSound(), x + 0.5f, y + 0.5f, z + 0.5f, (tile->soundType->getVolume() + 1) / 8, tile->soundType->getPitch() * 0.5f);
+				minecraft.soundEngine()->play(tile->soundType->getStepSound(), x + 0.5f, y + 0.5f, z + 0.5f, (tile->soundType->getVolume() + 1) / 8, tile->soundType->getPitch() * 0.5f);
 			}
 #endif
 		}
@@ -59,7 +59,7 @@ bool SurvivalMode::destroyBlock(Player* player, int x, int y, int z, int face ) 
 	if (item != NULL) {
 		item->mineBlock(t, x, y, z);
 		if (item->count == 0) {
-			//item->snap(minecraft->player);
+			//item->snap(minecraft.player());
 			player->inventory->clearSlot(player->inventory->selected);
 		}
 	}

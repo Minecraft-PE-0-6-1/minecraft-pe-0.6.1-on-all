@@ -1,6 +1,6 @@
 #include "ImageButton.hpp"
 #include "client/renderer/Tesselator.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "platform/log.hpp"
 #include "util/Mth.hpp"
 #include "client/renderer/Textures.hpp"
@@ -34,15 +34,15 @@ void ImageButton::setImageDef(const ImageDef& imageDef, bool setButtonSize) {
 	}
 }
 
-void ImageButton::render(Minecraft* minecraft, int xm, int ym) {
+void ImageButton::render(MinecraftClient& minecraft, int xm, int ym) {
 	if (!visible) return;
 
-	Font* font = minecraft->font;
+	Font* font = minecraft.font();
 
-	//minecraft->textures->loadAndBindTexture("gui/gui.png");
+	//minecraft.textures().loadAndBindTexture("gui/gui.png");
 	glColor4f2(1, 1, 1, 1);
 
-	bool hovered = active && (minecraft->useTouchscreen()? (_currentlyDown && xm >= x && ym >= y && xm < x + width && ym < y + height) : isInside(xm, ym));
+	bool hovered = active && (minecraft.useTouchscreen()? (_currentlyDown && xm >= x && ym >= y && xm < x + width && ym < y + height) : isInside(xm, ym));
 	bool IsSecondImage = isSecondImage(hovered);
 
 	//printf("ButtonId: %d - Hovered? %d (cause: %d, %d, %d, %d, <> %d, %d)\n", id, hovered, x, y, x+w, y+h, xm, ym);
@@ -53,7 +53,7 @@ void ImageButton::render(Minecraft* minecraft, int xm, int ym) {
 
 	renderBg(minecraft, xm, ym);
 
-	TextureId texId = (_imageDef.name.length() > 0)? minecraft->textures->loadAndBindTexture(_imageDef.name) : Textures::InvalidId;
+	TextureId texId = (_imageDef.name.length() > 0)? minecraft.textures().loadAndBindTexture(_imageDef.name) : Textures::InvalidId;
 	if ( Textures::isTextureIdValid(texId) ) {
 		const ImageDef& d = _imageDef;
 		Tesselator& t = Tesselator::instance;
@@ -75,7 +75,7 @@ void ImageButton::render(Minecraft* minecraft, int xm, int ym) {
 
 			const IntRectangle* src = _imageDef.getSrc();
 			if (src) {
-				const TextureData* d = minecraft->textures->getTemporaryTextureData(texId);
+				const TextureData* d = minecraft.textures().getTemporaryTextureData(texId);
 				if (d != NULL) {
 					float u0 = (src->x+(IsSecondImage?src->w:0)) / (float)d->w;
 					float u1 = (src->x+(IsSecondImage?2*src->w:src->w)) / (float)d->w;
@@ -126,10 +126,10 @@ void OptionButton::updateImage(Options* options) {
 	_secondImage = options->getBooleanValue(m_optId);
 }
 
-void OptionButton::mouseClicked( Minecraft* minecraft, int x, int y, int buttonNum ) {
+void OptionButton::mouseClicked( MinecraftClient& minecraft, int x, int y, int buttonNum ) {
 	if(buttonNum == MouseAction::ACTION_LEFT) {
 		if(clicked(minecraft, x, y)) {
-			toggle(&minecraft->options);
+			toggle(&minecraft.options);
 		}
 	}
 }

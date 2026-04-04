@@ -2,7 +2,7 @@
 #include "crafting/PaneCraftingScreen.hpp"
 #include "client/gui/Screen.hpp"
 #include "client/gui/components/NinePatch.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/player/LocalPlayer.hpp"
 #include "client/renderer/Tesselator.hpp"
 #include "client/renderer/entity/ItemRenderer.hpp"
@@ -115,7 +115,7 @@ void FurnaceScreen::init() {
 	buttons.push_back(&btnClose);
 
 	// GUI - nine patches
-	NinePatchFactory builder(minecraft->textures, "gui/spritesheet.png");
+	NinePatchFactory builder(minecraft.textures() "gui/spritesheet.png");
 
 	guiBackground   = builder.createSymmetrical(IntRectangle(0, 0, 16, 16), 4, 4);
 	guiSlot         = builder.createSymmetrical(IntRectangle(0, 32, 8, 8), 3, 3);
@@ -250,14 +250,14 @@ void FurnaceScreen::render(int xm, int ym, float a) {
 			t.beginOverride();
 			t.colorABGR(0x33ffffff);
 			t.noColor();
-			ItemRenderer::renderGuiItem(minecraft->font, minecraft->textures, &burnResult, (float)(btnResult.x + 7), (float)(btnResult.y + 8), true);
+			ItemRenderer::renderGuiItem(minecraft.font(), minecraft.textures(), &burnResult, (float)(btnResult.x + 7), (float)(btnResult.y + 8), true);
 			t.endOverrideAndDraw();
 			glDisable2(GL_BLEND);
 		}
-		minecraft->font->drawWordWrap(currentItemDesc, (float)btnResult.x - 24, (float)(btnResult.y + btnResult.height + 6), descWidth, rgbActive);
+		minecraft.font()->drawWordWrap(currentItemDesc, (float)btnResult.x - 24, (float)(btnResult.y + btnResult.height + 6), descWidth, rgbActive);
 	}
 
-	minecraft->textures->loadAndBindTexture("gui/spritesheet.png");
+	minecraft.textures().loadAndBindTexture("gui/spritesheet.png");
 	int yy = btnResult.y + 8;
 	int fpx = furnace->getLitProgress(14) + 2;
 	int xx0 = btnIngredient.x + 8;
@@ -274,7 +274,7 @@ void FurnaceScreen::buttonClicked(Button* button) {
 	int slot = button->id;
 
 	if (button == &btnClose) {
-		minecraft->player->closeContainer();
+		minecraft.player()->closeContainer();
 	}
 
 	if (slot >= FurnaceTileEntity::SLOT_INGREDIENT
@@ -305,8 +305,8 @@ void FurnaceScreen::recheckRecipes()
 	const FurnaceRecipes* recipes = FurnaceRecipes::getInstance();
 	ItemPack ip;
 	// Check for fuel, and items to burn
-	if (minecraft->player && minecraft->player->inventory) {
-		Inventory* inv = (minecraft->player)->inventory;
+	if (minecraft.player() && minecraft.player()->inventory) {
+		Inventory* inv = (minecraft.player())->inventory;
 
 		for (int i = Inventory::MAX_SELECTION_SIZE; i < inv->getContainerSize(); ++i) {
 			if (ItemInstance* item = inv->getItem(i)) {
@@ -401,8 +401,8 @@ void FurnaceScreen::updateItems() {
 
 	ItemList all(listFuel.begin(), listFuel.end());
 	all.insert(all.end(), listIngredient.begin(), listIngredient.end());
-	for (int i = Inventory::MAX_SELECTION_SIZE; i < minecraft->player->inventory->getContainerSize(); ++i) {
-		ItemInstance* item = minecraft->player->inventory->getItem(i);
+	for (int i = Inventory::MAX_SELECTION_SIZE; i < minecraft.player()->inventory->getContainerSize(); ++i) {
+		ItemInstance* item = minecraft.player()->inventory->getItem(i);
 		if (!item) continue;
 		//LOGI("ItemInstance (%p) Id/aux/count: %d, %d, %d\n", item, item->id, item->getAuxValue(), item->count);
 		bool added = false;
@@ -481,8 +481,8 @@ void FurnaceScreen::drawSlotItemAt( Tesselator& t, const ItemInstance* item, int
 		guiSlotMarker->draw(t, xx - 2, yy - 2);
 
 	if (item && !item->isNull()) {
-		ItemRenderer::renderGuiItem(minecraft->font, minecraft->textures, item, xx + 7, yy + 8, true);
-		minecraft->gui.renderSlotText(item, xx + 3, yy + 3, true, true);
+		ItemRenderer::renderGuiItem(minecraft.font(), minecraft.textures(), item, xx + 7, yy + 8, true);
+		minecraft.gui().renderSlotText(item, xx + 3, yy + 3, true, true);
 	}
 }
 
@@ -494,9 +494,9 @@ ItemInstance FurnaceScreen::moveOver(const ItemInstance* item, int maxCount) {
 	wantedCount = Mth::Min(wantedCount, maxCount);
 
 	ItemInstance removed(item->id, wantedCount, item->getAuxValue());
-	int oldSize = minecraft->player->inventory->getNumEmptySlots();
-	if (minecraft->player->inventory->removeResource(removed)) {
-		int newSize = minecraft->player->inventory->getNumEmptySlots();
+	int oldSize = minecraft.player()->inventory->getNumEmptySlots();
+	if (minecraft.player()->inventory->removeResource(removed)) {
+		int newSize = minecraft.player()->inventory->getNumEmptySlots();
 		setIfNotSet(doRecreatePane, newSize != oldSize);
 		return removed;
 	}
@@ -510,24 +510,24 @@ void FurnaceScreen::takeAndClearSlot( int slot )
 	ItemInstance blank;
 
 	furnace->setItem(slot, &blank);
-	if (minecraft->level->isClientSide) {
+	if (minecraft.level->isClientSide) {
 		ContainerSetSlotPacket p(menu->containerId, slot, blank);
-		minecraft->raknetInstance->send(p);
+		minecraft.raknetInstance->send(p);
 	}
 
-	int oldSize = minecraft->player->inventory->getNumEmptySlots();
+	int oldSize = minecraft.player()->inventory->getNumEmptySlots();
 
-	if (!minecraft->player->inventory->add(&oldItem))
-		minecraft->player->drop(new ItemInstance(oldItem), false);
+	if (!minecraft.player()->inventory->add(&oldItem))
+		minecraft.player()->drop(new ItemInstance(oldItem), false);
 
-	int newSize = minecraft->player->inventory->getNumEmptySlots();
+	int newSize = minecraft.player()->inventory->getNumEmptySlots();
 	setIfNotSet(doRecreatePane, newSize != oldSize);
 }
 
 bool FurnaceScreen::handleAddItem( int slot, const ItemInstance* item )
 {
 	ItemInstance* furnaceItem = furnace->getItem(slot);
-	int oldSize = minecraft->player->inventory->getNumEmptySlots();
+	int oldSize = minecraft.player()->inventory->getNumEmptySlots();
 
 	if (item->id == furnaceItem->id) {
 		// If stackable, stack them! Else deny the addition
@@ -545,11 +545,11 @@ bool FurnaceScreen::handleAddItem( int slot, const ItemInstance* item )
 		player->containerMenu->setSlot(slot, &moved);
 	}
 	 
-	if (minecraft->level->isClientSide) {
+	if (minecraft.level->isClientSide) {
 		ContainerSetSlotPacket p(menu->containerId, slot, *furnaceItem);
-		minecraft->raknetInstance->send(p);
+		minecraft.raknetInstance->send(p);
 	}
 
-	int newSize = minecraft->player->inventory->getNumEmptySlots();
+	int newSize = minecraft.player()->inventory->getNumEmptySlots();
 	return (newSize != oldSize);
 }

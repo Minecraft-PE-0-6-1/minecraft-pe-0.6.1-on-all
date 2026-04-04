@@ -21,7 +21,7 @@
 #include "network/packet/HurtArmorPacket.hpp"
 
 ServerPlayer::ServerPlayer( Minecraft* minecraft, Level* level )
-:   super(level, minecraft->isCreativeMode()),
+:   super(level, minecraft.isCreativeMode()),
 	_mc(minecraft),
 	_prevHealth(-999),
 	_containerCounter(0)
@@ -37,7 +37,7 @@ ServerPlayer::~ServerPlayer() {
 void ServerPlayer::stopSleepInBed(bool forcefulWakeUp, bool updateLevelList, bool saveRespawnPoint) {
 	if(isSleeping()) {
 		AnimatePacket packet(AnimatePacket::WAKE_UP, this);
-		_mc->raknetInstance->send(owner, packet);
+		_mc.raknetInstance->send(owner, packet);
 	}
 	super::stopSleepInBed(forcefulWakeUp, updateLevelList, saveRespawnPoint);
 }
@@ -61,13 +61,13 @@ void ServerPlayer::tick() {
 	if (health != _prevHealth) {
 		_prevHealth = health;
 		SetHealthPacket packet(health);
-		_mc->raknetInstance->send(owner, packet);
+		_mc.raknetInstance->send(owner, packet);
 	}
 }
 
 void ServerPlayer::take( Entity* e, int orgCount ) {
 	TakeItemEntityPacket packet(e->entityId, entityId);
-	_mc->raknetInstance->send(packet);
+	_mc.raknetInstance->send(packet);
 
 	super::take(e, orgCount);
 }
@@ -75,14 +75,14 @@ void ServerPlayer::take( Entity* e, int orgCount ) {
 void ServerPlayer::hurtArmor(int dmg) {
     super::hurtArmor(dmg);
     HurtArmorPacket packet(dmg);
-    _mc->raknetInstance->send(owner, packet);
+    _mc.raknetInstance->send(owner, packet);
 }
 
 void ServerPlayer::openContainer( ChestTileEntity* container) {
 	LOGI("Client is opening a container\n");
 	nextContainerCounter();
 	ContainerOpenPacket packet(_containerCounter, ContainerType::CONTAINER, container->getName(), container->getContainerSize());
-	_mc->raknetInstance->send(owner, packet);
+	_mc.raknetInstance->send(owner, packet);
 	setContainerMenu(new ContainerMenu(container, container->runningId));
 }
 
@@ -90,14 +90,14 @@ void ServerPlayer::openFurnace( FurnaceTileEntity* furnace ) {
 	LOGI("Client is opening a furnace\n");
 	nextContainerCounter();
 	ContainerOpenPacket packet(_containerCounter, ContainerType::FURNACE, furnace->getName(), furnace->getContainerSize());
-	_mc->raknetInstance->send(owner, packet);
+	_mc.raknetInstance->send(owner, packet);
 	setContainerMenu(new FurnaceMenu(furnace));
 }
 
 void ServerPlayer::closeContainer() {
 	LOGI("Client is closing a container\n");
 	ContainerClosePacket packet(containerMenu->containerId);
-	_mc->raknetInstance->send(owner, packet);
+	_mc.raknetInstance->send(owner, packet);
 	doCloseContainer();
 }
 
@@ -117,20 +117,20 @@ bool ServerPlayer::hasResource( int id ) {
 //
 void ServerPlayer::setContainerData( BaseContainerMenu* menu, int id, int value ) {
 	ContainerSetDataPacket p(menu->containerId, id, value);
-	_mc->raknetInstance->send(owner, p);
+	_mc.raknetInstance->send(owner, p);
 	//LOGI("Setting container data for id %d: %d\n", id, value);
 }
 
 void ServerPlayer::slotChanged( BaseContainerMenu* menu, int slot, const ItemInstance& item, bool isResultSlot ) {
 	if (isResultSlot) return;
 	ContainerSetSlotPacket p(menu->containerId, slot, item);
-	_mc->raknetInstance->send(owner, p);
+	_mc.raknetInstance->send(owner, p);
 	//LOGI("Slot %d changed\n", slot);
 }
 
 void ServerPlayer::refreshContainer( BaseContainerMenu* menu, const std::vector<ItemInstance>& items ) {
 	ContainerSetContentPacket p(menu->containerId, menu->getItems());
-	_mc->raknetInstance->send(owner, p);
+	_mc.raknetInstance->send(owner, p);
 	//LOGI("Refreshing container with %d items\n", items.size());
 }
 
@@ -155,11 +155,11 @@ void ServerPlayer::setContainerMenu( BaseContainerMenu* menu ) {
 
 void ServerPlayer::completeUsingItem() {
 	EntityEventPacket p(entityId, EntityEvent::USE_ITEM_COMPLETE);
-	_mc->raknetInstance->send(owner, p);
+	_mc.raknetInstance->send(owner, p);
 	super::completeUsingItem();
 }
 
 void ServerPlayer::displayClientMessage( const std::string& messageId ) {
 	ChatPacket package(messageId);
-	_mc->raknetInstance->send(owner, package);
+	_mc.raknetInstance->send(owner, package);
 }

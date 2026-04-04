@@ -1,5 +1,5 @@
 #include "Slider.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/renderer/Textures.hpp"
 #include "client/gui/Screen.hpp"
 #include "locale/I18n.hpp"
@@ -9,7 +9,7 @@
 
 Slider::Slider(OptionId optId) : m_mouseDownOnElement(false), m_optId(optId), m_numSteps(0) {}
 
-void Slider::render( Minecraft* minecraft, int xm, int ym ) {
+void Slider::render( MinecraftClient& minecraft, int xm, int ym ) {
 	int xSliderStart = x + 5;
 	int xSliderEnd = x + width - 5;
 	int ySliderStart = y + 6;
@@ -28,26 +28,26 @@ void Slider::render( Minecraft* minecraft, int xm, int ym ) {
 		}
 	}
 
-	minecraft->textures->loadAndBindTexture("gui/touchgui.png");
+	minecraft.textures().loadAndBindTexture("gui/touchgui.png");
 	blit(xSliderStart + (int)(m_percentage * barWidth) - handleSizeX / 2, y, 226, 126, handleSizeX, handleSizeY, handleSizeX, handleSizeY);
 }
 
-void Slider::mouseClicked( Minecraft* minecraft, int x, int y, int buttonNum ) {
+void Slider::mouseClicked( MinecraftClient& minecraft, int x, int y, int buttonNum ) {
 	if(pointInside(x, y)) {
 		m_mouseDownOnElement = true;
 	}
 }
 
-void Slider::mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum ) {
+void Slider::mouseReleased( MinecraftClient& minecraft, int x, int y, int buttonNum ) {
 	m_mouseDownOnElement = false;
 } 
 
-void Slider::tick(Minecraft* minecraft) {
-	if(minecraft->screen != NULL) {
+void Slider::tick(MinecraftClient& minecraft) {
+	if(minecraft.getScreen()!= NULL) {
 		int xm = Mouse::getX();
 		int ym = Mouse::getY();
 		
-		minecraft->screen->toGUICoordinate(xm, ym);
+		minecraft.getScreen()->toGUICoordinate(xm, ym);
 
 		if(m_mouseDownOnElement) {
 			m_percentage = float(xm - x) / float(width);
@@ -56,24 +56,24 @@ void Slider::tick(Minecraft* minecraft) {
 	}
 }
 
-SliderFloat::SliderFloat(Minecraft* minecraft, OptionId option) 
-: Slider(option), m_option(dynamic_cast<OptionFloat*>(minecraft->options.getOpt(option)))
+SliderFloat::SliderFloat(MinecraftClient& minecraft, OptionId option) 
+: Slider(option), m_option(dynamic_cast<OptionFloat*>(minecraft.options().getOpt(option)))
 {
 	m_percentage = Mth::clamp((m_option->get() - m_option->getMin()) / (m_option->getMax() - m_option->getMin()), 0.f, 1.f);
 }
 
-SliderInt::SliderInt(Minecraft* minecraft, OptionId option) 
-: Slider(option), m_option(dynamic_cast<OptionInt*>(minecraft->options.getOpt(option)))
+SliderInt::SliderInt(MinecraftClient& minecraft, OptionId option) 
+: Slider(option), m_option(dynamic_cast<OptionInt*>(minecraft.options().getOpt(option)))
 {
 	m_numSteps = m_option->getMax() - m_option->getMin() + 1;
 	m_percentage = float(m_option->get() - m_option->getMin()) / (m_numSteps-1);
 }
 
-void SliderInt::render( Minecraft* minecraft, int xm, int ym ) {
+void SliderInt::render( MinecraftClient& minecraft, int xm, int ym ) {
 	Slider::render(minecraft, xm, ym);
 }
 
-void SliderInt::mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum ) {
+void SliderInt::mouseReleased( MinecraftClient& minecraft, int x, int y, int buttonNum ) {
 	Slider::mouseReleased(minecraft, x, y, buttonNum);
 
 	if (pointInside(x, y)) {
@@ -81,14 +81,14 @@ void SliderInt::mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum
 		curStep = Mth::clamp(curStep + m_option->getMin(), m_option->getMin(), m_option->getMax());
 		m_percentage = float(curStep - m_option->getMin()) / (m_numSteps-1);
 
-		minecraft->options.set(m_optId, curStep);
+		minecraft.options().set(m_optId, curStep);
 	}
 }
 
-void SliderFloat::mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum ) {
+void SliderFloat::mouseReleased( MinecraftClient& minecraft, int x, int y, int buttonNum ) {
 	Slider::mouseReleased(minecraft, x, y, buttonNum);
 
 	if (pointInside(x, y)) {
-		minecraft->options.set(m_optId, m_percentage * (m_option->getMax() - m_option->getMin()) + m_option->getMin());
+		minecraft.options().set(m_optId, m_percentage * (m_option->getMax() - m_option->getMin()) + m_option->getMin());
 	}
 }

@@ -7,14 +7,15 @@
 #include "platform/input/Keyboard.hpp"
 #include "platform/input/Mouse.hpp"
 #include "client/renderer/Textures.hpp"
+#include <MinecraftClient.hpp>
 
-Screen::Screen()
+Screen::Screen(MinecraftClient& minecraft)
 :   passEvents(false),
 	clickedButton(NULL),
 	tabButtonIndex(0),
 	width(1),
 	height(1),
-	minecraft(NULL),
+	minecraft(minecraft),
 	font(NULL)
 {
 }
@@ -33,11 +34,10 @@ void Screen::render( int xm, int ym, float a )
 	}
 }
 
-void Screen::init( Minecraft* minecraft, int width, int height )
+void Screen::init(int width, int height)
 {
 	//particles = /*new*/ GuiParticles(minecraft);
-	this->minecraft = minecraft;
-	this->font = minecraft->font;
+	this->font = minecraft.font();
 	this->width = width;
 	this->height = height;
 	init();
@@ -80,8 +80,8 @@ void Screen::mouseEvent()
 	const MouseAction& e = Mouse::getEvent();
 	// forward wheel events to subclasses
 	if (e.action == MouseAction::ACTION_WHEEL) {
-		int xm = e.x * width / minecraft->width;
-		int ym = e.y * height / minecraft->height - 1;
+		int xm = e.x * width / minecraft.getScreenWidth();
+		int ym = e.y * height / minecraft.getScreenHeight() - 1;
 		mouseWheel(e.dx, e.dy, xm, ym);
 		return;
 	}
@@ -90,12 +90,12 @@ void Screen::mouseEvent()
 		return;
 
 	if (Mouse::getEventButtonState()) {
-		int xm = e.x * width / minecraft->width;
-		int ym = e.y * height / minecraft->height - 1;
+		int xm = e.x * width / minecraft.getScreenWidth();
+		int ym = e.y * height / minecraft.getScreenHeight() - 1;
 		mouseClicked(xm, ym, Mouse::getEventButton());
 	} else {
-		int xm = e.x * width / minecraft->width;
-		int ym = e.y * height / minecraft->height - 1;
+		int xm = e.x * width / minecraft.getScreenWidth();
+		int ym = e.y * height / minecraft.getScreenHeight() - 1;
 		mouseReleased(xm, ym, Mouse::getEventButton());
 	}
 }
@@ -104,7 +104,7 @@ void Screen::keyboardEvent()
 {
 	if (Keyboard::getEventKeyState()) {
 		//if (Keyboard.getEventKey() == Keyboard.KEY_F11) {
-		//    minecraft->toggleFullScreen();
+		//    minecraft.toggleFullScreen();
 		//    return;
 		//}
 		keyPressed(Keyboard::getEventKey());
@@ -121,7 +121,7 @@ void Screen::renderBackground()
 
 void Screen::renderBackground( int vo )
 {
-	if (minecraft->isLevelGenerated()) {
+	if (minecraft.isLevelGenerated()) {
 		fillGradient(0, 0, width, height, 0xc0101010, 0xd0101010);
 	} else {
 		renderDirtBackground(vo);
@@ -133,7 +133,7 @@ void Screen::renderDirtBackground( int vo )
 	//glDisable2(GL_LIGHTING);
 	glDisable2(GL_FOG);
 	Tesselator& t = Tesselator::instance;
-	minecraft->textures->loadAndBindTexture("gui/background.png");
+	minecraft.textures().loadAndBindTexture("gui/background.png");
 	glColor4f2(1, 1, 1, 1);
 	float s = 32;
 	float fvo = (float) vo;
@@ -168,8 +168,8 @@ bool Screen::closeOnPlayerHurt() {
 void Screen::keyPressed( int eventKey )
 {
 	if (eventKey == Keyboard::KEY_ESCAPE) {
-		minecraft->setScreen(NULL);
-		//minecraft->grabMouse();
+		minecraft.setScreen(NULL);
+		//minecraft.grabMouse();
 	}
 
 	// pass key events to any text boxes first
@@ -178,7 +178,7 @@ void Screen::keyPressed( int eventKey )
 	}
 
 #ifdef TABBING
-	if (minecraft->useTouchscreen())
+	if (minecraft.useTouchscreen())
 		return;
 
 
@@ -187,7 +187,7 @@ void Screen::keyPressed( int eventKey )
 	if (!tabButtonCount)
 		return;
 
-	Options& o = minecraft->options;
+	Options& o = minecraft.options;
 	if (eventKey == o.getIntValue(OPTIONS_KEY_MENU_NEXT))
 		if (++tabButtonIndex == tabButtonCount) tabButtonIndex = 0;
 	if (eventKey == o.getIntValue(OPTIONS_KEY_MENU_PREV))
@@ -195,7 +195,7 @@ void Screen::keyPressed( int eventKey )
 	if (eventKey == o.getIntValue(OPTIONS_KEY_MENU_OK)) {
 		Button* button = tabButtons[tabButtonIndex];
 		if (button->active) {
-			minecraft->soundEngine->playUI("random.click", 1, 1);
+			minecraft.soundEngine()->playUI("random.click", 1, 1);
 			buttonClicked(button);
 		}
 	}
@@ -213,7 +213,7 @@ void Screen::charPressed(char inputChar) {
 void Screen::updateTabButtonSelection()
 {
 #ifdef TABBING
-	if (minecraft->useTouchscreen())
+	if (minecraft.useTouchscreen())
 		return;
 
 	for (unsigned int i = 0; i < tabButtons.size(); ++i)
@@ -233,8 +233,8 @@ void Screen::mouseClicked( int x, int y, int buttonNum )
                 //LOGI("Hit-test successful: %p\n", button);
 				clickedButton = button;
 /*
-#if !defined(ANDROID) && !defined(__APPLE__) //if (!minecraft->isTouchscreen()) {
-					minecraft->soundEngine->playUI("random.click", 1, 1);
+#if !defined(ANDROID) && !defined(__APPLE__) //if (!minecraft.isTouchscreen()) {
+					minecraft.soundEngine()->playUI("random.click", 1, 1);
 					buttonClicked(button);
 #endif }
 */
@@ -254,12 +254,12 @@ void Screen::mouseReleased( int x, int y, int buttonNum )
 	if (!clickedButton || buttonNum != MouseAction::ACTION_LEFT) return;
 
 #if 1
-//#if defined(ANDROID) || defined(__APPLE__) //if (minecraft->isTouchscreen()) {
+//#if defined(ANDROID) || defined(__APPLE__) //if (minecraft.isTouchscreen()) {
 		for (unsigned int i = 0; i < buttons.size(); ++i) {
 			Button* button = buttons[i];
 			if (clickedButton == button && button->clicked(minecraft, x, y)) {
 				buttonClicked(button);
-				minecraft->soundEngine->playUI("random.click", 1, 1);
+				minecraft.soundEngine()->playUI("random.click", 1, 1);
 				clickedButton->released(x, y);
 			}
 		}
@@ -279,13 +279,13 @@ bool Screen::hasClippingArea( IntRectangle& out )
 }
 
 void Screen::lostFocus() {
-	for(std::vector<TextBox*>::iterator it = textBoxes.begin(); it != textBoxes.end(); ++it) {
+	for(auto it = textBoxes.begin(); it != textBoxes.end(); ++it) {
 		TextBox* tb = *it;
 		tb->loseFocus(minecraft);
 	}
 }
 
 void Screen::toGUICoordinate( int& x, int& y ) {
-	x = x * width / minecraft->width;
-	y = y * height / minecraft->height - 1;
+	x = x * width / minecraft.getScreenWidth();
+	y = y * height / minecraft.getScreenHeight() - 1;
 }

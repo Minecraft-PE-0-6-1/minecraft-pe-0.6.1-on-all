@@ -9,7 +9,7 @@
 #include "platform/input/Keyboard.hpp"
 
 class Font;
-class Minecraft;
+class MinecraftClient;
 
 class TextBox: public GuiElement
 {
@@ -18,16 +18,16 @@ public:
 	TextBox(int id, int x, int y, const std::string& msg);
 	TextBox(int id, int x, int y, int w, int h, const std::string& msg);
 
-	virtual void mouseClicked(Minecraft* minecraft, int x, int y, int buttonNum);
+	virtual void mouseClicked(MinecraftClient& minecraft, int x, int y, int buttonNum);
 
-	virtual void setFocus(Minecraft* minecraft);
-	virtual bool loseFocus(Minecraft* minecraft);
+	virtual void setFocus(MinecraftClient& minecraft);
+	virtual bool loseFocus(MinecraftClient& minecraft);
 
-	virtual void render(Minecraft* minecraft, int xm, int ym);
+	virtual void render(MinecraftClient& minecraft, int xm, int ym);
 
-	virtual void keyPressed(Minecraft* minecraft, int key);
-	virtual void charPressed(Minecraft* minecraft, char c);
-	virtual void tick(Minecraft* minecraft);
+	virtual void keyPressed(MinecraftClient& minecraft, int key);
+	virtual void charPressed(MinecraftClient& minecraft, char c);
+	virtual void tick(MinecraftClient& minecraft);
 	
 public:
 	std::string hint;

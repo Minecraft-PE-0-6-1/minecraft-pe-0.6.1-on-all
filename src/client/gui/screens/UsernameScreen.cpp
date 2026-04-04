@@ -1,6 +1,6 @@
 #include "UsernameScreen.hpp"
 #include "StartMenuScreen.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/gui/Font.hpp"
 #include "client/gui/components/Button.hpp"
 #include "platform/input/Keyboard.hpp"
@@ -66,15 +66,15 @@ void UsernameScreen::keyPressed(int eventKey)
 
 void UsernameScreen::removed()
 {
-    minecraft->platform()->hideKeyboard();
+    minecraft.platform()->hideKeyboard();
 }
 
 void UsernameScreen::buttonClicked(Button* button)
 {
     if (button == &_btnDone && !tUsername.text.empty()) {
-        minecraft->options.set(OPTIONS_USERNAME, tUsername.text);
-        minecraft->options.save();
-        minecraft->setScreen(NULL); // goes to StartMenuScreen
+        minecraft.options().set(OPTIONS_USERNAME, tUsername.text);
+        minecraft.options().save();
+        minecraft.setScreen(NULL); // goes to StartMenuScreen
     }
 }
 

@@ -14,14 +14,14 @@ GuiComponent::~GuiComponent()
 {
 }
 
-void GuiComponent::drawCenteredString( Font* font, const std::string& str, int x, int y, int color )
+void GuiComponent::drawCenteredString( Font& font, const std::string& str, int x, int y, int color )
 {
-	font->drawShadow(str, (float)(x - font->width(str) / 2), (float)(y - font->height(str) / 2), color);
+	font.drawShadow(str, (float)(x - font.width(str) / 2), (float)(y - font.height(str) / 2), color);
 }
 
-void GuiComponent::drawString( Font* font, const std::string& str, int x, int y, int color )
+void GuiComponent::drawString( Font& font, const std::string& str, int x, int y, int color )
 {
-	font->drawShadow(str, (float)x, (float)y /*- font->height(str)/2*/, color);
+	font.drawShadow(str, (float)x, (float)y /*- font.height(str)/2*/, color);
 }
 
 void GuiComponent::blit( int x, int y, int sx, int sy, int w, int h, int sw/*=0*/, int sh/*=0*/ )

@@ -385,7 +385,7 @@ void Minecraft::hostMultiplayer(int port) {
 
 void* Minecraft::prepareLevel_tspawn(void *p_param) {
 	Minecraft* mc = (Minecraft*) p_param;
-	mc->generateLevel("Currently not used", mc->level);
+	mc.generateLevel("Currently not used", mc.level);
 	return 0;
 }
 

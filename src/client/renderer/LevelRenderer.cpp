@@ -31,9 +31,9 @@
 /* static */ const int LevelRenderer::CHUNK_SIZE = 16;
 #endif
 
-LevelRenderer::LevelRenderer( Minecraft* mc)
+LevelRenderer::LevelRenderer( MinecraftClient& mc)
 :	mc(mc),
-	textures(mc->textures),
+	textures(mc.textures()),
 	level(NULL),
 	cullStep(0),
 
@@ -149,16 +149,16 @@ void LevelRenderer::allChanged()
 {
 	deleteChunks();
 
-	bool fancy = mc->options.getBooleanValue(OPTIONS_FANCY_GRAPHICS);
+	bool fancy = mc.options.getBooleanValue(OPTIONS_FANCY_GRAPHICS);
 
 	Tile::leaves->setFancy(fancy);
 	Tile::leaves_carried->setFancy(fancy);
-	lastViewDistance = mc->options.getIntValue(OPTIONS_VIEW_DISTANCE);
+	lastViewDistance = mc.options.getIntValue(OPTIONS_VIEW_DISTANCE);
 
 	int dist = (512 >> 3) << (3 - lastViewDistance);
-	if (lastViewDistance <= 2 && mc->isPowerVR())
+	if (lastViewDistance <= 2 && mc.isPowerVR())
 		dist = (int)((float)dist * 0.8f);
-	LOGI("last: %d, power: %d\n", lastViewDistance, mc->isPowerVR());
+	LOGI("last: %d, power: %d\n", lastViewDistance, mc.isPowerVR());
 
 	#if defined(RPI)
 		dist *= 0.6f;
@@ -214,7 +214,7 @@ void LevelRenderer::allChanged()
 	}
 
 	if (level != NULL) {
-		Entity* player = mc->cameraTargetPlayer;
+		Entity* player = mc.cameraTargetPlayer;
 		if (player != NULL) {
 			this->resortChunks(Mth::floor(player->x), Mth::floor(player->y), Mth::floor(player->z));
 			DistanceChunkSorter distanceSorter(player);
@@ -297,7 +297,7 @@ void LevelRenderer::resortChunks( int xc, int yc, int zc )
 
 int LevelRenderer::render( Mob* player, int layer, float alpha )
 {
-	if (mc->options.getIntValue(OPTIONS_VIEW_DISTANCE) != lastViewDistance) {
+	if (mc.options.getIntValue(OPTIONS_VIEW_DISTANCE) != lastViewDistance) {
 		allChanged();
 	}
 
@@ -336,7 +336,7 @@ int LevelRenderer::render( Mob* player, int layer, float alpha )
 	}
 
 	int count = 0;
-	if (occlusionCheck && !mc->options.getBooleanValue(OPTIONS_ANAGLYPH_3D) && layer == 0) {
+	if (occlusionCheck && !mc.options.getBooleanValue(OPTIONS_ANAGLYPH_3D) && layer == 0) {
 		int from = 0;
 		int to = 16;
 		//checkQueryResults(from, to);
@@ -439,7 +439,7 @@ void LevelRenderer::renderDebug(const AABB& b, float a) const {
 	t.begin();
 	t.color(255, 255, 255, 255);
 
-	t.offset(((Mob*)mc->player)->getPos(a).negated());
+	t.offset(((Mob*)mc.player)->getPos(a).negated());
 
 	// up
 	t.vertexUV(x0, y0, z1, u0, v1);
@@ -495,7 +495,7 @@ void LevelRenderer::render(const AABB& b) const
 	//t.begin();
 	t.color(255, 255, 255, 255);
 
-	t.offset(((Mob*)mc->player)->getPos(0).negated());
+	t.offset(((Mob*)mc.player)->getPos(0).negated());
 
 	t.begin(GL_LINE_STRIP);
 	t.vertex(b.x0, b.y0, b.z0);
@@ -558,7 +558,7 @@ int LevelRenderer::renderChunks( int from, int to, int layer, float alpha )
 		}
 	}
 
-	Mob* player = mc->cameraTargetPlayer;
+	Mob* player = mc.cameraTargetPlayer;
 	float xOff = player->xOld + (player->x - player->xOld) * alpha;
 	float yOff = player->yOld + (player->y - player->yOld) * alpha;
 	float zOff = player->zOld + (player->z - player->zOld) * alpha;
@@ -917,14 +917,14 @@ void LevelRenderer::renderEntities(Vec3 cam, Culler* culler, float a) {
     }
 
 	TIMER_PUSH("prepare");
-    TileEntityRenderDispatcher::getInstance()->prepare(level, textures, mc->font, mc->cameraTargetPlayer, a);
-    EntityRenderDispatcher::getInstance()->prepare(level, mc->font, mc->cameraTargetPlayer, &mc->options, a);
+    TileEntityRenderDispatcher::getInstance()->prepare(level, textures, mc.getFont(), mc.cameraTargetPlayer, a);
+    EntityRenderDispatcher::getInstance()->prepare(level, mc.getFont(), mc.cameraTargetPlayer, &mc.options, a);
 
     totalEntities = 0;
     renderedEntities = 0;
     culledEntities = 0;
 
-	Entity* player = mc->cameraTargetPlayer;
+	Entity* player = mc.cameraTargetPlayer;
     EntityRenderDispatcher::xOff = TileEntityRenderDispatcher::xOff = (player->xOld + (player->x - player->xOld) * a);
     EntityRenderDispatcher::yOff = TileEntityRenderDispatcher::yOff = (player->yOld + (player->y - player->yOld) * a);
     EntityRenderDispatcher::zOff = TileEntityRenderDispatcher::zOff = (player->zOld + (player->z - player->zOld) * a);
@@ -940,12 +940,12 @@ void LevelRenderer::renderEntities(Vec3 cam, Culler* culler, float a) {
 		for (int i = 0; i < totalEntities; i++) {
 			Entity* entity = entities[i];
 
-			bool thirdPerson = mc->options.getBooleanValue(OPTIONS_THIRD_PERSON_VIEW);
+			bool thirdPerson = mc.options.getBooleanValue(OPTIONS_THIRD_PERSON_VIEW);
 
 			if (entity->shouldRender(cam) && culler->isVisible(entity->bb))
 			{
-				if (entity == mc->cameraTargetPlayer && thirdPerson == 0 && mc->cameraTargetPlayer->isPlayer() && !((Player*)mc->cameraTargetPlayer)->isSleeping()) continue;
-				if (entity == mc->cameraTargetPlayer && !thirdPerson)
+				if (entity == mc.cameraTargetPlayer && thirdPerson == 0 && mc.cameraTargetPlayer->isPlayer() && !((Player*)mc.cameraTargetPlayer)->isSleeping()) continue;
+				if (entity == mc.cameraTargetPlayer && !thirdPerson)
 					continue;
 				if (!level->hasChunkAt(Mth::floor(entity->x), Mth::floor(entity->y), Mth::floor(entity->z)))
 					continue;
@@ -992,15 +992,15 @@ std::string LevelRenderer::gatherStats1() {
 //    IntBuffer resultBuffer = MemoryTracker.createIntBuffer(64);
 
 void LevelRenderer::renderSky(float alpha) {
-    if (mc->level->dimension->foggy) return;
+    if (mc.level->dimension->foggy) return;
 
     glDisable2(GL_TEXTURE_2D);
-    Vec3 sc = level->getSkyColor(mc->cameraTargetPlayer, alpha);
+    Vec3 sc = level->getSkyColor(mc.cameraTargetPlayer, alpha);
     float sr = (float) sc.x;
     float sg = (float) sc.y;
     float sb = (float) sc.z;// + 0.5f;
 
-    if (mc->options.getBooleanValue(OPTIONS_ANAGLYPH_3D)) {
+    if (mc.options.getBooleanValue(OPTIONS_ANAGLYPH_3D)) {
         float srr = (sr * 30.0f + sg * 59.0f + sb * 11.0f) / 100.0f;
         float sgg = (sr * 30.0f + sg * 70.0f) / (100.0f);
         float sbb = (sr * 30.0f + sb * 70.0f) / (100.0f);
@@ -1023,10 +1023,10 @@ void LevelRenderer::renderSky(float alpha) {
 }
 
 void LevelRenderer::renderClouds( float alpha ) {
-	//if (!mc->level->dimension->isNaturalDimension()) return;
+	//if (!mc.level->dimension->isNaturalDimension()) return;
 	glEnable2(GL_TEXTURE_2D);
 	glDisable(GL_CULL_FACE);
-	float yOffs = (float) (mc->player->yOld + (mc->player->y - mc->player->yOld) * alpha);
+	float yOffs = (float) (mc.player->yOld + (mc.player->y - mc.player->yOld) * alpha);
 	int s = 32;
 	int d = 256 / s;
 	Tesselator& t = Tesselator::instance;
@@ -1045,14 +1045,14 @@ void LevelRenderer::renderClouds( float alpha ) {
 	float scale = 1 / 2048.0f;
 
 	float time = (ticks + alpha);
-	float xo = mc->player->xo + (mc->player->x - mc->player->xo) * alpha + time * 0.03f;
-	float zo = mc->player->zo + (mc->player->z - mc->player->zo) * alpha;
+	float xo = mc.player->xo + (mc.player->x - mc.player->xo) * alpha + time * 0.03f;
+	float zo = mc.player->zo + (mc.player->z - mc.player->zo) * alpha;
 	int xOffs = Mth::floor(xo / 2048);
 	int zOffs = Mth::floor(zo / 2048);
 	xo -= xOffs * 2048;
 	zo -= zOffs * 2048;
 
-	float yy = /*level.dimension.getCloudHeight()*/ 128 - yOffs + 0.33f;//mc->player->y + 1;
+	float yy = /*level.dimension.getCloudHeight()*/ 128 - yOffs + 0.33f;//mc.player->y + 1;
 	float uo = (float) (xo * scale);
 	float vo = (float) (zo * scale);
 	t.begin();
@@ -1077,16 +1077,16 @@ void LevelRenderer::playSound(const std::string& name, float x, float y, float z
 	float dd = 16;
 
     if (volume > 1) dd *= volume;
-    if (mc->cameraTargetPlayer->distanceToSqr(x, y, z) < dd * dd) {
-        mc->soundEngine->play(name, x, y, z, volume, pitch);
+    if (mc.cameraTargetPlayer->distanceToSqr(x, y, z) < dd * dd) {
+        mc.soundEngine->play(name, x, y, z, volume, pitch);
     }
 }
 
 void LevelRenderer::addParticle(const std::string& name, float x, float y, float z, float xa, float ya, float za, int data) {
 
-	float xd = mc->cameraTargetPlayer->x - x;
-    float yd = mc->cameraTargetPlayer->y - y;
-    float zd = mc->cameraTargetPlayer->z - z;
+	float xd = mc.cameraTargetPlayer->x - x;
+    float yd = mc.cameraTargetPlayer->y - y;
+    float zd = mc.cameraTargetPlayer->z - z;
 	float distanceSquared = xd * xd + yd * yd + zd * zd;
 
 	//Particle* p = NULL;
@@ -1095,7 +1095,7 @@ void LevelRenderer::addParticle(const std::string& name, float x, float y, float
 
 	//if (p) {
 	//	if (distanceSquared < 32 * 32) {
-	//		mc->particleEngine->add(p);
+	//		mc.particleEngine->add(p);
 	//	} else { delete p; }
 	//	return;
 	//}
@@ -1106,21 +1106,21 @@ void LevelRenderer::addParticle(const std::string& name, float x, float y, float
 	//static Stopwatch sw;
 	//sw.start();
 
-    if (name == "bubble") mc->particleEngine->add(new BubbleParticle(level, x, y, z, xa, ya, za));
-	else if (name == "crit") mc->particleEngine->add(new CritParticle2(level, x, y, z, xa, ya, za));
-	else if (name == "smoke") mc->particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za));
-    //else if (name == "note") mc->particleEngine->add(new NoteParticle(level, x, y, z, xa, ya, za));
-    else if (name == "explode") mc->particleEngine->add(new ExplodeParticle(level, x, y, z, xa, ya, za));
-    else if (name == "flame") mc->particleEngine->add(new FlameParticle(level, x, y, z, xa, ya, za));
-    else if (name == "lava") mc->particleEngine->add(new LavaParticle(level, x, y, z));
-    //else if (name == "splash") mc->particleEngine->add(new SplashParticle(level, x, y, z, xa, ya, za));
-	else if (name == "largesmoke") mc->particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za, 2.5f));
-    else if (name == "reddust") mc->particleEngine->add(new RedDustParticle(level, x, y, z, xa, ya, za));
-	else if (name == "iconcrack") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, xa, ya, za, Item::items[data]));
-	else if (name == "snowballpoof") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::snowBall));
-    //else if (name == "snowballpoof") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::snowBall));
-    //else if (name == "slime") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::slimeBall));
-    //else if (name == "heart") mc->particleEngine->add(new HeartParticle(level, x, y, z, xa, ya, za));
+    if (name == "bubble") mc.particleEngine->add(new BubbleParticle(level, x, y, z, xa, ya, za));
+	else if (name == "crit") mc.particleEngine->add(new CritParticle2(level, x, y, z, xa, ya, za));
+	else if (name == "smoke") mc.particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za));
+    //else if (name == "note") mc.particleEngine->add(new NoteParticle(level, x, y, z, xa, ya, za));
+    else if (name == "explode") mc.particleEngine->add(new ExplodeParticle(level, x, y, z, xa, ya, za));
+    else if (name == "flame") mc.particleEngine->add(new FlameParticle(level, x, y, z, xa, ya, za));
+    else if (name == "lava") mc.particleEngine->add(new LavaParticle(level, x, y, z));
+    //else if (name == "splash") mc.particleEngine->add(new SplashParticle(level, x, y, z, xa, ya, za));
+	else if (name == "largesmoke") mc.particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za, 2.5f));
+    else if (name == "reddust") mc.particleEngine->add(new RedDustParticle(level, x, y, z, xa, ya, za));
+	else if (name == "iconcrack") mc.particleEngine->add(new BreakingItemParticle(level, x, y, z, xa, ya, za, Item::items[data]));
+	else if (name == "snowballpoof") mc.particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::snowBall));
+    //else if (name == "snowballpoof") mc.particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::snowBall));
+    //else if (name == "slime") mc.particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::slimeBall));
+    //else if (name == "heart") mc.particleEngine->add(new HeartParticle(level, x, y, z, xa, ya, za));
 
 	//sw.stop();
 	//sw.printEvery(50, "add-particle-string");
@@ -1128,9 +1128,9 @@ void LevelRenderer::addParticle(const std::string& name, float x, float y, float
 
 /*
 void LevelRenderer::addParticle(ParticleType::Id name, float x, float y, float z, float xa, float ya, float za, int data) {
-	float xd = mc->cameraTargetPlayer->x - x;
-	float yd = mc->cameraTargetPlayer->y - y;
-	float zd = mc->cameraTargetPlayer->z - z;
+	float xd = mc.cameraTargetPlayer->x - x;
+	float yd = mc.cameraTargetPlayer->y - y;
+	float zd = mc.cameraTargetPlayer->z - z;
 
 	const float particleDistance = 16;
 	if (xd * xd + yd * yd + zd * zd > particleDistance * particleDistance) return;
@@ -1140,15 +1140,15 @@ void LevelRenderer::addParticle(ParticleType::Id name, float x, float y, float z
 
 	//Particle* p = NULL;
 
-	if (name == ParticleType::bubble)		mc->particleEngine->add( new BubbleParticle(level, x, y, z, xa, ya, za) );
-	else if (name == ParticleType::crit)		mc->particleEngine->add(new CritParticle2(level, x, y, z, xa, ya, za) );
-	else if (name == ParticleType::smoke)		mc->particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za) );
-	else if (name == ParticleType::explode)		mc->particleEngine->add( new ExplodeParticle(level, x, y, z, xa, ya, za) );
-	else if (name == ParticleType::flame)		mc->particleEngine->add( new FlameParticle(level, x, y, z, xa, ya, za) );
-	else if (name == ParticleType::lava)		mc->particleEngine->add( new LavaParticle(level, x, y, z) );
-	else if (name == ParticleType::largesmoke)	mc->particleEngine->add( new SmokeParticle(level, x, y, z, xa, ya, za, 2.5f) );
-	else if (name == ParticleType::reddust)		mc->particleEngine->add( new RedDustParticle(level, x, y, z, xa, ya, za) );
-	else if (name == ParticleType::iconcrack)	mc->particleEngine->add( new BreakingItemParticle(level, x, y, z, xa, ya, za, Item::items[data]) );
+	if (name == ParticleType::bubble)		mc.particleEngine->add( new BubbleParticle(level, x, y, z, xa, ya, za) );
+	else if (name == ParticleType::crit)		mc.particleEngine->add(new CritParticle2(level, x, y, z, xa, ya, za) );
+	else if (name == ParticleType::smoke)		mc.particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za) );
+	else if (name == ParticleType::explode)		mc.particleEngine->add( new ExplodeParticle(level, x, y, z, xa, ya, za) );
+	else if (name == ParticleType::flame)		mc.particleEngine->add( new FlameParticle(level, x, y, z, xa, ya, za) );
+	else if (name == ParticleType::lava)		mc.particleEngine->add( new LavaParticle(level, x, y, z) );
+	else if (name == ParticleType::largesmoke)	mc.particleEngine->add( new SmokeParticle(level, x, y, z, xa, ya, za, 2.5f) );
+	else if (name == ParticleType::reddust)		mc.particleEngine->add( new RedDustParticle(level, x, y, z, xa, ya, za) );
+	else if (name == ParticleType::iconcrack)	mc.particleEngine->add( new BreakingItemParticle(level, x, y, z, xa, ya, za, Item::items[data]) );
 
 	//switch (name) {
 	//	case ParticleType::bubble:		p = new BubbleParticle(level, x, y, z, xa, ya, za); break;
@@ -1170,7 +1170,7 @@ void LevelRenderer::addParticle(ParticleType::Id name, float x, float y, float z
 	//		break;
 	//}
 	//if (p) {
-	//	mc->particleEngine->add(p);
+	//	mc.particleEngine->add(p);
 	//}
 
 	//sw.stop();
@@ -1261,29 +1261,29 @@ int _t_keepPic = -1;
 void LevelRenderer::takePicture( TripodCamera* cam, Entity* entity )
 {
 	// Push old values
-	Mob* oldCameraEntity = mc->cameraTargetPlayer;
-	bool hideGui = mc->options.getBooleanValue(OPTIONS_HIDEGUI);
-	bool thirdPerson = mc->options.getBooleanValue(OPTIONS_THIRD_PERSON_VIEW);
+	Mob* oldCameraEntity = mc.cameraTargetPlayer;
+	bool hideGui = mc.options.getBooleanValue(OPTIONS_HIDEGUI);
+	bool thirdPerson = mc.options.getBooleanValue(OPTIONS_THIRD_PERSON_VIEW);
 
 	// @huge @attn: This is highly illegal, super temp!
-	mc->cameraTargetPlayer = (Mob*)cam;
-	mc->options.set(OPTIONS_HIDEGUI, true);
-	mc->options.set(OPTIONS_THIRD_PERSON_VIEW, false);
+	mc.cameraTargetPlayer = (Mob*)cam;
+	mc.options.set(OPTIONS_HIDEGUI, true);
+	mc.options.set(OPTIONS_THIRD_PERSON_VIEW, false);
 
-	mc->gameRenderer->renderLevel(0);
+	mc.gameRenderer->renderLevel(0);
 
 	// Pop values back
-	mc->cameraTargetPlayer = oldCameraEntity;
-	mc->options.set(OPTIONS_HIDEGUI, hideGui);
-	mc->options.set(OPTIONS_THIRD_PERSON_VIEW, thirdPerson);
+	mc.cameraTargetPlayer = oldCameraEntity;
+	mc.options.set(OPTIONS_HIDEGUI, hideGui);
+	mc.options.set(OPTIONS_THIRD_PERSON_VIEW, thirdPerson);
 
 	_t_keepPic = -1;
 
 	// Save image
 	static char filename[256];
-	sprintf(filename, "%s/games/com.mojang/img_%.4d.jpg", mc->externalStoragePath.c_str(), getTimeMs());
+	sprintf(filename, "%s/games/com.mojang/img_%.4d.jpg", mc.externalStoragePath.c_str(), getTimeMs());
 
-	mc->platform()->saveScreenshot(filename, mc->width, mc->height);
+	mc.platform()->saveScreenshot(filename, mc.getScreenWidth(), mc.getScreenHeight());
 }
 
 void LevelRenderer::levelEvent(Player* player, int type, int x, int y, int z, int data) {

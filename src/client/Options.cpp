@@ -238,7 +238,7 @@ void Options::load() {
 		// }
 		
 		// if (key == OptionStrings::Controls_UseTouchJoypad) {
-		// 	m_options[OPTIONS_IS_JOY_TOUCH_AREA] = readBool(value) && minecraft->useTouchscreen();
+		// 	m_options[OPTIONS_IS_JOY_TOUCH_AREA] = readBool(value) && minecraft.useTouchscreen();
 		// }
 
 		// // Feedback

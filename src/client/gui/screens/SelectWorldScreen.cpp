@@ -65,12 +65,12 @@ void WorldSelectionList::renderItem( int i, int x, int y, int h, Tesselator& t )
 	const int TX = centerx - itemWidth / 2 + 5;
 
 	StringVector v = _descriptions[i];
-	drawString(minecraft->font, v[0].c_str(), TX, TY +  0, textColor);
-	drawString(minecraft->font, v[1].c_str(), TX, TY + 10, textColor2);
-	drawString(minecraft->font, v[2].c_str(), TX, TY + 20, textColor2);
-	drawString(minecraft->font, v[3].c_str(), TX, TY + 30, textColor2);
+	drawString(minecraft.font(), v[0].c_str(), TX, TY +  0, textColor);
+	drawString(minecraft.font(), v[1].c_str(), TX, TY + 10, textColor2);
+	drawString(minecraft.font(), v[2].c_str(), TX, TY + 20, textColor2);
+	drawString(minecraft.font(), v[3].c_str(), TX, TY + 30, textColor2);
 
-	minecraft->textures->loadAndBindTexture(_imageNames[i]);
+	minecraft.textures().loadAndBindTexture(_imageNames[i]);
 	t.color(0.3f, 1.0f, 0.2f);
 
 	//float x0 = (float)x;
@@ -114,7 +114,7 @@ void WorldSelectionList::commit() {
 
 		std::stringstream ss;
 		ss << level.name << "/preview.png";
-		TextureId id = Textures::InvalidId;//minecraft->textures->loadTexture(ss.str(), false);
+		TextureId id = Textures::InvalidId;//minecraft.textures().loadTexture(ss.str(), false);
 
 		if (id != Textures::InvalidId) {
 			_imageNames.push_back( ss.str() );
@@ -124,7 +124,7 @@ void WorldSelectionList::commit() {
 
 		StringVector lines;
 		lines.push_back(level.name);
-		lines.push_back(minecraft->platform()->getDateString(level.lastPlayed));
+		lines.push_back(minecraft.platform()->getDateString(level.lastPlayed));
 		lines.push_back(level.id);
 		lines.push_back(LevelSettings::gameTypeToString(level.gameType));
 		_descriptions.push_back(lines);
@@ -247,19 +247,19 @@ void SelectWorldScreen::buttonClicked(Button* button)
 		// open in-game world-creation screen instead of using platform dialog
 		if (!_hasStartedLevel) {
 		std::string name = getUniqueLevelName("world");
-		minecraft->setScreen(new SimpleChooseLevelScreen(name));
+		minecraft.setScreen(new SimpleChooseLevelScreen(name));
 	}
 	}
 	if (button->id == bDelete.id) {
 		if (isIndexValid(worldsList->selectedItem)) {
 			LevelSummary level = worldsList->levels[worldsList->selectedItem];
 			LOGI("level: %s, %s\n", level.id.c_str(), level.name.c_str());
-			minecraft->setScreen( new DeleteWorldScreen(level) );
+			minecraft.setScreen( new DeleteWorldScreen(level) );
 		}
 	}
 	if (button->id == bBack.id) {
-		minecraft->cancelLocateMultiplayer();
-		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+		minecraft.cancelLocateMultiplayer();
+		minecraft.screenChooser().setScreen(SCREEN_STARTMENU);
 	}
 	if (button->id == bWorldView.id) {
 		// Try to "click" the item in the middle
@@ -271,8 +271,8 @@ bool SelectWorldScreen::handleBackEvent(bool isDown)
 {
 	if (!isDown)
 	{
-		minecraft->cancelLocateMultiplayer();
-		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+		minecraft.cancelLocateMultiplayer();
+		minecraft.screenChooser().setScreen(SCREEN_STARTMENU);
 	}
 	return true;
 }
@@ -291,9 +291,9 @@ void SelectWorldScreen::tick()
 	worldsList->tick();
 
 	if (worldsList->hasPickedLevel) {
-		minecraft->selectLevel(worldsList->pickedLevel.id, worldsList->pickedLevel.name, LevelSettings::None());
-		minecraft->hostMultiplayer();
-		minecraft->setScreen(new ProgressScreen());
+		minecraft.selectLevel(worldsList->pickedLevel.id, worldsList->pickedLevel.name, LevelSettings::None());
+		minecraft.hostMultiplayer();
+		minecraft.setScreen(new ProgressScreen());
 		_hasStartedLevel = true;
 		return;
 	}
@@ -379,7 +379,7 @@ void SelectWorldScreen::render( int xm, int ym, float a )
 	//Performance::watches.get("sws-screen").stop();
 
 	//Performance::watches.get("sws-string").start();
-	drawCenteredString(minecraft->font, "Select world", width / 2, 8, 0xffffffff);
+	drawCenteredString(minecraft.font(), "Select world", width / 2, 8, 0xffffffff);
 	//Performance::watches.get("sws-string").stop();
 
 	//Performance::watches.get("sws-full").stop();
@@ -388,7 +388,7 @@ void SelectWorldScreen::render( int xm, int ym, float a )
 
 void SelectWorldScreen::loadLevelSource()
 {
-	LevelStorageSource* levelSource = minecraft->getLevelSource();
+	LevelStorageSource* levelSource = minecraft.getLevelSource();
 	levelSource->getLevelList(levels);
 	std::sort(levels.begin(), levels.end());
 
@@ -438,9 +438,9 @@ void SelectWorldScreen::mouseWheel(int dx, int dy, int xm, int ym)
 void SelectWorldScreen::keyPressed( int eventKey )
 {
 	if (bWorldView.selected) {
-		if (eventKey == minecraft->options.getIntValue(OPTIONS_KEY_RIGHT))
+		if (eventKey == minecraft.options().getIntValue(OPTIONS_KEY_RIGHT))
 			worldsList->stepLeft();
-		if (eventKey == minecraft->options.getIntValue(OPTIONS_KEY_LEFT))
+		if (eventKey == minecraft.options().getIntValue(OPTIONS_KEY_LEFT))
 			worldsList->stepRight();
 	}
 
@@ -462,8 +462,8 @@ DeleteWorldScreen::DeleteWorldScreen(const LevelSummary& level)
 void DeleteWorldScreen::postResult( bool isOk )
 {
 	if (isOk) {
-		LevelStorageSource* storageSource = minecraft->getLevelSource();
+		LevelStorageSource* storageSource = minecraft.getLevelSource();
 		storageSource->deleteLevel(_level.id);
 	}
-	minecraft->screenChooser.setScreen(SCREEN_SELECTWORLD);
+	minecraft.screenChooser().setScreen(SCREEN_SELECTWORLD);
 }

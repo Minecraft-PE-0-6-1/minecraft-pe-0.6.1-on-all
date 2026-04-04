@@ -1,7 +1,7 @@
 #include "ChooseLevelScreen.hpp"
 #include <algorithm>
 #include <set>
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 
 void ChooseLevelScreen::init() {
 	loadLevelSource();
@@ -9,7 +9,7 @@ void ChooseLevelScreen::init() {
 
 void ChooseLevelScreen::loadLevelSource()
 {
-	LevelStorageSource* levelSource = minecraft->getLevelSource();
+	LevelStorageSource* levelSource = minecraft.getLevelSource();
 	levelSource->getLevelList(levels);
 	std::sort(levels.begin(), levels.end());
 }

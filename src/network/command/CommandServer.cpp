@@ -103,9 +103,9 @@ CommandServer::CommandServer( Minecraft* mc )
 	restoreBuffer(0),
 	inited(false)
 {
-	camera = new CameraEntity(mc->level);
+	camera = new CameraEntity(mc.level);
 
-	Pos p = mc->level->getSharedSpawnPos();
+	Pos p = mc.level->getSharedSpawnPos();
 	apiPosTranslate = OffsetPosTranslator((float)-p.x, (float)-p.y, (float)-p.z);
 }
 
@@ -196,9 +196,9 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		apiPosTranslate.from(x, y, z);
 
 		if (hasData)
-			mc->level->setTileAndData(x, y, z, id, data & 15);
+			mc.level->setTileAndData(x, y, z, id, data & 15);
 		else
-			mc->level->setTile(x, y, z, id);
+			mc.level->setTile(x, y, z, id);
 
 		return NullString;
 	}
@@ -209,7 +209,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 			return Fail;
 		}
 		apiPosTranslate.from(x, y, z);
-		return ToStringOk(mc->level->getTile(x, y, z));
+		return ToStringOk(mc.level->getTile(x, y, z));
 	}
 
 	if (cmd == "world.setBlocks") {
@@ -243,9 +243,9 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		for (int z = z0; z <= z1; ++z)
 		for (int x = x0; x <= x1; ++x) {
 			if (hasData)
-				mc->level->setTileAndData(x, y, z, id, data & 15);
+				mc.level->setTileAndData(x, y, z, id, data & 15);
 			else
-				mc->level->setTile(x, y, z, id);
+				mc.level->setTile(x, y, z, id);
 		}
 		return NullString;
 	}
@@ -257,7 +257,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		}
 		x -= (int)apiPosTranslate.xo;
 		z -= (int)apiPosTranslate.zo;
-		const int y = mc->level->getHeightmap(x, z) + (int)apiPosTranslate.yo;
+		const int y = mc.level->getHeightmap(x, z) + (int)apiPosTranslate.yo;
 		return ToStringOk(y);
 	}
 
@@ -266,7 +266,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 	// Player related get, set and query
 	//
 	if (cmd == "player.setTile") {
-		if (!mc->player)
+		if (!mc.player)
 			return Fail;
 
 		int x, y, z;
@@ -275,16 +275,16 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		}
 
 		apiPosTranslate.from(x, y, z);
-		Entity* e = (Entity*) mc->player;
+		Entity* e = (Entity*) mc.player;
 		e->moveTo((float)x + 0.5f, (float)y, (float)z + 0.5f, e->yRot, e->xRot);
 		return NullString;
 	}
 
 	if (cmd == "player.getTile") {
-		if (!mc->player)
+		if (!mc.player)
 			return Fail;
 
-		Entity* e = (Entity*) mc->player;
+		Entity* e = (Entity*) mc.player;
 
 		int x = (int)e->x, y = (int)(e->y - e->heightOffset), z = (int)e->z;
 		apiPosTranslate.to(x, y, z);
@@ -292,7 +292,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 	}
 
 	if (cmd == "player.setPos") {
-		if (!mc->player)
+		if (!mc.player)
 			return Fail;
 
 		float x, y, z;
@@ -301,16 +301,16 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		}
 
 		apiPosTranslate.from(x, y, z);
-		Entity* e = (Entity*) mc->player;
+		Entity* e = (Entity*) mc.player;
 		e->moveTo(x, y, z, e->yRot, e->xRot);
 		return NullString;
 	}
 
 	if (cmd == "player.getPos") {
-		if (!mc->player)
+		if (!mc.player)
 			return Fail;
 
-		Entity* e = (Entity*) mc->player;
+		Entity* e = (Entity*) mc.player;
 
 		float x = e->x, y = e->y - e->heightOffset, z = e->z;
 		apiPosTranslate.to(x, y, z);
@@ -326,7 +326,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		if (4 != sscanf(rest.c_str(), "%d,%d,%d,%d", &id, &x, &y, &z)) {
 			return Fail;
 		}
-		Entity* e = mc->level->getEntity(id);
+		Entity* e = mc.level->getEntity(id);
 		if (!e) return Fail;
 
 		apiPosTranslate.from(x, y, z);
@@ -339,7 +339,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		if (1 != sscanf(rest.c_str(), "%d", &id))
 			return Fail;
 
-		Entity* e = mc->level->getEntity(id);
+		Entity* e = mc.level->getEntity(id);
 		if (!e) return Fail;
 
 		int x = (int)e->x, y = (int)(e->y - e->heightOffset), z = (int)e->z;
@@ -353,7 +353,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		if (4 != sscanf(rest.c_str(), "%d,%f,%f,%f", &id, &x, &y, &z)) {
 			return Fail;
 		}
-		Entity* e = mc->level->getEntity(id);
+		Entity* e = mc.level->getEntity(id);
 		if (!e) return Fail;
 
 		apiPosTranslate.from(x, y, z);
@@ -366,7 +366,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		if (1 != sscanf(rest.c_str(), "%d", &id))
 			return Fail;
 
-		Entity* e = mc->level->getEntity(id);
+		Entity* e = mc.level->getEntity(id);
 		if (!e) return Fail;
 
 		float x = e->x, y = e->y - e->heightOffset, z = e->z;
@@ -379,7 +379,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 	//
 	if (cmd == "chat.post") {
 #ifndef STANDALONE_SERVER
-		mc->gui.addMessage(rest);
+		mc.gui().addMessage(rest);
 #endif
 		ChatPacket p(rest, false);
 		dispatchPacket(p);
@@ -392,7 +392,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 	//
 	if (cmd == "camera.mode.setFixed") {
 		camera->follow(-1);
-		mc->cameraTargetPlayer = camera;
+		mc.cameraTargetPlayer = camera;
 		return NullString;
 	}
 	if (cmd == "camera.mode.setNormal") {
@@ -401,10 +401,10 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
                         if (1 != sscanf(rest.c_str(), "%d", &entityId)) return Fail;
 		}
 	        if (entityId > 0) {
-			Entity* e = mc->level->getEntity(entityId);
-			if (e && e->isMob()) mc->cameraTargetPlayer = (Mob*)e;
+			Entity* e = mc.level->getEntity(entityId);
+			if (e && e->isMob()) mc.cameraTargetPlayer = (Mob*)e;
 		} else {
-			mc->cameraTargetPlayer = (Mob*)mc->player;
+			mc.cameraTargetPlayer = (Mob*)mc.player;
 		}
 		return NullString;
 	}
@@ -414,10 +414,10 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		if (!rest.empty()) {
 			if (1 != sscanf(rest.c_str(), "%d", &entityId)) return Fail;
 		}
-		if (entityId < 0) entityId = mc->player->entityId;
+		if (entityId < 0) entityId = mc.player->entityId;
 
 		camera->follow(entityId);
-		mc->cameraTargetPlayer = camera;
+		mc.cameraTargetPlayer = camera;
 		return NullString;
 	}
 
@@ -428,7 +428,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		}
 
 		apiPosTranslate.from(x, y, z);
-		Entity* e = (Entity*) mc->cameraTargetPlayer;
+		Entity* e = (Entity*) mc.cameraTargetPlayer;
 		e->moveTo((float)x + 0.5f, (float)y, (float)z + 0.5f, e->yRot, e->xRot);
 		return NullString;
 	}
@@ -439,10 +439,10 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 	//
 	if (cmd == "world.getPlayerIds") {
 		std::stringstream s;
-		int size = mc->level->players.size();
+		int size = mc.level->players.size();
 		for (int i = 0; i < size; ++i) {
 			if (i != 0) s << "|";
-			s << mc->level->players[i]->entityId;
+			s << mc.level->players[i]->entityId;
 		}
 		s << "\n";
 		return s.str();
@@ -454,8 +454,8 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 	// Set and restore Checkpoint
 	//
 	if (cmd == "world.checkpoint.save") {
-		if (mc->player) {
-			Entity* e = (Entity*) mc->player;
+		if (mc.player) {
+			Entity* e = (Entity*) mc.player;
 
 			static Stopwatch sw;
 			sw.start();
@@ -478,7 +478,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		if (success) {
 			int xx = 16 * (restorePos.x - 2);
 			int zz = 16 * (restorePos.z - 2);
-			mc->level->setTilesDirty(xx, restorePos.y, zz,
+			mc.level->setTilesDirty(xx, restorePos.y, zz,
 				xx + 5 * 16, restorePos.y + RestoreHeight, zz + 5 * 16);
 		}
 		return success? NullString : Fail;
@@ -523,7 +523,7 @@ bool CommandServer::handleCheckpoint(bool doRestore ) {
 	int offset = 0;
 	for (int z = cz - 2; z <= cz + 2; ++z)
 	for (int x = cx - 2; x <= cx + 2; ++x) {
-		LevelChunk* c = mc->level->getChunk(x, z);
+		LevelChunk* c = mc.level->getChunk(x, z);
 		if (!c) continue;
 
 		if (doRestore) {
@@ -546,7 +546,7 @@ void CommandServer::tick() {
 	_updateClients();
 	++t;
 
-	// if (mc->cameraTargetPlayer == camera) {
+	// if (mc.cameraTargetPlayer == camera) {
 	// 	camera->tick();
 	// }
 }
@@ -564,7 +564,7 @@ void CommandServer::_updateAccept() {
 	clients.push_back(ConnectedClient(fd));
 
 	ConnectedClient& c = clients[clients.size()-1];
-	c.lastPoll_blockHit = mc->level->getTime();
+	c.lastPoll_blockHit = mc.level->getTime();
 }
 
 void CommandServer::_updateClients() {
@@ -593,20 +593,20 @@ bool CommandServer::_updateClient(ConnectedClient& client) {
 }
 
 void CommandServer::dispatchPacket( Packet& p ) {
-	// if (!mc->netCallback || !mc->player) return;
-	// const RakNet::RakNetGUID& guid = ((Player*)mc->player)->owner;
-	// mc->raknetInstance->send(p);
-	//p.handle(guid, mc->netCallback);
+	// if (!mc.netCallback || !mc.player) return;
+	// const RakNet::RakNetGUID& guid = ((Player*)mc.player)->owner;
+	// mc.raknetInstance->send(p);
+	//p.handle(guid, mc.netCallback);
 }
 
 std::string CommandServer::handleEventPollMessage( ConnectedClient& client, const std::string& cmd ) {
-	ICreator* c = mc->getCreator();
+	ICreator* c = mc.getCreator();
 	if (!c) {
 		return Fail;
 	}
 
 	if (cmd == "events.clear") {
-		long t = mc->level->getTime();
+		long t = mc.level->getTime();
 		client.lastPoll_blockHit = t;
 		return NullString;
 	}
@@ -617,7 +617,7 @@ std::string CommandServer::handleEventPollMessage( ConnectedClient& client, cons
 		
 
 		events.write(ss, apiPosTranslate, client.lastPoll_blockHit);
-		client.lastPoll_blockHit = mc->level->getTime();
+		client.lastPoll_blockHit = mc.level->getTime();
 
 		ss << "\n";
 		return ss.str();
@@ -627,17 +627,17 @@ std::string CommandServer::handleEventPollMessage( ConnectedClient& client, cons
 }
 
 void updateAdventureSettingFlag(Minecraft* mc, AdventureSettingsPacket::Flags flag, bool status) {
-	AdventureSettingsPacket p(mc->level->adventureSettings);
+	AdventureSettingsPacket p(mc.level->adventureSettings);
 	p.set(flag, status);
-	p.fillIn(mc->level->adventureSettings);
-	mc->raknetInstance->send(p);
+	p.fillIn(mc.level->adventureSettings);
+	mc.raknetInstance->send(p);
 }
 
 std::string CommandServer::handleSetSetting( const std::string& setting, int value )
 {
 	bool status = value != 0;
 
-	// if (setting == "autojump") mc->player->autoJumpEnabled = status;
+	// if (setting == "autojump") mc.player->autoJumpEnabled = status;
 
 	AdventureSettingsPacket::Flags flag = (AdventureSettingsPacket::Flags)0;
 	if (setting == "nametags_visible") flag = AdventureSettingsPacket::ShowNameTags;

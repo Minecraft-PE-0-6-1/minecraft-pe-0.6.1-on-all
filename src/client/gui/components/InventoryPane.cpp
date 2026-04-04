@@ -1,6 +1,6 @@
 #include "InventoryPane.hpp"
 #include "client/gui/Gui.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/player/input/touchscreen/TouchAreaModel.hpp"
 #include "client/renderer/entity/ItemRenderer.hpp"
 #include "client/renderer/Tesselator.hpp"
@@ -12,7 +12,7 @@ namespace Touch {
 
 static const int By = 6; // Border Frame height
 
-InventoryPane::InventoryPane( IInventoryPaneCallback* screen, Minecraft* mc, const IntRectangle& rect, int paneWidth, float clickMarginH, int numItems, int itemSize, int itemBorderSize)
+InventoryPane::InventoryPane( IInventoryPaneCallback* screen, MinecraftClient& mc, const IntRectangle& rect, int paneWidth, float clickMarginH, int numItems, int itemSize, int itemBorderSize)
 :	screen(screen),
 	mc(mc),
 	paneWidth(paneWidth),
@@ -62,7 +62,7 @@ void InventoryPane::renderBatch( std::vector<GridItem>& items, float alpha )
 
 	glEnable2(GL_SCISSOR_TEST);
 	GLuint x = (GLuint)(screenScale * bbox.x);
-	GLuint y = mc->height - (GLuint)(screenScale * (bbox.y + bbox.h));
+	GLuint y = mc.getScreenHeight() - (GLuint)(screenScale * (bbox.y + bbox.h));
 	GLuint w = (GLuint)(screenScale * bbox.w);
 	GLuint h = (GLuint)(screenScale * bbox.h);
 	glScissor(x, y, w, h);
@@ -75,7 +75,7 @@ void InventoryPane::renderBatch( std::vector<GridItem>& items, float alpha )
 		GridItem& item = items[i];
 		blit(item.xf, item.yf, 200, 46, (float)itemBbox.w, (float)itemBbox.h, 16, 16);
 	}
-	mc->textures->loadAndBindTexture("gui/gui.png");
+	mc.textures().loadAndBindTexture("gui/gui.png");
 	t.endOverrideAndDraw();
 
 	GridItem* marked = NULL;
@@ -104,7 +104,7 @@ void InventoryPane::renderBatch( std::vector<GridItem>& items, float alpha )
 			t.noColor();
 			float xx = Gui::floorAlignToScreenPixel(item.xf + BorderPixels + 4);
 			float yy = Gui::floorAlignToScreenPixel(item.yf + BorderPixels + 4);
-			ItemRenderer::renderGuiItem(NULL, mc->textures, citem, xx, yy, 16, 16, false);
+			ItemRenderer::renderGuiItem(NULL, mc.textures(), citem, xx, yy, 16, 16, false);
 
 			if (j == markerIndex && markerShare >= 0)
 				marked = &item, mxx = xx, myy = yy;
@@ -123,7 +123,7 @@ void InventoryPane::renderBatch( std::vector<GridItem>& items, float alpha )
 	}
 
 
-	if (!mc->isCreativeMode()) {
+	if (!mc.isCreativeMode()) {
 		const float ikText = Gui::InvGuiScale + Gui::InvGuiScale;
 		const float kText = 0.5f * Gui::GuiScale;
 		t.beginOverride();
@@ -138,7 +138,7 @@ void InventoryPane::renderBatch( std::vector<GridItem>& items, float alpha )
 
 			float tx = Gui::floorAlignToScreenPixel(kText * (item.xf + BorderPixels + 3));
 			float ty = Gui::floorAlignToScreenPixel(kText * (item.yf + BorderPixels + 3));
-			mc->gui.renderSlotText(citem, tx, ty, true, true);
+			mc.gui().renderSlotText(citem, tx, ty, true, true);
 		}
 		t.resetScale();
 		glEnable2(GL_BLEND);

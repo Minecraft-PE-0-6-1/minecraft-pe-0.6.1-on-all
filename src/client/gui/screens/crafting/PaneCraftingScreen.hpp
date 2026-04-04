@@ -25,7 +25,7 @@ public:
 
 	void setNumItems(int i) { numItems = i; }
 	IntRectangle getItemPos(int i);
-	void renderBg(Minecraft* minecraft, int xm, int ym);
+	void renderBg(MinecraftClient& minecraft, int xm, int ym);
 private:
 	NinePatchLayer* bg;
 	NinePatchLayer* bgSelected;

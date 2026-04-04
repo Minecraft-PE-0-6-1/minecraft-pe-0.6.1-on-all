@@ -1,7 +1,7 @@
 #pragma once
 
 #include "client/gui/GuiComponent.hpp"
-class Minecraft;
+class MinecraftClient;
 class Tesselator;
 
 
@@ -11,7 +11,7 @@ class RolledSelectionListV : public GuiComponent
 	static const int DRAG_OUTSIDE	= -2;
 	static const int DRAG_NORMAL	=  0;
 public:
-	RolledSelectionListV(Minecraft* minecraft, int width, int height, int x0, int x1, int y0, int y1, int itemHeight);
+	RolledSelectionListV(MinecraftClient& minecraft, int width, int height, int x0, int x1, int y0, int y1, int itemHeight);
 
 	virtual int getItemAtPosition(int x, int y);
 
@@ -51,7 +51,7 @@ protected:
 	virtual void onPostRender();
 	void renderDirtBackground();
 protected:
-	Minecraft* minecraft;
+	MinecraftClient& minecraft;
 
 	float x0;
 	float x1;

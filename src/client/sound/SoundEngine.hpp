@@ -12,7 +12,7 @@
 #include "SoundRepository.hpp"
 #include "util/Random.hpp"
 
-class Minecraft;
+class MinecraftClient;
 class Mob;
 class Options;
 
@@ -44,7 +44,7 @@ public:
 
 	~SoundEngine();
 
-    void init(Minecraft* mc, Options* options);
+    void init(MinecraftClient& mc, Options* options);
 	void destroy();
 
 	void enable(bool status);
@@ -61,6 +61,6 @@ private:
     SoundDesc _pp(const std::string& fn);
     
 	SoundRepository sounds;
-	Minecraft* mc;
+	MinecraftClient& mc;
 };
 

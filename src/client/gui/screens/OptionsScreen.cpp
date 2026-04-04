@@ -3,7 +3,7 @@
 #include "StartMenuScreen.hpp"
 #include "UsernameScreen.hpp"
 #include "DialogDefinitions.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "AppPlatform.hpp"
 #include "CreditsScreen.hpp"
 
@@ -34,14 +34,14 @@ OptionsScreen::~OptionsScreen() {
 		btnCredits = NULL;
 	}
 
-	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
+	for (auto it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
 		if (*it != NULL) {
 			delete* it;
 			*it = NULL;
 		}
 	}
 
-	for (std::vector<OptionsGroup*>::iterator it = optionPanes.begin(); it != optionPanes.end(); ++it) {
+	for (auto it = optionPanes.begin(); it != optionPanes.end(); ++it) {
 		if (*it != NULL) {
 			delete* it;
 			*it = NULL;
@@ -76,7 +76,7 @@ void OptionsScreen::init() {
 	buttons.push_back(btnClose);
 	buttons.push_back(btnCredits);
 
-	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
+	for (auto  it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
 		buttons.push_back(*it);
 		tabButtons.push_back(*it);
 	}
@@ -94,7 +94,7 @@ void OptionsScreen::setupPositions() {
 
 	int offsetNum = 1;
 
-	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
+	for (auto  it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
 
 		(*it)->x = 0;
 		(*it)->y = offsetNum * buttonHeight;
@@ -114,7 +114,7 @@ void OptionsScreen::setupPositions() {
 		btnCredits->y = height - btnCredits->height;
 	}
 
-	for (std::vector<OptionsGroup*>::iterator it = optionPanes.begin(); it != optionPanes.end(); ++it) {
+	for (auto  it = optionPanes.begin(); it != optionPanes.end(); ++it) {
 
 		if (categoryButtons.size() > 0 && categoryButtons[0] != NULL) {
 
@@ -133,8 +133,8 @@ void OptionsScreen::setupPositions() {
 void OptionsScreen::render(int xm, int ym, float a) {
 	renderBackground();
 
-	int xmm = xm * width / minecraft->width;
-	int ymm = ym * height / minecraft->height - 1;
+	int xmm = xm * width / minecraft.getScreenWidth();
+	int ymm = ym * height / minecraft.getScreenHeight() - 1;
 
 	if (currentOptionsGroup != NULL)
 		currentOptionsGroup->render(minecraft, xmm, ymm);
@@ -147,11 +147,11 @@ void OptionsScreen::removed() {
 
 void OptionsScreen::buttonClicked(Button* button) {
 	if (button == btnClose) {
-		minecraft->options.save();
-		if (minecraft->screen != NULL) {
-			minecraft->setScreen(NULL);
+		minecraft.options().save();
+		if (minecraft.getScreen()!= NULL) {
+			minecraft.setScreen(NULL);
 		} else {
-			minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+			minecraft.screenChooser.setScreen(SCREEN_STARTMENU);
 		}
 	}
 	else if (button->id > 1 && button->id < 7) {
@@ -159,14 +159,14 @@ void OptionsScreen::buttonClicked(Button* button) {
 		selectCategory(categoryButton);
 	}
 	else if (button == btnCredits) {
-		minecraft->setScreen(new CreditsScreen());
+		minecraft.setScreen(new CreditsScreen());
 	}
 }
 
 void OptionsScreen::selectCategory(int index) {
 	int currentIndex = 0;
 
-	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
+	for (auto  it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
 
 		if (index == currentIndex)
 			(*it)->selected = true;
@@ -246,7 +246,7 @@ void OptionsScreen::keyPressed(int eventKey) {
 	if (currentOptionsGroup != NULL)
 		currentOptionsGroup->keyPressed(minecraft, eventKey);
 	if (eventKey == Keyboard::KEY_ESCAPE) 
-		minecraft->options.save();
+		minecraft.options().save();
 	
 	super::keyPressed(eventKey);
 }

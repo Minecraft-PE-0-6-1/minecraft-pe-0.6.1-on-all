@@ -57,8 +57,8 @@ public:
     void displayClientMessage(const std::string& messageId);
 
     void awardStat(Stat* stat, int count) {
-        //minecraft->stats.award(stat, count);
-        //minecraft->achievementPopup.popup("Achievement get!", stat.name);
+        //minecraft.stats.award(stat, count);
+        //minecraft.achievementPopup.popup("Achievement get!", stat.name);
     }
 	void causeFallDamage( float distance );
 

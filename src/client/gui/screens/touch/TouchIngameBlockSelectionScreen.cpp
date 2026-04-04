@@ -10,7 +10,7 @@
 #include "client/renderer/entity/ItemRenderer.hpp"
 #include "client/renderer/Tesselator.hpp"
 #include "client/renderer/Textures.hpp"
-#include "client/Minecraft.hpp"
+#include <MinecraftClient.hpp>
 #include "client/sound/SoundEngine.hpp"
 #include "world/entity/player/Inventory.hpp"
 #include "platform/input/Mouse.hpp"
@@ -69,7 +69,7 @@ IngameBlockSelectionScreen::~IngameBlockSelectionScreen()
 
 void IngameBlockSelectionScreen::init()
 {
-	Inventory* inventory = minecraft->player->inventory;
+	Inventory* inventory = minecraft.player()->inventory;
 
 	//const int itemWidth = 2 * BorderPixels + 
 
@@ -110,7 +110,7 @@ void IngameBlockSelectionScreen::init()
 
 	buttons.push_back(&bHeader);
 	buttons.push_back(&bDone);
-	if (!minecraft->isCreativeMode()) {
+	if (!minecraft.isCreativeMode()) {
 		buttons.push_back(&bCraft);
 		buttons.push_back(&bArmor);
 	}
@@ -123,7 +123,7 @@ void IngameBlockSelectionScreen::setupPositions() {
 	bCraft.width = bArmor.width = 48;
 	bArmor.x = bCraft.width;
 
-	if (minecraft->isCreativeMode()) {
+	if (minecraft.isCreativeMode()) {
 		bHeader.x = 0;
 		bHeader.width = width;// -  bDone.w;
 		bHeader.xText = width/2; // Center of the screen
@@ -134,14 +134,14 @@ void IngameBlockSelectionScreen::setupPositions() {
 	}
 
 	clippingArea.x = 0;
-	clippingArea.w = minecraft->width;
+	clippingArea.w = minecraft.getScreenWidth();
 	clippingArea.y = 0;
 	clippingArea.h = (int)(Gui::GuiScale * 24);
 }
 
 void IngameBlockSelectionScreen::removed()
 {
-	minecraft->gui.inventoryUpdated();
+	minecraft.gui().inventoryUpdated();
 }
 
 int IngameBlockSelectionScreen::getSlotPosX(int slotX) {
@@ -166,7 +166,7 @@ void IngameBlockSelectionScreen::mouseClicked(int x, int y, int buttonNum) {
 
 void IngameBlockSelectionScreen::mouseReleased(int x, int y, int buttonNum) {
 	if (_pendingClose && _blockList->_clickArea->isInside((float)x, (float)y))
-		minecraft->setScreen(NULL);
+		minecraft.setScreen(NULL);
 	else
 		super::mouseReleased(x, y, buttonNum);
 }
@@ -191,7 +191,7 @@ void IngameBlockSelectionScreen::mouseWheel(int dx, int dy, int xm, int ym)
 
 bool IngameBlockSelectionScreen::addItem(const InventoryPane* pane, int itemId)
 {
-	Inventory* inventory = minecraft->player->inventory;
+	Inventory* inventory = minecraft.player()->inventory;
 	itemId += Inventory::MAX_SELECTION_SIZE;
 
 	if (!inventory->getItem(itemId))
@@ -201,13 +201,13 @@ bool IngameBlockSelectionScreen::addItem(const InventoryPane* pane, int itemId)
 
 	inventory->selectSlot(0);
 #ifdef __APPLE__
-	minecraft->soundEngine->playUI("random.pop", 0.3f, 0.3f);//1.0f + 0.2f*(Mth::random()-Mth::random()));
+	minecraft.soundEngine()->playUI("random.pop", 0.3f, 0.3f);//1.0f + 0.2f*(Mth::random()-Mth::random()));
 #else
-    minecraft->soundEngine->playUI("random.pop2", 1.0f, 0.3f);//1.0f + 0.2f*(Mth::random()-Mth::random()));
+    minecraft.soundEngine()->playUI("random.pop2", 1.0f, 0.3f);//1.0f + 0.2f*(Mth::random()-Mth::random()));
 #endif
 
 	// Flash the selected gui item
-	minecraft->gui.flashSlot(inventory->selected);
+	minecraft.gui().flashSlot(inventory->selected);
     return true;
 }
 
@@ -228,7 +228,7 @@ void IngameBlockSelectionScreen::render( int xm, int ym, float a )
 	// render frame
 	IntRectangle& bbox = _blockList->rect;
 	Tesselator::instance.colorABGR(0xffffffff);
-	minecraft->textures->loadAndBindTexture("gui/itemframe.png");
+	minecraft.textures().loadAndBindTexture("gui/itemframe.png");
 	glEnable2(GL_BLEND);
 	glColor4f2(1, 1, 1, 1);
 	glBlendFunc2(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -245,31 +245,31 @@ void IngameBlockSelectionScreen::renderDemoOverlay() {
 
 	const int centerX = (getSlotPosX(4) + getSlotPosX(5)) / 2;
 	const int centerY = (getSlotPosY(0) + getSlotPosY(1)) / 2 + 5;
-	drawCenteredString(minecraft->font, demoVersionString, centerX, centerY, 0xffffffff);
+	drawCenteredString(minecraft.font(), demoVersionString, centerX, centerY, 0xffffffff);
 #endif /*DEMO_MODE*/
 }
 
 void IngameBlockSelectionScreen::buttonClicked(Button* button) {
 	if (button->id == bDone.id)
-		minecraft->setScreen(NULL);
+		minecraft.setScreen(NULL);
 
     if (button->id == bMenu.id)
-        minecraft->screenChooser.setScreen(SCREEN_PAUSE);
+        minecraft.screenChooser.setScreen(SCREEN_PAUSE);
 
 	if (button->id == bCraft.id)
-		minecraft->setScreen(new WorkbenchScreen(Recipe::SIZE_2X2));
+		minecraft.setScreen(new WorkbenchScreen(Recipe::SIZE_2X2));
 
 	if (button == &bArmor)
-		minecraft->setScreen(new ArmorScreen());
+		minecraft.setScreen(new ArmorScreen());
 }
 
 bool IngameBlockSelectionScreen::isAllowed( int slot )
 {
-	if (slot < 0 || slot >= minecraft->player->inventory->getContainerSize())
+	if (slot < 0 || slot >= minecraft.player()->inventory->getContainerSize())
 		return false;
 
 #ifdef DEMO_MODE
-	if (slot >= (minecraft->isCreativeMode()? 28 : 27)) return false;
+	if (slot >= (minecraft.isCreativeMode()? 28 : 27)) return false;
 #endif
 	return true;
 }
@@ -283,8 +283,8 @@ bool IngameBlockSelectionScreen::hasClippingArea( IntRectangle& out )
 std::vector<const ItemInstance*> IngameBlockSelectionScreen::getItems( const InventoryPane* forPane )
 {
 	std::vector<const ItemInstance*> out;
-	for (int i = Inventory::MAX_SELECTION_SIZE; i < minecraft->player->inventory->getContainerSize(); ++i)
-		out.push_back(minecraft->player->inventory->getItem(i));
+	for (int i = Inventory::MAX_SELECTION_SIZE; i < minecraft.player()->inventory->getContainerSize(); ++i)
+		out.push_back(minecraft.player()->inventory->getItem(i));
 	return out;
 }
 

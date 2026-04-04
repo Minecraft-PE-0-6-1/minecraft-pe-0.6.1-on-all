@@ -1,7 +1,7 @@
 #pragma once
 
 #include "client/gui/GuiComponent.hpp"
-class Minecraft;
+class MinecraftClient;
 class Tesselator;
 
 
@@ -12,7 +12,7 @@ class ScrolledSelectionList : public GuiComponent
 	static const int DRAG_NORMAL = 0;
 	static const int DRAG_SKIP = 1; // special case to fix android jump bug
 public:
-	ScrolledSelectionList(Minecraft* _minecraft, int _width, int _height, int _y0, int _y1, int _itemHeight);
+	ScrolledSelectionList(MinecraftClient& _minecraft, int _width, int _height, int _y0, int _y1, int _itemHeight);
 
 	virtual void setRenderSelection(bool _renderSelection);
 protected:
@@ -40,7 +40,7 @@ public:
 	virtual void renderHoleBackground(float y0, float y1, int a0, int a1);
 	void renderDirtBackground();
 protected:
-	Minecraft* minecraft;
+	MinecraftClient& minecraft;
 
 	float y0;
 	float y1;
