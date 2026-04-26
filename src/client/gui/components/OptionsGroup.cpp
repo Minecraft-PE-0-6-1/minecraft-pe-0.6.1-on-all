@@ -7,6 +7,7 @@
 #include "TextOption.h"
 #include "KeyOption.h"
 #include <algorithm>
+#include "../Gui.h"
 #include "../Screen.h"
 #include "../../../platform/input/Mouse.h"
 #include "../../../util/Mth.h"
@@ -56,10 +57,20 @@ void OptionsGroup::setupPositions() {
 void OptionsGroup::render( Minecraft* minecraft, int xm, int ym ) {
 	float padX = 10.0f;
 	float padY = 5.0f;
+	const int labelHeight = 18;
 	
 	minecraft->font->draw(label, (float)x + padX, (float)y + padY, 0xffffffff, false);
 
+	glEnable2(GL_SCISSOR_TEST);
+	glScissor(
+		Gui::GuiScale * x,
+		minecraft->height - Gui::GuiScale * (y + height),
+		Gui::GuiScale * width,
+		Gui::GuiScale * (height - labelHeight)
+	);
+
 	super::render(minecraft, xm, ym);
+	glDisable2(GL_SCISSOR_TEST);
 }
 
 void OptionsGroup::tick(Minecraft* minecraft) {
