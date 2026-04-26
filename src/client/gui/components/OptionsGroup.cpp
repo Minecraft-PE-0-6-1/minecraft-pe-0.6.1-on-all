@@ -28,6 +28,7 @@ OptionsGroup::OptionsGroup( std::string labelID )
 
 void OptionsGroup::setupPositions() {
 	const int labelHeight = 18;
+	const int bottomPadding = 36;
 	const float requestedScroll = scrollOffsetY;
 	const int scrollOffset = (int)requestedScroll;
 	int curY = y + labelHeight - scrollOffset;
@@ -42,6 +43,7 @@ void OptionsGroup::setupPositions() {
 		(*it)->setupPositions();
 		curY += (*it)->height + 3;
 	}
+	curY += bottomPadding;
 	contentHeight = std::max(0, curY - contentStartY + scrollOffset);
 	maxScrollOffsetY = std::max(0, contentHeight - (height - labelHeight));
 	const float clampedScroll = Mth::clamp(requestedScroll, 0.0f, maxScrollOffsetY);
