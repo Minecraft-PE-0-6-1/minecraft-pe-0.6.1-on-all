@@ -13,6 +13,7 @@ public:
 	virtual void setupPositions();
 	virtual void addChild(GuiElement* element);
 	virtual void removeChild(GuiElement* element);
+	bool containsPointInChildren(int x, int y) const;
 
 	virtual void tick( Minecraft* minecraft );
 

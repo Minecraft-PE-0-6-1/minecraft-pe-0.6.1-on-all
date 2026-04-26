@@ -121,6 +121,7 @@ void OptionsScreen::setupPositions() {
 			(*it)->x = categoryButtons[0]->width;
 			(*it)->y = bHeader->height;
 			(*it)->width = width - categoryButtons[0]->width;
+			(*it)->height = height - bHeader->height;
 
 			(*it)->setupPositions();
 		}
@@ -251,6 +252,12 @@ void OptionsScreen::mouseReleased(int x, int y, int buttonNum) {
 		currentOptionsGroup->mouseReleased(minecraft, x, y, buttonNum);
 
 	super::mouseReleased(x, y, buttonNum);
+}
+
+void OptionsScreen::mouseWheel(int dx, int dy, int xm, int ym) {
+	if (currentOptionsGroup != NULL && currentOptionsGroup->pointInside(xm, ym) && dy != 0) {
+		currentOptionsGroup->scrollByPixels((float)dy * 18.0f);
+	}
 }
 
 void OptionsScreen::keyPressed(int eventKey) {
