@@ -64,7 +64,7 @@ RandomLevelSource::~RandomLevelSource() {
 /*public*/
 void RandomLevelSource::prepareHeights(int xOffs, int zOffs, unsigned char* blocks, /*Biome*/void* biomes, float* temperatures) {
 	
-	int xChunks = 16 / CHUNK_WIDTH;
+	int xChunks = 16 / LevelConstants::CHUNK_WIDTH;
     int waterHeight = Level::DEPTH - 64;
 
     int xSize = xChunks + 1;
@@ -87,23 +87,23 @@ void RandomLevelSource::prepareHeights(int xOffs, int zOffs, unsigned char* bloc
                 float s3a = (buffer[((xc + 1) * zSize + (zc + 1)) * ySize + (yc + 1)] - s3) * yStep;
 
                 for (int y = 0; y < CHUNK_HEIGHT; y++) {
-                    float xStep = 1 / (float) CHUNK_WIDTH;
+                    float xStep = 1 / (float) LevelConstants::CHUNK_WIDTH;
 
                     float _s0 = s0;
                     float _s1 = s1;
                     float _s0a = (s2 - s0) * xStep;
                     float _s1a = (s3 - s1) * xStep;
 
-                    for (int x = 0; x < CHUNK_WIDTH; x++) {
-                        int offs = (x + xc * CHUNK_WIDTH) << 11 | (0 + zc * CHUNK_WIDTH) << 7 | (yc * CHUNK_HEIGHT + y);
+                    for (int x = 0; x < LevelConstants::CHUNK_WIDTH; x++) {
+                        int offs = (x + xc * LevelConstants::CHUNK_WIDTH) << 11 | (0 + zc * LevelConstants::CHUNK_WIDTH) << 7 | (yc * CHUNK_HEIGHT + y);
                         int step = 1 << 7;
-                        float zStep = 1 / (float) CHUNK_WIDTH;
+                        float zStep = 1 / (float) LevelConstants::CHUNK_WIDTH;
 
                         float val = _s0;
                         float vala = (_s1 - _s0) * zStep;
-                        for (int z = 0; z < CHUNK_WIDTH; z++) {
-// + (zc * CHUNK_WIDTH + z)];
-                            float temp = temperatures[(xc * CHUNK_WIDTH + x) * 16 + (zc * CHUNK_WIDTH + z)];
+                        for (int z = 0; z < LevelConstants::CHUNK_WIDTH; z++) {
+// + (zc * LevelConstants::CHUNK_WIDTH + z)];
+                            float temp = temperatures[(xc * LevelConstants::CHUNK_WIDTH + x) * 16 + (zc * LevelConstants::CHUNK_WIDTH + z)];
                             int tileId = 0;
                             if (yc * CHUNK_HEIGHT + y < waterHeight) {
                                 if (temp < SNOW_CUTOFF && yc * CHUNK_HEIGHT + y >= waterHeight - 1) {

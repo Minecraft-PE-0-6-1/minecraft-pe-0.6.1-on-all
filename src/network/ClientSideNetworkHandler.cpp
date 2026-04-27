@@ -62,7 +62,7 @@ void ClientSideNetworkHandler::requestNextChunk()
 
         //LOGI("requesting chunks @ (%d, %d)\n", chunk.x, chunk.y);
         
-		//raknetInstance->send(new RequestChunkPacket(requestNextChunkPosition % CHUNK_CACHE_WIDTH, requestNextChunkPosition / CHUNK_CACHE_WIDTH));
+		//raknetInstance->send(new RequestChunkPacket(requestNextChunkPosition % LevelConstants::CHUNK_CACHE_WIDTH, requestNextChunkPosition / LevelConstants::CHUNK_CACHE_WIDTH));
 		requestNextChunkIndex++;
         requestNextChunkPosition++;
 	}
@@ -70,16 +70,16 @@ void ClientSideNetworkHandler::requestNextChunk()
 
 bool ClientSideNetworkHandler::areAllChunksLoaded()
 {
-	return (requestNextChunkPosition >= (CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH));
+	return (requestNextChunkPosition >= (LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH));
 }
 
 bool ClientSideNetworkHandler::isChunkLoaded(int x, int z)
 {
-	if (x < 0 || x >= CHUNK_CACHE_WIDTH || z < 0 || z >= CHUNK_CACHE_WIDTH) {
+	if (x < 0 || x >= LevelConstants::CHUNK_CACHE_WIDTH || z < 0 || z >= LevelConstants::CHUNK_CACHE_WIDTH) {
 		LOGE("Error: Tried to request chunk (%d, %d)\n", x, z);
 		return true;
 	}
-	return chunksLoaded[x * CHUNK_CACHE_WIDTH + z];
+	return chunksLoaded[x * LevelConstants::CHUNK_CACHE_WIDTH + z];
 	//return areAllChunksLoaded();
 }
 
@@ -100,9 +100,9 @@ void ClientSideNetworkHandler::onUnableToConnect()
 
 void ClientSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 {
-	CHUNK_CACHE_WIDTH = 16;
-	LEVEL_WIDTH = CHUNK_CACHE_WIDTH * CHUNK_WIDTH;
-	LEVEL_DEPTH = CHUNK_CACHE_WIDTH * CHUNK_DEPTH;
+	LevelConstants::CHUNK_CACHE_WIDTH = 16;
+	LevelConstants::LEVEL_WIDTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH;
+	LevelConstants::LEVEL_DEPTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_DEPTH;
 	
 	// TODO: Good disconnecting
 	LOGI("onDisconnect\n");
@@ -164,12 +164,12 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, StartGam
 	// we can put it directly to selectLevel?
 	if (packet->chunkCacheWidth != 0) {
 		printf("lol \n");
-		CHUNK_CACHE_WIDTH = packet->chunkCacheWidth;
-		LEVEL_WIDTH = CHUNK_CACHE_WIDTH * CHUNK_WIDTH;
-		LEVEL_DEPTH = CHUNK_CACHE_WIDTH * CHUNK_DEPTH;
+		LevelConstants::CHUNK_CACHE_WIDTH = packet->chunkCacheWidth;
+		LevelConstants::LEVEL_WIDTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH;
+		LevelConstants::LEVEL_DEPTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_DEPTH;
 		
 	}
-	NumRequestChunks = CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH;
+	NumRequestChunks = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH;
 	requestNextChunkIndexList.resize(NumRequestChunks);
 	chunksLoaded.resize(NumRequestChunks);
 
@@ -551,19 +551,19 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 	//unsigned char* blockIds = chunk->getBlockData();
 	DataLayer& blockData = chunk->data;
 
-	const int setSize = LEVEL_HEIGHT / 8;
-	const int setShift = 4; // power of LEVEL_HEIGHT / 8
+	const int setSize = LevelConstants::LEVEL_HEIGHT / 8;
+	const int setShift = 4; // power of LevelConstants::LEVEL_HEIGHT / 8
 
 	bool recalcHeight = false;
 
-	int x0 = 16, x1 = 0, z0 = 16, z1 = 0, y0 = LEVEL_HEIGHT, y1 = 0;
+	int x0 = 16, x1 = 0, z0 = 16, z1 = 0, y0 = LevelConstants::LEVEL_HEIGHT, y1 = 0;
 	int rx = packet->x << 4;
 	int rz = packet->z << 4;
 
 	unsigned char readBlockBuffer[setSize];
 	unsigned char readDataBuffer[setSize / 2];
 
-	for (int i = 0; i < CHUNK_COLUMNS; i++)
+	for (int i = 0; i < LevelConstants::CHUNK_COLUMNS; i++)
 	{
 		unsigned char updateBits = 0;
 		packet->chunkData.Read(updateBits);
@@ -572,8 +572,8 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 		{
 			recalcHeight = true;
 
-			int colX = (i % CHUNK_WIDTH);
-			int colZ = (i / CHUNK_WIDTH);
+			int colX = (i % LevelConstants::CHUNK_WIDTH);
+			int colZ = (i / LevelConstants::CHUNK_WIDTH);
 			int colDataPosition = colX << 11 | colZ << 7;
 
 			for (int set = 0; set < 8; set++)
@@ -607,26 +607,26 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 				{
 					y0 = ((1 << set) << setShift);
 				}
-				if (((1 << set) << setShift) + (LEVEL_HEIGHT / 8) - 1 > y1)
+				if (((1 << set) << setShift) + (LevelConstants::LEVEL_HEIGHT / 8) - 1 > y1)
 				{
-					y1 = ((1 << set) << setShift) + (LEVEL_HEIGHT / 8) - 1;
+					y1 = ((1 << set) << setShift) + (LevelConstants::LEVEL_HEIGHT / 8) - 1;
 				}
 			}
-			if ((i % CHUNK_WIDTH) < x0)
+			if ((i % LevelConstants::CHUNK_WIDTH) < x0)
 			{
-				x0 = (i % CHUNK_WIDTH);
+				x0 = (i % LevelConstants::CHUNK_WIDTH);
 			}
-			if ((i % CHUNK_WIDTH) > x1)
+			if ((i % LevelConstants::CHUNK_WIDTH) > x1)
 			{
-				x1 = (i % CHUNK_WIDTH);
+				x1 = (i % LevelConstants::CHUNK_WIDTH);
 			}
-			if ((i / CHUNK_WIDTH) < z0)
+			if ((i / LevelConstants::CHUNK_WIDTH) < z0)
 			{
-				z0 = (i / CHUNK_WIDTH);
+				z0 = (i / LevelConstants::CHUNK_WIDTH);
 			}
-			if ((i / CHUNK_WIDTH) > z1)
+			if ((i / LevelConstants::CHUNK_WIDTH) > z1)
 			{
-				z1 = (i / CHUNK_WIDTH);
+				z1 = (i / LevelConstants::CHUNK_WIDTH);
 			}
 		}
 	}
@@ -655,7 +655,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 	//chunk->terrainPopulated = true;
 	chunk->unsaved = false;
 
-	chunksLoaded[packet->x * CHUNK_CACHE_WIDTH + packet->z] = true;
+	chunksLoaded[packet->x * LevelConstants::CHUNK_CACHE_WIDTH + packet->z] = true;
 
 	if (areAllChunksLoaded())
 	{
@@ -703,14 +703,14 @@ void ClientSideNetworkHandler::arrangeRequestChunkOrder() {
 	clearChunksLoaded();
 
     // Default sort is around center of the world
-    int cx = CHUNK_CACHE_WIDTH / 2;
-    int cz = CHUNK_CACHE_WIDTH / 2;
+    int cx = LevelConstants::CHUNK_CACHE_WIDTH / 2;
+    int cz = LevelConstants::CHUNK_CACHE_WIDTH / 2;
 
     // If player exists, let's sort around him
     Player* p = minecraft? minecraft->player : NULL;
     if (p) {
-        cx = Mth::floor(p->x / (float)CHUNK_WIDTH);
-        cz = Mth::floor(p->z / (float)CHUNK_DEPTH);
+        cx = Mth::floor(p->x / (float)LevelConstants::CHUNK_WIDTH);
+        cz = Mth::floor(p->z / (float)LevelConstants::CHUNK_DEPTH);
     }
 
     _ChunkSorter sorter(cx, cz);
@@ -1004,8 +1004,8 @@ void ClientSideNetworkHandler::clearChunksLoaded()
 {
 	// Init the chunk positions
 	for (int i = 0; i < NumRequestChunks; ++i) {
-		requestNextChunkIndexList[i].x = i/CHUNK_WIDTH;
-		requestNextChunkIndexList[i].y = i%CHUNK_WIDTH;
+		requestNextChunkIndexList[i].x = i / LevelConstants::CHUNK_WIDTH;
+		requestNextChunkIndexList[i].y = i % LevelConstants::CHUNK_WIDTH;
 		chunksLoaded[i] = false;
 	}
 }

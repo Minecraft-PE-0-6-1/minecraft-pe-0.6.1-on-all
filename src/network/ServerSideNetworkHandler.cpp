@@ -274,7 +274,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
             gameType,
             newPlayer->entityId,
             newPlayer->x, newPlayer->y - newPlayer->heightOffset, newPlayer->z,
-			CHUNK_CACHE_WIDTH
+			LevelConstants::CHUNK_CACHE_WIDTH
         ).write(&bitStream);
 
         rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);

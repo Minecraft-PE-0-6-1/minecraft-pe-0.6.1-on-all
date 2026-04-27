@@ -47,7 +47,7 @@ bool Mushroom::mayPlaceOn( int tile ) {
 }
 
 bool Mushroom::canSurvive( Level* level, int x, int y, int z ) {
-	if (y < 0 || y >= LEVEL_HEIGHT/*Level::maxBuildHeight*/)
+	if (y < 0 || y >= LevelConstants::LEVEL_HEIGHT/*Level::maxBuildHeight*/)
         return false;
 
 	int below = level->getTile(x, y - 1, z);

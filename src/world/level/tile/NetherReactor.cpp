@@ -53,7 +53,7 @@ bool NetherReactor::canSpawnStartNetherReactor( Level* level, int x, int y, int 
 	if(!allPlayersCloseToReactor(level, x, y, z)) {
 		player->displayClientMessage("All players need to be close to the reactor.");
 		return false;
-	} else if(y > LEVEL_HEIGHT - 28) {
+	} else if(y > LevelConstants::LEVEL_HEIGHT - 28) {
 		player->displayClientMessage("The nether reactor needs to be built lower down.");
 		return false;
 	} else if(y < 2) {

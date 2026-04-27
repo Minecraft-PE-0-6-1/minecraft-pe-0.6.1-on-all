@@ -43,7 +43,7 @@ public:
 		bitStream->Write(x);
 		bitStream->Write(y);
 		bitStream->Write(z);
-		bitStream->Write(CHUNK_CACHE_WIDTH);
+		bitStream->Write(LevelConstants::CHUNK_CACHE_WIDTH);
 	}
 
 	void read(RakNet::BitStream* bitStream)
@@ -55,7 +55,7 @@ public:
 		bitStream->Read(x);
 		bitStream->Read(y);
 		bitStream->Read(z);
-		
+
 		if (bitStream->GetNumberOfUnreadBits() > 0) {
 			bitStream->Read(chunkCacheWidth);
 		}

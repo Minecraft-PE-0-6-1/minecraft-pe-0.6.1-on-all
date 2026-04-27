@@ -362,10 +362,10 @@ void Minecraft::prepareLevel(const std::string& title) {
 	if (!level->isNew())
 		level->setUpdateLights(false);
 
-	int Max = CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH;
+	int Max = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH;
 	int pp = 0;
-	for (int x = 8; x < (CHUNK_CACHE_WIDTH * CHUNK_WIDTH); x += CHUNK_WIDTH) {
-        for (int z = 8; z < (CHUNK_CACHE_WIDTH * CHUNK_WIDTH); z += CHUNK_WIDTH) {
+	for (int x = 8; x < (LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH); x += LevelConstants::CHUNK_WIDTH) {
+        for (int z = 8; z < (LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH); z += LevelConstants::CHUNK_WIDTH) {
             progressStagePercentage = 100 * pp++ / Max;
             //printf("level generation progress %d\n", progressStagePercentage);
 			B.start();
@@ -382,9 +382,9 @@ void Minecraft::prepareLevel(const std::string& title) {
 	level->setUpdateLights(true);
 
 	C.start();
-	for (int x = 0; x < CHUNK_CACHE_WIDTH; x++)
+	for (int x = 0; x < LevelConstants::CHUNK_CACHE_WIDTH; x++)
 	{
-		for (int z = 0; z < CHUNK_CACHE_WIDTH; z++)
+		for (int z = 0; z < LevelConstants::CHUNK_CACHE_WIDTH; z++)
 		{
 			LevelChunk* chunk = level->getChunk(x, z);
 			if (chunk && !chunk->createdFromSave)

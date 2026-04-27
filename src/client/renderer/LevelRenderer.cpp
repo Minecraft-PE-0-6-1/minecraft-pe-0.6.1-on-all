@@ -65,7 +65,7 @@ LevelRenderer::LevelRenderer( Minecraft* mc)
 	destroyProgress(0)
 {
 #ifdef OPENGL_ES
-	int maxChunksWidth = 2 * LEVEL_WIDTH / CHUNK_SIZE + 1;
+	int maxChunksWidth = 2 * LevelConstants::LEVEL_WIDTH / CHUNK_SIZE + 1;
 	numListsOrBuffers = maxChunksWidth * maxChunksWidth * (128/CHUNK_SIZE) * 3;
 	chunkBuffers = new GLuint[numListsOrBuffers];
 	glGenBuffers2(numListsOrBuffers, chunkBuffers);

@@ -343,8 +343,8 @@ bool ExternalFileLevelStorage::readPlayerData(const std::string& filename, Level
 			Vec3& pos = dest.playerData.pos;
 			if (pos.x < 0.5f) pos.x = 0.5f;
 			if (pos.z < 0.5f) pos.z = 0.5f;
-			if (pos.x > (LEVEL_WIDTH - 0.5f)) pos.x = LEVEL_WIDTH - 0.5f;
-			if (pos.z > (LEVEL_DEPTH - 0.5f)) pos.z = LEVEL_DEPTH - 0.5f;
+			if (pos.x > (LevelConstants::LEVEL_WIDTH - 0.5f)) pos.x = LevelConstants::LEVEL_WIDTH - 0.5f;
+			if (pos.z > (LevelConstants::LEVEL_DEPTH - 0.5f)) pos.z = LevelConstants::LEVEL_DEPTH - 0.5f;
 			if (pos.y < 0) pos.y = 64;
 
 			dest.playerDataVersion = version;
@@ -362,14 +362,14 @@ void ExternalFileLevelStorage::tick()
 		LOGI("Saving level...\n");
 
 		// look for chunks that needs to be saved
-		for (int z = 0; z < CHUNK_CACHE_WIDTH; z++)
+		for (int z = 0; z < LevelConstants::CHUNK_CACHE_WIDTH; z++)
 		{
-			for (int x = 0; x < CHUNK_CACHE_WIDTH; x++)
+			for (int x = 0; x < LevelConstants::CHUNK_CACHE_WIDTH; x++)
 			{
 				LevelChunk* chunk = level->getChunk(x, z);
 				if (chunk && chunk->unsaved)
 				{
-					int pos = x + z * CHUNK_CACHE_WIDTH;
+					int pos = x + z * LevelConstants::CHUNK_CACHE_WIDTH;
 					UnsavedChunkList::iterator prev = unsavedChunkList.begin();
 					for ( ; prev != unsavedChunkList.end(); ++prev)
 					{
@@ -415,13 +415,13 @@ void ExternalFileLevelStorage::save(Level* level, LevelChunk* levelChunk)
 
 	// Write chunk
 	RakNet::BitStream chunkData;
-	chunkData.Write((const char*)levelChunk->getBlockData(), CHUNK_BLOCK_COUNT);
-	chunkData.Write((const char*)levelChunk->data.data, CHUNK_BLOCK_COUNT / 2);
+	chunkData.Write((const char*)levelChunk->getBlockData(), LevelConstants::CHUNK_BLOCK_COUNT);
+	chunkData.Write((const char*)levelChunk->data.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
 
-	chunkData.Write((const char*)levelChunk->skyLight.data, CHUNK_BLOCK_COUNT / 2);
-	chunkData.Write((const char*)levelChunk->blockLight.data, CHUNK_BLOCK_COUNT / 2);
+	chunkData.Write((const char*)levelChunk->skyLight.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
+	chunkData.Write((const char*)levelChunk->blockLight.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
 
-	chunkData.Write((const char*)levelChunk->updateMap, CHUNK_COLUMNS);
+	chunkData.Write((const char*)levelChunk->updateMap, LevelConstants::CHUNK_COLUMNS);
 
 	regionFile->writeChunk(levelChunk->x, levelChunk->z, chunkData);
 
@@ -453,16 +453,16 @@ LevelChunk* ExternalFileLevelStorage::load(Level* level, int x, int z)
 
 	chunkData->ResetReadPointer();
 
-	unsigned char* blockIds = new unsigned char[CHUNK_BLOCK_COUNT];
-	chunkData->Read((char*)blockIds, CHUNK_BLOCK_COUNT);
+	unsigned char* blockIds = new unsigned char[LevelConstants::CHUNK_BLOCK_COUNT];
+	chunkData->Read((char*)blockIds, LevelConstants::CHUNK_BLOCK_COUNT);
 
 	LevelChunk* levelChunk = new LevelChunk(level, blockIds, x, z);
-	chunkData->Read((char*)levelChunk->data.data, CHUNK_BLOCK_COUNT / 2);
+	chunkData->Read((char*)levelChunk->data.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
 	if (loadedStorageVersion >= ChunkVersion_Light) {
-		chunkData->Read((char*)levelChunk->skyLight.data, CHUNK_BLOCK_COUNT / 2);
-		chunkData->Read((char*)levelChunk->blockLight.data, CHUNK_BLOCK_COUNT / 2);
+		chunkData->Read((char*)levelChunk->skyLight.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
+		chunkData->Read((char*)levelChunk->blockLight.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
 	}
-	chunkData->Read((char*)levelChunk->updateMap, CHUNK_COLUMNS);
+	chunkData->Read((char*)levelChunk->updateMap, LevelConstants::CHUNK_COLUMNS);
 	// This will be difficult to maintain.. Storage version could be per chunk
 	// too (but probably better to just read all -> write all, so that all
 	// chunks got same version anyway)
@@ -485,7 +485,7 @@ LevelChunk* ExternalFileLevelStorage::load(Level* level, int x, int z)
 	//bool dbg = (x == 7 && z == 9);
 
 	//int t = 0;
-	//for (int i = 0; i < CHUNK_COLUMNS; ++i) {
+	//for (int i = 0; i < LevelConstants::CHUNK_COLUMNS; ++i) {
 	//	char bits = levelChunk->updateMap[i];
 	//	t += (bits != 0);
 	//	int xx = x * 16 + i%16;

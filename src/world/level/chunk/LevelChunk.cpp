@@ -17,8 +17,8 @@ LevelChunk::LevelChunk( Level* level, int x, int z )
 :	level(level),
 	x(x),
 	z(z),
-	xt(x * CHUNK_WIDTH),
-	zt(z * CHUNK_DEPTH)
+	xt(x * LevelConstants::CHUNK_WIDTH),
+	zt(z * LevelConstants::CHUNK_DEPTH)
 {
 	init();
 }
@@ -27,8 +27,8 @@ LevelChunk::LevelChunk( Level* level, unsigned char* blocks, int x, int z )
 :	level(level),
 	x(x),
 	z(z),
-	xt(x * CHUNK_WIDTH),
-	zt(z * CHUNK_DEPTH),
+	xt(x * LevelConstants::CHUNK_WIDTH),
+	zt(z * LevelConstants::CHUNK_DEPTH),
 	blocks(blocks),
 	data(ChunkBlockCount),
 	skyLight(ChunkBlockCount),
@@ -45,6 +45,9 @@ LevelChunk::~LevelChunk()
 
 void LevelChunk::init()
 {
+	heightmap = (char*)malloc(LevelConstants::CHUNK_COLUMNS * sizeof(char));
+	updateMap = (unsigned char*)malloc(LevelConstants::CHUNK_COLUMNS * sizeof(unsigned char));
+	
 	terrainPopulated = false;
 	dontSave = false;
 	unsaved = false;

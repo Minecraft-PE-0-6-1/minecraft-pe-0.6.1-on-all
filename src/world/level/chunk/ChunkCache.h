@@ -10,7 +10,7 @@
 #include "../LevelConstants.h"
 
 class ChunkCache: public ChunkSource {
-    //static const int CHUNK_CACHE_WIDTH = CHUNK_CACHE_WIDTH; // WAS 32;
+    //static const int LevelConstants::CHUNK_CACHE_WIDTH = LevelConstants::CHUNK_CACHE_WIDTH; // WAS 32;
     static const int MAX_SAVES = 2;
 public:
     ChunkCache(Level* level_, ChunkStorage* storage_, ChunkSource* source_)
@@ -25,14 +25,14 @@ public:
         //emptyChunk = new EmptyLevelChunk(level_, emptyChunkBlocks, 0, 0);
 		emptyChunk = new EmptyLevelChunk(level_, NULL, 0, 0);
 
-        chunks = (LevelChunk *)malloc(CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH);
+        chunks = (LevelChunk *)malloc(LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH);
     }
 
 	~ChunkCache() {
 		delete source;
 		delete emptyChunk;
 
-		for (int i = 0; i < CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH; i++)
+		for (int i = 0; i < LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH; i++)
 		{
 			if (&chunks[i])
 			{
@@ -43,7 +43,7 @@ public:
 	}
 
     bool fits(int x, int z) {
-        return (x >= 0 && z >= 0 && x < CHUNK_CACHE_WIDTH && z < CHUNK_CACHE_WIDTH);
+        return (x >= 0 && z >= 0 && x < LevelConstants::CHUNK_CACHE_WIDTH && z < LevelConstants::CHUNK_CACHE_WIDTH);
     }
 
     bool hasChunk(int x, int z) {
@@ -53,9 +53,9 @@ public:
         if (x == xLast && z == zLast && last != NULL) {
             return true;
         }
-        int xs = x & (CHUNK_CACHE_WIDTH - 1);
-        int zs = z & (CHUNK_CACHE_WIDTH - 1);
-        int slot = xs + zs * CHUNK_CACHE_WIDTH;
+        int xs = x & (LevelConstants::CHUNK_CACHE_WIDTH - 1);
+        int zs = z & (LevelConstants::CHUNK_CACHE_WIDTH - 1);
+        int slot = xs + zs * LevelConstants::CHUNK_CACHE_WIDTH;
         return &chunks[slot] != NULL && (&chunks[slot] == emptyChunk || chunks[slot].isAt(x, z));
     }
 
@@ -72,9 +72,9 @@ public:
         }
 		if (!fits(x, z)) return emptyChunk;
         //if (!level->isFindingSpawn && !fits(x, z)) return emptyChunk;
-        int xs = x & (CHUNK_CACHE_WIDTH - 1);
-        int zs = z & (CHUNK_CACHE_WIDTH - 1);
-        int slot = xs + zs * CHUNK_CACHE_WIDTH;
+        int xs = x & (LevelConstants::CHUNK_CACHE_WIDTH - 1);
+        int zs = z & (LevelConstants::CHUNK_CACHE_WIDTH - 1);
+        int slot = xs + zs * LevelConstants::CHUNK_CACHE_WIDTH;
         if (!hasChunk(x, z)) {
             if (&chunks[slot] != NULL) {
                 chunks[slot].unload();
@@ -200,8 +200,8 @@ public:
 	void saveAll(bool onlyUnsaved) {
 		if (storage != NULL) {
 			std::vector<LevelChunk*> chunks;
-			for (int z = 0; z < CHUNK_CACHE_WIDTH; ++z)
-			for (int x = 0; x < CHUNK_CACHE_WIDTH; ++x) {
+			for (int z = 0; z < LevelConstants::CHUNK_CACHE_WIDTH; ++z)
+			for (int x = 0; x < LevelConstants::CHUNK_CACHE_WIDTH; ++x) {
 				LevelChunk* chunk = level->getChunk(x, z);
 				if (!onlyUnsaved || chunk->shouldSave(false))
 					chunks.push_back( chunk );
@@ -212,7 +212,7 @@ public:
 private:
     LevelChunk* load(int x, int z) {
         if (storage == NULL) return emptyChunk;
-		if (x < 0 || x >= CHUNK_CACHE_WIDTH || z < 0 || z >= CHUNK_CACHE_WIDTH)
+		if (x < 0 || x >= LevelConstants::CHUNK_CACHE_WIDTH || z < 0 || z >= LevelConstants::CHUNK_CACHE_WIDTH)
 		{
 			return emptyChunk;
 		}

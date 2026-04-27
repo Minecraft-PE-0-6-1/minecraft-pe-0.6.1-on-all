@@ -106,9 +106,9 @@ private:
 	void recalcHeight(int x, int yStart, int z);
 public:
     static bool touchedSky;
-	static const int ChunkBlockCount = CHUNK_BLOCK_COUNT;
-	static const int ChunkSize = ChunkBlockCount;
-	static const int UpdateMapBitShift = 4; // power of (LEVEL_HEIGHT / 8) == 16
+	const int ChunkBlockCount = LevelConstants::CHUNK_BLOCK_COUNT;
+	const int ChunkSize = ChunkBlockCount;
+	static const int UpdateMapBitShift = 4; // power of (LevelConstants::LEVEL_HEIGHT / 8) == 16
 
 	int blocksLength; // ? needed or not? (i.e. are all chunks the same size?)
 
@@ -118,8 +118,8 @@ public:
     DataLayer skyLight;
     DataLayer blockLight;
 
-	char heightmap[CHUNK_COLUMNS];
-	unsigned char updateMap[CHUNK_COLUMNS]; // marks regions within block columns that have been modified
+	char* heightmap; // [LevelConstants::CHUNK_COLUMNS]
+	unsigned char* updateMap; // marks regions within block columns that have been modified [LevelConstants::CHUNK_COLUMNS]
 	int minHeight;
 
 	int x, z;
