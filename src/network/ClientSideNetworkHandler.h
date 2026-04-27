@@ -102,11 +102,11 @@ private:
 	BlockUpdateList	bufferedBlockUpdates;
 	int	requestNextChunkPosition;
 
-    static const int NumRequestChunks = CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH;
+    int NumRequestChunks;
     
     int requestNextChunkIndex;
-    IntPair requestNextChunkIndexList[NumRequestChunks];
-	bool chunksLoaded[NumRequestChunks];
+    std::vector<IntPair> requestNextChunkIndexList;
+	std::vector<bool> chunksLoaded;
 };
 
 #endif

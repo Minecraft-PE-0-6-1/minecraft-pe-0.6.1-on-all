@@ -27,6 +27,7 @@
 #include "util/Mth.h"
 #include "util/StringUtils.h"
 #include "world/item/ItemInstance.h"
+#include "world/level/LevelConstants.h"
 #include "world/level/storage/LevelStorage.h"
 #include "world/phys/Vec3.h"
 #include "world/item/crafting/Recipe.h"
@@ -219,8 +220,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	//
 	bool oldClient = packet->clientNetworkVersion < SharedConstants::NetworkProtocolLowestSupportedVersion;
 	bool oldServer = packet->clientNetworkLowestSupportedVersion > SharedConstants::NetworkProtocolVersion;
-	if (oldClient || oldServer)
-		loginStatus = oldClient? LoginStatus::Failed_ClientOld : LoginStatus::Failed_ServerOld;
+	if (oldClient || oldServer || !packet->newProto)
+		loginStatus = oldClient || !packet->newProto? LoginStatus::Failed_ClientOld : LoginStatus::Failed_ServerOld;
 
 	for (int i = 0; i < level->players.size(); i++) {
 		ServerPlayer* player = (ServerPlayer*) level->players.at(i);
@@ -272,15 +273,11 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
             level->getLevelData()->getGeneratorVersion(),
             gameType,
             newPlayer->entityId,
-            newPlayer->x, newPlayer->y - newPlayer->heightOffset, newPlayer->z
+            newPlayer->x, newPlayer->y - newPlayer->heightOffset, newPlayer->z,
+			CHUNK_CACHE_WIDTH
         ).write(&bitStream);
 
         rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
-		
-		if (!packet->newProto) {
-			MessagePacket packet("You're using outdated client. Some features disabled.");
-			raknetInstance->send(packet);
-		}
 	}
 }
 

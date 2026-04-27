@@ -2,6 +2,7 @@
 #define NET_MINECRAFT_NETWORK_PACKET__StartGamePacket_H__
 
 #include "../Packet.h"
+#include "world/level/LevelConstants.h"
 #include <cstdint>
 
 class StartGamePacket : public Packet
@@ -14,18 +15,20 @@ public:
 	int entityId;
 	float x, y, z;
 
+	int chunkCacheWidth = 0;
 	StartGamePacket()
 	{
 	}
 
-	StartGamePacket(long seed, int levelGeneratorVersion, int gameType, int entityId, float x, float y, float z)
+	StartGamePacket(long seed, int levelGeneratorVersion, int gameType, int entityId, float x, float y, float z, int chunkCacheWidth)
 	:	levelSeed((int32_t)seed),
 		levelGeneratorVersion(levelGeneratorVersion),
 		gameType(gameType),
 		entityId(entityId),
 		x(x),
 		y(y),
-		z(z)
+		z(z),
+		chunkCacheWidth(chunkCacheWidth)
 	{
 	}
 
@@ -40,6 +43,7 @@ public:
 		bitStream->Write(x);
 		bitStream->Write(y);
 		bitStream->Write(z);
+		bitStream->Write(CHUNK_CACHE_WIDTH);
 	}
 
 	void read(RakNet::BitStream* bitStream)
@@ -51,6 +55,10 @@ public:
 		bitStream->Read(x);
 		bitStream->Read(y);
 		bitStream->Read(z);
+		
+		if (bitStream->GetNumberOfUnreadBits() > 0) {
+			bitStream->Read(chunkCacheWidth);
+		}
 	}
 
 	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)

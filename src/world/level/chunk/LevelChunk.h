@@ -122,8 +122,8 @@ public:
 	unsigned char updateMap[CHUNK_COLUMNS]; // marks regions within block columns that have been modified
 	int minHeight;
 
-	const int x, z;
-	const int xt, zt;
+	int x, z;
+	int xt, zt;
 
     bool terrainPopulated;
     bool unsaved;

@@ -12,6 +12,7 @@
 #include "../client/Minecraft.h"
 #include "../client/gamemode/GameMode.h"
 #include "world/item/ItemInstance.h"
+#include "world/level/LevelConstants.h"
 #ifndef STANDALONE_SERVER
 #include "../client/gui/screens/DisconnectionScreen.h"
 #endif
@@ -99,6 +100,10 @@ void ClientSideNetworkHandler::onUnableToConnect()
 
 void ClientSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 {
+	CHUNK_CACHE_WIDTH = 16;
+	LEVEL_WIDTH = CHUNK_CACHE_WIDTH * CHUNK_WIDTH;
+	LEVEL_DEPTH = CHUNK_CACHE_WIDTH * CHUNK_DEPTH;
+	
 	// TODO: Good disconnecting
 	LOGI("onDisconnect\n");
 	if (level)
@@ -154,6 +159,19 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, StartGam
 		return;
 	}
 #endif
+
+	// @todo @note i think its trash
+	// we can put it directly to selectLevel?
+	if (packet->chunkCacheWidth != 0) {
+		printf("lol \n");
+		CHUNK_CACHE_WIDTH = packet->chunkCacheWidth;
+		LEVEL_WIDTH = CHUNK_CACHE_WIDTH * CHUNK_WIDTH;
+		LEVEL_DEPTH = CHUNK_CACHE_WIDTH * CHUNK_DEPTH;
+		
+	}
+	NumRequestChunks = CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH;
+	requestNextChunkIndexList.resize(NumRequestChunks);
+	chunksLoaded.resize(NumRequestChunks);
 
 	const std::string& levelId = LevelStorageSource::TempLevelId;
 	LevelStorageSource* storageSource = minecraft->getLevelSource();
@@ -696,7 +714,7 @@ void ClientSideNetworkHandler::arrangeRequestChunkOrder() {
     }
 
     _ChunkSorter sorter(cx, cz);
-    std::sort(requestNextChunkIndexList, requestNextChunkIndexList + NumRequestChunks, sorter);
+    std::sort(requestNextChunkIndexList.begin(), requestNextChunkIndexList.end(), sorter);
 }
 
 void ClientSideNetworkHandler::levelGenerated(Level* level)
