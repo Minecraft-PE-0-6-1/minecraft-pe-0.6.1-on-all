@@ -560,8 +560,8 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 	int rx = packet->x << 4;
 	int rz = packet->z << 4;
 
-	unsigned char readBlockBuffer[setSize];
-	unsigned char readDataBuffer[setSize / 2];
+	unsigned char* readBlockBuffer = new unsigned char[setSize];
+	unsigned char* readDataBuffer = new unsigned char[setSize / 2];
 
 	for (int i = 0; i < LevelConstants::CHUNK_COLUMNS; i++)
 	{
@@ -630,6 +630,9 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 			}
 		}
 	}
+
+	delete[] readBlockBuffer;
+	delete[] readDataBuffer;
 
  	if (recalcHeight)
  	{

@@ -25,7 +25,7 @@ public:
         //emptyChunk = new EmptyLevelChunk(level_, emptyChunkBlocks, 0, 0);
 		emptyChunk = new EmptyLevelChunk(level_, NULL, 0, 0);
 
-        chunks = (LevelChunk *)malloc(LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH);
+        chunks = new LevelChunk *[LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH];
     }
 
 	~ChunkCache() {
@@ -36,8 +36,8 @@ public:
 		{
 			if (&chunks[i])
 			{
-				chunks[i].deleteBlockData();
-				delete &chunks[i];
+				chunks[i]->deleteBlockData();
+				delete chunks[i];
 			}
 		}
 	}
@@ -56,7 +56,7 @@ public:
         int xs = x & (LevelConstants::CHUNK_CACHE_WIDTH - 1);
         int zs = z & (LevelConstants::CHUNK_CACHE_WIDTH - 1);
         int slot = xs + zs * LevelConstants::CHUNK_CACHE_WIDTH;
-        return &chunks[slot] != NULL && (&chunks[slot] == emptyChunk || chunks[slot].isAt(x, z));
+        return chunks[slot] != NULL && (chunks[slot] == emptyChunk || chunks[slot]->isAt(x, z));
     }
 
     LevelChunk* create(int x, int z) {
@@ -76,10 +76,10 @@ public:
         int zs = z & (LevelConstants::CHUNK_CACHE_WIDTH - 1);
         int slot = xs + zs * LevelConstants::CHUNK_CACHE_WIDTH;
         if (!hasChunk(x, z)) {
-            if (&chunks[slot] != NULL) {
-                chunks[slot].unload();
-                save(&chunks[slot]);
-                saveEntities(&chunks[slot]);
+            if (chunks[slot] != NULL) {
+                chunks[slot]->unload();
+                save(chunks[slot]);
+                saveEntities(chunks[slot]);
             }
 
             LevelChunk* newChunk = load(x, z);
@@ -94,7 +94,7 @@ public:
 				//return emptyChunk;
 				updateLights = true;
             }
-            chunks[slot] = *newChunk;
+            chunks[slot] = newChunk;
             newChunk->lightLava();
 
 			if (updateLights)
@@ -115,23 +115,23 @@ public:
 				//level->updateLight(LightLayer::Block, x * 16, 0, z * 16, x * 16 + 15, 128, z * 16 + 15);
 			}
 
-            if (&chunks[slot] != NULL) {
-                chunks[slot].load();
+            if (chunks[slot] != NULL) {
+                chunks[slot]->load();
             }
 
-            if (!chunks[slot].terrainPopulated && hasChunk(x + 1, z + 1) && hasChunk(x, z + 1) && hasChunk(x + 1, z)) postProcess(this, x, z);
+            if (!chunks[slot]->terrainPopulated && hasChunk(x + 1, z + 1) && hasChunk(x, z + 1) && hasChunk(x + 1, z)) postProcess(this, x, z);
             if (hasChunk(x - 1, z) && !getChunk(x - 1, z)->terrainPopulated && hasChunk(x - 1, z + 1) && hasChunk(x, z + 1) && hasChunk(x - 1, z)) postProcess(this, x - 1, z);
             if (hasChunk(x, z - 1) && !getChunk(x, z - 1)->terrainPopulated && hasChunk(x + 1, z - 1) && hasChunk(x, z - 1) && hasChunk(x + 1, z)) postProcess(this, x, z - 1);
             if (hasChunk(x - 1, z - 1) && !getChunk(x - 1, z - 1)->terrainPopulated && hasChunk(x - 1, z - 1) && hasChunk(x, z - 1) && hasChunk(x - 1, z)) postProcess(this, x - 1, z - 1);
         }
         xLast = x;
         zLast = z;
-        last = &chunks[slot];
+        last = chunks[slot];
 
 		//sw.stop();
 		//sw.printEvery(500000, "ChunkCache::load: ");
 
-        return &chunks[slot];
+        return chunks[slot];
     }
 
 	Biome::MobList getMobsAt(const MobCategory& mobCategory, int x, int y, int z) {
@@ -255,7 +255,7 @@ private:
     LevelChunk* emptyChunk;
     ChunkSource* source;
     ChunkStorage* storage;
-    LevelChunk* chunks;
+    LevelChunk** chunks;
     Level* level;
 
     LevelChunk* last;

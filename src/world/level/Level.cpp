@@ -29,6 +29,9 @@
 #include "../Difficulty.h"
 #include "../../network/packet/ExplodePacket.h"
 
+const int Level::DEPTH = LevelConstants::LEVEL_HEIGHT;
+const int Level::SEA_LEVEL = Level::DEPTH / 2 - 1;
+
 Level::Level(LevelStorage* levelStorage, const std::string& levelName, const LevelSettings& settings, int generatorVersion, Dimension* fixedDimension /* = NULL */)
 :	levelStorage(levelStorage),
 	isClientSide(false),

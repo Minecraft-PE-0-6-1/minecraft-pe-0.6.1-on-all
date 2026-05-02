@@ -12,6 +12,7 @@
 
 /*static*/
 bool LevelChunk::touchedSky = false;
+const int LevelChunk::ChunkBlockCount = LevelConstants::CHUNK_BLOCK_COUNT;
 
 LevelChunk::LevelChunk( Level* level, int x, int z )
 :	level(level),
@@ -45,8 +46,8 @@ LevelChunk::~LevelChunk()
 
 void LevelChunk::init()
 {
-	heightmap = (char*)malloc(LevelConstants::CHUNK_COLUMNS * sizeof(char));
-	updateMap = (unsigned char*)malloc(LevelConstants::CHUNK_COLUMNS * sizeof(unsigned char));
+	heightmap = new char[LevelConstants::CHUNK_COLUMNS];
+	updateMap = new unsigned char[LevelConstants::CHUNK_COLUMNS];
 	
 	terrainPopulated = false;
 	dontSave = false;
