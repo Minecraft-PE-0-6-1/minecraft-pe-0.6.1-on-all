@@ -11,8 +11,6 @@
 #include "network/RakNetInstance.h"
 #include "world/level/Level.h"
 
-
-
 CommandManager::CommandManager() {
     registerAllCommands();
 }
