@@ -76,6 +76,7 @@ int main(int numArguments, char* pszArgs[]) {
 		//pthread_yield();
 		sleepMs(20);
 	}
+	
 	((MAIN_CLASS*)g_app)->level->saveLevelData();
 	delete app;
 	appContext.platform->finish();

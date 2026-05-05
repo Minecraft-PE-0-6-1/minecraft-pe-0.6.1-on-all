@@ -163,7 +163,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, StartGam
 	// @todo @note i think its trash
 	// we can put it directly to selectLevel?
 	if (packet->chunkCacheWidth != 0) {
-		printf("lol \n");
+		printf("lol \n");		
 		LevelConstants::CHUNK_CACHE_WIDTH = packet->chunkCacheWidth;
 		LevelConstants::LEVEL_WIDTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH;
 		LevelConstants::LEVEL_DEPTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_DEPTH;

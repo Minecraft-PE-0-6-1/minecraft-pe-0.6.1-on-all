@@ -74,11 +74,11 @@ void ServerSideNetworkHandler::tileChanged(int x, int y, int z)
 
 Packet* ServerSideNetworkHandler::getAddPacketFromEntity( Entity* entity ) {
 	if (entity->isMob() && !entity->isPlayer()) { //@fix: This code is duplicated. See if it can be unified.
-		if (minecraft->player) {
+		// if (minecraft->player) {
 			// I guess this should always be true, but it crashed somewhere in this
 			// function once and I only see this one as a potential problem
 			return new AddMobPacket((Mob*)entity);
-		}
+		// }
 	}
 	else if (entity->isPlayer()) {
 
