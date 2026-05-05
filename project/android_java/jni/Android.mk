@@ -228,6 +228,7 @@ LOCAL_SRC_FILES := ../../../src/main.cpp \
 ../../../src/world/level/tile/entity/TileEntity.cpp \
 ../../../src/world/level/tile/entity/FurnaceTileEntity.cpp \
 ../../../src/world/phys/HitResult.cpp
+../../../src/world/level/LevelConstants.cpp
 
 LOCAL_CFLAGS := -Wno-psabi $(LOCAL_CFLAGS)
 
