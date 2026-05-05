@@ -1,7 +1,7 @@
 #include "CommandKick.hpp"
-#include "RakPeerInterface.h"
 #include "commands/Command.hpp"
 #include "network/RakNetInstance.h"
+#include "raknet/RakPeerInterface.h"
 #include "world/level/Level.h"
 #include <algorithm>
 #include <client/Minecraft.h>
