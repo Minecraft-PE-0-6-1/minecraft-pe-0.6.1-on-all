@@ -134,13 +134,13 @@ LOCAL_SRC_FILES := ../../../src/main.cpp \
 ../../../src/client/sound/SoundEngine.cpp \
 ../../../src/locale/I18n.cpp \
 ../../../src/nbt/Tag.cpp \
-../../../src/network/command/CommandServer.cpp \
-../../../src/network/command/CommandServer.cpp \
 ../../../src/commands/Command.cpp \
 ../../../src/commands/CommandHelp.cpp \
 ../../../src/commands/CommandKick.cpp \
 ../../../src/commands/CommandManager.cpp \
 ../../../src/commands/CommandOp.cpp \
+../../../src/network/command/CommandServer.cpp \
+../../../src/network/command/CommandServer.cpp \
 ../../../src/network/command/CommandServer.cpp \
 ../../../src/network/ClientSideNetworkHandler.cpp \
 ../../../src/network/NetEventCallback.cpp \
