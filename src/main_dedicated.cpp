@@ -12,6 +12,7 @@
 #include "server/ArgumentsSettings.h"
 #include "platform/time.h"
 #include "SharedConstants.h"
+#include "world/level/LevelConstants.h"
 
 #define MAIN_CLASS NinecraftApp
 static App* g_app = 0;
@@ -40,9 +41,8 @@ std::string findStringInConfig(std::string line, std::string config) {
     }
  
     std::string valueStr = "";
-    
-    valuePos += 1 + line.size();
 
+    valuePos += 1 + line.size();
 
     while (true) {
         auto sym = config.at(valuePos);
@@ -92,6 +92,7 @@ int main(int numArguments, char* pszArgs[]) {
 
 	int port = 0;
 	int gamemode = 0;
+	int worldSize = 0;
 
 	std::string levelDir = "";
 	std::string cachePath = "";
@@ -112,6 +113,16 @@ int main(int numArguments, char* pszArgs[]) {
         }
 
 		port = std::stoi(findStringInConfig("port", propString));
+		worldSize = std::stoi(findStringInConfig("world-size", propString));
+
+		if (worldSize < 16 || worldSize > 32) {
+			throw std::runtime_error("Incorrect world size.");
+		}
+
+		LevelConstants::CHUNK_CACHE_WIDTH = worldSize;
+		LevelConstants::LEVEL_WIDTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH;
+		LevelConstants::LEVEL_DEPTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_DEPTH;
+		
 		cachePath = findStringInConfig("level-cachepath", propString);
 		externalPath = findStringInConfig("level-externalpath", propString);
 		levelName = findStringInConfig("level-name", propString);
@@ -144,7 +155,7 @@ int main(int numArguments, char* pszArgs[]) {
 			buffer << "gamemode=survival" << std::endl;
 			buffer << "level-name=" << defaultSettings.getLevelName() << std::endl;
 			buffer << "world-size=16" << std::endl;
-			
+
 			defaultProperties << buffer.str();
 
 			printf("%s \n", buffer.str().c_str());
