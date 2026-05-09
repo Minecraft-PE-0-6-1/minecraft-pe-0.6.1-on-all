@@ -22,6 +22,7 @@
 #include "../../item/StoneSlabTileItem.h"
 #include "../../item/SaplingTileItem.h"
 #include "../../item/ItemCategory.h"
+#include "world/level/LevelConstants.h"
 
 const int Tile::RENDERLAYER_OPAQUE          = 0;
 const int Tile::RENDERLAYER_ALPHATEST       = 1;
@@ -512,10 +513,15 @@ bool Tile::shouldRenderFace( LevelSource* level, int x, int y, int z, int face )
 {
 	if (face == 0 && y == -1) return false;
 	// For fixed size worlds //@todo: external constants rather than magic numbers
+	// @fixme @ahtung temp fix
+
+	auto xz = LevelConstants::CHUNK_CACHE_WIDTH == 16 ? 256 : 
+	LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH / (LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH / 256 / 2);
+
 	if (face == 2 && z == -1)  return false;
-	if (face == 3 && z == 256) return false;
+	if (face == 3 && z == xz) return false;
 	if (face == 4 && x == -1)  return false;
-	if (face == 5 && x == 256) return false;
+	if (face == 5 && x == xz) return false;
 	// Common
 	if (face == 0 && yy0 > 0) return true;
 	if (face == 1 && yy1 < 1) return true;

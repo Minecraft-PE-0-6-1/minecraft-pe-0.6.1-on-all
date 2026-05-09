@@ -13,6 +13,7 @@
 #include "../client/gamemode/GameMode.h"
 #include "world/item/ItemInstance.h"
 #include "world/level/LevelConstants.h"
+#include <cstddef>
 #ifndef STANDALONE_SERVER
 #include "../client/gui/screens/DisconnectionScreen.h"
 #endif
@@ -120,6 +121,7 @@ void ClientSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 			}
 		}
 	}
+	minecraft->setLevel(NULL);
 #ifndef STANDALONE_SERVER
 	minecraft->gui.addMessage("Disconnected from server");
 #endif
@@ -354,7 +356,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveEn
 	if (!level) return;
 
 	Entity* entity = level->getEntity(packet->entityId);
-	LOGI("RemoveEntityPacket %p %p, %d\n", entity, minecraft->player, entity?(int)(entity->isPlayer()): -1);
+	// LOGI("RemoveEntityPacket %p %p, %d\n", entity, minecraft->player, entity?(int)(entity->isPlayer()): -1);
 	if (!entity) return;
 
 	level->removeEntity(entity);
