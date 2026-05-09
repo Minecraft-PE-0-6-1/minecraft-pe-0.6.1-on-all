@@ -52,7 +52,7 @@ std::string findStringInConfig(std::string line, std::string config) {
         }
 
         if (valuePos == config.size()) {
-            throw std::runtime_error("Cannot end line");
+            throw std::runtime_error("Cannot find end of the line");
         }
 
         valueStr += sym;
@@ -63,31 +63,7 @@ std::string findStringInConfig(std::string line, std::string config) {
 }
 
 
-int main(int numArguments, char* pszArgs[]) {
-	ArgumentsSettings aSettings(numArguments, pszArgs);
-	// if(aSettings.getShowHelp()) {
-	// 	// TODO: Map with args and print it with std::cout and for loop
-	// 	// TODO: World size setting
-
-	// 	ArgumentsSettings defaultSettings(0, NULL);
-
-	// 	printf("Minecraft Pockect Edition Server %s\n", Common::getGameVersionString("").c_str());
-	// 	printf("-------------------------------------------------------\n");
-
-	// 	printf("--cachepath - Path to where the server can store temp stuff (not sure if this is used) [default: \"%s\"]\n", defaultSettings.getCachePath().c_str());
-	// 	printf("--externalpath - The path to the place where the server should store the levels. [default: \"%s\"]\n", defaultSettings.getExternalPath().c_str());
-	// 	printf("--levelname - The name of the server [default: \"%s\"]\n", defaultSettings.getLevelName().c_str());
-	// 	printf("--gamemode - The name of the gamemode [default: \"%s\"]\n", defaultSettings.getGamemode().c_str());
-	// 	printf("--leveldir - The name of the server [default: \"%s\"]\n", defaultSettings.getLevelDir().c_str());
-	// 	printf("--help - Shows this message.\n");
-	// 	printf("--port - The port to run the server on. [default: %d]\n", defaultSettings.getPort());
-	// 	printf("--serverkey - The key that the server should use for API calls. [default: \"%s\"]\n", defaultSettings.getServerKey().c_str());
-
-	// 	printf("-------------------------------------------------------\n");
-
-	// 	return 0;
-	// }
-	
+int main(int numArguments, char* pszArgs[]) {	
 	std::ifstream serverProperties("server.properties");
 
 	int port = 0;
@@ -138,7 +114,7 @@ int main(int numArguments, char* pszArgs[]) {
 			gamemode = GameType::Survival;
 		}
 		
-		printf("%d %s %s %d \n", port, cachePath.c_str(), externalPath.c_str(), gamemode);
+		printf("%d %s %s %d %d\n", port, cachePath.c_str(), externalPath.c_str(), gamemode, LevelConstants::CHUNK_CACHE_WIDTH);
 	} else {
 		std::ofstream defaultProperties("server.properties");
 
@@ -160,7 +136,7 @@ int main(int numArguments, char* pszArgs[]) {
 
 			printf("%s \n", buffer.str().c_str());
 
-			printf("Edit a config file first!");
+			printf("Edit a config file first!\n");
 
 			defaultProperties.close();
 			exit(0);

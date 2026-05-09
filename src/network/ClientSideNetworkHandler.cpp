@@ -45,6 +45,9 @@ ClientSideNetworkHandler::ClientSideNetworkHandler(Minecraft* minecraft, IRakNet
 	requestNextChunkPosition(0),
     requestNextChunkIndex(0)
 {
+	NumRequestChunks = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH;
+	requestNextChunkIndexList.resize(NumRequestChunks);
+	chunksLoaded.resize(NumRequestChunks);
 	rakPeer = raknetInstance->getPeer();
 }
 
