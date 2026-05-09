@@ -9,6 +9,7 @@ namespace LoginStatus {
 	const int Failed_ClientOld = 1;
 	const int Failed_ServerOld = 2;
 	const int Failed_TakenNickname = 3;
+	const int Failed_Banned = 4;
 }
 
 class LoginStatusPacket : public Packet {

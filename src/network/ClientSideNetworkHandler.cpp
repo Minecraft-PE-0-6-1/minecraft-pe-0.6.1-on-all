@@ -151,6 +151,12 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginSta
 		minecraft->setScreen(new DisconnectionScreen("Could not connect: Nickname is taken!"));
 #endif
 	}
+	if (packet->status == LoginStatus::Failed_Banned) {
+		LOGI("Disconnect! You're banned from this server!\n");
+#ifndef STANDALONE_SERVER
+		minecraft->setScreen(new DisconnectionScreen("Could not connect: You're banned from this server!"));
+#endif
+	}
 }
 
 

@@ -7,6 +7,7 @@
 #include "commands/CommandHelp.hpp"
 #include "commands/CommandKick.hpp"
 #include "commands/CommandOp.hpp"
+#include "commands/CommandBan.hpp"
 #include "network/packet/ChatPacket.h"
 #include "network/RakNetInstance.h"
 #include "world/level/Level.h"
@@ -19,6 +20,7 @@ void CommandManager::registerAllCommands() {
     m_commands.push_back(new CommandHelp());
     m_commands.push_back(new CommandKick());
     m_commands.push_back(new CommandOp());
+    m_commands.push_back(new CommandBan());
 }
 
 std::vector<std::string> CommandManager::getListAllCommands() {

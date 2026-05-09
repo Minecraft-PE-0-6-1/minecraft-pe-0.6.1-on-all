@@ -161,6 +161,44 @@ int main(int numArguments, char* pszArgs[]) {
 	((MAIN_CLASS*)g_app)->selectLevel(levelDir, levelName, settings);
 	((MAIN_CLASS*)g_app)->hostMultiplayer(port);
 
+	// Reading ops
+	std::ifstream ops("ops.txt");
+
+	if (ops.is_open()) {
+        std::string line;
+        
+        while (std::getline(ops, line)) {
+			if (!line.empty()) {
+            	((MAIN_CLASS*)g_app)->level->ops.insert(line);
+			}
+        }
+	} else {
+		std::ofstream opsDefault("ops.txt");
+
+		if (!opsDefault.is_open()) {
+			throw std::runtime_error("Cannot create ops list.");
+		}
+	}
+
+	// Reading banned ppl
+	std::ifstream banned("banned-players.txt");
+
+	if (banned.is_open()) {
+        std::string line;
+        
+        while (std::getline(banned, line)) {
+			if (!line.empty()) {
+            	((MAIN_CLASS*)g_app)->level->bannedPpl.insert(line);
+			}
+        }
+	} else {
+		std::ofstream bannedPpl("banned-players.txt");
+
+		if (!bannedPpl.is_open()) {
+			throw std::runtime_error("Cannot create banned players list.");
+		}
+	}
+
 	std::cout << "Level has been generated in " << getTimeS() - startTime << std::endl;
 	((MAIN_CLASS*)g_app)->level->saveLevelData();
 	std::cout << "Level has been saved!" << std::endl;
@@ -171,7 +209,30 @@ int main(int numArguments, char* pszArgs[]) {
 		sleepMs(20);
 	}
 	
+	std::ofstream opsWrite("ops.txt"); 
+
+	if (opsWrite.is_open()) {
+		for (auto& op : ((MAIN_CLASS*)g_app)->level->ops) {
+			opsWrite << op << std::endl;
+		}
+		opsWrite.close();
+	} else {
+		throw std::runtime_error("Cannot open ops list.");
+	}
+
+	std::ofstream bannedWrite("banned-players.txt"); 
+
+	if (bannedWrite.is_open()) {
+		for (auto& banned : ((MAIN_CLASS*)g_app)->level->bannedPpl) {
+			bannedWrite << banned << std::endl;
+		}
+		bannedWrite.close();
+	} else {
+		throw std::runtime_error("Cannot open banned players list.");
+	}
+	
 	((MAIN_CLASS*)g_app)->level->saveLevelData();
+
 	delete app;
 	appContext.platform->finish();
 	delete appContext.platform;

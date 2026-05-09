@@ -309,7 +309,7 @@ public:
 	Random random;
 
 	std::set<std::string> ops;
-
+	std::set<std::string> bannedPpl;
 protected:
 	bool isFindingSpawn;
 

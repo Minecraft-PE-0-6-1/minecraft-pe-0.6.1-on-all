@@ -278,7 +278,10 @@ void Minecraft::setLevel(Level* level, const std::string& message /* ="" */, Loc
 		}
 		this->level = level;
 		// So uhhh
-		level->ops.emplace(options.getStringValue(OPTIONS_USERNAME));
+		std::string op = options.getStringValue(OPTIONS_USERNAME);
+    	std::transform(op.begin(), op.end(), op.begin(), ::tolower);
+
+		level->ops.emplace(op);
 		_hasSignaledGeneratingLevelFinished = false;
 #ifdef STANDALONE_SERVER
 		const bool threadedLevelCreation = false;
@@ -732,19 +735,19 @@ void Minecraft::tickInput() {
 			}
 			
 			// TODO: replace it with client /give command :face_vomiting:
-			if (key == Keyboard::KEY_F4) {
-				player->inventory->add(new ItemInstance(Tile::redBrick));
-				player->inventory->add(new ItemInstance(Item::ironIngot, 64));
-				player->inventory->add(new ItemInstance(Item::ironIngot, 34));
-				player->inventory->add(new ItemInstance(Tile::stonecutterBench));
-				player->inventory->add(new ItemInstance(Tile::workBench));
-				player->inventory->add(new ItemInstance(Tile::furnace));
-				player->inventory->add(new ItemInstance(Tile::wood, 54));
-				player->inventory->add(new ItemInstance(Item::stick, 14));
-				player->inventory->add(new ItemInstance(Item::coal, 31));
-				player->inventory->add(new ItemInstance(Tile::sand, 6));
+			// if (key == Keyboard::KEY_F4) {
+			// 	player->inventory->add(new ItemInstance(Tile::redBrick));
+			// 	player->inventory->add(new ItemInstance(Item::ironIngot, 64));
+			// 	player->inventory->add(new ItemInstance(Item::ironIngot, 34));
+			// 	player->inventory->add(new ItemInstance(Tile::stonecutterBench));
+			// 	player->inventory->add(new ItemInstance(Tile::workBench));
+			// 	player->inventory->add(new ItemInstance(Tile::furnace));
+			// 	player->inventory->add(new ItemInstance(Tile::wood, 54));
+			// 	player->inventory->add(new ItemInstance(Item::stick, 14));
+			// 	player->inventory->add(new ItemInstance(Item::coal, 31));
+			// 	player->inventory->add(new ItemInstance(Tile::sand, 6));
 
-			}
+			// }
 
 			if (key == Keyboard::KEY_F5) {
 				options.toggle(OPTIONS_THIRD_PERSON_VIEW);
@@ -1603,6 +1606,6 @@ void Minecraft::addMessage(const std::string& msg) {
 #ifndef STANDALONE_SERVER
 	gui.addMessage(msg);
 #else 
-	LOGI("%s", msg.c_str());
+	LOGI("%s \n", msg.c_str());
 #endif
 }

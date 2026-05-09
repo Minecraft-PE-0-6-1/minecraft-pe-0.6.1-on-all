@@ -15,15 +15,14 @@ std::string CommandOp::execute(Minecraft& mc, Player& player, const std::vector<
         return help(mc);
     }
 
-    auto it = std::find_if(mc.level->players.begin(), mc.level->players.end(), [args] (auto& it) -> bool {
-        return it->name == args[0];
-    });
-
-    if (mc.level->ops.find(args[0]) != mc.level->ops.end()) {
+    std::string nicknameLower = args[0];
+    std::transform(nicknameLower.begin(), nicknameLower.end(), nicknameLower.begin(), ::tolower);
+    
+    if (mc.level->ops.find(nicknameLower) != mc.level->ops.end()) {
         return "op: player " + args[0] + " already opped";
     }
 
-    mc.level->ops.emplace((*it)->name);
+    mc.level->ops.emplace(nicknameLower);
     return "op: successfully opped player " + args[0];
 }
 

@@ -159,7 +159,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChatPack
 {
 	auto player = getPlayer(source);
 
-	if (player == nullptr) return; // TODO maybe kick?
+	if (player == nullptr) return; // @todo maybe kick?
 	
 	if (packet->message[0] == '/') {
 		// This is a command
@@ -223,11 +223,27 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	if (oldClient || oldServer || !packet->newProto)
 		loginStatus = oldClient || !packet->newProto? LoginStatus::Failed_ClientOld : LoginStatus::Failed_ServerOld;
 
+	std::string nicknameLower = packet->clientName.C_String();
+	std::transform(nicknameLower.begin(), nicknameLower.end(), nicknameLower.begin(), ::tolower);
+
+	printf("%s lower \n", nicknameLower.c_str());
 	for (int i = 0; i < level->players.size(); i++) {
 		ServerPlayer* player = (ServerPlayer*) level->players.at(i);
-		
-		if (player->name == packet->clientName.C_String()) {
+
+		std::string clientLower = player->name;
+		std::transform(clientLower.begin(), clientLower.end(), clientLower.begin(), ::tolower);
+
+		// @todo to lower case
+		if (nicknameLower == clientLower) {
 			loginStatus = packet->newProto ? LoginStatus::Failed_TakenNickname : LoginStatus::Failed_ClientOld;
+			break;
+		}
+	}
+	
+	for (auto& banned : level->bannedPpl) {
+		if (nicknameLower == banned) {
+			loginStatus = packet->newProto ? LoginStatus::Failed_Banned : LoginStatus::Failed_ClientOld;
+			break;
 		}
 	}
 
