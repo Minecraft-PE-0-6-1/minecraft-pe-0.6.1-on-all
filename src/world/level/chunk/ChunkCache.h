@@ -26,6 +26,8 @@ public:
 		emptyChunk = new EmptyLevelChunk(level_, NULL, 0, 0);
 
         chunks = new LevelChunk *[LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH];
+        memset(chunks, 0, sizeof(LevelChunk*) * LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH);
+        LOGI("Chunks allocated.");
     }
 
 	~ChunkCache() {
@@ -34,7 +36,7 @@ public:
 
 		for (int i = 0; i < LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH; i++)
 		{
-			if (&chunks[i])
+			if (chunks[i])
 			{
 				chunks[i]->deleteBlockData();
 				delete chunks[i];
