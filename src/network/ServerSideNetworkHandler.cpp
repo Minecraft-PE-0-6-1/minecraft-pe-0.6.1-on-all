@@ -968,19 +968,17 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 
 void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SetHealthPacket* packet )
 {
-	LOGI("net idi nahui\n");
-
-	// for (unsigned int i = 0; i < level->players.size(); ++i) {
-	// 	Player* p = level->players[i];
-	// 	if (p->owner == source) {
-	// 		if (packet->health <= -32) {
-	// 			int diff = packet->health - SetHealthPacket::HEALTH_MODIFY_OFFSET;
-	// 			if (diff > 0) p->hurt(NULL, diff);
-	// 			else if (diff < 0) p->heal(-diff);
-	// 		}
-	// 		break;
-	// 	}
-	// }
+	for (unsigned int i = 0; i < level->players.size(); ++i) {
+		Player* p = level->players[i];
+		if (p->owner == source) {
+			if (packet->health <= -32) {
+				int diff = packet->health - SetHealthPacket::HEALTH_MODIFY_OFFSET;
+				if (diff > 0) p->hurt(NULL, diff);
+				else if (diff < 0) p->heal(-diff);
+			}
+			break;
+		}
+	}
 }
 
 void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SignUpdatePacket* packet ) {
