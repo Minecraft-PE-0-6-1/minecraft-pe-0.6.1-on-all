@@ -12,7 +12,7 @@
 
 /*static*/
 bool LevelChunk::touchedSky = false;
-const int LevelChunk::ChunkBlockCount = LevelConstants::CHUNK_BLOCK_COUNT;
+int LevelChunk::ChunkBlockCount;
 
 LevelChunk::LevelChunk( Level* level, int x, int z )
 :	level(level),

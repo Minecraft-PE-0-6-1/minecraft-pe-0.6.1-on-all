@@ -178,7 +178,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, StartGam
 		LevelConstants::CHUNK_CACHE_WIDTH = packet->chunkCacheWidth;
 		LevelConstants::LEVEL_WIDTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH;
 		LevelConstants::LEVEL_DEPTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_DEPTH;
-		
+		LevelChunk::ChunkBlockCount = LevelConstants::CHUNK_BLOCK_COUNT;
 	}
 	NumRequestChunks = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH;
 	requestNextChunkIndexList.resize(NumRequestChunks);

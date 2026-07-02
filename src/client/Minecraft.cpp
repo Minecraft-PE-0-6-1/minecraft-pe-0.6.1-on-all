@@ -1137,6 +1137,7 @@ bool Minecraft::supportNonTouchScreen() {
 }
 void Minecraft::init()
 {
+	LevelChunk::ChunkBlockCount = LevelConstants::CHUNK_BLOCK_COUNT;
 #ifndef STANDALONE_SERVER
 	checkGlError("Init enter");
 
