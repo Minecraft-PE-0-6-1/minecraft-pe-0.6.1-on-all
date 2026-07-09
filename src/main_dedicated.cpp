@@ -5,7 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#ifdef __linux__
 #include <unistd.h>
+#endif
 
 #include "world/level/LevelSettings.h"
 #include "world/level/Level.h"

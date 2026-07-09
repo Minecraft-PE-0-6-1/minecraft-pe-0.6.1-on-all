@@ -149,7 +149,6 @@ file(GLOB SERVER_SOURCES
 
     "src/platform/CThread.cpp"
     "src/platform/HttpClient.cpp"
-    "src/platform/PngLoader.cpp"
     "src/platform/time.cpp"
 
     "src/platform/input/Controller.cpp"
@@ -302,18 +301,16 @@ if (${PLATFORM} STREQUAL "Desktop")
 endif()
 
 # Server
-if(UNIX)
-    add_executable("${PROJECT_NAME}-server" ${SERVER_SOURCES})
+add_executable("${PROJECT_NAME}-server" ${SERVER_SOURCES})
 
-    target_compile_definitions("${PROJECT_NAME}-server" PUBLIC "STANDALONE_SERVER" "SERVER_PROFILER")
+target_compile_definitions("${PROJECT_NAME}-server" PUBLIC "STANDALONE_SERVER" "SERVER_PROFILER")
 
-    target_include_directories("${PROJECT_NAME}-server" PUBLIC 
-        "${CMAKE_SOURCE_DIR}/src/"
-        "project/lib_projects/raknet/jni/RaknetSources"
-    )
+target_include_directories("${PROJECT_NAME}-server" PUBLIC 
+    "${CMAKE_SOURCE_DIR}/src/"
+    "project/lib_projects/raknet/jni/RaknetSources"
+)
 
-    target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT})
-endif()
+target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable(${PROJECT_NAME} ${CLIENT_SOURCES})
 
