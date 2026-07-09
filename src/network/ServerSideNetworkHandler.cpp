@@ -433,24 +433,24 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 {
 	if (!level) return;
 	
-	//LOGI("MovePlayerPacket\n");
+	LOGI("MovePlayerPacket\n");
 	if (Entity* entity = level->getEntity(packet->entityId)) {
 		ServerPlayer* player = (ServerPlayer*) getPlayer(source);
 
-		int timeElapsed = minecraft->getTicks() - player->getLastMoveTicks();
+		// int timeElapsed = minecraft->getTicks() - player->getLastMoveTicks();
 
-		if (timeElapsed > 0) {
-			float dist = player->distanceTo(packet->x, player->y, packet->z);
-			float speed = dist / (minecraft->getTicks() - player->getLastMoveTicks());
-			player->setLastMoveTicks(minecraft->getTicks());
+		// if (timeElapsed > 0) {
+		// 	float dist = player->distanceTo(packet->x, player->y, packet->z);
+		// 	float speed = dist / (minecraft->getTicks() - player->getLastMoveTicks());
+		// 	player->setLastMoveTicks(minecraft->getTicks());
 
-			float maxSpeed = (minecraft->isCreativeMode()) ? 1.65f : 1.f;
+		// 	float maxSpeed = (minecraft->isCreativeMode()) ? 1.65f : 1.f;
 
-			if (speed > maxSpeed) {
-				MovePlayerPacket refuse(player->entityId, player->x, player->y, player->z, player->xRot, player->yRot);
-		    	return raknetInstance->send(refuse);
-			}
-		}
+		// 	if (speed > maxSpeed) {
+		// 		MovePlayerPacket refuse(player->entityId, player->x, player->y, player->z, player->xRot, player->yRot);
+		//     	return raknetInstance->send(refuse);
+		// 	}
+		// }
 
 		entity->xd = entity->yd = entity->zd = 0;	
 		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
