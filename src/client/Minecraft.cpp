@@ -258,9 +258,10 @@ void Minecraft::selectLevel( const std::string& levelId, const std::string& leve
 
 void Minecraft::setLevel(Level* level, const std::string& message /* ="" */, LocalPlayer* forceInsertPlayer /* = NULL */) {
 	cameraTargetPlayer = NULL;
-	LOGI("Seed is %ld\n", level->getSeed());
 
 	if (level != NULL) {
+		LOGI("Seed is %ld\n", level->getSeed());
+
 		level->raknetInstance = raknetInstance;
         gameMode->initLevel(level);
 

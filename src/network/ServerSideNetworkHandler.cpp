@@ -697,12 +697,9 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCrea
 			}
 		}
 
-		// for (int i = 0; i < items.size(); i++) {
-		// 	RemoveItemPacket removePacket(packet->playerId, items.at(i).count, items.at(i).getAuxValue(), items.at(i).id);
-		// 	raknetInstance->send(source, removePacket);
-
-		// 	p->inventory->removeResource(ItemInstance(items.at(i).id, items.at(i).count, items.at(i).getAuxValue()));
-		// }
+		for (int i = 0; i < items.size(); i++) {
+			p->inventory->removeResource(ItemInstance(items.at(i).id, items.at(i).count, items.at(i).getAuxValue()));
+		}
 		// TakeItemPacket itemAdd(p->entityId, wantCreate.count, wantCreate.getAuxValue(), wantCreate.id);
 		// raknetInstance->send(source, itemAdd);
 

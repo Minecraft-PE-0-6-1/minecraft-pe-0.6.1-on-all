@@ -1077,53 +1077,54 @@ void LevelRenderer::playSound(const std::string& name, float x, float y, float z
 	float dd = 16;
 
     if (volume > 1) dd *= volume;
-    if (mc->cameraTargetPlayer->distanceToSqr(x, y, z) < dd * dd) {
+    if (mc->cameraTargetPlayer != NULL && mc->cameraTargetPlayer->distanceToSqr(x, y, z) < dd * dd) {
         mc->soundEngine->play(name, x, y, z, volume, pitch);
     }
 }
 
 void LevelRenderer::addParticle(const std::string& name, float x, float y, float z, float xa, float ya, float za, int data) {
+	if (mc->cameraTargetPlayer != NULL) {
+		float xd = mc->cameraTargetPlayer->x - x;
+		float yd = mc->cameraTargetPlayer->y - y;
+		float zd = mc->cameraTargetPlayer->z - z;
+		float distanceSquared = xd * xd + yd * yd + zd * zd;
 
-	float xd = mc->cameraTargetPlayer->x - x;
-    float yd = mc->cameraTargetPlayer->y - y;
-    float zd = mc->cameraTargetPlayer->z - z;
-	float distanceSquared = xd * xd + yd * yd + zd * zd;
+		//Particle* p = NULL;
+		//if (name == "hugeexplosion") p = new HugeExplosionSeedParticle(level, x, y, z, xa, ya, za);
+		//else if (name == "largeexplode") p = new HugeExplosionParticle(textures, level, x, y, z, xa, ya, za);
 
-	//Particle* p = NULL;
-	//if (name == "hugeexplosion") p = new HugeExplosionSeedParticle(level, x, y, z, xa, ya, za);
-	//else if (name == "largeexplode") p = new HugeExplosionParticle(textures, level, x, y, z, xa, ya, za);
+		//if (p) {
+		//	if (distanceSquared < 32 * 32) {
+		//		mc->particleEngine->add(p);
+		//	} else { delete p; }
+		//	return;
+		//}
 
-	//if (p) {
-	//	if (distanceSquared < 32 * 32) {
-	//		mc->particleEngine->add(p);
-	//	} else { delete p; }
-	//	return;
-	//}
+		const float particleDistance = 16;
+		if (distanceSquared > particleDistance * particleDistance) return;
 
-    const float particleDistance = 16;
-    if (distanceSquared > particleDistance * particleDistance) return;
+		//static Stopwatch sw;
+		//sw.start();
 
-	//static Stopwatch sw;
-	//sw.start();
+		if (name == "bubble") mc->particleEngine->add(new BubbleParticle(level, x, y, z, xa, ya, za));
+		else if (name == "crit") mc->particleEngine->add(new CritParticle2(level, x, y, z, xa, ya, za));
+		else if (name == "smoke") mc->particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za));
+		//else if (name == "note") mc->particleEngine->add(new NoteParticle(level, x, y, z, xa, ya, za));
+		else if (name == "explode") mc->particleEngine->add(new ExplodeParticle(level, x, y, z, xa, ya, za));
+		else if (name == "flame") mc->particleEngine->add(new FlameParticle(level, x, y, z, xa, ya, za));
+		else if (name == "lava") mc->particleEngine->add(new LavaParticle(level, x, y, z));
+		//else if (name == "splash") mc->particleEngine->add(new SplashParticle(level, x, y, z, xa, ya, za));
+		else if (name == "largesmoke") mc->particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za, 2.5f));
+		else if (name == "reddust") mc->particleEngine->add(new RedDustParticle(level, x, y, z, xa, ya, za));
+		else if (name == "iconcrack") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, xa, ya, za, Item::items[data]));
+		else if (name == "snowballpoof") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::snowBall));
+		//else if (name == "snowballpoof") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::snowBall));
+		//else if (name == "slime") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::slimeBall));
+		//else if (name == "heart") mc->particleEngine->add(new HeartParticle(level, x, y, z, xa, ya, za));
 
-    if (name == "bubble") mc->particleEngine->add(new BubbleParticle(level, x, y, z, xa, ya, za));
-	else if (name == "crit") mc->particleEngine->add(new CritParticle2(level, x, y, z, xa, ya, za));
-	else if (name == "smoke") mc->particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za));
-    //else if (name == "note") mc->particleEngine->add(new NoteParticle(level, x, y, z, xa, ya, za));
-    else if (name == "explode") mc->particleEngine->add(new ExplodeParticle(level, x, y, z, xa, ya, za));
-    else if (name == "flame") mc->particleEngine->add(new FlameParticle(level, x, y, z, xa, ya, za));
-    else if (name == "lava") mc->particleEngine->add(new LavaParticle(level, x, y, z));
-    //else if (name == "splash") mc->particleEngine->add(new SplashParticle(level, x, y, z, xa, ya, za));
-	else if (name == "largesmoke") mc->particleEngine->add(new SmokeParticle(level, x, y, z, xa, ya, za, 2.5f));
-    else if (name == "reddust") mc->particleEngine->add(new RedDustParticle(level, x, y, z, xa, ya, za));
-	else if (name == "iconcrack") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, xa, ya, za, Item::items[data]));
-	else if (name == "snowballpoof") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::snowBall));
-    //else if (name == "snowballpoof") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::snowBall));
-    //else if (name == "slime") mc->particleEngine->add(new BreakingItemParticle(level, x, y, z, Item::slimeBall));
-    //else if (name == "heart") mc->particleEngine->add(new HeartParticle(level, x, y, z, xa, ya, za));
-
-	//sw.stop();
-	//sw.printEvery(50, "add-particle-string");
+		//sw.stop();
+		//sw.printEvery(50, "add-particle-string");
+	}
 }
 
 /*
