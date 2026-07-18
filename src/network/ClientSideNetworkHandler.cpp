@@ -223,7 +223,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SetTimeP
 	if (!level)
 		return;
 
-	LOGI("SetTimePacket\n");
+	// LOGI("SetTimePacket\n");
 	level->setTime(packet->time);
 }
 
@@ -279,7 +279,7 @@ void ClientSideNetworkHandler::handle( const RakNet::RakNetGUID& source, AddPain
 }
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AddMobPacket* packet)
 {
-	LOGI("AddMobPacket (%p)\n", level);
+	// LOGI("AddMobPacket (%p)\n", level);
 
 	if (!level) {
 		LOGW("Trying to add a mob with no level!\n");
@@ -385,7 +385,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AddItemE
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TakeItemEntityPacket* packet) {
-	printf("TakeItemEntityPacket \n");
+	// printf("TakeItemEntityPacket \n");
 	if (!level) return;
 
 	Entity* e = level->getEntity(packet->itemId);

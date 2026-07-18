@@ -368,7 +368,7 @@ void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID
 	if (!minecraft->level->getLevelStorage()->loadPlayer(*newPlayer)) {
 		LOGW("Failed to load %s data\n", newPlayer->name.c_str());
 	}
-
+	
 	// Credits to EpikIzCool
 	bitStream.Reset();
 	MovePlayerPacket mv(newPlayer->entityId, newPlayer->x, newPlayer->y - newPlayer->heightOffset,

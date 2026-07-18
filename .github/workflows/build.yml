@@ -60,13 +60,14 @@ jobs:
 
       - name: Build
         working-directory: ${{github.workspace}}/build
-        run: cmake --build . --config $BUILD_TYPE --target MinecraftPE --parallel
+        run: cmake --build . --config $BUILD_TYPE --parallel
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: mcpe-windows
           path: |
+            ${{github.workspace}}/build/MinecraftPE-server.exe
             ${{github.workspace}}/build/MinecraftPE.exe
             ${{github.workspace}}/build/libpng16.dll
             ${{github.workspace}}/build/OpenAL32.dll
@@ -297,6 +298,12 @@ jobs:
         uses: vimtor/action-zip@v1.2
         with:
           files: mcpe-linux/MinecraftPE-server
+          dest: minecraftpe-server-${{ steps.ref.outputs.hash }}.zip
+          
+      - name: Zip Windows Server Artifacts
+        uses: vimtor/action-zip@v1.2
+        with:
+          files: mcpe-windows/MinecraftPE-server.exe
           dest: minecraftpe-server-${{ steps.ref.outputs.hash }}.zip
 
       - name: Zip Android arm64-v8a Artifact
