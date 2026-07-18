@@ -120,13 +120,14 @@ void ClientSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 				level->removeEntity(p);
 			}
 		}
-	}	
-	minecraft->setLevel(NULL);
-#ifndef STANDALONE_SERVER
-	minecraft->gui.addMessage("Disconnected from server");
-	// TODO: screen with error
-    minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
-#endif
+	}
+	minecraft->leaveGame();	
+// 	minecraft->setLevel(NULL);
+// #ifndef STANDALONE_SERVER
+// 	minecraft->gui.addMessage("Disconnected from server");
+// 	// TODO: screen with error
+//     minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+// #endif
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginStatusPacket* packet) {

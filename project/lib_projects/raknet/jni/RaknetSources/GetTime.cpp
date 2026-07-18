@@ -140,7 +140,7 @@ RakNet::TimeUS GetTimeUS_Windows( void )
 #if _MSC_VER >= 1400 && defined (_M_X64)
 		GetProcessAffinityMask(mProc, (PDWORD_PTR)&mProcMask, (PDWORD_PTR)&mSysMask);
 #else
-		GetProcessAffinityMask(mProc, &mProcMask, &mSysMask);
+		GetProcessAffinityMask(mProc, (PDWORD_PTR)&mProcMask, (PDWORD_PTR)&mSysMask);
 #endif
 		mThread = GetCurrentThread();
 
