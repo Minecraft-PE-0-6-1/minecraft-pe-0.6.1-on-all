@@ -198,7 +198,7 @@ public:
     std::string gatherStats() {
    //     return "ChunkCache: 1024";
 		std::stringstream ss;
-		ss << "ChunkCache: " << CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH;
+		ss << "ChunkCache: " << LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH;
 		return ss.str();
     }
 	
