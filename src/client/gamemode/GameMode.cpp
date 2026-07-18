@@ -93,7 +93,9 @@ bool GameMode::useItemOn(Player* player, Level* level, ItemInstance* item, int x
 		LOGI("%f %f %f \n", player->x, player->y, player->z);
 
 		item = player->inventory->getSelected();
-		UseItemPacket packet(x, y, z, face, item, player->entityId, clickX, clickY, clickZ, player->x, player->y, player->z);
+		UseItemPacket packet(x, y, z, face, item, player->entityId, clickX, clickY, clickZ, player->x, player->y, player->z,
+		player->bb.x0, player->bb.y0, player->bb.z0, player->bb.x1, player->bb.y1, player->bb.z1);
+
 		minecraft->raknetInstance->send(packet);
 	}
     int t = level->getTile(x, y, z);
@@ -119,7 +121,8 @@ bool GameMode::useItem( Player* player, Level* level, ItemInstance* item ) {
 
 	ItemInstance* itemInstance = item->use(level, player);
 	if(level->isClientSide) {
-		UseItemPacket packet(item, player->entityId, player->aimDirection, player->x, player->y, player->z);
+		UseItemPacket packet(item, player->entityId, player->aimDirection, player->x, player->y, player->z,
+		player->bb.x0, player->bb.y0, player->bb.z0, player->bb.x1, player->bb.y1, player->bb.z1);
 		minecraft->raknetInstance->send(packet);
 	}
 	if (itemInstance != item || (itemInstance != NULL && itemInstance->count != oldCount)) {

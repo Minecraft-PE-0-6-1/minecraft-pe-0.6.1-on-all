@@ -749,12 +749,17 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 		}
 
 		ItemInstance* item = player->inventory->getItem(slot);
-
 		player->x = packet->playerX;
 		player->y = packet->playerY;
 		player->z = packet->playerZ;
-		LOGI("upd: %f %f %f \n", packet->playerX, packet->playerY, packet->playerZ);
-		LOGI("plr new: %f %f %f \n", player->x, player->y, player->z);
+
+		player->bb.x0 = packet->playerX0;
+		player->bb.y0 = packet->playerY0;
+		player->bb.z0 = packet->playerZ0;
+
+		player->bb.x1 = packet->playerX1;
+		player->bb.y1 = packet->playerY1;
+		player->bb.z1 = packet->playerZ1;
 
 		if(packet->face == 255) {
             // Special case: x,y,z means direction-of-action
