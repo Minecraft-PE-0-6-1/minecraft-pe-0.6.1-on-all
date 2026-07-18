@@ -34,7 +34,6 @@ if (${PLATFORM} STREQUAL "Desktop")
         add_definitions(-D_CRT_SECURE_NO_WARNINGS)
         include_directories(misc/windows)
         set(EXTRA_LIBS ws2_32 winhttp)
-        set(SERVER_EXTRA_LIBS ws2_32)
     elseif(UNIX)
         find_library(pthread NAMES pthread)
         set(EXTRA_LIBS pthread m)
@@ -311,7 +310,7 @@ target_include_directories("${PROJECT_NAME}-server" PUBLIC
     "project/lib_projects/raknet/jni/RaknetSources"
 )
 
-target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT} ${SERVER_EXTRA_LIBS})
+target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT} ${EXTRA_LIBS})
 
 add_executable(${PROJECT_NAME} ${CLIENT_SOURCES})
 
