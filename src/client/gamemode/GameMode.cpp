@@ -90,8 +90,10 @@ bool GameMode::useItemOn(Player* player, Level* level, ItemInstance* item, int x
 	float clickY = hit.y - y;
 	float clickZ = hit.z - z;
 	if (level->isClientSide) {
+		LOGI("%f %f %f \n", player->x, player->y, player->z);
+
 		item = player->inventory->getSelected();
-		UseItemPacket packet(x, y, z, face, item, player->entityId, clickX, clickY, clickZ);
+		UseItemPacket packet(x, y, z, face, item, player->entityId, clickX, clickY, clickZ, player->x, player->y, player->z);
 		minecraft->raknetInstance->send(packet);
 	}
     int t = level->getTile(x, y, z);
@@ -100,7 +102,7 @@ bool GameMode::useItemOn(Player* player, Level* level, ItemInstance* item, int x
 		return true;
 
 	if (item == NULL) return false;
-	if(isCreativeType()) {
+	if (isCreativeType()) {
 		int aux = item->getAuxValue();
 		int count = item->count;
 		bool success = item->useOn(player, level, x, y, z, face, clickX, clickY, clickZ);
@@ -117,7 +119,7 @@ bool GameMode::useItem( Player* player, Level* level, ItemInstance* item ) {
 
 	ItemInstance* itemInstance = item->use(level, player);
 	if(level->isClientSide) {
-		UseItemPacket packet(item, player->entityId, player->aimDirection);
+		UseItemPacket packet(item, player->entityId, player->aimDirection, player->x, player->y, player->z);
 		minecraft->raknetInstance->send(packet);
 	}
 	if (itemInstance != item || (itemInstance != NULL && itemInstance->count != oldCount)) {

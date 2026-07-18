@@ -16,10 +16,12 @@ public:
     short		  itemId;
 	unsigned char itemData;
     ItemInstance item;
+	float playerX, playerY, playerZ;
 
     UseItemPacket() {}
 
-    UseItemPacket(int x, int y, int z, int face, const ItemInstance* item, int entityId, float clickX, float clickY, float clickZ)
+    UseItemPacket(int x, int y, int z, int face, const ItemInstance* item, int entityId, float clickX, float clickY, float clickZ,
+	float plrX, float plrY, float plrZ)
     :	x(x),
         y(y),
         z(z),
@@ -29,17 +31,23 @@ public:
 		entityId(entityId),
 		clickX(clickX),
 		clickY(clickY),
-		clickZ(clickZ)
+		clickZ(clickZ),
+		playerX(plrX),
+		playerY(plrY),
+		playerZ(plrZ)
 	{}
 
-    UseItemPacket(const ItemInstance* item, int entityId, const Vec3& aim)
+    UseItemPacket(const ItemInstance* item, int entityId, const Vec3& aim, float plrX, float plrY, float plrZ)
     :   face(255),
         itemId(item? item->id : 0),
         itemData(item? item->getAuxValue() : 0),
         entityId(entityId),
         x((int)(aim.x * 32768.0f)),
         y((int)(aim.y * 32768.0f)),
-        z((int)(aim.z * 32768.0f))
+        z((int)(aim.z * 32768.0f)),
+		playerX(plrX),
+		playerY(plrY),
+		playerZ(plrZ)
     {
     }
 
@@ -57,6 +65,9 @@ public:
 		bitStream->Write(clickX);
 		bitStream->Write(clickY);
 		bitStream->Write(clickZ);
+		bitStream->Write(playerX);
+		bitStream->Write(playerY);
+		bitStream->Write(playerZ);
 	}
 
 	void read(RakNet::BitStream* bitStream)
@@ -74,7 +85,9 @@ public:
 		item.id = itemId;
 		item.setAuxValue(itemData);
 		item.count = (itemId == 0 && itemData == 0)? 0 : 1;
-
+		bitStream->Read(playerX);
+		bitStream->Read(playerY);
+		bitStream->Read(playerZ);
 	}
 
 	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)

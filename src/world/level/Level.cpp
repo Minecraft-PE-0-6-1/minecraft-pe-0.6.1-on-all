@@ -1962,7 +1962,7 @@ void Level::prepare() {
         ;
 }
 
-bool Level::mayPlace(int tileId, int x, int y, int z, bool ignoreEntities,unsigned char face) {
+bool Level::mayPlace(int tileId, int x, int y, int z, bool ignoreEntities,unsigned char face) {    
     int targetType = getTile(x, y, z);
     const Tile* targetTile = Tile::tiles[targetType];
     Tile* tile = Tile::tiles[tileId];

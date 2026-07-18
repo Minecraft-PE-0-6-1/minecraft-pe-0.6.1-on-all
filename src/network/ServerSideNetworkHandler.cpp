@@ -433,7 +433,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 {
 	if (!level) return;
 	
-	LOGI("MovePlayerPacket\n");
+	// LOGI("MovePlayerPacket\n");
 	if (Entity* entity = level->getEntity(packet->entityId)) {
 		ServerPlayer* player = (ServerPlayer*) getPlayer(source);
 
@@ -713,7 +713,10 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 
 	LOGI("UseItemPacket: id %i data %i\n", packet->itemId, packet->itemData);
 	Entity* entity = level->getEntity(packet->entityId);
+
 	if (entity && entity->isPlayer()) {
+		LOGI("%f %f %f \n", entity->x, entity->y, entity->z);
+
 		Player* player = (Player*) entity;
 		int x = packet->x, y = packet->y, z = packet->z;
 		Tile* t = Tile::tiles[level->getTile(x, y, z)];
@@ -746,6 +749,12 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 		}
 
 		ItemInstance* item = player->inventory->getItem(slot);
+
+		player->x = packet->playerX;
+		player->y = packet->playerY;
+		player->z = packet->playerZ;
+		LOGI("upd: %f %f %f \n", packet->playerX, packet->playerY, packet->playerZ);
+		LOGI("plr new: %f %f %f \n", player->x, player->y, player->z);
 
 		if(packet->face == 255) {
             // Special case: x,y,z means direction-of-action

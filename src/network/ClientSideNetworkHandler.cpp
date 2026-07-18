@@ -820,7 +820,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SetEntit
 	if (!level)
 		return;
 
-	LOGI("SetEntityDataPacket\n");
+	// LOGI("SetEntityDataPacket\n");
 
 	Entity* e = level->getEntity(packet->id);
 	if (e) {
