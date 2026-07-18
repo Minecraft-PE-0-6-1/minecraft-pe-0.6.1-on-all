@@ -92,10 +92,14 @@
 #include "../network/command/CommandServer.h"
 #include "gamemode/CreatorMode.h"
 
+
+#ifndef STANDALONE_SERVER
 #include "../world/level/GrassColor.h"
 #include "renderer/LevelRenderer.h"
 #include "particle/ParticleEngine.h"
+#endif
 #include "../world/level/Level.h"
+
 static void checkGlError(const char* tag) {
 #ifdef GLDEBUG
 	while (1) {
