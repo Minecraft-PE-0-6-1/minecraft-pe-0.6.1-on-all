@@ -45,6 +45,8 @@ public:
 	int				getAttackDamage(Entity* entity);
 	float			getDestroySpeed(Tile* tile);
 	bool			canDestroy(Tile* tile);
+
+	void print();
 private:
 	void			setupDefault();
 public:

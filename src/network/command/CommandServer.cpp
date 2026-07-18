@@ -236,9 +236,9 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 		if (x0 < 0) x0 = 0;
 		if (y0 < 0) y0 = 0;
 		if (z0 < 0) z0 = 0;
-		if (x1 >= LEVEL_WIDTH ) x1 = LEVEL_WIDTH  - 1;
-		if (y1 >= LEVEL_HEIGHT) y1 = LEVEL_HEIGHT - 1;
-		if (z1 >= LEVEL_DEPTH ) z1 = LEVEL_DEPTH  - 1;
+		if (x1 >= LevelConstants::LEVEL_WIDTH ) x1 = LevelConstants::LEVEL_WIDTH  - 1;
+		if (y1 >= LevelConstants::LEVEL_HEIGHT) y1 = LevelConstants::LEVEL_HEIGHT - 1;
+		if (z1 >= LevelConstants::LEVEL_DEPTH ) z1 = LevelConstants::LEVEL_DEPTH  - 1;
 
 		for (int y = y0; y <= y1; ++y)
 		for (int z = z0; z <= z1; ++z)
@@ -456,7 +456,7 @@ std::string CommandServer::parse(ConnectedClient& client, const std::string& s) 
 			sw.start();
 
 			// Save a cuboid around the player
-			const int CSize = CHUNK_CACHE_WIDTH;
+			const int CSize = LevelConstants::CHUNK_CACHE_WIDTH;
 			int cx = (int)e->x / CSize;
 			int cz = (int)e->z / CSize;
 
@@ -504,7 +504,7 @@ bool CommandServer::handleCheckpoint(bool doRestore ) {
 	const int cz = restorePos.z;
 	const int y0 = restorePos.y;
 	const int y1 = y0 + RestoreHeight;
-	const int CSize = CHUNK_CACHE_WIDTH;
+	const int CSize = LevelConstants::CHUNK_CACHE_WIDTH;
 	const int numChunkBytes = RestoreHeight * CSize * CSize * 20 / 8;
 
 	if (!restoreBuffer) {

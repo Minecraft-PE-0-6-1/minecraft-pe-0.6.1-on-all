@@ -15,7 +15,7 @@ class ServerPlayer: public Player,
 {
     typedef Player super;
 public:
-    ServerPlayer(Minecraft* minecraft, Level* level);
+    ServerPlayer(Minecraft* minecraft, Level* level, bool proto);
 
 	~ServerPlayer();
 
@@ -43,6 +43,17 @@ public:
 	virtual void stopSleepInBed(bool forcefulWakeUp, bool updateLevelList, bool saveRespawnPoint);
 
 	void completeUsingItem();
+	
+	void setLastMoveTicks(int lastMoveTicks) { this->lastMoveTicks = lastMoveTicks; }
+	int getLastMoveTicks() { return lastMoveTicks; }
+
+	void setTicksInAir(int ticksInAir) { this->ticksInAir = ticksInAir; }
+	int getTicksInAir() { return ticksInAir; }
+
+	void setNewProto(bool proto) { isNewProto = proto; }
+	bool getProto() { return isNewProto; }
+
+	virtual void causeFallDamage(float distance);
 private:
 	void nextContainerCounter();
 	void setContainerMenu( BaseContainerMenu* menu );
@@ -50,6 +61,11 @@ private:
 	Minecraft* _mc;
     int _prevHealth;
 	int _containerCounter;
+
+	int lastMoveTicks = 0;
+	int ticksInAir = 0;
+
+	bool isNewProto = false;
 };
 
 #endif /*ServerPlayer_H__*/

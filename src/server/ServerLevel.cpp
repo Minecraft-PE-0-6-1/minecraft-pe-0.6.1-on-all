@@ -12,16 +12,19 @@ ServerLevel::ServerLevel(LevelStorage* levelStorage, const std::string& levelNam
 void ServerLevel::updateSleepingPlayerList() {
 	bool allPlayersWasSleeping = allPlayersAreSleeping;
 	allPlayersAreSleeping = !players.empty();
-	for(PlayerList::iterator it = players.begin(); it != players.end(); ++it) {
+	
+	for (PlayerList::iterator it = players.begin(); it != players.end(); ++it) {
 		Player* player = *it;
-		if(!player->isSleeping()) {
+		
+		if (!player->isSleeping()) {
 			allPlayersAreSleeping = false;
 			break;
 		}
 	}
-	if(!allPlayersWasSleeping && allPlayersAreSleeping) {
+	if (!allPlayersWasSleeping && allPlayersAreSleeping) {
 		levelEvent(NULL, LevelEvent::ALL_PLAYERS_SLEEPING, 0, 0, 0, 0);
-		for(PlayerList::iterator it = players.begin(); it != players.end(); ++it) {
+		
+		for (PlayerList::iterator it = players.begin(); it != players.end(); ++it) {
 			(*it)->setAllPlayersSleeping();
 		}
 	}
@@ -29,23 +32,26 @@ void ServerLevel::updateSleepingPlayerList() {
 
 void ServerLevel::awakenAllPlayers() {
 	allPlayersAreSleeping = false;
-	for(PlayerList::iterator it = players.begin(); it != players.end(); ++it) {
+	
+	for (PlayerList::iterator it = players.begin(); it != players.end(); ++it) {
 		Player* player = *it;
-		if(player->isSleeping()) {
+		
+		if (player->isSleeping()) {
 			player->stopSleepInBed(false, false, true);
 			player->health = Player::MAX_HEALTH;
 			player->lastHealth = Player::MAX_HEALTH; 
 		}
 	}
+	
 	SetHealthPacket packet(Player::MAX_HEALTH);
 	raknetInstance->send(packet);
 }
 
 bool ServerLevel::allPlayersSleeping() {
-	if(allPlayersAreSleeping && !isClientSide) {
+	if (allPlayersAreSleeping && !isClientSide) {
 		// all players are sleeping, but have they slept long enough?
-		for(PlayerList::iterator it = players.begin(); it != players.end(); ++it) {
-			if(!(*it)->isSleepingLongEnough()) {
+		for (PlayerList::iterator it = players.begin(); it != players.end(); ++it) {
+			if (!(*it)->isSleepingLongEnough()) {
 				return false;
 			}
 		}
@@ -55,13 +61,17 @@ bool ServerLevel::allPlayersSleeping() {
 	return false;
 }
 
-void ServerLevel::tick(){
+void ServerLevel::tick() {
 	super::tick();
-	if(allPlayersSleeping()) {
+
+	if (allPlayersSleeping()) {
 		long newTime = levelData.getTime() + TICKS_PER_DAY;
+		
 		levelData.setTime(newTime - (newTime % TICKS_PER_DAY));
+		
 		SetTimePacket packet(levelData.getTime());
 		raknetInstance->send(packet);
+		
 		awakenAllPlayers();
 	}
 }

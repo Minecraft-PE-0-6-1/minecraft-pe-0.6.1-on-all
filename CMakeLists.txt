@@ -111,7 +111,6 @@ CPMAddPackage(
         "ALSOFT_STATIC_LIBGCC ON"
 )
 
-# TODO: Clear this paths with *
 file(GLOB SERVER_SOURCES
     "project/lib_projects/raknet/jni/RaknetSources/*.cpp"
     "src/NinecraftApp.cpp"
@@ -150,7 +149,6 @@ file(GLOB SERVER_SOURCES
 
     "src/platform/CThread.cpp"
     "src/platform/HttpClient.cpp"
-    "src/platform/PngLoader.cpp"
     "src/platform/time.cpp"
 
     "src/platform/input/Controller.cpp"
@@ -216,6 +214,7 @@ file(GLOB SERVER_SOURCES
     "src/world/level/tile/entity/*.cpp"
 
     "src/world/phys/HitResult.cpp"
+    "src/commands/*.cpp"
 ) 
 
 file(GLOB CLIENT_SOURCES 
@@ -299,6 +298,8 @@ file(GLOB CLIENT_SOURCES
 
     "src/AppPlatform_glfw.cpp"
     "src/main.cpp"
+
+    "src/commands/*.cpp"
 )
 
 if (${PLATFORM} STREQUAL "Desktop")
@@ -306,19 +307,16 @@ if (${PLATFORM} STREQUAL "Desktop")
 endif()
 
 # Server
-if(UNIX)
-    add_executable("${PROJECT_NAME}-server" ${SERVER_SOURCES})
+add_executable("${PROJECT_NAME}-server" ${SERVER_SOURCES})
 
-    target_compile_definitions("${PROJECT_NAME}-server" PUBLIC "STANDALONE_SERVER" "SERVER_PROFILER")
+target_compile_definitions("${PROJECT_NAME}-server" PUBLIC "STANDALONE_SERVER" "SERVER_PROFILER")
 
-    target_include_directories("${PROJECT_NAME}-server" PUBLIC 
-        "${CMAKE_SOURCE_DIR}/glad/include/"
-        "${CMAKE_SOURCE_DIR}/src/"
-        "project/lib_projects/raknet/jni/RaknetSources"
-    )
+target_include_directories("${PROJECT_NAME}-server" PUBLIC 
+    "${CMAKE_SOURCE_DIR}/src/"
+    "project/lib_projects/raknet/jni/RaknetSources"
+)
 
-    target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT})
-endif()
+target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT} ${EXTRA_LIBS})
 
 add_executable(${PROJECT_NAME} ${CLIENT_SOURCES})
 

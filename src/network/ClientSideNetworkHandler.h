@@ -77,6 +77,11 @@ public:
 	virtual void handle(const RakNet::RakNetGUID& source, ChatPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, AdventureSettingsPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, SignUpdatePacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, RemoveItemPacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, TakeItemPacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, WantCreatePacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, SendInventoryPacket* packet);
+
 private:
 
 	void requestNextChunk();
@@ -97,11 +102,11 @@ private:
 	BlockUpdateList	bufferedBlockUpdates;
 	int	requestNextChunkPosition;
 
-    static const int NumRequestChunks = CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH;
+    int NumRequestChunks;
     
     int requestNextChunkIndex;
-    IntPair requestNextChunkIndexList[NumRequestChunks];
-	bool chunksLoaded[NumRequestChunks];
+    std::vector<IntPair> requestNextChunkIndexList;
+	std::vector<bool> chunksLoaded;
 };
 
 #endif

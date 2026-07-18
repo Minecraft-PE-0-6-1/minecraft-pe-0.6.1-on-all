@@ -1,3 +1,6 @@
+#include <cstddef>
+#include <fstream>
+#include <ios>
 #if !defined(DEMO_MODE) && !defined(APPLE_DEMO_PROMOTION)
 
 #include "LevelData.h"
@@ -88,6 +91,9 @@ ExternalFileLevelStorage::ExternalFileLevelStorage(const std::string& levelId, c
 {
 	createFolderIfNotExists(levelPath.c_str());
 
+	std::string playerFolder = levelPath + "/players";
+	createFolderIfNotExists(playerFolder.c_str());
+
 	std::string datFileName   = levelPath + "/" + fnLevelDat;
 	std::string levelFileName = levelPath + "/" + fnPlayerDat;
 	loadedLevelData = new LevelData();
@@ -113,6 +119,7 @@ void ExternalFileLevelStorage::saveLevelData(LevelData& levelData, std::vector<P
 
 void ExternalFileLevelStorage::saveLevelData( const std::string& levelPath, LevelData& levelData, std::vector<Player*>* players )
 {
+	// @todo: completely rewrite
 	std::string directory = levelPath + "/";
     std::string tmpFile = directory + fnLevelDatNew;
     std::string datFile = directory + fnLevelDat;
@@ -141,6 +148,67 @@ void ExternalFileLevelStorage::saveLevelData( const std::string& levelPath, Leve
 
     // Remove the temporary save, if the rename didn't do it
     remove(tmpFile.c_str());
+
+	// Save players
+	// fuck mojang for that
+	if (!players || players->empty()) {
+		return;
+	}
+
+	for (auto& player : *players) {
+		if (player != NULL) {
+			savePlayer(*player, directory);
+		}
+	}
+}
+
+void ExternalFileLevelStorage::savePlayer(Player& player, const std::string& worldDir) {
+	std::string playerPath = worldDir + "/players/" + player.name + ".dat";
+
+	LOGI("Saving player %s to %s...\n", player.name.c_str(), playerPath.c_str());
+
+	RakNet::BitStream data;
+	RakDataOutput buf(data);
+	CompoundTag playerTag;
+	player.saveWithoutId(&playerTag);
+
+	NbtIo::write(&playerTag, &buf);
+
+	std::ofstream file(playerPath, std::ios::out | std::ios::binary);
+	file.write((const char*)data.GetData(), (size_t)data.GetNumberOfBytesUsed());
+}
+
+bool ExternalFileLevelStorage::loadPlayer(Player& player, const std::string& worldDir) {
+	std::string playerPath = worldDir + "/players/" + player.name + ".dat";
+
+	LOGI("Loading player %s from %s...\n", player.name.c_str(), playerPath.c_str());
+
+	std::ifstream file(playerPath, std::ios::in | std::ios::binary);
+	if (!file.is_open()) {
+		return false;
+	}
+
+	std::vector<uint8_t> data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+	RakNet::BitStream bitStream(data.data(), data.size(), false);
+	RakDataInput stream(bitStream);
+
+	CompoundTag* tag = NbtIo::read(&stream);
+	if (tag) {
+		player.load(tag);
+		tag->deleteChildren();
+		delete tag;
+	}
+
+	return true;
+}
+
+void ExternalFileLevelStorage::savePlayer(Player& player) {
+	ExternalFileLevelStorage::savePlayer(player, levelPath);
+}
+
+bool ExternalFileLevelStorage::loadPlayer(Player& player) {
+	return ExternalFileLevelStorage::loadPlayer(player, levelPath);
 }
 
 LevelData* ExternalFileLevelStorage::prepareLevel(Level* _level)
@@ -275,8 +343,8 @@ bool ExternalFileLevelStorage::readPlayerData(const std::string& filename, Level
 			Vec3& pos = dest.playerData.pos;
 			if (pos.x < 0.5f) pos.x = 0.5f;
 			if (pos.z < 0.5f) pos.z = 0.5f;
-			if (pos.x > (LEVEL_WIDTH - 0.5f)) pos.x = LEVEL_WIDTH - 0.5f;
-			if (pos.z > (LEVEL_DEPTH - 0.5f)) pos.z = LEVEL_DEPTH - 0.5f;
+			if (pos.x > (LevelConstants::LEVEL_WIDTH - 0.5f)) pos.x = LevelConstants::LEVEL_WIDTH - 0.5f;
+			if (pos.z > (LevelConstants::LEVEL_DEPTH - 0.5f)) pos.z = LevelConstants::LEVEL_DEPTH - 0.5f;
 			if (pos.y < 0) pos.y = 64;
 
 			dest.playerDataVersion = version;
@@ -294,14 +362,14 @@ void ExternalFileLevelStorage::tick()
 		LOGI("Saving level...\n");
 
 		// look for chunks that needs to be saved
-		for (int z = 0; z < CHUNK_CACHE_WIDTH; z++)
+		for (int z = 0; z < LevelConstants::CHUNK_CACHE_WIDTH; z++)
 		{
-			for (int x = 0; x < CHUNK_CACHE_WIDTH; x++)
+			for (int x = 0; x < LevelConstants::CHUNK_CACHE_WIDTH; x++)
 			{
 				LevelChunk* chunk = level->getChunk(x, z);
 				if (chunk && chunk->unsaved)
 				{
-					int pos = x + z * CHUNK_CACHE_WIDTH;
+					int pos = x + z * LevelConstants::CHUNK_CACHE_WIDTH;
 					UnsavedChunkList::iterator prev = unsavedChunkList.begin();
 					for ( ; prev != unsavedChunkList.end(); ++prev)
 					{
@@ -347,13 +415,13 @@ void ExternalFileLevelStorage::save(Level* level, LevelChunk* levelChunk)
 
 	// Write chunk
 	RakNet::BitStream chunkData;
-	chunkData.Write((const char*)levelChunk->getBlockData(), CHUNK_BLOCK_COUNT);
-	chunkData.Write((const char*)levelChunk->data.data, CHUNK_BLOCK_COUNT / 2);
+	chunkData.Write((const char*)levelChunk->getBlockData(), LevelConstants::CHUNK_BLOCK_COUNT);
+	chunkData.Write((const char*)levelChunk->data.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
 
-	chunkData.Write((const char*)levelChunk->skyLight.data, CHUNK_BLOCK_COUNT / 2);
-	chunkData.Write((const char*)levelChunk->blockLight.data, CHUNK_BLOCK_COUNT / 2);
+	chunkData.Write((const char*)levelChunk->skyLight.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
+	chunkData.Write((const char*)levelChunk->blockLight.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
 
-	chunkData.Write((const char*)levelChunk->updateMap, CHUNK_COLUMNS);
+	chunkData.Write((const char*)levelChunk->updateMap, LevelConstants::CHUNK_COLUMNS);
 
 	regionFile->writeChunk(levelChunk->x, levelChunk->z, chunkData);
 
@@ -385,16 +453,16 @@ LevelChunk* ExternalFileLevelStorage::load(Level* level, int x, int z)
 
 	chunkData->ResetReadPointer();
 
-	unsigned char* blockIds = new unsigned char[CHUNK_BLOCK_COUNT];
-	chunkData->Read((char*)blockIds, CHUNK_BLOCK_COUNT);
+	unsigned char* blockIds = new unsigned char[LevelConstants::CHUNK_BLOCK_COUNT];
+	chunkData->Read((char*)blockIds, LevelConstants::CHUNK_BLOCK_COUNT);
 
 	LevelChunk* levelChunk = new LevelChunk(level, blockIds, x, z);
-	chunkData->Read((char*)levelChunk->data.data, CHUNK_BLOCK_COUNT / 2);
+	chunkData->Read((char*)levelChunk->data.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
 	if (loadedStorageVersion >= ChunkVersion_Light) {
-		chunkData->Read((char*)levelChunk->skyLight.data, CHUNK_BLOCK_COUNT / 2);
-		chunkData->Read((char*)levelChunk->blockLight.data, CHUNK_BLOCK_COUNT / 2);
+		chunkData->Read((char*)levelChunk->skyLight.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
+		chunkData->Read((char*)levelChunk->blockLight.data, LevelConstants::CHUNK_BLOCK_COUNT / 2);
 	}
-	chunkData->Read((char*)levelChunk->updateMap, CHUNK_COLUMNS);
+	chunkData->Read((char*)levelChunk->updateMap, LevelConstants::CHUNK_COLUMNS);
 	// This will be difficult to maintain.. Storage version could be per chunk
 	// too (but probably better to just read all -> write all, so that all
 	// chunks got same version anyway)
@@ -417,7 +485,7 @@ LevelChunk* ExternalFileLevelStorage::load(Level* level, int x, int z)
 	//bool dbg = (x == 7 && z == 9);
 
 	//int t = 0;
-	//for (int i = 0; i < CHUNK_COLUMNS; ++i) {
+	//for (int i = 0; i < LevelConstants::CHUNK_COLUMNS; ++i) {
 	//	char bits = levelChunk->updateMap[i];
 	//	t += (bits != 0);
 	//	int xx = x * 16 + i%16;

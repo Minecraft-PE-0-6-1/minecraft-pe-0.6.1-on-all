@@ -110,6 +110,7 @@ LOCAL_SRC_FILES := ../../../src/main.cpp \
 ../../../src/client/renderer/Textures.cpp \
 ../../../src/client/renderer/TileRenderer.cpp \
 ../../../src/client/renderer/gles.cpp \
+../../../src/world/level/LevelConstants.cpp \
 ../../../src/client/renderer/culling/Frustum.cpp \
 ../../../src/client/renderer/entity/ArrowRenderer.cpp \
 ../../../src/client/renderer/entity/ChickenRenderer.cpp \
@@ -140,6 +141,12 @@ LOCAL_SRC_FILES := ../../../src/main.cpp \
 ../../../src/network/Packet.cpp \
 ../../../src/network/RakNetInstance.cpp \
 ../../../src/network/ServerSideNetworkHandler.cpp \
+../../../src/commands/Command.cpp \
+../../../src/commands/CommandHelp.cpp \
+../../../src/commands/CommandKick.cpp \
+../../../src/commands/CommandBan.cpp \
+../../../src/commands/CommandManager.cpp \
+../../../src/commands/CommandOp.cpp \
 ../../../src/server/ServerLevel.cpp \
 ../../../src/server/ServerPlayer.cpp \
 ../../../src/util/DataIO.cpp \

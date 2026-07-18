@@ -67,8 +67,8 @@ class Level: public LevelSource
 
 public:
     static const int MAX_LEVEL_SIZE = 32000000;
-    static const short DEPTH = LEVEL_HEIGHT;
-    static const short SEA_LEVEL = DEPTH / 2 - 1;
+    static const int DEPTH;
+    static const int SEA_LEVEL;
 
     static const int MAX_BRIGHTNESS = 15;
     static const int TICKS_PER_DAY = SharedConstants::TicksPerSecond * 60 * 16;// SharedConstants::TicksPerSecond * 60 * 12; // ORG:20*60*20
@@ -310,6 +310,9 @@ public:
 	Dimension* dimension;
 	IRakNetInstance* raknetInstance;
 	Random random;
+
+	std::set<std::string> ops;
+	std::set<std::string> bannedPpl;
 protected:
 	bool isFindingSpawn;
 

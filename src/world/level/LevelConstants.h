@@ -1,14 +1,14 @@
-#ifndef _MINECRAFT_WORLD_LEVELCONSTANTS_H_
-#define _MINECRAFT_WORLD_LEVELCONSTANTS_H_
+#pragma once
 
-
-const int LEVEL_HEIGHT = 128;
-const int CHUNK_CACHE_WIDTH = 16; // in chunks
-const int CHUNK_WIDTH = 16; // in blocks
-const int CHUNK_DEPTH = 16;
-const int LEVEL_WIDTH = CHUNK_CACHE_WIDTH * CHUNK_WIDTH;
-const int LEVEL_DEPTH = CHUNK_CACHE_WIDTH * CHUNK_DEPTH;
-const int CHUNK_COLUMNS = CHUNK_WIDTH * CHUNK_DEPTH;
-const int CHUNK_BLOCK_COUNT = CHUNK_COLUMNS * LEVEL_HEIGHT;
-
-#endif
+class LevelConstants {
+public:
+    static int CHUNK_CACHE_WIDTH; // in chunks
+    static int LEVEL_WIDTH; 
+    static int LEVEL_DEPTH;
+    static int LEVEL_HEIGHT;
+    
+    static int CHUNK_WIDTH; // in blocks
+    static int CHUNK_DEPTH;
+    static int CHUNK_COLUMNS;
+    static int CHUNK_BLOCK_COUNT;
+};

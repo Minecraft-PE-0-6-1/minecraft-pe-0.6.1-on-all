@@ -29,6 +29,9 @@
 #include "../Difficulty.h"
 #include "../../network/packet/ExplodePacket.h"
 
+const int Level::DEPTH = LevelConstants::LEVEL_HEIGHT;
+const int Level::SEA_LEVEL = Level::DEPTH / 2 - 1;
+
 Level::Level(LevelStorage* levelStorage, const std::string& levelName, const LevelSettings& settings, int generatorVersion, Dimension* fixedDimension /* = NULL */)
 	:	levelStorage(levelStorage),
 	isClientSide(false),
@@ -278,8 +281,8 @@ void Level::tickTiles() {
 		for (int i = 0; i < pollChunkOffsetsSize; i += 2) {
 			const int xp = xx + pollChunkOffsets[i];
 			const int zp = zz + pollChunkOffsets[i+1];
-			if (xp >= 0 && xp < CHUNK_CACHE_WIDTH &&
-				zp >= 0 && zp < CHUNK_CACHE_WIDTH)
+			if (xp >= 0 && xp < LevelConstants::CHUNK_CACHE_WIDTH &&
+				zp >= 0 && zp < LevelConstants::CHUNK_CACHE_WIDTH)
 				_chunksToPoll.insert(ChunkPos(xp, zp));
 		}
 	}
@@ -427,21 +430,21 @@ bool Level::findPath(Path* path, Entity* from, int xBest, int yBest, int zBest, 
 */
 /*protected*/
 void Level::setInitialSpawn() {
-	isFindingSpawn = true;
-	int xSpawn = CHUNK_CACHE_WIDTH * CHUNK_WIDTH / 2; // (Level.MAX_LEVEL_SIZE - 100) * 0;
-	int ySpawn = 64;
-	int zSpawn = CHUNK_CACHE_WIDTH * CHUNK_DEPTH / 2; // (Level.MAX_LEVEL_SIZE - 100) * 0;
-	while (!dimension->isValidSpawn(xSpawn, zSpawn)) {
-		xSpawn += random.nextInt(32) - random.nextInt(32);
-		zSpawn += random.nextInt(32) - random.nextInt(32);
+    isFindingSpawn = true;
+    int xSpawn = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH / 2; // (Level.MAX_LEVEL_SIZE - 100) * 0;
+    int ySpawn = 64;
+    int zSpawn = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_DEPTH / 2; // (Level.MAX_LEVEL_SIZE - 100) * 0;
+    while (!dimension->isValidSpawn(xSpawn, zSpawn)) {
+        xSpawn += random.nextInt(32) - random.nextInt(32);
+        zSpawn += random.nextInt(32) - random.nextInt(32);
 
 		if (xSpawn < 4) xSpawn += 32;
-		if (xSpawn >= LEVEL_WIDTH-4) xSpawn -= 32;
+		if (xSpawn >= LevelConstants::LEVEL_WIDTH-4) xSpawn -= 32;
 		if (zSpawn < 4) zSpawn += 32;
-		if (zSpawn >= LEVEL_DEPTH-4) zSpawn -= 32;
-	}
-	levelData.setSpawn(xSpawn, ySpawn, zSpawn);
-	isFindingSpawn = false;
+		if (zSpawn >= LevelConstants::LEVEL_DEPTH-4) zSpawn -= 32;
+    }
+    levelData.setSpawn(xSpawn, ySpawn, zSpawn);
+    isFindingSpawn = false;
 }
 
 /*public*/
@@ -456,12 +459,12 @@ void Level::validateSpawn() {
 		zSpawn += random.nextInt(8) - random.nextInt(8);
 
 		if (xSpawn < 4) xSpawn += 8;
-		if (xSpawn >= LEVEL_WIDTH-4) xSpawn -= 8;
+		if (xSpawn >= LevelConstants::LEVEL_WIDTH-4) xSpawn -= 8;
 		if (zSpawn < 4) zSpawn += 8;
-		if (zSpawn >= LEVEL_DEPTH-4) zSpawn -= 8;
-	}
-	levelData.setXSpawn(xSpawn);
-	levelData.setZSpawn(zSpawn);
+		if (zSpawn >= LevelConstants::LEVEL_DEPTH-4) zSpawn -= 8;
+    }
+    levelData.setXSpawn(xSpawn);
+    levelData.setZSpawn(zSpawn);
 }
 
 int Level::getTopTile(int x, int z) {
@@ -944,7 +947,7 @@ HitResult Level::clip(const Vec3& A, const Vec3& b, bool liquid /*= false*/, boo
 		if (solidOnly && tile != NULL && tile->getAABB(this, xTile0, yTile0, zTile0) == NULL) {
 			// No collision
 		} else if (t > 0 && tile->mayPick(data, liquid)) {
-			if(xTile0 >= 0 && zTile0 >= 0 && xTile0 < LEVEL_WIDTH && zTile0 < LEVEL_WIDTH) {
+			if(xTile0 >= 0 && zTile0 >= 0 && xTile0 < LevelConstants::LEVEL_WIDTH && zTile0 < LevelConstants::LEVEL_WIDTH) {
 				HitResult r = tile->clip(this, xTile0, yTile0, zTile0, a, b);
 				if (r.isHit()) return r;
 			}
@@ -1984,10 +1987,10 @@ void Level::prepare() {
 		;
 }
 
-bool Level::mayPlace(int tileId, int x, int y, int z, bool ignoreEntities,unsigned char face) {
-	int targetType = getTile(x, y, z);
-	const Tile* targetTile = Tile::tiles[targetType];
-	Tile* tile = Tile::tiles[tileId];
+bool Level::mayPlace(int tileId, int x, int y, int z, bool ignoreEntities,unsigned char face) {    
+    int targetType = getTile(x, y, z);
+    const Tile* targetTile = Tile::tiles[targetType];
+    Tile* tile = Tile::tiles[tileId];
 
 	AABB* aabb = tile->getAABB(this, x, y, z);
 	if (ignoreEntities) aabb = NULL;
@@ -2247,9 +2250,9 @@ void Level::setNightMode( bool isNightMode ) {
 }
 
 bool Level::inRange( int x, int y, int z ) {
-	return x >= 0 && x < LEVEL_WIDTH
-		&& y >= 0 && y < LEVEL_HEIGHT
-		&& z >= 0 && z < LEVEL_DEPTH;
+	return x >= 0 && x < LevelConstants::LEVEL_WIDTH
+		&& y >= 0 && y < LevelConstants::LEVEL_HEIGHT
+		&& z >= 0 && z < LevelConstants::LEVEL_DEPTH;
 }
 
 //

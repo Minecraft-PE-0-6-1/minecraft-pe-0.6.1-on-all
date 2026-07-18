@@ -2,6 +2,7 @@
 #include "Packet.h"
 #include "../world/level/chunk/LevelChunk.h"
 
+#include "network/packet/TakeItemPacket.h"
 #include "packet/PacketInclude.h"
 
 Packet::Packet()
@@ -41,10 +42,16 @@ Packet* MinecraftPackets::createPacket(int id)
 	case PACKET_ADDITEMENTITY:
 		packet = new AddItemEntityPacket();
 		break;
+	case PACKET_REMOVEITEM:
+		packet = new RemoveItemPacket();
+		break;
+	case PACKET_TAKEITEM:
+		packet = new TakeItemPacket();
+		break;
 	case PACKET_TAKEITEMENTITY:
 		packet = new TakeItemEntityPacket();
 		break;
-	case PACKET_ADDMOB:
+	case PACKET_ADDMOB:	
 		packet = new AddMobPacket();
 		break;
 	case PACKET_ADDPLAYER:
@@ -67,6 +74,9 @@ Packet* MinecraftPackets::createPacket(int id)
 		break;
 	case PACKET_RESPAWN:
 		packet = new RespawnPacket();
+		break;
+	case PACKET_WANTCREATEITEM:
+		packet = new WantCreatePacket();
 		break;
 	case PACKET_REMOVEENTITY:
 		packet = new RemoveEntityPacket();

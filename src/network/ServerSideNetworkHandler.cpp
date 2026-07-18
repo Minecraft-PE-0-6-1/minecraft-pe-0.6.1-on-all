@@ -5,6 +5,16 @@
 #include "../world/entity/player/Inventory.h"
 #include "../world/Container.h"
 #include "../world/inventory/BaseContainerMenu.h"
+#include "network/packet/ChatPacket.h"
+#include "network/packet/ContainerSetSlotPacket.h"
+#include "network/packet/LoginStatusPacket.h"
+#include "network/packet/MovePlayerPacket.h"
+#include "network/packet/RemoveBlockPacket.h"
+#include "network/packet/SendInventoryPacket.h"
+#include "network/packet/UpdateBlockPacket.h"
+#include "network/packet/RemoveItemPacket.h"
+#include "network/packet/TakeItemPacket.h"
+#include "network/packet/WantCreatePacket.h"
 #include "packet/PacketInclude.h"
 
 #include "RakNetInstance.h"
@@ -13,6 +23,17 @@
 #include "../client/gamemode/GameMode.h"
 #include "../raknet/RakPeerInterface.h"
 #include "../raknet/PacketPriority.h"
+#include "platform/log.h"
+#include "util/Mth.h"
+#include "util/StringUtils.h"
+#include "world/item/ItemInstance.h"
+#include "world/level/LevelConstants.h"
+#include "world/level/storage/LevelStorage.h"
+#include "world/phys/Vec3.h"
+#include "world/item/crafting/Recipe.h"
+#include "world/item/crafting/Recipes.h"
+#include <cstddef>
+#include <cstdio>
 #ifndef STANDALONE_SERVER
 #include "../client/sound/SoundEngine.h"
 #endif
@@ -53,11 +74,11 @@ void ServerSideNetworkHandler::tileChanged(int x, int y, int z)
 
 Packet* ServerSideNetworkHandler::getAddPacketFromEntity( Entity* entity ) {
 	if (entity->isMob() && !entity->isPlayer()) { //@fix: This code is duplicated. See if it can be unified.
-		if (minecraft->player) {
+		// if (minecraft->player) {
 			// I guess this should always be true, but it crashed somewhere in this
 			// function once and I only see this one as a potential problem
 			return new AddMobPacket((Mob*)entity);
-		}
+		// }
 	}
 	else if (entity->isPlayer()) {
 
@@ -136,7 +157,18 @@ void ServerSideNetworkHandler::displayGameMessage(const std::string& message)
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChatPacket* packet)
 {
-	displayGameMessage(packet->message);
+	auto player = getPlayer(source);
+
+	if (player == nullptr) return; // @todo maybe kick?
+	
+	if (packet->message[0] == '/') {
+		// This is a command
+
+		ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, Util::stringTrim(packet->message.substr(1))));
+		return sendPrivate(resp, source);
+	}
+
+	displayGameMessage("<" + player->name + "> " + packet->message);
 }
 
 void ServerSideNetworkHandler::onNewClient(const RakNet::RakNetGUID& clientGuid)
@@ -156,6 +188,8 @@ void ServerSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 
 		if (player->owner == guid)
 		{
+			minecraft->level->getLevelStorage()->savePlayer(*player);
+
 			std::string message = player->name;
 			message += " disconnected from the game";
 			displayGameMessage(message);
@@ -179,15 +213,39 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	if (!_allowIncoming) return;
 
 	LOGI("LoginPacket\n");
-
+	
 	int loginStatus = LoginStatus::Success;
 	//
 	// Bad/incompatible client version
 	//
 	bool oldClient = packet->clientNetworkVersion < SharedConstants::NetworkProtocolLowestSupportedVersion;
 	bool oldServer = packet->clientNetworkLowestSupportedVersion > SharedConstants::NetworkProtocolVersion;
-	if (oldClient || oldServer)
-		loginStatus = oldClient? LoginStatus::Failed_ClientOld : LoginStatus::Failed_ServerOld;
+	if (oldClient || oldServer || !packet->newProto)
+		loginStatus = oldClient || !packet->newProto? LoginStatus::Failed_ClientOld : LoginStatus::Failed_ServerOld;
+
+	std::string nicknameLower = packet->clientName.C_String();
+	std::transform(nicknameLower.begin(), nicknameLower.end(), nicknameLower.begin(), ::tolower);
+
+	printf("%s lower \n", nicknameLower.c_str());
+	for (int i = 0; i < level->players.size(); i++) {
+		ServerPlayer* player = (ServerPlayer*) level->players.at(i);
+
+		std::string clientLower = player->name;
+		std::transform(clientLower.begin(), clientLower.end(), clientLower.begin(), ::tolower);
+
+		// @todo to lower case
+		if (nicknameLower == clientLower) {
+			loginStatus = packet->newProto ? LoginStatus::Failed_TakenNickname : LoginStatus::Failed_ClientOld;
+			break;
+		}
+	}
+	
+	for (auto& banned : level->bannedPpl) {
+		if (nicknameLower == banned) {
+			loginStatus = packet->newProto ? LoginStatus::Failed_Banned : LoginStatus::Failed_ClientOld;
+			break;
+		}
+	}
 
 	RakNet::BitStream bitStream;
 	LoginStatusPacket(loginStatus).write(&bitStream);
@@ -199,12 +257,15 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	//
 	// Valid client version
 	//
-	Player* newPlayer = new ServerPlayer(minecraft, level);
-
+	
+	Player* newPlayer = new ServerPlayer(minecraft, level, packet->newProto);
+	
 	minecraft->gameMode->initAbilities(newPlayer->abilities);
 	newPlayer->owner = source;
 	newPlayer->name = packet->clientName.C_String();
 	_pendingPlayers.push_back(newPlayer);
+
+	LOGI("Adding new player... isCreative: %i\n", minecraft->isCreativeMode());
 
 	// Reset the player so he doesn't spawn inside blocks
 	while (newPlayer->y > 0) {
@@ -228,7 +289,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
             level->getLevelData()->getGeneratorVersion(),
             gameType,
             newPlayer->entityId,
-            newPlayer->x, newPlayer->y - newPlayer->heightOffset, newPlayer->z
+            newPlayer->x, newPlayer->y - newPlayer->heightOffset, newPlayer->z,
+			LevelConstants::CHUNK_CACHE_WIDTH
         ).write(&bitStream);
 
         rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
@@ -244,6 +306,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ReadyPac
 
 	if (packet->type == ReadyPacket::READY_REQUESTEDCHUNKS)
 		onReady_RequestedChunks(source);
+
+	LOGI("Ready player two ready ready player two!!\n ");
 }
 
 void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID& source)
@@ -301,6 +365,36 @@ void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID
 		}
 	}
 
+	if (!minecraft->level->getLevelStorage()->loadPlayer(*newPlayer)) {
+		LOGW("Failed to load %s data\n", newPlayer->name.c_str());
+	}
+	
+	// Credits to EpikIzCool
+	bitStream.Reset();
+	MovePlayerPacket mv(newPlayer->entityId, newPlayer->x, newPlayer->y - newPlayer->heightOffset,
+		newPlayer->z, newPlayer->xRot, newPlayer->yRot);
+	mv.write(&bitStream);
+
+	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+	
+	bitStream.Reset();
+	SetHealthPacket hp(newPlayer->health);
+	hp.write(&bitStream);
+	
+	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+	
+	if (newPlayer->hasRespawnPosition()) {
+		bitStream.Reset();
+		SetSpawnPositionPacket sp(newPlayer->getRespawnPosition());
+		sp.write(&bitStream);
+		rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+	}
+
+	bitStream.Reset();
+	SendInventoryPacket(newPlayer, false).write(&bitStream);
+	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
+
+
 	// Additional packets
 	// * set spawn
 	/*
@@ -338,15 +432,32 @@ void ServerSideNetworkHandler::onReady_RequestedChunks(const RakNet::RakNetGUID&
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlayerPacket* packet)
 {
 	if (!level) return;
+	
+	// LOGI("MovePlayerPacket\n");
+	if (Entity* entity = level->getEntity(packet->entityId)) {
+		ServerPlayer* player = (ServerPlayer*) getPlayer(source);
 
-	//LOGI("MovePlayerPacket\n");
-	if (Entity* entity = level->getEntity(packet->entityId))
-	{
-		entity->xd = entity->yd = entity->zd = 0;
+		// int timeElapsed = minecraft->getTicks() - player->getLastMoveTicks();
+
+		// if (timeElapsed > 0) {
+		// 	float dist = player->distanceTo(packet->x, player->y, packet->z);
+		// 	float speed = dist / (minecraft->getTicks() - player->getLastMoveTicks());
+		// 	player->setLastMoveTicks(minecraft->getTicks());
+
+		// 	float maxSpeed = (minecraft->isCreativeMode()) ? 1.65f : 1.f;
+
+		// 	if (speed > maxSpeed) {
+		// 		MovePlayerPacket refuse(player->entityId, player->x, player->y, player->z, player->xRot, player->yRot);
+		//     	return raknetInstance->send(refuse);
+		// 	}
+		// }
+
+		entity->xd = entity->yd = entity->zd = 0;	
 		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
-
+		
 		// broadcast this packet to other clients
 		redistributePacket(packet, source);
+	
 	}
 }
 
@@ -368,12 +479,29 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveBl
 	if (oldTile != NULL && changed) {
 		level->playSound(x + 0.5f, y + 0.5f, z + 0.5f, oldTile->soundType->getBreakSound(), (oldTile->soundType->getVolume() + 1) / 2, oldTile->soundType->getPitch() * 0.8f);
 
-		if (minecraft->gameMode->isSurvivalType() && player->canDestroy(oldTile))
-			//oldTile->spawnResources(level, x, y, z, data, 1); //@todo
+		if (minecraft->gameMode->isSurvivalType() && player->canDestroy(oldTile)) {
+			// From SurvivalMode.cpp
+			// Why tf i have to copy this shit from SurvivalMode class
+			// Why SurvivalMode class locked to LOCAL MINECRAFT PLAYER :sob: :sob: :sob: :sob: :sob: :sob: :sob: :sob:
+			// @fix @warn @ahtung @alert
+			ItemInstance* item = player->inventory->getSelected();
+			if (item != NULL) {
+				item->mineBlock(oldTile->id, x, y, z);
+				if (item->count == 0) {
+					//item->snap(minecraft->player);
+					player->inventory->clearSlot(player->inventory->selected);
+				}
+			}
+
+			// oldTile->spawnResources(level, x, y, z, data, 1); //@todo
 			oldTile->playerDestroy(level, player, x, y, z, data);
+		}
+			
 
 		oldTile->destroy(level, x, y, z, data);
 	}
+
+	LOGI("Remove block [%i, %i, %i]\n", packet->x, packet->y, packet->z);
 }
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RequestChunkPacket* packet)
@@ -403,6 +531,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RequestC
             raknetInstance->send(source, p);
         }
     }
+
+	// LOGI("Requested chunk [%i, %i]\n", packet->x, packet->z);
 }
 
 void ServerSideNetworkHandler::levelGenerated( Level* level )
@@ -429,23 +559,31 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerEq
 	if (!player) return;
 	if (rakPeer->GetMyGUID() == player->owner) return;
 
+	LOGI("Equip item: id %i aux %i\n", packet->itemId, packet->itemAuxValue);
+
 	// override the player's inventory
-	//int slot = player->inventory->getSlot(packet->itemId, packet->itemAuxValue);
-	int slot = Inventory::MAX_SELECTION_SIZE;
-	if (slot >= 0) {
-		if (packet->itemId == 0) {
-			player->inventory->clearSlot(slot);
-		} else {
-			// @note: 128 is an ugly hack for depletable items.
-			// @todo: fix
-			ItemInstance newItem(packet->itemId, 128, packet->itemAuxValue);
-			player->inventory->replaceSlot(slot, &newItem);
-		}
-		player->inventory->moveToSelectedSlot(slot, true);
-		redistributePacket(packet, source);
-	} else {
-		LOGW("Warning: Remote player doesn't have his thing, Odd!\n");
+	int slot = player->inventory->getSlot(packet->itemId, packet->itemAuxValue);
+
+	if (slot >= 0 && slot != packet->inventorySlot && packet->itemId != 0) {
+		LOGW("PlayerEquipmentPacket: Item in player inventory but slots doesn't match!");
+		packet->inventorySlot = slot;
 	}
+
+	if (slot < 0 && packet->itemId != 0) {
+		LOGW("PlayerEquipmentPacket: Remote player doesn't have his thing (or crafted it)!\n");
+
+		SendInventoryPacket newInventory (player, false);
+		raknetInstance->send(newInventory);
+
+		return;
+	}
+
+	player->inventory->selectSlot(packet->selectedSlot);
+	player->inventory->linkSlot(packet->selectedSlot, packet->inventorySlot, true);
+
+	player->inventory->print();
+
+	redistributePacket(packet, source);
 }
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerArmorEquipmentPacket* packet) {
@@ -454,6 +592,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerAr
     Player* player = getPlayer(source);
     if (!player) return;
     if (rakPeer->GetMyGUID() == player->owner) return;
+
+	// LOGI("Equip armor: %i %i %i %i\n", packet->head, packet->torso, packet->legs, packet->feet);
 
     packet->fillIn(player);
     redistributePacket(packet, source);
@@ -466,6 +606,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Interact
 	Entity* entity = level->getEntity(packet->targetId);
 	if (src && entity && src->isPlayer())
 	{
+		LOGI("Interact: source %i target %i\n", packet->sourceId, packet->targetId);
+
 		Player* player = (Player*) src;
 		if (InteractPacket::Attack == packet->action) {
 			player->swing();
@@ -506,14 +648,75 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AnimateP
 	}
 	redistributePacket(packet, source);
 }
+void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCreatePacket* packet) {
+	LOGI("WantCreatePacket\n");
+	Entity* entity = level->getEntity(packet->playerId);
+
+	if (entity && entity->isPlayer()) {
+		Player* p = (Player*)entity;
+		
+		auto playerInv = p->inventory;
+		
+		ItemInstance wantCreate;
+
+		wantCreate.id = packet->itemId;
+		wantCreate.count = packet->count;
+		wantCreate.setAuxValue(packet->auxValue);
+
+		Recipe* recipe = Recipes::getInstance()->getRecipeFor(wantCreate);
+
+		std::vector<ItemInstance> items = recipe->getItemPack().getItemInstances();
+
+		std::vector<int> checkForExists = {};
+
+		for (int i = Inventory::MAX_SELECTION_SIZE; i < p->inventory->getContainerSize(); ++i) {
+			auto itm = p->inventory->getItem(i);
+
+			if (itm != NULL) {
+				for (int y = 0; y < items.size(); y++) {
+					auto itmRecipe = items.at(y);
+
+					if (itmRecipe.id == itm->id && itm->count >= itmRecipe.count) {
+						checkForExists.push_back(itm->id);
+					}
+				}
+			}
+		}
+		
+		if (checkForExists.empty()) {
+			return;
+		}
+		
+		for (int i = 0; i < items.size(); i++) {
+			auto item = items.at(i);
+			
+    		auto it = std::find(checkForExists.begin(), checkForExists.end(), item.id);
+
+			if (it == checkForExists.end() && checkForExists.size() > 1) {
+				return;
+			}
+		}
+
+		for (int i = 0; i < items.size(); i++) {
+			p->inventory->removeResource(ItemInstance(items.at(i).id, items.at(i).count, items.at(i).getAuxValue()));
+		}
+		// TakeItemPacket itemAdd(p->entityId, wantCreate.count, wantCreate.getAuxValue(), wantCreate.id);
+		// raknetInstance->send(source, itemAdd);
+
+		p->inventory->add(new ItemInstance(wantCreate.id, wantCreate.count, wantCreate.getAuxValue()));
+	}
+}
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemPacket* packet)
 {
 	if (!level) return;
 
-	LOGI("UseItemPacket\n");
+	LOGI("UseItemPacket: id %i data %i\n", packet->itemId, packet->itemData);
 	Entity* entity = level->getEntity(packet->entityId);
+
 	if (entity && entity->isPlayer()) {
+		LOGI("%f %f %f \n", entity->x, entity->y, entity->z);
+
 		Player* player = (Player*) entity;
 		int x = packet->x, y = packet->y, z = packet->z;
 		Tile* t = Tile::tiles[level->getTile(x, y, z)];
@@ -522,7 +725,41 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 		if (t && t->use(level, x, y, z, player)) return;
 		if (packet->item.isNull()) return;
 
-		ItemInstance* item = &packet->item;
+		ItemInstance* packetItem = &packet->item;
+
+		int slot = player->inventory->getSlot(packet->itemId, packet->itemData);
+
+		if (slot < 0) {
+			LOGW("UseItemPacket: Player doesn't have this item!\n");
+
+			auto pos = Vec3(packet->x, packet->y, packet->z);
+
+			if (ItemInstance::isBlock(packetItem)) {
+				LOGI("UseItemPacket: This is even block!!!\n");
+
+				pos.x += packet->clickX;
+				pos.y += packet->clickY;
+				pos.z += packet->clickZ;
+			}
+
+			UpdateBlockPacket refuse(pos.x, pos.y, pos.z, level->getTile(pos.x, pos.y, pos.z), level->getData(pos.x, pos.y, pos.z));
+			raknetInstance->send(refuse);
+
+			return;
+		}
+
+		ItemInstance* item = player->inventory->getItem(slot);
+		player->x = packet->playerX;
+		player->y = packet->playerY;
+		player->z = packet->playerZ;
+
+		player->bb.x0 = packet->playerX0;
+		player->bb.y0 = packet->playerY0;
+		player->bb.z0 = packet->playerZ0;
+
+		player->bb.x1 = packet->playerX1;
+		player->bb.y1 = packet->playerY1;
+		player->bb.z1 = packet->playerZ1;
 
 		if(packet->face == 255) {
             // Special case: x,y,z means direction-of-action
@@ -532,6 +769,10 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 		else {
 			minecraft->gameMode->useItemOn(player, level, item, packet->x, packet->y, packet->z, packet->face,
 				Vec3(packet->clickX + packet->x, packet->clickY + packet->y, packet->clickZ + packet->z));
+		}
+
+		if (item && item->count <= 0) {
+			player->inventory->clearSlot(slot);
 		}
 		
 		//LOGW("Use Item not working! Out of synch?\n");
@@ -543,6 +784,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemP
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, EntityEventPacket* packet) {
 	if (!level) return;
+
+	LOGI("EntityEventPacket: id %i\n", packet->eventId);
 
 	if (Entity* e = level->getEntity(packet->entityId))
 		e->handleEntityEvent(packet->eventId);
@@ -577,6 +820,11 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SendInv
 {
 	if (!level) return;
 
+	LOGI("SendInventoryPacket:\n");
+	for (int i = 0; i < packet->numItems; i++) {
+		LOGI("\t %i: %s (%i)\n", i, packet->items.at(i).getName().c_str(), packet->items.at(i).count);
+	}
+
 	Entity* entity = level->getEntity(packet->entityId);
 	if (entity && entity->isPlayer()) {
 		Player* p = (Player*)entity;
@@ -592,15 +840,27 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, DropIte
 {
 	if (!level) return;
 
+	LOGI("DropItemPacket\n");
+
 	Entity* entity = level->getEntity(packet->entityId);
 	if (entity && entity->isPlayer()) {
 		Player* p = (Player*)entity;
-		p->drop(new ItemInstance(packet->item), packet->dropType != 0);
+		// p->drop(new ItemInstance(packet->item), packet->dropType != 0);
+
+		int slot = p->inventory->getSlot(packet->item.id, packet->item.getAuxValue());
+
+		if (slot < 0) {
+			LOGW("DropItemPacket: player doesn't have these items!\n");
+			return;
+		}
+
+		p->inventory->dropSlot(slot, false, packet->dropType != 0);
 	}
 }
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerClosePacket* packet) {
 	if (!level) return;
+	LOGI("ContainerClosePacket\n");
 
 	Player* p = findPlayer(level, &source);
 	if (!p) return;
@@ -612,6 +872,16 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ContainerSetSlotPacket* packet) {
 	if (!level) return;
 
+	const char* type = "unknown";
+
+	switch (packet->setType) {
+		case ContainerSetSlotPacket::SETTYPE_ADD: type = "add"; break;
+		case ContainerSetSlotPacket::SETTYPE_SET: type = "set"; break;
+		case ContainerSetSlotPacket::SETTYPE_TAKE: type = "take"; break;
+	};
+
+	LOGI("ContainerSetSlot: slot %i item %s type %s\n", packet->slot, packet->item.getName().c_str(), type);
+
 	Player* p = findPlayer(level, &source);
 	if (!p) return;
 
@@ -619,9 +889,77 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 		LOGW("User has no container!\n");
 		return;
 	}
-	if (p->containerMenu->containerId != packet->containerId)
-	{
+
+	if (p->containerMenu->containerId != packet->containerId) {
 		LOGW("Wrong container id: %d vs %d\n", p->containerMenu->containerId, packet->containerId);
+		return;
+	}
+
+	if (packet->item.count > 64) {
+		LOGW("ContainerSetSlotPacket: player tried to put more than 64");
+		return;
+	}
+
+	auto contItems = p->containerMenu->getItems();
+
+	// find same item in player inventory (used not in all cases)
+	int invSlot = p->inventory->getSlot(packet->item.id, packet->item.getAuxValue());
+	auto invItem = p->inventory->getItem(invSlot);
+
+	if (contItems.at(packet->slot).id == 0 && packet->item.id != 0) {
+		LOGI("ContainerSetSlotPacket: player tried to put items to slot %i\n", packet->slot);
+
+		if (invSlot < 0) {
+			LOGW("ContainerSetSlotPacket: player doesn't have this item\n");
+			return;
+		}
+
+		if (invItem->count < packet->item.count) {
+			LOGW("ContainerSetSlotPacket: player tried to put more than he have\n");
+			packet->item.count = invItem->count;
+		}
+
+		invItem->count -= packet->item.count;
+
+		if (invItem->count <= 0) {
+			p->inventory->removeItem(invItem);
+		}
+	} else if(contItems.at(packet->slot).id == packet->item.id) {
+		int deltaItem = packet->item.count - contItems.at(packet->slot).count;
+
+		if (deltaItem > 0) {
+			LOGI("ContainerSetSlotPacket: player tried to add %i items to slot %i\n", deltaItem, packet->slot);
+
+			auto invItem = p->inventory->getItem(invSlot);
+
+			if (invSlot < 0) {
+				LOGW("ContainerSetSlotPacket: player doesn't have this item\n");
+				return;
+			}
+
+			if (invItem->count < deltaItem) {
+				LOGW("ContainerSetSlotPacket: player tried to put more than he have");
+				packet->item.count -= (deltaItem - invItem->count);
+				deltaItem = invItem->count;
+			}
+
+			invItem->count -= deltaItem;
+
+			if (invItem->count <= 0) {
+				p->inventory->removeItem(invItem);
+			}
+		} else if (deltaItem < 0) {
+			LOGW("ContainerSetSlotPacket: player tried to take %i items from slot %i\n", -deltaItem, packet->slot);
+			p->inventory->add(new ItemInstance(packet->item.getItem(), -deltaItem, contItems.at(packet->slot).getAuxValue()));
+		}
+	} else if(contItems.at(packet->slot).id && !packet->item.id) {
+		LOGI("ContainerSetSlotPacket: player tried to take all items from slot %i\n", packet->slot);
+		packet->item.count = 0;
+		packet->item.setAuxValue(0);
+
+		p->inventory->add(new ItemInstance(contItems.at(packet->slot).getItem(), contItems.at(packet->slot).count, contItems.at(packet->slot).getAuxValue()));
+	} else {
+		LOGW("ContainerSetSlotPacket: illegal container operation in slot %i\n", packet->slot);
 		return;
 	}
 	
@@ -635,6 +973,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 		p->containerMenu->setSlot(packet->slot, &packet->item);
 		//p->containerMenu->setSlot(packet->slot, packet->item.isNull()? NULL : &packet->item);
 	}
+
+	p->inventory->print();
 }
 
 void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SetHealthPacket* packet )
@@ -656,6 +996,8 @@ void ServerSideNetworkHandler::handle( const RakNet::RakNetGUID& source, SignUpd
 	redistributePacket(packet, source);
 	if (!level)
 		return;
+
+		LOGI("SignUpdate: [%i, %i, %i]\n", packet->x, packet->y, packet->z);
 
 	TileEntity* te = level->getTileEntity(packet->x, packet->y, packet->z);
 	if (TileEntity::isType(te, TileEntityType::Sign)) {
@@ -712,4 +1054,10 @@ Player* ServerSideNetworkHandler::getPlayer( const RakNet::RakNetGUID& source ) 
     for (unsigned int i = 0; i < level->players.size(); ++i)
         if (source == level->players[i]->owner) return level->players[i];
     return NULL;
+}
+
+void ServerSideNetworkHandler::sendPrivate(Packet& packet, const RakNet::RakNetGUID& source) {
+	RakNet::BitStream bitStream;
+	packet.write(&bitStream);
+	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, false);
 }

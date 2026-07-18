@@ -9,17 +9,20 @@ public:
 	RakNet::RakString clientName;
 	int clientNetworkVersion;
 	int clientNetworkLowestSupportedVersion;
+	bool newProto;
 
 	LoginPacket()
 	:	clientNetworkVersion(-1),
-		clientNetworkLowestSupportedVersion(-1)
+		clientNetworkLowestSupportedVersion(-1),
+		newProto(false)
 	{
 	}
 
-	LoginPacket(const RakNet::RakString& clientName, int clientVersion)
+	LoginPacket(const RakNet::RakString& clientName, int clientVersion, bool newProto)
 	:	clientName(clientName),
 		clientNetworkVersion(clientVersion),
-		clientNetworkLowestSupportedVersion(clientVersion)
+		clientNetworkLowestSupportedVersion(clientVersion),
+		newProto(newProto)
 	{
 	}
 
@@ -29,6 +32,7 @@ public:
 		bitStream->Write(clientName);
 		bitStream->Write(clientNetworkVersion);
 		bitStream->Write(clientNetworkLowestSupportedVersion);
+		bitStream->Write(newProto);
 	}
 
 	void read(RakNet::BitStream* bitStream)
@@ -39,6 +43,11 @@ public:
 		if (bitStream->GetNumberOfUnreadBits() > 0) {
 			bitStream->Read(clientNetworkVersion);
 			bitStream->Read(clientNetworkLowestSupportedVersion);
+			
+			// Checking for new proto
+			if (bitStream->GetNumberOfUnreadBits() > 0) {
+				bitStream->Read(newProto);
+			}
 		}
 	}
 

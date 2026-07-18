@@ -58,7 +58,8 @@ public:
 	virtual void handle(const RakNet::RakNetGUID& source, ContainerClosePacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, SignUpdatePacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, ChatPacket* packet);
-
+	virtual void handle(const RakNet::RakNetGUID& source, WantCreatePacket* packet);
+	
 	bool allowsIncomingConnections() { return _allowIncoming; }
 	void allowIncomingConnections(bool doAllow);
 
@@ -70,6 +71,12 @@ private:
 	 * @brief Send packet to all players
 	 */
 	void redistributePacket(Packet* packet, const RakNet::RakNetGUID& fromPlayer);
+
+	/**
+	 * @brief Send packer private with GUID
+	 */
+	void sendPrivate(Packet& packet, const RakNet::RakNetGUID& source);
+
 	Player* getPlayer(const RakNet::RakNetGUID& source);
 
 	Minecraft*					minecraft;

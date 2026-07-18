@@ -1,6 +1,7 @@
 
 #include "ClientSideNetworkHandler.h"
 #include "client/Options.h"
+#include "network/packet/LoginStatusPacket.h"
 #include "packet/PacketInclude.h"
 #include "RakNetInstance.h"
 #include "../world/level/chunk/ChunkSource.h"
@@ -10,6 +11,9 @@
 #include "../world/entity/player/Inventory.h"
 #include "../client/Minecraft.h"
 #include "../client/gamemode/GameMode.h"
+#include "world/item/ItemInstance.h"
+#include "world/level/LevelConstants.h"
+#include <cstddef>
 #ifndef STANDALONE_SERVER
 #include "../client/gui/screens/DisconnectionScreen.h"
 #endif
@@ -42,6 +46,9 @@ ClientSideNetworkHandler::ClientSideNetworkHandler(Minecraft* minecraft, IRakNet
 	requestNextChunkPosition(0),
     requestNextChunkIndex(0)
 {
+	NumRequestChunks = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH;
+	requestNextChunkIndexList.resize(NumRequestChunks);
+	chunksLoaded.resize(NumRequestChunks);
 	rakPeer = raknetInstance->getPeer();
 }
 
@@ -59,7 +66,7 @@ void ClientSideNetworkHandler::requestNextChunk()
 
         //LOGI("requesting chunks @ (%d, %d)\n", chunk.x, chunk.y);
         
-		//raknetInstance->send(new RequestChunkPacket(requestNextChunkPosition % CHUNK_CACHE_WIDTH, requestNextChunkPosition / CHUNK_CACHE_WIDTH));
+		//raknetInstance->send(new RequestChunkPacket(requestNextChunkPosition % LevelConstants::CHUNK_CACHE_WIDTH, requestNextChunkPosition / LevelConstants::CHUNK_CACHE_WIDTH));
 		requestNextChunkIndex++;
         requestNextChunkPosition++;
 	}
@@ -67,16 +74,16 @@ void ClientSideNetworkHandler::requestNextChunk()
 
 bool ClientSideNetworkHandler::areAllChunksLoaded()
 {
-	return (requestNextChunkPosition >= (CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH));
+	return (requestNextChunkPosition >= (LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH));
 }
 
 bool ClientSideNetworkHandler::isChunkLoaded(int x, int z)
 {
-	if (x < 0 || x >= CHUNK_CACHE_WIDTH || z < 0 || z >= CHUNK_CACHE_WIDTH) {
+	if (x < 0 || x >= LevelConstants::CHUNK_CACHE_WIDTH || z < 0 || z >= LevelConstants::CHUNK_CACHE_WIDTH) {
 		LOGE("Error: Tried to request chunk (%d, %d)\n", x, z);
 		return true;
 	}
-	return chunksLoaded[x * CHUNK_CACHE_WIDTH + z];
+	return chunksLoaded[x * LevelConstants::CHUNK_CACHE_WIDTH + z];
 	//return areAllChunksLoaded();
 }
 
@@ -86,7 +93,7 @@ void ClientSideNetworkHandler::onConnect(const RakNet::RakNetGUID& hostGuid)
 	serverGuid = hostGuid;
 
 	clearChunksLoaded();
-	LoginPacket packet(minecraft->options.getStringValue(OPTIONS_USERNAME).c_str(), SharedConstants::NetworkProtocolVersion);
+	LoginPacket packet(minecraft->options.getStringValue(OPTIONS_USERNAME).c_str(), SharedConstants::NetworkProtocolVersion, true);
 	raknetInstance->send(packet);
 }
 
@@ -97,6 +104,11 @@ void ClientSideNetworkHandler::onUnableToConnect()
 
 void ClientSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 {
+	LevelConstants::CHUNK_CACHE_WIDTH = 16;
+	LevelConstants::LEVEL_WIDTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH;
+	LevelConstants::LEVEL_DEPTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_DEPTH;
+	
+	// TODO: Good disconnecting
 	LOGI("onDisconnect\n");
 	if (level)
 	{
@@ -109,9 +121,13 @@ void ClientSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 			}
 		}
 	}
-#ifndef STANDALONE_SERVER
-	minecraft->gui.addMessage("Disconnected from server");
-#endif
+	minecraft->leaveGame();	
+// 	minecraft->setLevel(NULL);
+// #ifndef STANDALONE_SERVER
+// 	minecraft->gui.addMessage("Disconnected from server");
+// 	// TODO: screen with error
+//     minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
+// #endif
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginStatusPacket* packet) {
@@ -132,6 +148,18 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginSta
 		minecraft->setScreen(new DisconnectionScreen("Could not connect: Outdated server!"));
 #endif
 	}
+	if (packet->status == LoginStatus::Failed_TakenNickname) {
+		LOGI("Disconnect! Nickname is taken!\n");
+#ifndef STANDALONE_SERVER
+		minecraft->setScreen(new DisconnectionScreen("Could not connect: Nickname is taken!"));
+#endif
+	}
+	if (packet->status == LoginStatus::Failed_Banned) {
+		LOGI("Disconnect! You're banned from this server!\n");
+#ifndef STANDALONE_SERVER
+		minecraft->setScreen(new DisconnectionScreen("Could not connect: You're banned from this server!"));
+#endif
+	}
 }
 
 
@@ -145,6 +173,19 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, StartGam
 		return;
 	}
 #endif
+
+	// @todo @note i think its trash
+	// we can put it directly to selectLevel?
+	if (packet->chunkCacheWidth != 0) {
+		printf("lol \n");		
+		LevelConstants::CHUNK_CACHE_WIDTH = packet->chunkCacheWidth;
+		LevelConstants::LEVEL_WIDTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH;
+		LevelConstants::LEVEL_DEPTH = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_DEPTH;
+		LevelChunk::ChunkBlockCount = LevelConstants::CHUNK_BLOCK_COUNT;
+	}
+	NumRequestChunks = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH;
+	requestNextChunkIndexList.resize(NumRequestChunks);
+	chunksLoaded.resize(NumRequestChunks);
 
 	const std::string& levelId = LevelStorageSource::TempLevelId;
 	LevelStorageSource* storageSource = minecraft->getLevelSource();
@@ -182,7 +223,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SetTimeP
 	if (!level)
 		return;
 
-	LOGI("SetTimePacket\n");
+	// LOGI("SetTimePacket\n");
 	level->setTime(packet->time);
 }
 
@@ -238,7 +279,7 @@ void ClientSideNetworkHandler::handle( const RakNet::RakNetGUID& source, AddPain
 }
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AddMobPacket* packet)
 {
-	LOGI("AddMobPacket (%p)\n", level);
+	// LOGI("AddMobPacket (%p)\n", level);
 
 	if (!level) {
 		LOGW("Trying to add a mob with no level!\n");
@@ -324,7 +365,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveEn
 	if (!level) return;
 
 	Entity* entity = level->getEntity(packet->entityId);
-	LOGI("RemoveEntityPacket %p %p, %d\n", entity, minecraft->player, entity?(int)(entity->isPlayer()): -1);
+	// LOGI("RemoveEntityPacket %p %p, %d\n", entity, minecraft->player, entity?(int)(entity->isPlayer()): -1);
 	if (!entity) return;
 
 	level->removeEntity(entity);
@@ -344,6 +385,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AddItemE
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TakeItemEntityPacket* packet) {
+	// printf("TakeItemEntityPacket \n");
 	if (!level) return;
 
 	Entity* e = level->getEntity(packet->itemId);
@@ -384,6 +426,54 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 	{
 		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
 	}
+}
+
+void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SendInventoryPacket* packet) {
+	if (!level) return;
+
+	if (packet->entityId == minecraft->player->entityId) {
+		auto items = packet->items;
+		
+		minecraft->player->inventory->replace(items);
+
+		for (int i = 0; i < packet->linkedSlot.size(); i++) {
+			minecraft->player->inventory->linkSlot(i, packet->linkedSlot[i].inventorySlot, true);
+			LOGI("%i -> %i\n", packet->linkedSlot[i].inventorySlot, i);
+		}
+	}
+}
+
+void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TakeItemPacket* packet) {
+	if (!level) return;
+
+	LOGI("TakeItemPacket\n");
+
+	ItemInstance* item;
+
+	item->count = packet->count;
+	item->id = packet->itemId;
+	item->setAuxValue(packet->auxValue);
+
+	// if (minecraft->player->entityId == packet->playerId) {
+	if (!minecraft->player->inventory->add(item)) {
+		minecraft->player->drop(new ItemInstance(*item), false);
+	}
+	// }
+}
+
+void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveItemPacket* packet) {
+	// Idk how it works...
+	if (!level) return;
+
+	ItemInstance item;
+
+	item.count = packet->count;
+	item.id = packet->itemId;
+	item.setAuxValue(packet->auxValue);
+
+	// if (minecraft->player->entityId == packet->playerId) {
+	minecraft->player->inventory->removeResource(item);
+	// }
 }
 
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MoveEntityPacket* packet)
@@ -475,19 +565,19 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 	//unsigned char* blockIds = chunk->getBlockData();
 	DataLayer& blockData = chunk->data;
 
-	const int setSize = LEVEL_HEIGHT / 8;
-	const int setShift = 4; // power of LEVEL_HEIGHT / 8
+	const int setSize = LevelConstants::LEVEL_HEIGHT / 8;
+	const int setShift = 4; // power of LevelConstants::LEVEL_HEIGHT / 8
 
 	bool recalcHeight = false;
 
-	int x0 = 16, x1 = 0, z0 = 16, z1 = 0, y0 = LEVEL_HEIGHT, y1 = 0;
+	int x0 = 16, x1 = 0, z0 = 16, z1 = 0, y0 = LevelConstants::LEVEL_HEIGHT, y1 = 0;
 	int rx = packet->x << 4;
 	int rz = packet->z << 4;
 
-	unsigned char readBlockBuffer[setSize];
-	unsigned char readDataBuffer[setSize / 2];
+	unsigned char* readBlockBuffer = new unsigned char[setSize];
+	unsigned char* readDataBuffer = new unsigned char[setSize / 2];
 
-	for (int i = 0; i < CHUNK_COLUMNS; i++)
+	for (int i = 0; i < LevelConstants::CHUNK_COLUMNS; i++)
 	{
 		unsigned char updateBits = 0;
 		packet->chunkData.Read(updateBits);
@@ -496,8 +586,8 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 		{
 			recalcHeight = true;
 
-			int colX = (i % CHUNK_WIDTH);
-			int colZ = (i / CHUNK_WIDTH);
+			int colX = (i % LevelConstants::CHUNK_WIDTH);
+			int colZ = (i / LevelConstants::CHUNK_WIDTH);
 			int colDataPosition = colX << 11 | colZ << 7;
 
 			for (int set = 0; set < 8; set++)
@@ -531,29 +621,32 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 				{
 					y0 = ((1 << set) << setShift);
 				}
-				if (((1 << set) << setShift) + (LEVEL_HEIGHT / 8) - 1 > y1)
+				if (((1 << set) << setShift) + (LevelConstants::LEVEL_HEIGHT / 8) - 1 > y1)
 				{
-					y1 = ((1 << set) << setShift) + (LEVEL_HEIGHT / 8) - 1;
+					y1 = ((1 << set) << setShift) + (LevelConstants::LEVEL_HEIGHT / 8) - 1;
 				}
 			}
-			if ((i % CHUNK_WIDTH) < x0)
+			if ((i % LevelConstants::CHUNK_WIDTH) < x0)
 			{
-				x0 = (i % CHUNK_WIDTH);
+				x0 = (i % LevelConstants::CHUNK_WIDTH);
 			}
-			if ((i % CHUNK_WIDTH) > x1)
+			if ((i % LevelConstants::CHUNK_WIDTH) > x1)
 			{
-				x1 = (i % CHUNK_WIDTH);
+				x1 = (i % LevelConstants::CHUNK_WIDTH);
 			}
-			if ((i / CHUNK_WIDTH) < z0)
+			if ((i / LevelConstants::CHUNK_WIDTH) < z0)
 			{
-				z0 = (i / CHUNK_WIDTH);
+				z0 = (i / LevelConstants::CHUNK_WIDTH);
 			}
-			if ((i / CHUNK_WIDTH) > z1)
+			if ((i / LevelConstants::CHUNK_WIDTH) > z1)
 			{
-				z1 = (i / CHUNK_WIDTH);
+				z1 = (i / LevelConstants::CHUNK_WIDTH);
 			}
 		}
 	}
+
+	delete[] readBlockBuffer;
+	delete[] readDataBuffer;
 
  	if (recalcHeight)
  	{
@@ -579,7 +672,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChunkDat
 	//chunk->terrainPopulated = true;
 	chunk->unsaved = false;
 
-	chunksLoaded[packet->x * CHUNK_CACHE_WIDTH + packet->z] = true;
+	chunksLoaded[packet->x * LevelConstants::CHUNK_CACHE_WIDTH + packet->z] = true;
 
 	if (areAllChunksLoaded())
 	{
@@ -627,18 +720,18 @@ void ClientSideNetworkHandler::arrangeRequestChunkOrder() {
 	clearChunksLoaded();
 
     // Default sort is around center of the world
-    int cx = CHUNK_CACHE_WIDTH / 2;
-    int cz = CHUNK_CACHE_WIDTH / 2;
+    int cx = LevelConstants::CHUNK_CACHE_WIDTH / 2;
+    int cz = LevelConstants::CHUNK_CACHE_WIDTH / 2;
 
     // If player exists, let's sort around him
     Player* p = minecraft? minecraft->player : NULL;
     if (p) {
-        cx = Mth::floor(p->x / (float)CHUNK_WIDTH);
-        cz = Mth::floor(p->z / (float)CHUNK_DEPTH);
+        cx = Mth::floor(p->x / (float)LevelConstants::CHUNK_WIDTH);
+        cz = Mth::floor(p->z / (float)LevelConstants::CHUNK_DEPTH);
     }
 
     _ChunkSorter sorter(cx, cz);
-    std::sort(requestNextChunkIndexList, requestNextChunkIndexList + NumRequestChunks, sorter);
+    std::sort(requestNextChunkIndexList.begin(), requestNextChunkIndexList.end(), sorter);
 }
 
 void ClientSideNetworkHandler::levelGenerated(Level* level)
@@ -728,7 +821,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SetEntit
 	if (!level)
 		return;
 
-	LOGI("SetEntityDataPacket\n");
+	// LOGI("SetEntityDataPacket\n");
 
 	Entity* e = level->getEntity(packet->id);
 	if (e) {
@@ -782,6 +875,10 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AnimateP
 	}
 }
 
+void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, WantCreatePacket* packet)
+{
+}
+
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, UseItemPacket* packet)
 {
 }
@@ -791,6 +888,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, SetHealt
 	if (!level || !minecraft->player)
 		return;
 
+	printf("SetHealthPacket \n");
 	minecraft->player->hurtTo(packet->health);
 }
 
@@ -886,7 +984,11 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, Containe
 void ClientSideNetworkHandler::handle( const RakNet::RakNetGUID& source, ChatPacket* packet )
 {
 #ifndef STANDALONE_SERVER
-	minecraft->gui.displayClientMessage(packet->message);
+	// minecraft->gui.displayClientMessage(packet->message);
+	std::istringstream iss(packet->message);
+	for (std::string line; std::getline(iss, line); ) {
+		minecraft->gui.addMessage(line);
+	}
 #endif
 }
 
@@ -919,8 +1021,8 @@ void ClientSideNetworkHandler::clearChunksLoaded()
 {
 	// Init the chunk positions
 	for (int i = 0; i < NumRequestChunks; ++i) {
-		requestNextChunkIndexList[i].x = i/CHUNK_WIDTH;
-		requestNextChunkIndexList[i].y = i%CHUNK_WIDTH;
+		requestNextChunkIndexList[i].x = i / LevelConstants::CHUNK_WIDTH;
+		requestNextChunkIndexList[i].y = i % LevelConstants::CHUNK_WIDTH;
 		chunksLoaded[i] = false;
 	}
 }

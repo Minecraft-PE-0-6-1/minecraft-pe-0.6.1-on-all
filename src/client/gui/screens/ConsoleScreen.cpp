@@ -8,6 +8,7 @@
 #include "../../../network/ServerSideNetworkHandler.h"
 #include "../../../network/packet/ChatPacket.h"
 #include "../../../platform/log.h"
+#include "util/StringUtils.h"
 
 #include <sstream>
 #include <cstdlib>
@@ -54,139 +55,35 @@ void ConsoleScreen::charPressed(char inputChar)
         _input += inputChar;
 }
 
-// ---------------------------------------------------------------------------
-// execute: run _input as a command, print result, close screen
-// ---------------------------------------------------------------------------
 void ConsoleScreen::execute()
 {
+    if (!minecraft->level) return;
+
     if (_input.empty()) {
-        minecraft->setScreen(NULL);
-        return;
+        return minecraft->setScreen(NULL);
     }
 
     if (_input[0] == '/') {
         // Command
-        std::string result = processCommand(_input);
-        if (!result.empty())
-            minecraft->gui.addMessage(result);
+        _input = Util::stringTrim(_input.substr(1));
+        
+        std::istringstream iss(minecraft->commandManager().execute(*minecraft, *minecraft->player, _input));
+        for (std::string line; std::getline(iss, line); ) {
+            minecraft->gui.addMessage(line);
+        }
     } else {
-        // Chat message: <name> message
-        std::string msg = std::string("<") + minecraft->player->name + "> " + _input;
+        // @ai @rewrite
         if (minecraft->netCallback && minecraft->raknetInstance->isServer()) {
-            // Hosting a LAN game: displayGameMessage shows locally + broadcasts MessagePacket to clients
-            static_cast<ServerSideNetworkHandler*>(minecraft->netCallback)->displayGameMessage(msg);
+            static_cast<ServerSideNetworkHandler*>(minecraft->netCallback)->displayGameMessage(_input);
         } else if (minecraft->netCallback) {
-            // Connected client: send ChatPacket to server; server echoes it back as MessagePacket
-            ChatPacket chatPkt(msg);
+            ChatPacket chatPkt(_input);
             minecraft->raknetInstance->send(chatPkt);
         } else {
-            // Singleplayer: show locally only
-            minecraft->gui.addMessage(msg);
+            minecraft->gui.addMessage("<" + minecraft->player->name + "> " + _input);
         }
     }
 
     minecraft->setScreen(NULL);
-}
-
-// ---------------------------------------------------------------------------
-// processCommand
-// ---------------------------------------------------------------------------
-static std::string trim(const std::string& s) {
-    size_t a = s.find_first_not_of(" \t");
-    if (a == std::string::npos) return "";
-    size_t b = s.find_last_not_of(" \t");
-    return s.substr(a, b - a + 1);
-}
-
-std::string ConsoleScreen::processCommand(const std::string& raw)
-{
-    // strip leading '/'
-    std::string line = raw;
-    if (!line.empty() && line[0] == '/') line = line.substr(1);
-    line = trim(line);
-
-    // tokenise
-    std::vector<std::string> args;
-    {
-        std::istringstream ss(line);
-        std::string tok;
-        while (ss >> tok) args.push_back(tok);
-    }
-
-    if (args.empty()) return "";
-
-    Level* level = minecraft->level;
-    if (!level) return "No level loaded.";
-
-    // -----------------------------------------------------------------------
-    // /time ...
-    // -----------------------------------------------------------------------
-    if (args[0] == "time") {
-        if (args.size() < 2)
-            return "Usage: /time <add|set|query> ...";
-
-        const std::string& sub = args[1];
-
-        // -- time add <value> -----------------------------------------------
-        if (sub == "add") {
-            if (args.size() < 3) return "Usage: /time add <value>";
-            long delta = std::atol(args[2].c_str());
-            long newTime = level->getTime() + delta;
-            level->setTime(newTime);
-            std::ostringstream out;
-            out << "Set the time to " << (newTime % Level::TICKS_PER_DAY);
-            return out.str();
-        }
-
-        // -- time set <value|day|night|noon|midnight> -----------------------
-        if (sub == "set") {
-            if (args.size() < 3) return "Usage: /time set <value|day|night|noon|midnight>";
-            const std::string& val = args[2];
-
-            long t = -1;
-            if      (val == "day")      t = 1000;
-            else if (val == "noon")     t = 6000;
-            else if (val == "night")    t = 13000;
-            else if (val == "midnight") t = 18000;
-            else {
-                // numeric — accept positive integers only
-                bool numeric = true;
-                for (char c : val)
-                    if (!std::isdigit((unsigned char)c)) { numeric = false; break; }
-                if (!numeric) return std::string("Unknown value: ") + val;
-                t = std::atol(val.c_str());
-            }
-
-            // Preserve the total day count so only the time-of-day changes
-            long dayCount = level->getTime() / Level::TICKS_PER_DAY;
-            long newTime  = dayCount * Level::TICKS_PER_DAY + (t % Level::TICKS_PER_DAY);
-            level->setTime(newTime);
-            std::ostringstream out;
-            out << "Set the time to " << t;
-            return out.str();
-        }
-
-        // -- time query <daytime|gametime|day> ------------------------------
-        if (sub == "query") {
-            if (args.size() < 3) return "Usage: /time query <daytime|gametime|day>";
-            const std::string& what = args[2];
-
-            long total   = level->getTime();
-            long daytime = total % Level::TICKS_PER_DAY;
-            long day     = total / Level::TICKS_PER_DAY;
-
-            std::ostringstream out;
-            if      (what == "daytime")  { out << "The time of day is " << daytime; }
-            else if (what == "gametime") { out << "The game time is "   << total;   }
-            else if (what == "day")      { out << "The day is "         << day;     }
-            else return std::string("Unknown query: ") + what;
-            return out.str();
-        }
-
-        return "Unknown sub-command. Usage: /time <add|set|query> ...";
-    }
-
-    return std::string("Unknown command: /") + args[0];
 }
 
 // ---------------------------------------------------------------------------

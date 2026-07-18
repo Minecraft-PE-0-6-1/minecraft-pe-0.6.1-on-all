@@ -743,7 +743,6 @@ bool Mob::isWaterMob()
 void Mob::aiStep()
 {
 	//@todo? 30 lines of code here in java version
-
 	TIMER_PUSH("ai");
 	if (isImmobile()) {
 		jumping = false;

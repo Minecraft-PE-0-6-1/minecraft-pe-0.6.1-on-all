@@ -2,6 +2,7 @@
 #include "Options.h"
 #include "client/Options.h"
 #include "client/player/input/IBuildInput.h"
+#include "commands/CommandManager.hpp"
 #include "platform/input/Keyboard.h"
 #include "world/item/Item.h"
 #include "world/item/ItemInstance.h"
@@ -180,7 +181,8 @@ Minecraft::Minecraft() :
 	_powerVr(false),
 	commandPort(4711),
 	reserved_d1(0),reserved_d2(0),
-	reserved_f1(0),reserved_f2(0), options(this)
+	reserved_f1(0),reserved_f2(0), options(this),
+	m_commandManager()
 {
 	//#ifdef ANDROID
 
@@ -261,9 +263,10 @@ void Minecraft::selectLevel( const std::string& levelId, const std::string& leve
 
 void Minecraft::setLevel(Level* level, const std::string& message /* ="" */, LocalPlayer* forceInsertPlayer /* = NULL */) {
 	cameraTargetPlayer = NULL;
-	LOGI("Seed is %ld\n", level->getSeed());
 
 	if (level != NULL) {
+		LOGI("Seed is %ld\n", level->getSeed());
+
 		level->raknetInstance = raknetInstance;
 		gameMode->initLevel(level);
 
@@ -280,6 +283,11 @@ void Minecraft::setLevel(Level* level, const std::string& message /* ="" */, Loc
 			}
 		}
 		this->level = level;
+		// So uhhh
+		std::string op = options.getStringValue(OPTIONS_USERNAME);
+    	std::transform(op.begin(), op.end(), op.begin(), ::tolower);
+
+		level->ops.emplace(op);
 		_hasSignaledGeneratingLevelFinished = false;
 #ifdef STANDALONE_SERVER
 		const bool threadedLevelCreation = false;
@@ -363,12 +371,12 @@ void Minecraft::prepareLevel(const std::string& title) {
 	if (!level->isNew())
 		level->setUpdateLights(false);
 
-	int Max = CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH;
+	int Max = LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_CACHE_WIDTH;
 	int pp = 0;
-	for (int x = 8; x < (CHUNK_CACHE_WIDTH * CHUNK_WIDTH); x += CHUNK_WIDTH) {
-		for (int z = 8; z < (CHUNK_CACHE_WIDTH * CHUNK_WIDTH); z += CHUNK_WIDTH) {
-			progressStagePercentage = 100 * pp++ / Max;
-			//printf("level generation progress %d\n", progressStagePercentage);
+	for (int x = 8; x < (LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH); x += LevelConstants::CHUNK_WIDTH) {
+        for (int z = 8; z < (LevelConstants::CHUNK_CACHE_WIDTH * LevelConstants::CHUNK_WIDTH); z += LevelConstants::CHUNK_WIDTH) {
+            progressStagePercentage = 100 * pp++ / Max;
+            //printf("level generation progress %d\n", progressStagePercentage);
 			B.start();
 			level->getTile(x, 64, z);
 			B.stop();
@@ -383,9 +391,9 @@ void Minecraft::prepareLevel(const std::string& title) {
 	level->setUpdateLights(true);
 
 	C.start();
-	for (int x = 0; x < CHUNK_CACHE_WIDTH; x++)
+	for (int x = 0; x < LevelConstants::CHUNK_CACHE_WIDTH; x++)
 	{
-		for (int z = 0; z < CHUNK_CACHE_WIDTH; z++)
+		for (int z = 0; z < LevelConstants::CHUNK_CACHE_WIDTH; z++)
 		{
 			LevelChunk* chunk = level->getChunk(x, z);
 			if (chunk && !chunk->createdFromSave)
@@ -559,7 +567,7 @@ void Minecraft::tick(int nTick, int maxTick) {
 			level->tickEntities();
 			level->tick();
 #ifndef STANDALONE_SERVER
-			TIMER_POP_PUSH("animateTick");
+			TIMER_POP_PUSH("animateTick");	
 			if (player) {
 				level->animateTick(Mth::floor(player->x), Mth::floor(player->y), Mth::floor(player->z));
 			}
@@ -732,6 +740,21 @@ void Minecraft::tickInput() {
 			if (key == Keyboard::KEY_F3) {
 				options.toggle(OPTIONS_RENDER_DEBUG);
 			}
+			
+			// TODO: replace it with client /give command :face_vomiting:
+			// if (key == Keyboard::KEY_F4) {
+			// 	player->inventory->add(new ItemInstance(Tile::redBrick));
+			// 	player->inventory->add(new ItemInstance(Item::ironIngot, 64));
+			// 	player->inventory->add(new ItemInstance(Item::ironIngot, 34));
+			// 	player->inventory->add(new ItemInstance(Tile::stonecutterBench));
+			// 	player->inventory->add(new ItemInstance(Tile::workBench));
+			// 	player->inventory->add(new ItemInstance(Tile::furnace));
+			// 	player->inventory->add(new ItemInstance(Tile::wood, 54));
+			// 	player->inventory->add(new ItemInstance(Item::stick, 14));
+			// 	player->inventory->add(new ItemInstance(Item::coal, 31));
+			// 	player->inventory->add(new ItemInstance(Tile::sand, 6));
+
+			// }
 
 			if (key == Keyboard::KEY_F5) {
 				options.toggle(OPTIONS_THIRD_PERSON_VIEW);
@@ -1136,6 +1159,7 @@ bool Minecraft::supportNonTouchScreen() {
 }
 void Minecraft::init()
 {
+	LevelChunk::ChunkBlockCount = LevelConstants::CHUNK_BLOCK_COUNT;
 #ifndef STANDALONE_SERVER
 	checkGlError("Init enter");
 
@@ -1373,12 +1397,9 @@ bool Minecraft::joinMultiplayerFromString( const std::string& server )
 	} else {
 		ip = server;
 	}
-
-	printf("%s \n", port.c_str());
-
+	
 	if (isLookingForMultiplayer && netCallback) {
 		isLookingForMultiplayer = false;
-		printf("test");
 		int portNum = atoi(port.c_str());
 		return raknetInstance->connect(ip.c_str(), portNum);
 	}
@@ -1685,4 +1706,12 @@ void Minecraft::optionUpdated(OptionId option, int value ) {
 		// reapply screen scaling using current window size
 		setSize(width, height);
 	}
+}
+
+void Minecraft::addMessage(const std::string& msg) {
+#ifndef STANDALONE_SERVER
+	gui.addMessage(msg);
+#else 
+	LOGI("%s \n", msg.c_str());
+#endif
 }

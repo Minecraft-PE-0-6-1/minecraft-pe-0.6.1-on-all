@@ -60,13 +60,16 @@ jobs:
 
       - name: Build
         working-directory: ${{github.workspace}}/build
-        run: cmake --build . --config $BUILD_TYPE --target MinecraftPE --parallel
+        run: |
+          cmake --build . --config $BUILD_TYPE --target MinecraftPE --parallel
+          cmake --build . --config $BUILD_TYPE --target MinecraftPE-server --parallel
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: mcpe-windows
           path: |
+            ${{github.workspace}}/build/MinecraftPE-server.exe
             ${{github.workspace}}/build/MinecraftPE.exe
             ${{github.workspace}}/build/libpng16.dll
             ${{github.workspace}}/build/OpenAL32.dll
@@ -299,6 +302,12 @@ jobs:
         with:
           files: mcpe-windows/MinecraftPE.exe mcpe-windows/libpng16.dll mcpe-windows/OpenAL32.dll mcpe-windows/libz.dll
           dest: minecraftpe-${{ steps.ref.outputs.hash }}-windows.zip
+        
+      - name: Zip Windows Server Artifacts
+        uses: vimtor/action-zip@v1.2
+        with:
+          files: mcpe-windows/MinecraftPE-server.exe
+          dest: minecraftpe-server-${{ steps.ref.outputs.hash }}-windows.zip
 
       - name: Zip Linux Artifacts
         uses: vimtor/action-zip@v1.2
@@ -310,7 +319,7 @@ jobs:
         uses: vimtor/action-zip@v1.2
         with:
           files: mcpe-linux/MinecraftPE-server
-          dest: minecraftpe-server-${{ steps.ref.outputs.hash }}.zip
+          dest: minecraftpe-server-${{ steps.ref.outputs.hash }}-linux.zip
 
       - name: Rename Android Artifacts
         run: |
@@ -343,7 +352,11 @@ jobs:
             ./data.zip
             ./minecraftpe-server-${{ steps.ref.outputs.hash }}.zip
             ./minecraftpe-${{ steps.ref.outputs.hash }}-windows.zip
+            ./minecraftpe-server-${{ steps.ref.outputs.hash }}-windows.zip
             ./minecraftpe-${{ steps.ref.outputs.hash }}-linux.zip
             ./minecraftpe-${{ steps.ref.outputs.hash }}-android-arm64-v8a.apk
             ./minecraftpe-${{ steps.ref.outputs.hash }}-android-armeabi-v7a.apk
+            ./minecraftpe-server-${{ steps.ref.outputs.hash }}-linux.zip
+            ./minecraftpe-${{ steps.ref.outputs.hash }}-android-arm64-v8a.zip
+            ./minecraftpe-${{ steps.ref.outputs.hash }}-android-armeabi-v7a.zip
             ./minecraftpe-${{ steps.ref.outputs.hash }}-web.zip

@@ -17,6 +17,11 @@ ArgumentsSettings::ArgumentsSettings(int numArguments, char** arguments)
 				levelName = std::string(arguments[a+1]);
 				a++; // Skip the next argument since it's part of this one.
 			}
+		} else if(strcmp(arguments[a], "--gamemode") == 0) {
+			if(a + 1 < numArguments) {
+				gamemode = std::string(arguments[a+1]);
+				a++; // Skip the next argument since it's part of this one.
+			}
 		} else if(strcmp(arguments[a], "--leveldir") == 0) {
 			if(a + 1 < numArguments) {
 				levelDir = std::string(arguments[a+1]);
@@ -50,6 +55,9 @@ std::string ArgumentsSettings::getServerKey() {
 }
 std::string ArgumentsSettings::getCachePath() {
 	return cachePath;
+}
+std::string ArgumentsSettings::getGamemode() {
+	return gamemode;
 }
 std::string ArgumentsSettings::getLevelDir() {
 	return levelDir;

@@ -460,7 +460,7 @@ void LocalPlayer::tick() {
 		{
 			sentInventoryItemId   = newItemId;
 			sentInventoryItemData = newItemData;
-			PlayerEquipmentPacket packet(entityId, newItemId, newItemData);
+			PlayerEquipmentPacket packet(entityId, newItemId, newItemData, inventory->selected, inventory->getSlot(newItemId, newItemData));
 			minecraft->raknetInstance->send(packet);
 		}
 	}

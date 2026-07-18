@@ -32,6 +32,9 @@ public:
 	virtual void saveGame(Level* level) {}
 	virtual void loadEntities(Level* level, LevelChunk* levelChunk) {}
 
+	virtual void savePlayer(Player& player) = 0;
+	virtual bool loadPlayer(Player& player) = 0;
+
 	//void checkSession() throws LevelConflictException;
 	//PlayerIO getPlayerIO();
 };

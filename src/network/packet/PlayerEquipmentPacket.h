@@ -9,15 +9,19 @@ public:
 	int entityId;
 	unsigned short itemId;
 	unsigned short itemAuxValue;
+	unsigned char selectedSlot;
+	unsigned char inventorySlot;
 
 	PlayerEquipmentPacket()
 	{
 	}
 
-	PlayerEquipmentPacket(int entityId, int itemId, int data)
+	PlayerEquipmentPacket(int entityId, int itemId, int data, int selSlot, int invSlot)
 	:	entityId(entityId),
 		itemId(itemId),
-		itemAuxValue(data)
+		itemAuxValue(data),
+		selectedSlot(selSlot),
+		inventorySlot(invSlot)
 	{
 	}
 
@@ -28,6 +32,8 @@ public:
 		bitStream->Write(entityId);
 		bitStream->Write(itemId);
 		bitStream->Write(itemAuxValue);
+		bitStream->Write(selectedSlot);
+		bitStream->Write(inventorySlot);
 	}
 
 	void read(RakNet::BitStream* bitStream)
@@ -35,6 +41,8 @@ public:
 		bitStream->Read(entityId);
 		bitStream->Read(itemId);
 		bitStream->Read(itemAuxValue);
+		bitStream->Read(selectedSlot);
+		bitStream->Read(inventorySlot);
 	}
 
 	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
