@@ -240,8 +240,8 @@ void OptionsScreen::generateOptionScreens() {
 		.addOptionItem(OPTIONS_RPI_CURSOR, minecraft)
 #ifndef __APPLE__
 		.addOptionItem(OPTIONS_FOLIAGE_TINT, minecraft)
-		.addOptionItem(OPTIONS_TINTED_SIDE, minecraft)
 #endif
+		.addOptionItem(OPTIONS_TINTED_SIDE, minecraft)
 		.addOptionItem(OPTIONS_JAVA_HUD, minecraft)
 		.addOptionItem(OPTIONS_FOG_TYPE, minecraft)
 		.addOptionItem(OPTIONS_BETA_SKY, minecraft)
