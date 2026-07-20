@@ -10,13 +10,10 @@
 static const char* errIdString = 0;
 
 void checkError() {
+    ALenum err = alGetError();
+    if(err == AL_NO_ERROR) return;
 
-    while (1) {
-        ALenum err = alGetError();
-        if(err == AL_NO_ERROR) return;
-
-        LOGI("### SoundSystemAL error: %d ####: %s\n", err, errIdString==0?"(none)":errIdString);
-    }
+    LOGI("### SoundSystemAL error: %d ####: %s\n", err, errIdString==0?"(none)":errIdString);
 }
 
 //typedef ALvoid	AL_APIENTRY	(*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid *data, ALsizei size, ALsizei freq);
