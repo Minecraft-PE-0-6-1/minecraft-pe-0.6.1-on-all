@@ -31,7 +31,6 @@ if (${PLATFORM} STREQUAL "Desktop")
     endif()
 
     if (WIN32)
-        target_sources(MinecraftPE PRIVATE data/images/pe.rc)
         add_definitions(-D_CRT_SECURE_NO_WARNINGS)
         include_directories(misc/windows)
         set(EXTRA_LIBS ws2_32 winhttp)
@@ -320,6 +319,10 @@ target_include_directories("${PROJECT_NAME}-server" PUBLIC
 target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT} ${EXTRA_LIBS})
 
 add_executable(${PROJECT_NAME} ${CLIENT_SOURCES})
+
+if(WIN32) 
+    target_sources(${PROJECT_NAME} PRIVATE data/images/pe.rc)
+endif()
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${PLATFORM_CPP})
 
