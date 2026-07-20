@@ -238,9 +238,7 @@ void OptionsScreen::generateOptionScreens() {
 		.addOptionItem(OPTIONS_BAR_ON_TOP, minecraft)
 		.addOptionItem(OPTIONS_MENU_STYLE, minecraft)
 		.addOptionItem(OPTIONS_RPI_CURSOR, minecraft)
-#ifndef __APPLE__
 		.addOptionItem(OPTIONS_FOLIAGE_TINT, minecraft)
-#endif
 		.addOptionItem(OPTIONS_TINTED_SIDE, minecraft)
 		.addOptionItem(OPTIONS_JAVA_HUD, minecraft)
 		.addOptionItem(OPTIONS_FOG_TYPE, minecraft)
