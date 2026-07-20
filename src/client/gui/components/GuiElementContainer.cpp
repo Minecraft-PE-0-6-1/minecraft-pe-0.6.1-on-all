@@ -36,7 +36,7 @@ void GuiElementContainer::removeChild( GuiElement* element ) {
 }
 
 bool GuiElementContainer::containsPointInChildren(int x, int y) const {
-	for (std::vector<GuiElement*>::const_iterator it = children.begin(); it != children.end(); ++it) {
+	for (auto it = children.begin(); it != children.end(); ++it) {
 		GuiElement* child = *it;
 		if (child == NULL || !child->visible) continue;
 		if (child->pointInside(x, y)) return true;
