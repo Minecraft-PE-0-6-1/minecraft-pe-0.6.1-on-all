@@ -1197,15 +1197,12 @@ void Minecraft::init()
 	TextureId grassId = (textures->loadTexture("misc/grasscolor.png")); // loading the uh png for foliage color
 	int* grassPixels = textures->loadTexturePixels(grassId, "misc/grasscolor.png");
 	GrassColor::init(grassPixels);
-#ifndef __APPLE__
+
 	bool tint = options.getBooleanValue(OPTIONS_FOLIAGE_TINT); // finally, toggleable foliage color
-	bool sideTint = options.getBooleanValue(OPTIONS_TINTED_SIDE);
-#else
-	bool tint = false, sideTint = false;
-#endif
 	FoliageColor::setUseTint(tint);
 	GrassColor::setUseTint(tint);
 
+	bool sideTint = options.getBooleanValue(OPTIONS_TINTED_SIDE);
 	TileRenderer::setUseTint(sideTint);
 
 
