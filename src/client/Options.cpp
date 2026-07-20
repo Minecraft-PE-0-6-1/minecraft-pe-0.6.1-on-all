@@ -65,17 +65,13 @@ OptionBool useVignette("useVignette", true);
 OptionBool useTouchscreen("useTouchscreen", true);
 
 OptionBool serverVisible("servervisible", true);
-#ifndef __APPLE__
 OptionBool foliageTint("foliagetint", false);
-#endif
 OptionInt fogType("fogType", 0, 0, 2);
 
 OptionBool javaHud("javaHud", false);
 
 OptionBool betaSky("betaSky", false);
-#ifndef __APPLE__
 OptionBool tintedSide("tintedSide", false);
-#endif
 OptionBool blockOutline("blockOutline", false);
 
 OptionBool restoredAnims("restoredAnims", true);
