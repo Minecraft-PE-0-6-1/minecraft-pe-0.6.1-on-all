@@ -35,6 +35,17 @@ void GuiElementContainer::removeChild( GuiElement* element ) {
 		children.erase(it);
 }
 
+bool GuiElementContainer::containsPointInChildren(int x, int y) const {
+	for (std::vector<GuiElement*>::const_iterator it = children.begin(); it != children.end(); ++it) {
+		GuiElement* child = *it;
+		if (child == NULL || !child->visible) continue;
+		if (child->pointInside(x, y)) return true;
+		const GuiElementContainer* container = dynamic_cast<const GuiElementContainer*>(child);
+		if (container != NULL && container->containsPointInChildren(x, y)) return true;
+	}
+	return false;
+}
+
 void GuiElementContainer::tick( Minecraft* minecraft ) {
 	for(std::vector<GuiElement*>::iterator it = children.begin(); it != children.end(); ++it) {
 		(*it)->tick(minecraft);
