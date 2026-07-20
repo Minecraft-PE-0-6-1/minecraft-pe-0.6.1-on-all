@@ -257,7 +257,7 @@ void EntityRenderer::renderShadow(Entity* e, float x, float y, float z, float po
 	//Textures* textures = entityRenderDispatcher->textures;
 	//textures->bind(textures->loadTexture("%clamp%/environment/shadow.png"));
 	Textures* textures = entityRenderDispatcher->textures;
-	textures->loadAndBindTexture("/misc/shadow.png"); 
+	textures->loadAndBindTexture("misc/shadow.png"); 
     
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -298,6 +298,7 @@ void EntityRenderer::renderShadow(Entity* e, float x, float y, float z, float po
 			tt.draw();
 
 			glColor4f2(1, 1, 1, 1);
+			// tt.color(1.f, 1.f, 1.f, 1.f);
 			glDisable2(GL_BLEND);
 			glDepthMask(true);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -315,7 +316,7 @@ void EntityRenderer::renderTileShadow(Tile* tt, float x, float y, float z, int x
 	float a = ((pow - (y - (yt + yo)) / 2) * 0.5f) * getLevel()->getBrightness(xt, yt, zt);
 	if (a < 0) return;
 	if (a > 1) a = 1;
-	//	t.color(1, 1, 1, (float) a);
+	// t.color(1.f, 1.f, 1.f, (float) a);
 	glColor4f2(1, 1, 1, (float) a);
 
 	float x0 = xt + tt->xx0 + xo;
