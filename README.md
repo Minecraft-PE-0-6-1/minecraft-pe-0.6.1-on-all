@@ -76,7 +76,7 @@ cmake --build .
    ```
    C:\android-ndk-r14b
    ```
-3. Install **Build tools 35** with [SDKManager](https://dl.google.com/android/repository/commandlinetools-win-15859902_latest.zip) (BuildTools should be in AppData):
+3. Install **Build tools 35** with [SDKManager](https://dl.google.com/android/repository/commandlinetools-win-15859902_latest.zip) (build-tools should be in AppData):
 
 ```powershell
 sdkmanager "build-tools;35.0.0" --sdk_root="%LocalAppData%\Android\Sdk"
@@ -157,7 +157,6 @@ sdkmanager "build-tools;android-36" --sdk_root="%LocalAppData%\Android\Sdk"
 
    ```bash
    35.0.0
-   33.0.2
    ```
 
 6. Download **Android NDK r14b**:  
