@@ -202,7 +202,7 @@ sdkmanager "build-tools;android-36" --sdk_root="%LocalAppData%\Android\Sdk"
    ```
 ## iOS
 ### Xcode
-> [Note!]
+> [!Note]
 > There's a precompiled IPA artifact in the GitHub mirror under Actions for those who either don't have Macs or don't want to build themself. But if you want to build youself, you'll need a Mac with Xcode. Download Xcode from the Mac App Store.
 
 ### 1. Clone
