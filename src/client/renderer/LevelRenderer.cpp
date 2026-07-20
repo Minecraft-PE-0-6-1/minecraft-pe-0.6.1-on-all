@@ -185,11 +185,14 @@ void LevelRenderer::allChanged()
 
 	lastFogType = mc->options.getIntValue(OPTIONS_FOG_TYPE);
 
+#ifndef __APPLE__
 	bool tint = mc->options.getBooleanValue(OPTIONS_FOLIAGE_TINT);
+	bool sideTint = mc->options.getBooleanValue(OPTIONS_TINTED_SIDE);
+#else 
+	bool tint = false, sideTint = false;
+#endif
 	FoliageColor::setUseTint(tint);
 	GrassColor::setUseTint(tint);
-
-	bool sideTint = mc->options.getBooleanValue(OPTIONS_TINTED_SIDE);
 	TileRenderer::setUseTint(sideTint);
 
 
