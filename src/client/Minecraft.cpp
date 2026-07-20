@@ -186,7 +186,8 @@ Minecraft::Minecraft() :
 	commandPort(4711),
 	reserved_d1(0),reserved_d2(0),
 	reserved_f1(0),reserved_f2(0), options(this),
-	m_commandManager()
+	m_commandManager(),
+	m_pluginsManager(*level)
 {
 	//#ifdef ANDROID
 

@@ -3,6 +3,8 @@
 
 #include "Options.h"
 #include "commands/CommandManager.hpp"
+#include <plugins/PluginsManager.hpp>
+
 #ifndef STANDALONE_SERVER
 #include "MouseHandler.h"
 #include "gui/Gui.h"
@@ -243,6 +245,8 @@ private:
 	CommandServer* _commandServer;
 
 	CommandManager m_commandManager;
+
+	PluginsManager m_pluginsManager;
 };
 
 #endif /*NET_MINECRAFT_CLIENT__Minecraft_H__*/

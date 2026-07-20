@@ -226,7 +226,6 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	std::string nicknameLower = packet->clientName.C_String();
 	std::transform(nicknameLower.begin(), nicknameLower.end(), nicknameLower.begin(), ::tolower);
 
-	printf("%s lower \n", nicknameLower.c_str());
 	for (int i = 0; i < level->players.size(); i++) {
 		ServerPlayer* player = (ServerPlayer*) level->players.at(i);
 
@@ -306,8 +305,6 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ReadyPac
 
 	if (packet->type == ReadyPacket::READY_REQUESTEDCHUNKS)
 		onReady_RequestedChunks(source);
-
-	LOGI("Ready player two ready ready player two!!\n ");
 }
 
 void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID& source)

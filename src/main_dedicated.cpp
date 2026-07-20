@@ -15,6 +15,7 @@
 #include "platform/time.h"
 #include "SharedConstants.h"
 #include "world/level/LevelConstants.h"
+#include <sol/sol.hpp>
 
 #define MAIN_CLASS NinecraftApp
 static App* g_app = 0;
@@ -63,7 +64,6 @@ std::string findStringInConfig(std::string line, std::string config) {
 
     return valueStr;
 }
-
 
 int main(int numArguments, char* pszArgs[]) {	
 	std::ifstream serverProperties("server.properties");
@@ -148,7 +148,7 @@ int main(int numArguments, char* pszArgs[]) {
 	}
 
 	printf("Level Name: %s\n", levelName.c_str());
-
+	
 	AppContext appContext;
 	appContext.platform = new AppPlatform();
 	App* app = new MAIN_CLASS();
@@ -199,6 +199,15 @@ int main(int numArguments, char* pszArgs[]) {
 		if (!bannedPpl.is_open()) {
 			throw std::runtime_error("Cannot create banned players list.");
 		}
+	}
+
+	std::string pluginsFolder = "plugins/";
+	struct stat sb;
+
+	if (stat(pluginsFolder.c_str(), &sb) == 0) {
+
+	} else {
+
 	}
 
 	std::cout << "Level has been generated in " << getTimeS() - startTime << std::endl;

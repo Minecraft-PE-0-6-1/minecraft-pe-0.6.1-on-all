@@ -3,7 +3,7 @@ project(MinecraftPE)
 
 include(cmake/CPM.cmake)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_POLICY_VERSION_MINIMUM 3.10)
 
@@ -94,6 +94,46 @@ else()
             "GLFW_BUILD_EXAMPLES OFF"
             "GLFW_BUILD_TESTS OFF"
             "GLFW_BUILD_DOCS OFF"
+    )
+
+    CPMAddPackage("gh:halx99/sol2#support-lua-5.5")
+    CPMAddPackage("gh:lua/lua#master")
+
+    add_library(
+        lua STATIC
+        ${lua_SOURCE_DIR}/lapi.c
+        ${lua_SOURCE_DIR}/lauxlib.c
+        ${lua_SOURCE_DIR}/lbaselib.c
+        ${lua_SOURCE_DIR}/lcode.c
+        ${lua_SOURCE_DIR}/lcorolib.c
+        ${lua_SOURCE_DIR}/lctype.c
+        ${lua_SOURCE_DIR}/ldblib.c
+        ${lua_SOURCE_DIR}/ldebug.c
+        ${lua_SOURCE_DIR}/ldo.c
+        ${lua_SOURCE_DIR}/ldump.c
+        ${lua_SOURCE_DIR}/lfunc.c
+        ${lua_SOURCE_DIR}/lgc.c
+        ${lua_SOURCE_DIR}/linit.c
+        ${lua_SOURCE_DIR}/liolib.c
+        ${lua_SOURCE_DIR}/llex.c
+        ${lua_SOURCE_DIR}/lmathlib.c
+        ${lua_SOURCE_DIR}/lmem.c
+        ${lua_SOURCE_DIR}/loadlib.c
+        ${lua_SOURCE_DIR}/lobject.c
+        ${lua_SOURCE_DIR}/lopcodes.c
+        ${lua_SOURCE_DIR}/loslib.c
+        ${lua_SOURCE_DIR}/lparser.c
+        ${lua_SOURCE_DIR}/lstate.c
+        ${lua_SOURCE_DIR}/lstring.c
+        ${lua_SOURCE_DIR}/lstrlib.c
+        ${lua_SOURCE_DIR}/ltable.c
+        ${lua_SOURCE_DIR}/ltablib.c
+        ${lua_SOURCE_DIR}/ltm.c
+        ${lua_SOURCE_DIR}/lua.c
+        ${lua_SOURCE_DIR}/lundump.c
+        ${lua_SOURCE_DIR}/lutf8lib.c
+        ${lua_SOURCE_DIR}/lvm.c
+        ${lua_SOURCE_DIR}/lzio.c
     )
 endif()
 
@@ -215,6 +255,8 @@ file(GLOB SERVER_SOURCES
 
     "src/world/phys/HitResult.cpp"
     "src/commands/*.cpp"
+
+    "src/plugins/*.cpp"
 ) 
 
 file(GLOB CLIENT_SOURCES 
@@ -300,6 +342,8 @@ file(GLOB CLIENT_SOURCES
     "src/main.cpp"
 
     "src/commands/*.cpp"
+    "src/plugins/*.cpp"
+
 )
 
 if (${PLATFORM} STREQUAL "Desktop")
@@ -313,10 +357,12 @@ target_compile_definitions("${PROJECT_NAME}-server" PUBLIC "STANDALONE_SERVER" "
 
 target_include_directories("${PROJECT_NAME}-server" PUBLIC 
     "${CMAKE_SOURCE_DIR}/src/"
+    "${lua_SOURCE_DIR}/"
+
     "project/lib_projects/raknet/jni/RaknetSources"
 )
 
-target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT} ${EXTRA_LIBS})
+target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT} ${EXTRA_LIBS} lua sol2::sol2)
 
 add_executable(${PROJECT_NAME} ${CLIENT_SOURCES})
 
@@ -328,6 +374,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     "${openal_SOURCE_DIR}/include"
     "${glfw_SOURCE_DIR}/include"
     "lib/include"
+    "${lua_SOURCE_DIR}/"
+
 )
 
 if(${PLATFORM} MATCHES "Web")
@@ -375,7 +423,7 @@ endif()
 
 # Client
 target_compile_definitions(${PROJECT_NAME} PUBLIC "OPENGL_ES" "NO_EGL" ${PLATFORM})
-target_link_libraries(${PROJECT_NAME} zlib ${PNG_LIB} OpenAL::OpenAL glfw ${EXTRA_LIBS})
+target_link_libraries(${PROJECT_NAME} zlib ${PNG_LIB} OpenAL::OpenAL glfw ${EXTRA_LIBS} lua sol2::sol2)
 
 if (OpenSSL_FOUND)
     target_link_libraries(${PROJECT_NAME} OpenSSL::SSL OpenSSL::Crypto)
