@@ -293,7 +293,7 @@ void Minecraft::setLevel(Level* level, const std::string& message /* ="" */, Loc
 
 		level->ops.emplace(op);
 		_hasSignaledGeneratingLevelFinished = false;
-#ifdef STANDALONE_SERVER
+#if defined(STANDALONE_SERVER) || defined(PLATFORM_WEB)
 		const bool threadedLevelCreation = false;
 #else
 		const bool threadedLevelCreation = true;
