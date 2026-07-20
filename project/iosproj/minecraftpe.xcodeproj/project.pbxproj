@@ -47,6 +47,8 @@
 		9D293CE816071C08000305C8 /* CreateNewWorld_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D293CE616071C08000305C8 /* CreateNewWorld_iphone.xib */; };
 		9D293CEB160720D6000305C8 /* worldname_iphone5_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D293CEA160720D6000305C8 /* worldname_iphone5_3.png */; };
 		9D293CEC160720D6000305C8 /* worldname_iphone5_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D293CEA160720D6000305C8 /* worldname_iphone5_3.png */; };
+		BEEF202614CFF670005F0002 /* Lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEF202614CFF670005F0001 /* Lighting.cpp */; };
+		BEEF202614CFF670005F0003 /* Lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEF202614CFF670005F0001 /* Lighting.cpp */; };
 		D506D3E2161288BD0099FA65 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D959AFF16036BEE00E23A6F /* Default-568h@2x.png */; };
 		D51DC73614581D4E00E3D761 /* itemframe.png in Resources */ = {isa = PBXBuildFile; fileRef = D51DC73514581D4E00E3D761 /* itemframe.png */; };
 		D51DC74314592B8B00E3D761 /* PVRTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = D51DC74214592B8A00E3D761 /* PVRTexture.m */; };
@@ -1179,8 +1181,19 @@
 		F99F0FAD2F8436CE00F2B29A /* FoliageColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F0FAB2F8436CE00F2B29A /* FoliageColor.cpp */; };
 		F99F0FAF2F8436EB00F2B29A /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F0FAE2F8436EB00F2B29A /* Color.cpp */; };
 		F99F0FB02F8436EB00F2B29A /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F0FAE2F8436EB00F2B29A /* Color.cpp */; };
-		BEEF202614CFF670005F0002 /* Lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEF202614CFF670005F0001 /* Lighting.cpp */; };
-		BEEF202614CFF670005F0003 /* Lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEF202614CFF670005F0001 /* Lighting.cpp */; };
+		F9E5A772300E7A8700164066 /* LevelConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A771300E7A8700164066 /* LevelConstants.cpp */; };
+		F9E5A775300E7AB700164066 /* CommandManager.hpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A773300E7AB700164066 /* CommandManager.hpp */; };
+		F9E5A776300E7AB700164066 /* CommandManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A774300E7AB700164066 /* CommandManager.cpp */; };
+		F9E5A779300E7AD500164066 /* CommandBan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A777300E7AD500164066 /* CommandBan.cpp */; };
+		F9E5A77A300E7AD500164066 /* CommandBan.hpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A778300E7AD500164066 /* CommandBan.hpp */; };
+		F9E5A77D300E7AF400164066 /* CommandHelp.hpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A77B300E7AF400164066 /* CommandHelp.hpp */; };
+		F9E5A77E300E7AF400164066 /* CommandHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A77C300E7AF400164066 /* CommandHelp.cpp */; };
+		F9E5A783300E7B0B00164066 /* CommandKick.hpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A77F300E7B0A00164066 /* CommandKick.hpp */; };
+		F9E5A784300E7B0B00164066 /* CommandOp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A780300E7B0A00164066 /* CommandOp.cpp */; };
+		F9E5A785300E7B0B00164066 /* CommandKick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A781300E7B0B00164066 /* CommandKick.cpp */; };
+		F9E5A786300E7B0B00164066 /* CommandOp.hpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A782300E7B0B00164066 /* CommandOp.hpp */; };
+		F9E5A789300E7B3400164066 /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A787300E7B3400164066 /* Command.cpp */; };
+		F9E5A78A300E7B3400164066 /* Command.hpp in Sources */ = {isa = PBXBuildFile; fileRef = F9E5A788300E7B3400164066 /* Command.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1248,6 +1261,7 @@
 		9D293CE616071C08000305C8 /* CreateNewWorld_iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateNewWorld_iphone.xib; path = minecraftpe/dialogs/CreateNewWorld_iphone.xib; sourceTree = "<group>"; };
 		9D293CEA160720D6000305C8 /* worldname_iphone5_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = worldname_iphone5_3.png; sourceTree = "<group>"; };
 		9D959AFF16036BEE00E23A6F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		BEEF202614CFF670005F0001 /* Lighting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lighting.cpp; sourceTree = "<group>"; };
 		D51A8B01146A200000E5D720 /* minecraftpedemo-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "minecraftpedemo-info.plist"; sourceTree = "<group>"; };
 		D51DC73514581D4E00E3D761 /* itemframe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = itemframe.png; sourceTree = "<group>"; };
 		D51DC74114592B8A00E3D761 /* PVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTexture.h; sourceTree = "<group>"; };
@@ -2468,7 +2482,19 @@
 		F99F0FA82F84369F00F2B29A /* GrassColor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GrassColor.cpp; sourceTree = "<group>"; };
 		F99F0FAB2F8436CE00F2B29A /* FoliageColor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FoliageColor.cpp; sourceTree = "<group>"; };
 		F99F0FAE2F8436EB00F2B29A /* Color.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
-		BEEF202614CFF670005F0001 /* Lighting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Lighting.cpp; path = Lighting.cpp; sourceTree = "<group>"; };
+		F9E5A771300E7A8700164066 /* LevelConstants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LevelConstants.cpp; path = ../../src/world/level/LevelConstants.cpp; sourceTree = "<group>"; };
+		F9E5A773300E7AB700164066 /* CommandManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CommandManager.hpp; path = ../../src/commands/CommandManager.hpp; sourceTree = "<group>"; };
+		F9E5A774300E7AB700164066 /* CommandManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandManager.cpp; path = ../../src/commands/CommandManager.cpp; sourceTree = "<group>"; };
+		F9E5A777300E7AD500164066 /* CommandBan.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandBan.cpp; path = ../../src/commands/CommandBan.cpp; sourceTree = "<group>"; };
+		F9E5A778300E7AD500164066 /* CommandBan.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CommandBan.hpp; path = ../../src/commands/CommandBan.hpp; sourceTree = "<group>"; };
+		F9E5A77B300E7AF400164066 /* CommandHelp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CommandHelp.hpp; path = ../../src/commands/CommandHelp.hpp; sourceTree = "<group>"; };
+		F9E5A77C300E7AF400164066 /* CommandHelp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandHelp.cpp; path = ../../src/commands/CommandHelp.cpp; sourceTree = "<group>"; };
+		F9E5A77F300E7B0A00164066 /* CommandKick.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CommandKick.hpp; path = ../../src/commands/CommandKick.hpp; sourceTree = "<group>"; };
+		F9E5A780300E7B0A00164066 /* CommandOp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandOp.cpp; path = ../../src/commands/CommandOp.cpp; sourceTree = "<group>"; };
+		F9E5A781300E7B0B00164066 /* CommandKick.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandKick.cpp; path = ../../src/commands/CommandKick.cpp; sourceTree = "<group>"; };
+		F9E5A782300E7B0B00164066 /* CommandOp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CommandOp.hpp; path = ../../src/commands/CommandOp.hpp; sourceTree = "<group>"; };
+		F9E5A787300E7B3400164066 /* Command.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Command.cpp; path = ../../src/commands/Command.cpp; sourceTree = "<group>"; };
+		F9E5A788300E7B3400164066 /* Command.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Command.hpp; path = ../../src/commands/Command.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4319,6 +4345,19 @@
 		D5CF9C37144C225000E4244F = {
 			isa = PBXGroup;
 			children = (
+				F9E5A788300E7B3400164066 /* Command.hpp */,
+				F9E5A787300E7B3400164066 /* Command.cpp */,
+				F9E5A77F300E7B0A00164066 /* CommandKick.hpp */,
+				F9E5A781300E7B0B00164066 /* CommandKick.cpp */,
+				F9E5A782300E7B0B00164066 /* CommandOp.hpp */,
+				F9E5A780300E7B0A00164066 /* CommandOp.cpp */,
+				F9E5A77B300E7AF400164066 /* CommandHelp.hpp */,
+				F9E5A77C300E7AF400164066 /* CommandHelp.cpp */,
+				F9E5A778300E7AD500164066 /* CommandBan.hpp */,
+				F9E5A777300E7AD500164066 /* CommandBan.cpp */,
+				F9E5A773300E7AB700164066 /* CommandManager.hpp */,
+				F9E5A774300E7AB700164066 /* CommandManager.cpp */,
+				F9E5A771300E7A8700164066 /* LevelConstants.cpp */,
 				F99D344D2F7372A100DC153E /* Launch Screen.storyboard */,
 				D5E1BA9A1451C8A0007DCC4F /* Default@2x.png */,
 				9D959AFF16036BEE00E23A6F /* Default-568h@2x.png */,
@@ -5451,6 +5490,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9E5A789300E7B3400164066 /* Command.cpp in Sources */,
+				F9E5A78A300E7B3400164066 /* Command.hpp in Sources */,
+				F9E5A783300E7B0B00164066 /* CommandKick.hpp in Sources */,
+				F9E5A784300E7B0B00164066 /* CommandOp.cpp in Sources */,
+				F9E5A785300E7B0B00164066 /* CommandKick.cpp in Sources */,
+				F9E5A786300E7B0B00164066 /* CommandOp.hpp in Sources */,
+				F9E5A77D300E7AF400164066 /* CommandHelp.hpp in Sources */,
+				F9E5A77E300E7AF400164066 /* CommandHelp.cpp in Sources */,
+				F9E5A779300E7AD500164066 /* CommandBan.cpp in Sources */,
+				F9E5A77A300E7AD500164066 /* CommandBan.hpp in Sources */,
+				F9E5A775300E7AB700164066 /* CommandManager.hpp in Sources */,
+				F9E5A776300E7AB700164066 /* CommandManager.cpp in Sources */,
+				F9E5A772300E7A8700164066 /* LevelConstants.cpp in Sources */,
 				F912B8CF2F6C3D5200BC60DF /* TextBox.h in Sources */,
 				D5CF9C57144C225000E4244F /* main.mm in Sources */,
 				D5CF9C5B144C225000E4244F /* minecraftpeAppDelegate.mm in Sources */,
