@@ -17,6 +17,11 @@ This project aims to preserve and improve this early version of Minecraft PE.
 # Screenshots
 <p align="center">
 
+<img width="49%" alt="menu" src="https://sffempire.ru/mcpe-screenshots/menu.png" />
+<img width="49%" alt="settings" src="https://sffempire.ru/mcpe-screenshots/settings.png" />
+<img width="49%" alt="worlds" src="https://sffempire.ru/mcpe-screenshots/worlds.png" />
+<img width="49%" alt="gameplay" src="https://sffempire.ru/mcpe-screenshots/gameplay.png" />
+
 </p>
 
 # Build
