@@ -31,6 +31,7 @@ if (${PLATFORM} STREQUAL "Desktop")
     endif()
 
     if (WIN32)
+        target_sources(MinecraftPE PRIVATE data/images/pe.rc)
         add_definitions(-D_CRT_SECURE_NO_WARNINGS)
         include_directories(misc/windows)
         set(EXTRA_LIBS ws2_32 winhttp)
