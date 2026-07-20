@@ -32,17 +32,17 @@ protected:
 	void createKey(OptionId optId, Minecraft* minecraft);
 
 	std::string label;
-	int contentHeight;
-	float scrollOffsetY;
-	float maxScrollOffsetY;
-	bool trackingScrollGesture;
-	bool scrollingGesture;
-	bool touchDispatched;
-	int dragStartX;
-	int dragStartY;
-	int lastDragY;
-	int touchStartX;
-	int touchStartY;
+	int contentHeight = 0;
+	float scrollOffsetY = 0.f;
+	float maxScrollOffsetY = 0.f;
+	bool trackingScrollGesture = false;
+	bool scrollingGesture = false;
+	bool touchDispatched = false;
+	int dragStartX = 0;
+	int dragStartY = 0;
+	int lastDragY = 0;
+	int touchStartX = 0;
+	int touchStartY = 0;
 	static const int ScrollStartThreshold = 5;
 };
 

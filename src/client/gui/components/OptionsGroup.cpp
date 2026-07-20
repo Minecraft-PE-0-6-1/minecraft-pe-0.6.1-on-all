@@ -12,18 +12,7 @@
 #include "../../../platform/input/Mouse.h"
 #include "../../../util/Mth.h"
 
-OptionsGroup::OptionsGroup( std::string labelID )
-: contentHeight(0),
-	scrollOffsetY(0.0f),
-	maxScrollOffsetY(0.0f),
-	trackingScrollGesture(false),
-	scrollingGesture(false),
-	touchDispatched(false),
-	dragStartX(0),
-	dragStartY(0),
-	lastDragY(0),
-	touchStartX(0),
-	touchStartY(0) {
+OptionsGroup::OptionsGroup( std::string labelID ) {
 	label = I18n::get(labelID);
 }
 
@@ -36,7 +25,7 @@ void OptionsGroup::setupPositions() {
 	const int contentStartY = y + labelHeight;
 
 	// First we write the header and then we add the items
-	for(std::vector<GuiElement*>::iterator it = children.begin(); it != children.end(); ++it) {
+	for(auto it = children.begin(); it != children.end(); ++it) {
 		(*it)->width = width - 5;
 		
 		(*it)->y = curY;
