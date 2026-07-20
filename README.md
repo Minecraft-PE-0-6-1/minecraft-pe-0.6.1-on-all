@@ -1,6 +1,6 @@
 # MinecraftPE
 > [!Warning]
-> Github repository **isnt main**. All issues and pull requests should be send in [Gitea Repository](https://gitea.sffempire.ru/Kolyah35/minecraft-pe-0.6.1).
+> [Github repository](https://github.com/Minecraft-PE-0-6-1/minecraft-pe-0.6.1-on-all) **isnt main**. All issues and pull requests should be send in [Gitea Repository](https://gitea.sffempire.ru/Kolyah35/minecraft-pe-0.6.1).
 
 > [!Important]
 > We have a discord server, where you can report bugs or send feedback https://discord.gg/c58YesBxve
@@ -9,23 +9,15 @@ Source code for **Minecraft Pocket Edition 0.6.1 alpha** with various fixes and 
 
 This project aims to preserve and improve this early version of Minecraft PE.
 
-# TODO / Roadmap
-- [x] Add platform GLFW
-- [x] Compile for Linux
-- [x] Compile for android aarch64
-    - [x] Touch control improvements
-    - [ ] Screen fixes
-- [ ] Rewrite platform logic
-- [x] Fix sound
-- [x] Do a server connection GUI
-- [ ] Controller support
-- [x] Minecraft server hosting
-- [x] Screen fixess
-- [x] Fix fog
-- [x] Add sprinting
-- [x] Chat (semi working) and commands
-- [x] Implementing options
-- [x] Better F3
+# Features
+- Support for modern IOS and Android, Linux, Web
+- Improved Dedicated Server (Windows build, anticheat, commands, etc)
+- Features from Beta version of Minecraft (Grass tint, Beta sky, Smooth lighting, etc) and other tweaks
+
+# Screenshots
+<p align="center">
+
+</p>
 
 # Build
 
@@ -79,8 +71,14 @@ cmake --build .
    ```
    C:\android-ndk-r14b
    ```
+3. Install **Build tools 35** with [SDKManager](https://dl.google.com/android/repository/commandlinetools-win-15859902_latest.zip) (BuildTools should be in AppData):
 
-3. Run the build script:
+```powershell
+sdkmanager "build-tools;35.0.0" --sdk_root="%LocalAppData%\Android\Sdk"
+sdkmanager "build-tools;android-36" --sdk_root="%LocalAppData%\Android\Sdk"
+```
+
+4. Run the build script:
 
 ```powershell
 # Full build (NDK + Java + APK + install)
