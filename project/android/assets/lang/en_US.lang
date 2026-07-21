@@ -965,5 +965,5 @@ desc.netherbrickitem=Used to form blocks of Nether bricks.
 desc.netherquartz=Quartz from the Nether, used to create Blocks of Quartz.
 desc.quartzblock=Decorative block, used to create other kinds of Quartz blocks.
 desc.stonecutter=For crafting stoneblocks.
-desc.seedsmelon=Allows for more melons.
+desc.seeds_melon=Allows for more melons.
 desc.tile.melon=Can be cut up and eaten.
