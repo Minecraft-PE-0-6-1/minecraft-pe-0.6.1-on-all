@@ -48,9 +48,9 @@ int TallGrass::getColor( LevelSource* level, int x, int y, int z ) {
 	if (!GrassColor::useTint && d == DEAD_SHRUB){
 		return 0xffffff;
 	}
-	if (GrassColor::useTint){
-		return GrassColor::get(temp, rain);
-	}
+	// if (GrassColor::useTint){
+	// 	return GrassColor::get(temp, rain); @fixme @todo doesnt work properly
+	// }
 	// @TODO port this function from beta 1.6.6 probably, for now im using biomesource to tint it directly above - shredder
 	//if (GrassColor::useTint){ 
 	//return level->getBiome(x, z)->getGrassColor();

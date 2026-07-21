@@ -189,9 +189,9 @@ void ItemRenderer::renderGuiItem(Font* font, Textures* textures, const ItemInsta
 			//							it we're batching for saving the
 			//							buffer, this will fail miserably
 			t.endOverrideAndDraw();
-			glDisable2(GL_TEXTURE_2D);
-			fillRect(t, x, y, w, h, 0xff0000);
-			glEnable2(GL_TEXTURE_2D);
+			// glDisable2(GL_TEXTURE_2D);
+			// fillRect(t, x, y, w, h, 0xff0000);
+			// glEnable2(GL_TEXTURE_2D);
 			renderGuiItemCorrect(font, textures, item, int(x), int(y));
 			t.beginOverride();
 		}
