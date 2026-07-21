@@ -329,7 +329,10 @@ bool ChestScreen::handleAddItem(FillingContainer* from, FillingContainer* to, in
 		added = (takenItem.count != wantedCount);
 
 		if (added) {
-			item->count -= (wantedCount - takenItem.count);
+			if (!minecraft->isCreativeMode()) {
+				item->count -= (wantedCount - takenItem.count);
+			}
+			
 			std::vector<int> changed;
 			std::vector<const ItemInstance*> items = getItems(toPane);
 			differ.getDiff(items, changed);

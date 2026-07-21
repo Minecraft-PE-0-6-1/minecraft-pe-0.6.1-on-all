@@ -774,22 +774,19 @@ void LocalPlayer::startCrafting(int x, int y, int z, int tableSize) {
 
 void LocalPlayer::startStonecutting(int x, int y, int z) {
 #ifndef STANDALONE_SERVER
-	if (!minecraft->isCreativeMode())
-		minecraft->setScreen( new StonecutterScreen() );
+	minecraft->setScreen( new StonecutterScreen() );
 #endif
 }
 
 void LocalPlayer::openFurnace( FurnaceTileEntity* e ) {
 #ifndef STANDALONE_SERVER
-	if (!minecraft->isCreativeMode())
-		minecraft->setScreen( new FurnaceScreen(this, e) );
+	minecraft->setScreen( new FurnaceScreen(this, e) );
 #endif
 }
 
 void LocalPlayer::openContainer( ChestTileEntity* container ) {
 #ifndef STANDALONE_SERVER
-	if (!minecraft->isCreativeMode())
-		minecraft->setScreen( new ChestScreen(this, container) );
+	minecraft->setScreen( new ChestScreen(this, container) );
 #endif
 }
 

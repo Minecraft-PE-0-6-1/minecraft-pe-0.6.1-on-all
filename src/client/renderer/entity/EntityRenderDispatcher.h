@@ -45,6 +45,8 @@ public:
     Font* getFont();
 
 	void onGraphicsReset();
+
+	void setModernSkin(Entity* player);
 private:
 	void assign(EntityRendererId id, EntityRenderer* renderer);
 public:

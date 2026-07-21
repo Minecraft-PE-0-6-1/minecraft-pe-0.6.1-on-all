@@ -19,6 +19,8 @@ public:
 
 	virtual void renderName(Mob* mob, float x, float y, float z);
 	virtual void onGraphicsReset();
+
+	void setModernSkin(Mob* mob);
 private:
 	HumanoidModel* playerModel32;
 	HumanoidModel* playerModel64;

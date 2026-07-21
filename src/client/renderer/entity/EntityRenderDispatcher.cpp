@@ -137,6 +137,11 @@ void EntityRenderDispatcher::render( Entity* entity, float x, float y, float z, 
 	}
 }
 
+void EntityRenderDispatcher::setModernSkin(Entity* player) {
+	PlayerRenderer* rend = (PlayerRenderer*)(getRenderer(player));
+	rend->setModernSkin((Mob*)player);
+}
+
 EntityRenderer* EntityRenderDispatcher::getRenderer( Entity* entity )
 {
 	EntityRendererId rendererId = entity->entityRendererId;

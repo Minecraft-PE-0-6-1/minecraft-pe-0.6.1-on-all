@@ -500,6 +500,8 @@ ItemInstance FurnaceScreen::moveOver(const ItemInstance* item, int maxCount) {
 		setIfNotSet(doRecreatePane, newSize != oldSize);
 		return removed;
 	}
+	
+
 	return ItemInstance();
 }
 

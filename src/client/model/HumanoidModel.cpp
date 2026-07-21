@@ -21,6 +21,9 @@ HumanoidModel::HumanoidModel( float g /*= 0*/, float yOffset /*= 0*/, int texW /
 	texWidth = texW;
 	texHeight = texH;
 
+	// texWidth = 64;
+	// texHeight = 32;
+
 	head.setModel(this);
 	hair.setModel(this);
 	body.setModel(this);

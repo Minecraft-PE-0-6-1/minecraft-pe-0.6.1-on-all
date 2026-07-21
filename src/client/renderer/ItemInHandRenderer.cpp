@@ -291,8 +291,7 @@ void ItemInHandRenderer::render( float a )
 	Lighting::turnOn(mc);
 	glPopMatrix2();
 
-	 if (localPlayer) // shredder added, basically does the hand swaying animation from b1.8
-	{
+	if (localPlayer) { // shredder added, basically does the hand swaying animation from b1.8 
         float xrr = localPlayer->xBobO + (localPlayer->xBob - localPlayer->xBobO) * a;
         float yrr = localPlayer->yBobO + (localPlayer->yBob - localPlayer->yBobO) * a;
 		// 4J - was using player->xRot and yRot directly here rather than interpolating between old & current with a
@@ -425,6 +424,8 @@ void ItemInHandRenderer::render( float a )
 
 		EntityRenderer* er = EntityRenderDispatcher::getInstance()->getRenderer(mc->player);
 		HumanoidMobRenderer* playerRenderer = (HumanoidMobRenderer*) er;
+		EntityRenderDispatcher::getInstance()->setModernSkin((Entity*)(player));
+
 		float ss = 1;
 		glScalef2(ss, ss, ss);
 		playerRenderer->renderHand();

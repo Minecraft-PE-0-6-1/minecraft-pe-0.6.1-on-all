@@ -70,13 +70,18 @@ void PlayerRenderer::renderName( Mob* mob, float x, float y, float z ){
 	}
 }
 
-void PlayerRenderer::render(Entity* mob_, float x, float y, float z, float rot, float a) {
-	Mob* mob = (Mob*) mob_;
+// @note fix player skin system
+void PlayerRenderer::setModernSkin(Mob* mob) {
 	HumanoidModel* desired = isModernPlayerSkin(mob) ? playerModel64 : playerModel32;
 	if (model != desired || humanoidModel != desired) {
 		model = desired;
 		humanoidModel = desired;
 	}
+}
+
+void PlayerRenderer::render(Entity* mob_, float x, float y, float z, float rot, float a) {
+	Mob* mob = (Mob*) mob_;
+	setModernSkin(mob);
 	/* LOGI("[PlayerRenderer] %s: skin=%s, modelTex=%dx%d, desired=%s\n", 
 		((Player*)mob)->name.c_str(), mob->getTexture().c_str(), 
 		humanoidModel->texWidth, humanoidModel->texHeight,
