@@ -65,17 +65,13 @@ OptionBool useVignette("useVignette", true);
 OptionBool useTouchscreen("useTouchscreen", true);
 
 OptionBool serverVisible("servervisible", true);
-#ifndef __APPLE__
-OptionBool foliageTint("foliagetint", true);
-#endif
+OptionBool foliageTint("foliagetint", false);
 OptionInt fogType("fogType", 0, 0, 2);
 
 OptionBool javaHud("javaHud", false);
 
 OptionBool betaSky("betaSky", false);
-#ifndef __APPLE__
 OptionBool tintedSide("tintedSide", false);
-#endif
 OptionBool blockOutline("blockOutline", false);
 
 OptionBool restoredAnims("restoredAnims", true);
@@ -199,18 +195,14 @@ void Options::initTable() {
 	m_options[OPTIONS_BAR_ON_TOP] = &barOnTop;
 	m_options[OPTIONS_ALLOW_SPRINT] = &allowSprint;
 	m_options[OPTIONS_RPI_CURSOR] = &rpiCursor;
-#ifndef __APPLE__
 	m_options[OPTIONS_FOLIAGE_TINT] = &foliageTint;
-#endif
 	// more options yay
 	m_options[OPTIONS_FOG_TYPE] = &fogType;
 
 	m_options[OPTIONS_DEBUG_STYLE] = &debugStyle;
 
 	m_options[OPTIONS_BETA_SKY] = &betaSky;
-#ifndef __APPLE__
 	m_options[OPTIONS_TINTED_SIDE] = &tintedSide;
-#endif
 	m_options[OPTIONS_JAVA_HUD] = &javaHud;
 
 	m_options[OPTIONS_AUTOJUMP] = &autoJump;
