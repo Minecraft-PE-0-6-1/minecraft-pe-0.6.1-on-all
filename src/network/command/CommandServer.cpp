@@ -92,7 +92,7 @@ static std::string ToStringOk(const T& a, const T& b, const T& c) {
 	std::stringstream ss;
 	ss << a << "," << b << "," << c << "\n";
 	return ss.str();
-}
+}		
 
 static bool inRange(int c, int lowInclusive, int highInclusive) {
 	return c >= lowInclusive && c <= highInclusive;

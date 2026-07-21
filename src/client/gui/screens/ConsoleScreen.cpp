@@ -6,7 +6,7 @@
 #include "../../../world/level/Level.h"
 #include "../../../network/RakNetInstance.h"
 #include "../../../network/ServerSideNetworkHandler.h"
-#include "../../../network/packet/ChatPacket.h"
+#include "../../../network/packet/MessagePacket.h"
 #include "../../../platform/log.h"
 #include "util/StringUtils.h"
 
@@ -76,7 +76,7 @@ void ConsoleScreen::execute()
         if (minecraft->netCallback && minecraft->raknetInstance->isServer()) {
             static_cast<ServerSideNetworkHandler*>(minecraft->netCallback)->displayGameMessage(_input);
         } else if (minecraft->netCallback) {
-            ChatPacket chatPkt(_input);
+            MessagePacket chatPkt(_input.c_str());
             minecraft->raknetInstance->send(chatPkt);
         } else {
             minecraft->gui.addMessage("<" + minecraft->player->name + "> " + _input);
