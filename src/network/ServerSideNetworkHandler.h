@@ -66,7 +66,7 @@ public:
 	Player* popPendingPlayer(const RakNet::RakNetGUID& source);
 
 	void displayGameMessage(const std::string& message);
-private:
+
 	/**
 	 * @brief Send packet to all players
 	 */
@@ -78,6 +78,8 @@ private:
 	void sendPrivate(Packet& packet, const RakNet::RakNetGUID& source);
 
 	Player* getPlayer(const RakNet::RakNetGUID& source);
+	
+private:
 
 	Minecraft*					minecraft;
 	Level*						level;

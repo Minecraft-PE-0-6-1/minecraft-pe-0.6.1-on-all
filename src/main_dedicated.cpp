@@ -15,16 +15,16 @@
 #include "platform/time.h"
 #include "SharedConstants.h"
 #include "world/level/LevelConstants.h"
-#include <sol/sol.hpp>
+#include <plugins/PluginsManager.hpp>
 
 #define MAIN_CLASS NinecraftApp
 static App* g_app = 0;
 static int g_exitCode = 0;
 void signal_callback_handler(int signum) {
 	std::cout << "Signum caught: " << signum << std::endl;
-	if(signum == 2 || signum == 3){ // SIGINT ||  SIGQUIT
 
-		if(g_app != 0) {
+	if (signum == 2 || signum == 3) { // SIGINT ||  SIGQUIT
+		if (g_app != 0) {
 			g_app->quit();
 		} else {
 			exit(g_exitCode);
@@ -162,6 +162,7 @@ int main(int numArguments, char* pszArgs[]) {
 	float startTime = getTimeS();
 	((MAIN_CLASS*)g_app)->selectLevel(levelDir, levelName, settings);
 	((MAIN_CLASS*)g_app)->hostMultiplayer(port);
+	PluginsManager::get().loadPlugins();
 
 	// Reading ops
 	std::ifstream ops("ops.txt");
@@ -201,18 +202,10 @@ int main(int numArguments, char* pszArgs[]) {
 		}
 	}
 
-	std::string pluginsFolder = "plugins/";
-	struct stat sb;
-
-	if (stat(pluginsFolder.c_str(), &sb) == 0) {
-
-	} else {
-
-	}
-
 	std::cout << "Level has been generated in " << getTimeS() - startTime << std::endl;
 	((MAIN_CLASS*)g_app)->level->saveLevelData();
 	std::cout << "Level has been saved!" << std::endl;
+	PluginsManager::get().emit("ServerLoaded");
 
 	while(!app->wantToQuit()) {
 		app->update();

@@ -245,8 +245,6 @@ private:
 	CommandServer* _commandServer;
 
 	CommandManager m_commandManager;
-
-	PluginsManager m_pluginsManager;
 };
 
 #endif /*NET_MINECRAFT_CLIENT__Minecraft_H__*/

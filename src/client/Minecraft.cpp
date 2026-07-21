@@ -186,8 +186,7 @@ Minecraft::Minecraft() :
 	commandPort(4711),
 	reserved_d1(0),reserved_d2(0),
 	reserved_f1(0),reserved_f2(0), options(this),
-	m_commandManager(),
-	m_pluginsManager(*level)
+	m_commandManager()
 {
 	//#ifdef ANDROID
 
@@ -1215,6 +1214,8 @@ void Minecraft::init()
 	checkGlError("Init complete");
 #endif
 
+	PluginsManager::get().init(*this);
+	
 	options.load();
 
 	setIsCreativeMode(false); // false means it's Survival Mode

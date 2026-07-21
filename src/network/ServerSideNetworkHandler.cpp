@@ -39,6 +39,7 @@
 #endif
 #include "../server/ServerPlayer.h"
 #include "../world/entity/item/FallingTile.h"
+#include <plugins/LuaPlayer.hpp>
 
 #define TIMES(x) for(int itc ## __LINE__ = 0; itc ## __LINE__ < x; ++ itc ## __LINE__)
 
@@ -163,12 +164,12 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChatPack
 	
 	if (packet->message[0] == '/') {
 		// This is a command
-
 		ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, Util::stringTrim(packet->message.substr(1))));
 		return sendPrivate(resp, source);
 	}
 
 	displayGameMessage("<" + player->name + "> " + packet->message);
+	PluginsManager::get().emit("Message", LuaPlayer(source), packet->message);
 }
 
 void ServerSideNetworkHandler::onNewClient(const RakNet::RakNetGUID& clientGuid)
@@ -193,6 +194,7 @@ void ServerSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 			std::string message = player->name;
 			message += " disconnected from the game";
 			displayGameMessage(message);
+			PluginsManager::get().emit("PlayerDisconnect", LuaPlayer(guid));
 
 			//RemoveEntityPacket packet(player->entityId);
 			//raknetInstance->send(packet);
@@ -349,6 +351,7 @@ void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID
 #else
 	LOGW("%s joined the game\n", newPlayer->name.c_str());
 #endif
+	PluginsManager::get().emit("PlayerJoin", LuaPlayer(source));
 
 	// Send all Entities to the new player
 	for (unsigned int i = 0; i < level->entities.size(); ++i) {
@@ -458,7 +461,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 	}
 }
 
-void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveBlockPacket* packet){
+void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveBlockPacket* packet) {
 	if (!level) return;
 
 	Player* player = getPlayer(source);
