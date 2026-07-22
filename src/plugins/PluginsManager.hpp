@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <sol/sol.hpp>
 #include <vector>
+#include <iostream>
 #include <plugins/LuaServer.hpp>
 
 class Minecraft;
