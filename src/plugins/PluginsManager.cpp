@@ -8,7 +8,7 @@
 namespace fs = std::filesystem;
 
 void PluginsManager::init(Minecraft& minecraft) {
-    m_lua.open_libraries(sol::lib::base);
+    m_lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table);
     registerTypes();
 
     m_minecraft = &minecraft;    

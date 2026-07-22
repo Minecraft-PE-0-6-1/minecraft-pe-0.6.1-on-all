@@ -6,7 +6,7 @@ include(cmake/CPM.cmake)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_POLICY_VERSION_MINIMUM 3.10)
-
+add_definitions(-DLUA_USE_DLOPEN)
 include(cmake/EnumOption.cmake)
 
 if(EMSCRIPTEN)
@@ -352,7 +352,7 @@ endif()
 
 # Server
 add_executable("${PROJECT_NAME}-server" ${SERVER_SOURCES})
-
+set_target_properties("${PROJECT_NAME}-server" PROPERTIES ENABLE_EXPORTS TRUE)
 target_compile_definitions("${PROJECT_NAME}-server" PUBLIC "STANDALONE_SERVER" "SERVER_PROFILER")
 
 target_include_directories("${PROJECT_NAME}-server" PUBLIC 
@@ -365,6 +365,7 @@ target_include_directories("${PROJECT_NAME}-server" PUBLIC
 target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT} ${EXTRA_LIBS} lua sol2::sol2)
 
 add_executable(${PROJECT_NAME} ${CLIENT_SOURCES})
+set_target_properties(${PROJECT_NAME} PROPERTIES ENABLE_EXPORTS TRUE)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${PLATFORM_CPP})
 

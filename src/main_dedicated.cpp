@@ -240,6 +240,7 @@ int main(int numArguments, char* pszArgs[]) {
 	delete app;
 	appContext.platform->finish();
 	delete appContext.platform;
+	PluginsManager::get().emit("ServerShutdown");
 
 	std::cout << "Quit correctly" << std::endl;
 	return g_exitCode;
