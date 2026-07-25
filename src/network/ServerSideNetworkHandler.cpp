@@ -164,8 +164,12 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChatPack
 	
 	if (packet->message[0] == '/') {
 		// This is a command
-		ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, Util::stringTrim(packet->message.substr(1))));
-		return sendPrivate(resp, source);
+		auto cmd = Util::stringTrim(packet->message.substr(1));
+
+		if (PluginsManager::get().emitCommands(cmd, LuaPlayer(source))) {
+			ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, cmd));
+			return sendPrivate(resp, source);	
+		}
 	}
 
 	displayGameMessage("<" + player->name + "> " + packet->message);
@@ -451,13 +455,19 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MovePlay
 		//     	return raknetInstance->send(refuse);
 		// 	}
 		// }
+		
+		PluginsManager::get().emit(
+			"PlayerMovement", 
+			LuaPlayer(source), 
+			packet->x, packet->y, packet->z, packet->yRot, packet->xRot, // newPos
+			player->x, player->y, player->z, player->yRot, player->xRot // oldPos
+		);
 
 		entity->xd = entity->yd = entity->zd = 0;	
 		entity->lerpTo(packet->x, packet->y, packet->z, packet->yRot, packet->xRot, 3);
 		
 		// broadcast this packet to other clients
 		redistributePacket(packet, source);
-	
 	}
 }
 
