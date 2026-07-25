@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <plugins/LuaServer.hpp>
+#include <raknet/RakNetTypes.h>
 
 class Minecraft;
 
@@ -42,23 +43,8 @@ public:
         }
     }  
 
-    template<typename... Args>
-    int emitCommands(std::string event, Args&&... args) {
-        auto it = m_luaCommands.find(event);
-
-        if (it == m_luaCommands.end()) return 1;
-
-        for (auto& callback : it->second) {
-            sol::protected_function_result result = callback(std::forward<Args>(args)...);
-
-            if (!result.valid()) {
-                sol::error err = result;
-                std::cout << err.what() << std::endl;
-            }
-        }
-
-        return 0;
-    }  
+    int emitCommands(std::string command, const RakNet::RakNetGUID& source);
+    
     Minecraft* getMinecraft() { return m_minecraft; }
 private:
     std::unordered_map<std::string, std::vector<sol::function>> m_callbacks;

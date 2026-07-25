@@ -7,6 +7,42 @@
 
 namespace fs = std::filesystem;
 
+int PluginsManager::emitCommands(std::string command, const RakNet::RakNetGUID& source) {
+    std::vector<std::string> args;
+    std::string cmd;
+
+    int i = 0;
+    std::string word;
+    std::stringstream ss(command);
+
+    while (ss >> word) {
+        if (i == 0) {
+            cmd = word;
+        } else {
+            args.push_back(word);
+        }
+        
+        i++;
+    }
+
+    std::cout << cmd << " " << " ff" << std::endl;
+
+    auto it = m_luaCommands.find(cmd);
+
+    if (it == m_luaCommands.end()) return 1;
+
+    for (auto& callback : it->second) {
+        sol::protected_function_result result = callback(LuaPlayer(source), sol::as_table(args));
+
+        if (!result.valid()) {
+            sol::error err = result;
+            std::cout << err.what() << std::endl;
+        }
+    }
+
+    return 0;
+}
+
 void PluginsManager::init(Minecraft& minecraft) {
     m_lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table, sol::lib::io);
     registerTypes();

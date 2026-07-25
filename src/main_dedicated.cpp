@@ -234,13 +234,13 @@ int main(int numArguments, char* pszArgs[]) {
 	} else {
 		throw std::runtime_error("Cannot open banned players list.");
 	}
-	
+	PluginsManager::get().emit("ServerShutdown");
+
 	((MAIN_CLASS*)g_app)->level->saveLevelData();
 
 	delete app;
 	appContext.platform->finish();
 	delete appContext.platform;
-	PluginsManager::get().emit("ServerShutdown");
 
 	std::cout << "Quit correctly" << std::endl;
 	return g_exitCode;

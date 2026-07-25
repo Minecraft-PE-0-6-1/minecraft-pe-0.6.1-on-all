@@ -166,9 +166,11 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChatPack
 		// This is a command
 		auto cmd = Util::stringTrim(packet->message.substr(1));
 
-		if (PluginsManager::get().emitCommands(cmd, LuaPlayer(source))) {
+		if (PluginsManager::get().emitCommands(cmd, source)) {
 			ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, cmd));
 			return sendPrivate(resp, source);	
+		} else {
+			return;
 		}
 	}
 
