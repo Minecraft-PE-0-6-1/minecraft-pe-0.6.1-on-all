@@ -4,6 +4,8 @@
 //package net.minecraft.world.item;
 
 #include <string>
+#include <plugins/PluginsManager.hpp>
+#include <plugins/LuaPlayer.hpp>
 
 #include "Item.h"
 #include "ItemInstance.h"
@@ -61,7 +63,7 @@ public:
             if (level->setTileAndData(x, y, z, tileId, data)) {
                 Tile::tiles[tileId]->setPlacedBy(level, x, y, z, player);
                 level->playSound(x + 0.5f, y + 0.5f, z + 0.5f, tile->soundType->getStepSound(), (tile->soundType->getVolume() + 1) / 2, tile->soundType->getPitch() * 0.8f);
-                printf("%f %f %f \n", player->x, player->y, player->z);
+                PluginsManager::get().emit("PlayerPlaceBlock", LuaPlayer(player->owner), x, y, z, face, tileId, instance->getAuxValue());
 /*
 				PlaceBlockPacket packet(player->entityId, x, y, z, face, tileId, instance->getAuxValue());
 				//LOGI("Place block at @ %d, %d, %d\n", x, y, z);

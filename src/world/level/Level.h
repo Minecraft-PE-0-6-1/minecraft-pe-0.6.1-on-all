@@ -313,6 +313,7 @@ public:
 
 	std::set<std::string> ops;
 	std::set<std::string> bannedPpl;
+	std::set<std::string> bannedIps;
 protected:
 	bool isFindingSpawn;
 

@@ -25,8 +25,6 @@ int PluginsManager::emitCommands(std::string command, const RakNet::RakNetGUID& 
         i++;
     }
 
-    std::cout << cmd << " " << " ff" << std::endl;
-
     auto it = m_luaCommands.find(cmd);
 
     if (it == m_luaCommands.end()) return 1;
@@ -76,7 +74,9 @@ void PluginsManager::registerTypes() {
         "getInventory", &LuaPlayer::getInventory,
         "addItem", &LuaPlayer::addItem,
         "getItem", &LuaPlayer::getItem,
-        "clearInventory", &LuaPlayer::clearInventory
+        "clearInventory", &LuaPlayer::clearInventory,
+        "getHp", &LuaPlayer::getHp,
+        "setHp", &LuaPlayer::setHp
     );
 
     m_lua["Server"] = &m_srv;

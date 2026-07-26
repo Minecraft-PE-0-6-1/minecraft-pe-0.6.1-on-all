@@ -156,6 +156,30 @@ void ServerSideNetworkHandler::displayGameMessage(const std::string& message)
 	raknetInstance->send(packet);
 }
 
+void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MessagePacket* packet)
+{
+	auto player = getPlayer(source);
+
+	if (player == nullptr) return; // @todo maybe kick?
+	
+	auto msg = std::string(packet->message.C_String());
+
+	if (packet->message[0] == '/') {
+		// This is a command
+		auto cmd = Util::stringTrim(msg);
+
+		if (PluginsManager::get().emitCommands(msg, source)) {
+			ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, msg));
+			return sendPrivate(resp, source);	
+		} else {
+			return;
+		}
+	}
+
+	displayGameMessage("<" + player->name + "> " + msg);
+	PluginsManager::get().emit("Message", LuaPlayer(source), packet->message);
+}
+
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChatPacket* packet)
 {
 	auto player = getPlayer(source);
@@ -195,12 +219,12 @@ void ServerSideNetworkHandler::onDisconnect(const RakNet::RakNetGUID& guid)
 
 		if (player->owner == guid)
 		{
+			PluginsManager::get().emit("PlayerDisconnect", LuaPlayer(guid));
 			minecraft->level->getLevelStorage()->savePlayer(*player);
 
 			std::string message = player->name;
 			message += " disconnected from the game";
 			displayGameMessage(message);
-			PluginsManager::get().emit("PlayerDisconnect", LuaPlayer(guid));
 
 			//RemoveEntityPacket packet(player->entityId);
 			//raknetInstance->send(packet);
@@ -234,6 +258,10 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	std::string nicknameLower = packet->clientName.C_String();
 	std::transform(nicknameLower.begin(), nicknameLower.end(), nicknameLower.begin(), ::tolower);
 
+	RakNet::SystemAddress sysAddress = rakPeer->GetSystemAddressFromGuid(source);
+    char clientIp[32];
+    sysAddress.ToString(false, clientIp);
+
 	for (int i = 0; i < level->players.size(); i++) {
 		ServerPlayer* player = (ServerPlayer*) level->players.at(i);
 
@@ -249,6 +277,13 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 	
 	for (auto& banned : level->bannedPpl) {
 		if (nicknameLower == banned) {
+			loginStatus = packet->newProto ? LoginStatus::Failed_Banned : LoginStatus::Failed_ClientOld;
+			break;
+		}
+	}
+
+	for (auto& banned : level->bannedIps) {
+		if (clientIp == banned) {
 			loginStatus = packet->newProto ? LoginStatus::Failed_Banned : LoginStatus::Failed_ClientOld;
 			break;
 		}
@@ -412,7 +447,7 @@ void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID
 	bitStream.Reset();
 	AddPlayerPacket(newPlayer).write(&bitStream);
 	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, true);
-	
+
 	PluginsManager::get().emit("PlayerJoin", LuaPlayer(source));
 }
 
@@ -511,6 +546,8 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveBl
 			
 
 		oldTile->destroy(level, x, y, z, data);
+		// 		RemoveEntityPacket packet(e->entityId);
+		// redistributePacket(&packet, rakPeer->GetMyGUID());
 	}
 
 	LOGI("Remove block [%i, %i, %i]\n", packet->x, packet->y, packet->z);

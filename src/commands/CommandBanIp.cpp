@@ -1,4 +1,4 @@
-#include "CommandBan.hpp"
+#include "CommandBanIp.hpp"
 #include "commands/Command.hpp"
 #include "network/RakNetInstance.h"
 #include "raknet/RakPeerInterface.h"
@@ -6,9 +6,9 @@
 #include <algorithm>
 #include <client/Minecraft.h>
 
-CommandBan::CommandBan() : Command("ban") {}
+CommandBanIp::CommandBanIp() : Command("banip") {}
 
-std::string CommandBan::execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) {
+std::string CommandBanIp::execute(Minecraft& mc, Player& player, const std::vector<std::string>& args) {
     if (!isPlayerOp(mc, player)) {
         return "You aren't enough priveleged to run this command";
     }
@@ -28,9 +28,13 @@ std::string CommandBan::execute(Minecraft& mc, Player& player, const std::vector
     });
 
     if (*it == (Player*)mc.player) {
-        return "ban: you can't ban urself lol";
+        return "banip: you can't ban urself lol";
     }
+    
+	RakNet::SystemAddress sysAddress = mc.raknetInstance->getPeer()->GetSystemAddressFromGuid((*it)->owner);
 
+    char clientIp[32];
+    sysAddress.ToString(false, clientIp);
     auto sourceId = (*it)->owner;
 
     if (it != mc.level->players.end()) {
@@ -38,17 +42,17 @@ std::string CommandBan::execute(Minecraft& mc, Player& player, const std::vector
         mc.level->removeEntity((*it));
         mc.raknetInstance->getPeer()->CloseConnection(sourceId, true);
     } else {
-        for (auto& banned : mc.level->bannedPpl) {
-            if (nicknameLower == banned) {
+        for (auto& banned : mc.level->bannedIps) {
+            if (clientIp == banned) {
                 return args[0] + " already banned!";
             }
         }
     }
 
-    mc.level->bannedPpl.insert(nicknameLower);
-    return "ban: successfully banned player " + args[0];
+    mc.level->bannedIps.insert(clientIp);
+    return "banip: successfully banned player by ip " + args[0];
 }
 
-std::string CommandBan::help(Minecraft& mc) {
-    return "Usage: /ban <player>";
+std::string CommandBanIp::help(Minecraft& mc) {
+    return "Usage: /banip <player>";
 }

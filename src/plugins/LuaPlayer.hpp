@@ -8,6 +8,7 @@
 #include <network/packet/ChatPacket.h>
 #include <network/packet/MovePlayerPacket.h>
 #include <network/packet/RemoveItemPacket.h>
+#include <network/packet/SetHealthPacket.h>
 #include <network/packet/TakeItemPacket.h>
 #include <world/entity/player/Inventory.h>
 
@@ -132,6 +133,26 @@ public:
 		}
 
         return inv;
+    }
+
+    int getHp() {
+        auto plr = getPlayer();
+        if (plr == nullptr) return -1;
+
+        return plr->health;
+    }
+
+    void setHp(int hp) {
+        auto plr = getPlayer();
+        if (plr == nullptr) return;
+
+        plr->health = hp;
+
+        auto mc = PluginsManager::get().getMinecraft();
+        ServerSideNetworkHandler* ss = (ServerSideNetworkHandler*) mc->netCallback;
+
+        SetHealthPacket hpPacket(plr->health);
+		ss->sendPrivate(hpPacket, m_source);
     }
 private:
     const RakNet::RakNetGUID m_source;

@@ -202,6 +202,24 @@ int main(int numArguments, char* pszArgs[]) {
 		}
 	}
 
+	std::ifstream bannedIps("banned-ips.txt");
+
+	if (bannedIps.is_open()) {
+        std::string line;
+        
+        while (std::getline(bannedIps, line)) {
+			if (!line.empty()) {
+            	((MAIN_CLASS*)g_app)->level->bannedIps.insert(line);
+			}
+        }
+	} else {
+		std::ofstream bannedIp("banned-ips.txt");
+
+		if (!bannedIp.is_open()) {
+			throw std::runtime_error("Cannot create banned players list.");
+		}
+	}
+
 	std::cout << "Level has been generated in " << getTimeS() - startTime << std::endl;
 	((MAIN_CLASS*)g_app)->level->saveLevelData();
 	std::cout << "Level has been saved!" << std::endl;
@@ -234,6 +252,18 @@ int main(int numArguments, char* pszArgs[]) {
 	} else {
 		throw std::runtime_error("Cannot open banned players list.");
 	}
+
+	std::ofstream bannedIpsWrite("banned-ips.txt"); 
+
+	if (bannedIpsWrite.is_open()) {
+		for (auto& banned : ((MAIN_CLASS*)g_app)->level->bannedIps) {
+			bannedIpsWrite << banned << std::endl;
+		}
+		bannedIpsWrite.close();
+	} else {
+		throw std::runtime_error("Cannot open banned players list.");
+	}
+
 	PluginsManager::get().emit("ServerShutdown");
 
 	((MAIN_CLASS*)g_app)->level->saveLevelData();
