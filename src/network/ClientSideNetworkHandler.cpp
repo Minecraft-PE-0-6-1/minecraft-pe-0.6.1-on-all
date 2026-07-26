@@ -448,7 +448,7 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, TakeItem
 
 	LOGI("TakeItemPacket\n");
 
-	ItemInstance* item;
+	ItemInstance* item = new ItemInstance();
 
 	item->count = packet->count;
 	item->id = packet->itemId;

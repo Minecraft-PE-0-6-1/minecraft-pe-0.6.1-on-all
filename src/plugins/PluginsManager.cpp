@@ -73,7 +73,10 @@ void PluginsManager::registerTypes() {
         "getPos", &LuaPlayer::getPos,
         "setPos", &LuaPlayer::setPos,
         "sendMessage", &LuaPlayer::sendMessage,
-        "getInventory", &LuaPlayer::getInventory
+        "getInventory", &LuaPlayer::getInventory,
+        "addItem", &LuaPlayer::addItem,
+        "getItem", &LuaPlayer::getItem,
+        "clearInventory", &LuaPlayer::clearInventory
     );
 
     m_lua["Server"] = &m_srv;

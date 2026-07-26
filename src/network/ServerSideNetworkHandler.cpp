@@ -357,8 +357,6 @@ void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID
 #else
 	LOGW("%s joined the game\n", newPlayer->name.c_str());
 #endif
-	PluginsManager::get().emit("PlayerJoin", LuaPlayer(source));
-
 	// Send all Entities to the new player
 	for (unsigned int i = 0; i < level->entities.size(); ++i) {
 		Entity* e = level->entities[i];
@@ -414,6 +412,8 @@ void ServerSideNetworkHandler::onReady_ClientGeneration(const RakNet::RakNetGUID
 	bitStream.Reset();
 	AddPlayerPacket(newPlayer).write(&bitStream);
 	rakPeer->Send(&bitStream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, source, true);
+	
+	PluginsManager::get().emit("PlayerJoin", LuaPlayer(source));
 }
 
 //
