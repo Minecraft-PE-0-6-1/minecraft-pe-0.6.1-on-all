@@ -35,9 +35,11 @@ std::string CommandKick::execute(Minecraft& mc, Player& player, const std::vecto
         return "kick: you can't kick urself lol";
     }
 
-    mc.level->removePlayer(*it);
-    (*it)->remove();
-    mc.raknetInstance->getPeer()->CloseConnection((*it)->owner, true);
+    auto sourceId = (*it)->owner;
+
+    (*it)->reallyRemoveIfPlayer = true;
+    mc.level->removeEntity((*it));
+    mc.raknetInstance->getPeer()->CloseConnection(sourceId, true);
     return "kick: successfully kicked player " + args[0];
 }
 

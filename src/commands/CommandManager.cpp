@@ -9,6 +9,7 @@
 #include "commands/CommandOp.hpp"
 #include "commands/CommandBan.hpp"
 #include "commands/CommandBanIp.hpp"
+#include "commands/CommandPardon.hpp"
 #include "network/packet/ChatPacket.h"
 #include "network/RakNetInstance.h"
 #include "world/level/Level.h"
@@ -23,6 +24,7 @@ void CommandManager::registerAllCommands() {
     m_commands.push_back(new CommandOp());
     m_commands.push_back(new CommandBan());
     m_commands.push_back(new CommandBanIp());
+    m_commands.push_back(new CommandPardon());
 }
 
 std::vector<std::string> CommandManager::getListAllCommands() {

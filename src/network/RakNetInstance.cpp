@@ -173,6 +173,7 @@ bool RakNetInstance::isMyLocalGuid(const RakNet::RakNetGUID& guid)
 void RakNetInstance::runEvents(NetEventCallback* callback)
 {
 	RakNet::Packet* currentEvent;
+	bool disconnect = false;
 
 	while ((currentEvent = rakPeer->Receive()) != NULL)
 	{
@@ -200,6 +201,7 @@ void RakNetInstance::runEvents(NetEventCallback* callback)
 				case ID_DISCONNECTION_NOTIFICATION:
 				case ID_CONNECTION_LOST:
 					callback->onDisconnect(currentEvent->guid);
+					disconnect = true;
 					break;
 				case ID_UNCONNECTED_PONG:
 					{
@@ -233,8 +235,9 @@ void RakNetInstance::runEvents(NetEventCallback* callback)
 				}
 			}
 		}
-
-		rakPeer->DeallocatePacket(currentEvent);
+		if (!disconnect) {
+			rakPeer->DeallocatePacket(currentEvent);
+		}
 		//delete activeBitStream;
 	}
 

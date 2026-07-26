@@ -27,13 +27,13 @@ std::string CommandBan::execute(Minecraft& mc, Player& player, const std::vector
         return lower == nicknameLower;
     });
 
-    if (*it == (Player*)mc.player) {
-        return "ban: you can't ban urself lol";
-    }
-
-    auto sourceId = (*it)->owner;
-
     if (it != mc.level->players.end()) {
+        if (*it == (Player*)mc.player) {
+            return "banip: you can't ban urself lol";
+        }
+
+        auto sourceId = (*it)->owner;
+
         (*it)->reallyRemoveIfPlayer = true;
         mc.level->removeEntity((*it));
         mc.raknetInstance->getPeer()->CloseConnection(sourceId, true);

@@ -175,9 +175,14 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MessageP
 			return;
 		}
 	}
-
-	displayGameMessage("<" + player->name + "> " + msg);
+	// @todo rewrite
+	bool shouldShow = true;
+	
 	PluginsManager::get().emit("Message", LuaPlayer(source), packet->message);
+
+	if (shouldShow) {
+		displayGameMessage("<" + player->name + "> " + msg);
+	}
 }
 
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChatPacket* packet)

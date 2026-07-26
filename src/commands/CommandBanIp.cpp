@@ -27,17 +27,22 @@ std::string CommandBanIp::execute(Minecraft& mc, Player& player, const std::vect
         return lower == nicknameLower;
     });
 
-    if (*it == (Player*)mc.player) {
-        return "banip: you can't ban urself lol";
-    }
-    
-	RakNet::SystemAddress sysAddress = mc.raknetInstance->getPeer()->GetSystemAddressFromGuid((*it)->owner);
-
-    char clientIp[32];
-    sysAddress.ToString(false, clientIp);
-    auto sourceId = (*it)->owner;
+    std::string clientIp;
 
     if (it != mc.level->players.end()) {
+        if (*it == (Player*)mc.player) {
+            return "banip: you can't ban urself lol";
+        }
+        
+        RakNet::SystemAddress sysAddress = mc.raknetInstance->getPeer()->GetSystemAddressFromGuid((*it)->owner);
+
+        char ip[32];
+        sysAddress.ToString(false, ip);
+
+        clientIp = ip;
+
+        auto sourceId = (*it)->owner;
+
         (*it)->reallyRemoveIfPlayer = true;
         mc.level->removeEntity((*it));
         mc.raknetInstance->getPeer()->CloseConnection(sourceId, true);
@@ -47,6 +52,8 @@ std::string CommandBanIp::execute(Minecraft& mc, Player& player, const std::vect
                 return args[0] + " already banned!";
             }
         }
+
+        clientIp = args[0];
     }
 
     mc.level->bannedIps.insert(clientIp);
