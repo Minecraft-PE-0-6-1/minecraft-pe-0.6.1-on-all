@@ -43,14 +43,16 @@ int TallGrass::getColor( int auxData ) {
 int TallGrass::getColor( LevelSource* level, int x, int y, int z ) {
 	int d = level->getData(x, y, z);
 	if (d == DEAD_SHRUB); //return 0xffffff; // i removed this to make it accurate to beta 1.6.6 instead of early java release versions
+
+	level->getBiomeSource()->getBiomeBlock(x, z, 1, 1);
 	float temp = level->getBiomeSource()->temperatures[0]; // shredder added
 	float rain = level->getBiomeSource()->downfalls != nullptr ? level->getBiomeSource()->downfalls[0] : 0; // shredder added
 	if (!GrassColor::useTint && d == DEAD_SHRUB){
 		return 0xffffff;
 	}
-	// if (GrassColor::useTint){
-	// 	return GrassColor::get(temp, rain); @fixme @todo doesnt work properly
-	// }
+	if (GrassColor::useTint){
+		return GrassColor::get(temp, rain);
+	}
 	// @TODO port this function from beta 1.6.6 probably, for now im using biomesource to tint it directly above - shredder
 	//if (GrassColor::useTint){ 
 	//return level->getBiome(x, z)->getGrassColor();

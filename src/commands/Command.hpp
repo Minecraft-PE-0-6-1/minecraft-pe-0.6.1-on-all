@@ -2,18 +2,12 @@
 #include <string>
 #include <vector>
 
-enum CommandFlags {
-    COMMAND_FLAG_SINGLEPLAYER_ONLY = (1 << 1),
-    COMMAND_FLAG_NO_ARGS = (1 << 2),
-};
-
 class Minecraft;
 class Player;
 
 class Command {
 public:
     const std::string& getName() { return m_name; }
-    const CommandFlags getFlags() { return m_flags; }
 
     bool isPlayerOp(Minecraft& mc, Player& player);
 
@@ -21,8 +15,7 @@ public:
     virtual std::string help(Minecraft& mc) = 0;
 
 protected:
-    Command(const std::string& name, CommandFlags flags = (CommandFlags)0) : m_name(name), m_flags(flags) {}
+    Command(const std::string& name) : m_name(name) {}
 
     const std::string m_name;
-    const CommandFlags m_flags;
 };

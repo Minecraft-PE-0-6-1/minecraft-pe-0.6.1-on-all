@@ -516,7 +516,7 @@ void Minecraft::tick(int nTick, int maxTick) {
 	if (missTime > 0) missTime--;
 #ifndef STANDALONE_SERVER
 	if (!screen && player) {
-		if (player->health <= 0) {
+		if (player->hasDied()) {
 			setScreen(new DeathScreen());
 		}
 	}

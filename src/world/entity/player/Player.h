@@ -91,10 +91,7 @@ public:
 	void handleEntityEvent(char id);
 
 	virtual void take(Entity* e, int orgCount);
-	//void drop();
-	virtual void drop(ItemInstance* item);
-	virtual void drop(ItemInstance* item, bool randomly);
-	void reallyDrop(ItemEntity* thrownItem);
+	virtual void drop(ItemInstance* item, bool randomly = false);
 
     bool canDestroy(Tile* tile);
 	float getDestroySpeed(Tile* tile);

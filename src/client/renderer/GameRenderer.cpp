@@ -440,7 +440,7 @@ float GameRenderer::getFov(float a, bool applyEffects) {
 		fov *= this->oFov + (this->fov - this->oFov) * a;
 
 	if (player->isUnderLiquid(Material::water)) fov = 60;
-	if (player->health <= 0) {
+	if (player->hasDied()) {
 		float duration = player->deathTime + a;
 
 		fov /= ((1 - 500 / (duration + 500)) * 2.0f + 1);
@@ -537,7 +537,7 @@ void GameRenderer::bobHurt(float a) {
 
 	float hurt = player->hurtTime - a;
 
-	if (player->health <= 0) {
+	if (player->hasDied()) {
 		float duration = player->deathTime + a;
 		glRotatef2(40 - (40 * 200) / (duration + 200), 0, 0, 1);
 	}

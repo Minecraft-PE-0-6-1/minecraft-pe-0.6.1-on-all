@@ -204,22 +204,23 @@ void ScrollingPane::render( int xm, int ym, float alpha ) {
 
 	const float bxx = bbox.x - (fpx /*+ dx*alpha*/) + (nw.xf - nw.x);
 	const float byy = bbox.y - (fpy /*+ dy*alpha*/) + (nw.yf - nw.y);
-	for (int y = nw.y; y <= se.y; ++y)
-	for (int x = nw.x; x <= se.x; ++x) {
-		int id = y * columns + x;
-		if (y <0 || id < 0 || id >= numItems) continue; // @todo: break rather
-		if (isNotSet(SF_WrapX) && (x < 0 || x >= columns)) continue; // @todo: break rather
-		GridItem item; //@todo: v- Does not support SF_Wrapping
-		item.id = id;
-		item.xf  = bxx + x * itemBbox.w;
-		item.yf  = byy + y * itemBbox.h;
-		item.x = (int)item.xf;
-		item.y = (int)item.yf;
-		//LOGI("i: %d (%.1f, %.1f)\t", id, item.xf, item.yf);
-		if (isSet(SF_MultiSelect)) item.selected = selected[id];
-		else item.selected = (id == selectedId);
+	for (int y = nw.y; y <= se.y; ++y) {
+		for (int x = nw.x; x <= se.x; ++x) {
+			int id = y * columns + x;
+			if (y <0 || id < 0 || id >= numItems) continue; // @todo: break rather
+			if (isNotSet(SF_WrapX) && (x < 0 || x >= columns)) continue; // @todo: break rather
+			GridItem item; //@todo: v- Does not support SF_Wrapping
+			item.id = id;
+			item.xf  = bxx + x * itemBbox.w;
+			item.yf  = byy + y * itemBbox.h;
+			item.x = (int)item.xf;
+			item.y = (int)item.yf;
+			//LOGI("i: %d (%.1f, %.1f)\t", id, item.xf, item.yf);
+			if (isSet(SF_MultiSelect)) item.selected = selected[id];
+			else item.selected = (id == selectedId);
 
-		itemsToRender.push_back(item);
+			itemsToRender.push_back(item);
+		}
 	}
 	renderBatch(itemsToRender, alpha);
 

@@ -390,7 +390,7 @@ void Player::travel(float xa, float ya) {
 
 /*protected*/
 bool Player::isImmobile() {
-    return health <= 0 || isSleeping();
+    return hasDied() || isSleeping();
 }
 
 /*protected*/
@@ -447,8 +447,8 @@ void Player::aiStep() {
     float tBob = (float) Mth::sqrt(xd * xd + zd * zd);
     float tTilt = (float) Mth::atan(-yd * 0.2f) * 15.f;
     if (tBob > 0.1f) tBob = 0.1f;
-    if (!onGround || health <= 0) tBob = 0;
-    if (onGround || health <= 0) tTilt = 0;
+    if (!onGround || hasDied()) tBob = 0;
+    if (onGround || hasDied()) tTilt = 0;
     bob += (tBob - bob) * 0.4f;
     tilt += (tTilt - tilt) * 0.8f;
 
@@ -518,14 +518,6 @@ bool Player::isCreativeModeAllowed() {
     return true;
 }
 
-//void Player::drop() {
-//    //drop(inventory.removeItem(inventory.selected, 1), false);
-//}
-
-void Player::drop(ItemInstance* item) {
-    drop(item, false);
-}
-
 void Player::drop(ItemInstance* item, bool randomly) {
     if (item == NULL || item->isNull())
         return;
@@ -559,11 +551,6 @@ void Player::drop(ItemInstance* item, bool randomly) {
         thrownItem->zd += Mth::sin(dir) * pow;
     }
 
-    reallyDrop(thrownItem);
-}
-
-/*protected*/
-void Player::reallyDrop(ItemEntity* thrownItem) {
     level->addEntity(thrownItem);
 }
 
@@ -680,7 +667,7 @@ bool Player::hurt(Entity* source, int dmg) {
 	if (abilities.invulnerable) return false;
 
 	noActionTime = 0;
-    if (health <= 0) return false;
+    if (hasDied()) return false;
 	if(isSleeping() && !level->isClientSide) {
 		stopSleepInBed(true, true, false);
 	}

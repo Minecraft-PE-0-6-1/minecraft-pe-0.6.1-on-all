@@ -8,13 +8,14 @@
 #include "../../../platform/time.h"
 #include "../../../platform/input/Keyboard.h"
 #include "../../../platform/log.h"
+#include <locale/I18n.h>
 
 SimpleChooseLevelScreen::SimpleChooseLevelScreen(const std::string& levelName)
-:   bHeader(0),
-    bGamemode(0),
-    bCheats(0),
-    bBack(0),
-    bCreate(0),
+:   bHeader(nullptr),
+    bGamemode(nullptr),
+    bCheats(nullptr),
+    bBack(nullptr),
+    bCreate(nullptr),
     levelName(levelName),
     hasChosen(false),
     gamemode(GameType::Survival),
@@ -42,10 +43,10 @@ void SimpleChooseLevelScreen::init()
     // first") when the name already existed.
     ChooseLevelScreen::init();
 
-    tLevelName.text = "New world";
+    tLevelName.text = I18n::get("selectWorld.newWorld");
 
     // header + close button
-    bHeader = new Touch::THeader(0, "Create World");
+    bHeader = new Touch::THeader(0, I18n::get("selectWorld.create"));
     // create the back/X button as ImageButton like CreditsScreen
     bBack = new ImageButton(2, "");
     {
@@ -56,14 +57,14 @@ void SimpleChooseLevelScreen::init()
         def.setSrc(IntRectangle(150, 0, (int)def.width, (int)def.height));
         bBack->setImageDef(def, true);
     }
-    if (/* minecraft->useTouchscreen() */ true) {
-        bGamemode = new Touch::TButton(1, "Survival mode");
+    if (minecraft->options.getIntValue(OPTIONS_MENU_STYLE) != 2) {
+        bGamemode = new Touch::TButton(1, I18n::get("selectWorld.gameMode.survival"));
         bCheats  = new Touch::TButton(4, "Cheats: Off");
-        bCreate  = new Touch::TButton(3, "Create");
+        bCreate  = new Touch::TButton(3, I18n::get("selectWorld.create"));
     } else {
-        bGamemode = new Button(1, "Survival mode");
+        bGamemode = new Button(1, I18n::get("selectWorld.gameMode.survival"));
         bCheats  = new Button(4, "Cheats: Off");
-        bCreate  = new Button(3, "Create");
+        bCreate  = new Button(3, I18n::get("Create"));
     }
 
     buttons.push_back(bHeader);

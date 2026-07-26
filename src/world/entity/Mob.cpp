@@ -224,7 +224,7 @@ void Mob::baseTick()
 	if (hurtTime > 0) hurtTime--;
 	if (invulnerableTime > 0) invulnerableTime--;
 
-	if (health <= 0) {
+	if (this->hasDied()) {
 	    deathTime++;
 	    if (deathTime > SharedConstants::TicksPerSecond) {
 	        beforeRemove();
@@ -437,7 +437,8 @@ void Mob::setSize( float w, float h )
 
 void Mob::heal( int heal )
 {
-	if (health <= 0) return;
+	if (this->hasDied()) return;
+
 	health += heal;
 	if (health > 20) health = 20;
 	invulnerableTime = invulnerableDuration / 2;
@@ -447,7 +448,8 @@ bool Mob::hurt( Entity* source, int dmg )
 {
 	if (level->isClientSide) return false;
 	noActionTime = 0;
-	if (health <= 0) return false;
+
+	if (this->hasDied()) return false;
 
 	this->walkAnimSpeed = 1.5f;
 
@@ -485,7 +487,7 @@ bool Mob::hurt( Entity* source, int dmg )
 		}
 	}
 
-	if (health <= 0) {
+	if (this->hasDied()) {
 		if (sound) level->playSound(this, getDeathSound(), getSoundVolume(), getVoicePitch());
 		die(source);
 	} else {
@@ -892,7 +894,7 @@ void Mob::newServerAiStep() {
 
 bool Mob::isImmobile()
 {
-	return health <= 0;
+	return this->hasDied();
 }
 
 void Mob::jumpFromGround()

@@ -72,7 +72,7 @@ void DeathScreen::render( int xm, int ym, float a )
 if (minecraft->options.getIntValue(OPTIONS_MENU_STYLE) == 2){
 	glPushMatrix2();
 	glScalef2(2, 2, 2);
-	drawCenteredString(font, "Game over!", width / 2 / 2, height / 8, 0xffffff);
+	drawCenteredString(font, I18n::get("deathScreen.title.hardcore"), width / 4, height / 8, 0xffffff);
 	glPopMatrix2();
 	std::stringstream ss;
 	ss << "Score: &e" << minecraft->player->getScore();
@@ -80,7 +80,7 @@ if (minecraft->options.getIntValue(OPTIONS_MENU_STYLE) == 2){
 } else {
 	glPushMatrix2();
 	glScalef2(2, 2, 2);
-	drawCenteredString(font, "You died!", width / 2 / 2, height / 8, 0xffffff);
+	drawCenteredString(font, I18n::get("deathScreen.title"), width / 4, height / 8, 0xffffff);
 	glPopMatrix2();
 }
 

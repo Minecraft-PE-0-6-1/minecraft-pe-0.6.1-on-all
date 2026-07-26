@@ -127,6 +127,8 @@ public:
 	virtual ItemInstance* getCarriedItem() {return NULL;}
 	virtual int getUseItemDuration() {return 0;}
 	virtual void swing();
+
+	inline bool hasDied() { return health <= 0; }
 protected:
 	virtual void causeFallDamage(float distance);
 

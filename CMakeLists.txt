@@ -16,7 +16,9 @@ endif()
 
 enum_option(PLATFORM "Desktop;Web" "Platform to build for.")
 
-find_package(Threads REQUIRED)
+if(NOT EMSCRIPTEN)
+    find_package(Threads REQUIRED)
+endif()
 find_package(OpenSSL)
 
 if (${PLATFORM} STREQUAL "Desktop")
