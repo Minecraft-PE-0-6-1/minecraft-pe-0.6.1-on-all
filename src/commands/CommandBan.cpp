@@ -5,6 +5,7 @@
 #include "world/level/Level.h"
 #include <algorithm>
 #include <client/Minecraft.h>
+#include <network/packet/LoginStatusPacket.h>
 
 CommandBan::CommandBan() : Command("ban") {}
 
@@ -31,12 +32,6 @@ std::string CommandBan::execute(Minecraft& mc, Player& player, const std::vector
         if (*it == (Player*)mc.player) {
             return "banip: you can't ban urself lol";
         }
-
-        auto sourceId = (*it)->owner;
-
-        (*it)->reallyRemoveIfPlayer = true;
-        mc.level->removeEntity((*it));
-        mc.raknetInstance->getPeer()->CloseConnection(sourceId, true);
     } else {
         for (auto& banned : mc.level->bannedPpl) {
             if (nicknameLower == banned) {
