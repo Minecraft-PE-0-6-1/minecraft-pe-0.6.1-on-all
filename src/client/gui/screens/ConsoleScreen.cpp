@@ -65,7 +65,7 @@ void ConsoleScreen::execute()
 
     if (minecraft->netCallback && !minecraft->raknetInstance->isServer()) {
         MessagePacket packet(_input.c_str());
-        minecraft->raknetInstance->send(&packet);
+        minecraft->raknetInstance->send(packet);
     } else if (_input[0] == '/') {
         _input = Util::stringTrim(_input.substr(1));
 
@@ -80,7 +80,7 @@ void ConsoleScreen::execute()
     else {
         if (minecraft->raknetInstance->isServer()) {
             MessagePacket packet(_input.c_str());
-            minecraft->raknetInstance->send(&packet);
+            minecraft->raknetInstance->send(packet);
         }
 
         minecraft->gui.addMessage("<" + minecraft->player->name + "> " + _input);
