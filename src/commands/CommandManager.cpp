@@ -22,7 +22,7 @@ void CommandManager::registerAllCommands() {
     m_commands.push_back(new CommandKick());
     m_commands.push_back(new CommandOp());
     m_commands.push_back(new CommandBan());
-    m_commands.push_back(new CommandGimmieItems());
+    // m_commands.push_back(new CommandGimmieItems());
 }
 
 std::vector<std::string> CommandManager::getListAllCommands() {
