@@ -4,6 +4,7 @@
 
 #include <client/Minecraft.h>
 #include <filesystem>
+#include "MessageEvent.hpp"
 
 namespace fs = std::filesystem;
 
@@ -77,6 +78,11 @@ void PluginsManager::registerTypes() {
         "clearInventory", &LuaPlayer::clearInventory,
         "getHp", &LuaPlayer::getHp,
         "setHp", &LuaPlayer::setHp
+    );
+
+    m_lua.new_usertype<MessageEvent>(
+        "MessageEvent",
+        "setDecline", &MessageEvent::setDecline
     );
 
     m_lua["Server"] = &m_srv;

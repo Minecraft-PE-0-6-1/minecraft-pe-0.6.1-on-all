@@ -1,4 +1,5 @@
 #pragma once
+
 #include <cstdint>
 #include <raknet/RakNetTypes.h>
 #include <plugins/PluginsManager.hpp>

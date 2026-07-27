@@ -40,6 +40,7 @@
 #include "../server/ServerPlayer.h"
 #include "../world/entity/item/FallingTile.h"
 #include <plugins/LuaPlayer.hpp>
+#include <plugins/MessageEvent.hpp>
 
 #define TIMES(x) for(int itc ## __LINE__ = 0; itc ## __LINE__ < x; ++ itc ## __LINE__)
 
@@ -164,23 +165,24 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, MessageP
 	
 	auto msg = std::string(packet->message.C_String());
 
-	if (packet->message[0] == '/') {
-		// This is a command
-		auto cmd = Util::stringTrim(msg);
-
-		if (PluginsManager::get().emitCommands(msg, source)) {
-			ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, msg));
-			return sendPrivate(resp, source);	
-		} else {
-			return;
-		}
-	}
-	// @todo rewrite
-	bool shouldShow = true;
+	MessageEvent event;
+	event.m_decline = false;
 	
-	PluginsManager::get().emit("Message", LuaPlayer(source), packet->message);
+	PluginsManager::get().emit("Message", LuaPlayer(source), msg, event);
+	
+	if (!event.m_decline) {
+		if (packet->message[0] == '/') {
+			// This is a command
+			auto cmd = Util::stringTrim(msg.substr(1));
 
-	if (shouldShow) {
+			if (PluginsManager::get().emitCommands(cmd, source)) {
+				ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, cmd));
+				return sendPrivate(resp, source);	
+			} else {
+				return;
+			}
+		}
+
 		displayGameMessage("<" + player->name + "> " + msg);
 	}
 }
@@ -191,20 +193,26 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, ChatPack
 
 	if (player == nullptr) return; // @todo maybe kick?
 	
-	if (packet->message[0] == '/') {
-		// This is a command
-		auto cmd = Util::stringTrim(packet->message.substr(1));
+	MessageEvent event;
+	event.m_decline = false;
+	
+	PluginsManager::get().emit("Message", LuaPlayer(source), packet->message, event);
+	
+	if (!event.m_decline) {
+		if (packet->message[0] == '/') {
+			// This is a command
+			auto cmd = Util::stringTrim(packet->message.substr(1));
 
-		if (PluginsManager::get().emitCommands(cmd, source)) {
-			ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, cmd));
-			return sendPrivate(resp, source);	
-		} else {
-			return;
+			if (PluginsManager::get().emitCommands(cmd, source)) {
+				ChatPacket resp(minecraft->commandManager().execute(*minecraft, *player, cmd));
+				return sendPrivate(resp, source);	
+			} else {
+				return;
+			}
 		}
-	}
 
-	displayGameMessage("<" + player->name + "> " + packet->message);
-	PluginsManager::get().emit("Message", LuaPlayer(source), packet->message);
+		displayGameMessage("<" + player->name + "> " + packet->message);
+	}
 }
 
 void ServerSideNetworkHandler::onNewClient(const RakNet::RakNetGUID& clientGuid)
