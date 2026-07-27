@@ -200,7 +200,7 @@ void RakNetInstance::runEvents(NetEventCallback* callback)
 				case ID_DISCONNECTION_NOTIFICATION:
 				case ID_CONNECTION_LOST:
 					callback->onDisconnect(currentEvent->guid);
-					break;
+					return;
 				case ID_UNCONNECTED_PONG:
 					{
 						RakNet::TimeMS time;

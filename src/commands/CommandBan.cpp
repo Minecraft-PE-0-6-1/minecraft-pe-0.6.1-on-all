@@ -36,14 +36,14 @@ std::string CommandBan::execute(Minecraft& mc, Player& player, const std::vector
         (*it)->remove();
         mc.raknetInstance->getPeer()->CloseConnection((*it)->owner, true);
     } else {
-        for (auto& banned : mc.level->bannedPpl) {
+        for (auto& banned : mc.level->bannedPlayers) {
             if (nicknameLower == banned) {
                 return args[0] + "already banned!";
             }
         }
     }
 
-    mc.level->bannedPpl.insert(nicknameLower);
+    mc.level->bannedPlayers.insert(nicknameLower);
     return "ban: successfully banned player " + args[0];
 }
 

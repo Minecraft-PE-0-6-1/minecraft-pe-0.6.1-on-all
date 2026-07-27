@@ -257,7 +257,7 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, LoginPac
 		}
 	}
 	
-	for (auto& banned : level->bannedPpl) {
+	for (auto& banned : level->bannedPlayers) {
 		if (nicknameLower == banned) {
 			loginStatus = packet->newProto ? LoginStatus::Failed_Banned : LoginStatus::Failed_ClientOld;
 			break;

@@ -190,13 +190,13 @@ int main(int numArguments, char* pszArgs[]) {
         
         while (std::getline(banned, line)) {
 			if (!line.empty()) {
-            	((MAIN_CLASS*)g_app)->level->bannedPpl.insert(line);
+            	((MAIN_CLASS*)g_app)->level->bannedPlayers.insert(line);
 			}
         }
 	} else {
-		std::ofstream bannedPpl("banned-players.txt");
+		std::ofstream bannedPlayers("banned-players.txt");
 
-		if (!bannedPpl.is_open()) {
+		if (!bannedPlayers.is_open()) {
 			throw std::runtime_error("Cannot create banned players list.");
 		}
 	}
@@ -225,7 +225,7 @@ int main(int numArguments, char* pszArgs[]) {
 	std::ofstream bannedWrite("banned-players.txt"); 
 
 	if (bannedWrite.is_open()) {
-		for (auto& banned : ((MAIN_CLASS*)g_app)->level->bannedPpl) {
+		for (auto& banned : ((MAIN_CLASS*)g_app)->level->bannedPlayers) {
 			bannedWrite << banned << std::endl;
 		}
 		bannedWrite.close();

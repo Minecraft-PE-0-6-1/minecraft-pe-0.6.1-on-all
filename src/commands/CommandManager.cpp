@@ -36,32 +36,25 @@ std::vector<std::string> CommandManager::getListAllCommands() {
 }
 
 std::string CommandManager::execute(Minecraft& mc, Player& player, const std::string& input) {
-    if (!mc.level->isClientSide) {
-        std::istringstream ss(input);
-        std::string cmd;
+    std::istringstream ss(input);
+    std::string cmd;
 
-        ss >> cmd;
+    ss >> cmd;
 
-        auto it = std::find_if(m_commands.begin(), m_commands.end(), [cmd](auto& it) -> bool {
-            return it->getName() == cmd;
-        });
+    auto it = std::find_if(m_commands.begin(), m_commands.end(), [cmd](auto& it) -> bool {
+        return it->getName() == cmd;
+    });
 
-        if (it == m_commands.end()) {
-            return "Command /" + cmd + " not found";
-        }
-
-        std::vector<std::string> args;
-
-        std::string tok;
-        while (ss >> tok) args.push_back(tok);
-
-        return (*it)->execute(mc, player, args);
-    } else {
-        ChatPacket packet("/" + input);
-        mc.raknetInstance->send(packet);
+    if (it == m_commands.end()) {
+        return "Command /" + cmd + " not found";
     }
 
-    return std::string();
+    std::vector<std::string> args;
+
+    std::string tok;
+    while (ss >> tok) args.push_back(tok);
+
+    return (*it)->execute(mc, player, args);
 }
 
 Command* CommandManager::getCommand(const std::string& name) {

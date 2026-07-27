@@ -63,24 +63,25 @@ void ConsoleScreen::execute()
         return minecraft->setScreen(NULL);
     }
 
-    if (_input[0] == '/') {
-        // Command
+    if (minecraft->netCallback && !minecraft->raknetInstance->isServer()) {
+        minecraft->raknetInstance->send(MessagePacket(_input.c_str()));
+    } else if (_input[0] == '/') {
         _input = Util::stringTrim(_input.substr(1));
-        
-        std::istringstream iss(minecraft->commandManager().execute(*minecraft, *minecraft->player, _input));
-        for (std::string line; std::getline(iss, line); ) {
+
+        std::istringstream iss(
+            minecraft->commandManager().execute(*minecraft, *minecraft->player, _input)
+        );
+
+        for (std::string line; std::getline(iss, line);) {
             minecraft->gui.addMessage(line);
         }
-    } else {
-        // @ai @rewrite
-        if (minecraft->netCallback && minecraft->raknetInstance->isServer()) {
-            static_cast<ServerSideNetworkHandler*>(minecraft->netCallback)->displayGameMessage(_input);
-        } else if (minecraft->netCallback) {
-            MessagePacket chatPkt(_input.c_str());
-            minecraft->raknetInstance->send(chatPkt);
-        } else {
-            minecraft->gui.addMessage("<" + minecraft->player->name + "> " + _input);
+    }
+    else {
+        if (minecraft->raknetInstance->isServer()) {
+            minecraft->raknetInstance->send(MessagePacket(_input.c_str()));
         }
+
+        minecraft->gui.addMessage("<" + minecraft->player->name + "> " + _input);
     }
 
     minecraft->setScreen(NULL);
