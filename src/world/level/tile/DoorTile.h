@@ -17,7 +17,6 @@ class DoorTile: public Tile
 {
 	typedef Tile super;
 public:
-	static const int UPPER_BIT = 8;
 	static const int C_DIR_MASK = 3;
 	static const int C_OPEN_MASK = 4;
 	static const int C_LOWER_DATA_MASK = 7;

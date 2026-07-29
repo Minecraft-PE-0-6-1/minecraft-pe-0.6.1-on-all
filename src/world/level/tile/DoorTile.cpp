@@ -3,6 +3,7 @@
 #include "../Level.h"
 #include "../../item/Item.h"
 #include "../../entity/player/Player.h"
+#include "world/level/LevelSettings.h"
 
 DoorTile::DoorTile(int id, const Material* material)
 :	super(id, material)
@@ -150,7 +151,7 @@ void DoorTile::setOpen(Level* level, int x, int y, int z, bool shouldOpen) {
 
 void DoorTile::neighborChanged(Level* level, int x, int y, int z, int type) {
 	int data = level->getData(x, y, z);
-	if ((data & UPPER_BIT) == 0) {
+	if ((data & C_IS_UPPER_MASK) == 0) {
 		bool spawn = false;
 		if (level->getTile(x, y + 1, z) != id) {
 			level->setTile(x, y, z, 0);
@@ -164,7 +165,7 @@ void DoorTile::neighborChanged(Level* level, int x, int y, int z, int type) {
 			}
 		}
 		if (spawn) {
-			if (!level->isClientSide) {
+			if (!level->isClientSide && level->getLevelData()->getGameType() != GameType::Creative) {
 				// use default chance (1.0) so the drop always occurs
 				spawnResources(level, x, y, z, data);
 			}
@@ -193,7 +194,7 @@ int DoorTile::getResource(int data, Random* random) {
 	// itself never drops anything and playerDestroy suppresses spawning
 	// from the top.  This prevents duplicate drops if the bottom half is
 	// mined.
-	if ((data & UPPER_BIT) != 0) return 0;
+	if ((data & C_IS_UPPER_MASK) != 0) return 0;
 	if (material == Material::metal) return Item::door_iron->id;
 	return Item::door_wood->id;
 }
@@ -205,7 +206,7 @@ HitResult DoorTile::clip(Level* level, int xt, int yt, int zt, const Vec3& a, co
 
 // override to prevent double-dropping when top half is directly mined
 void DoorTile::playerDestroy(Level* level, Player* player, int x, int y, int z, int data) {
-	if ((data & UPPER_BIT) == 0) {
+	if ((data & C_IS_UPPER_MASK) == 0) {
 		// only let the lower half handle the actual spawning
 		super::playerDestroy(level, player, x, y, z, data);
 	}
@@ -225,7 +226,7 @@ bool DoorTile::mayPlace(Level* level, int x, int y, int z, unsigned char face) {
 
 int DoorTile::getCompositeData( LevelSource* level, int x, int y, int z ) {
 	int data = level->getData(x, y, z);
-	bool isUpper = (data & UPPER_BIT) != 0;
+	bool isUpper = (data & C_IS_UPPER_MASK) != 0;
 	int lowerData;
 	int upperData;
 	if (isUpper) {
