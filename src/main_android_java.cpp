@@ -220,16 +220,23 @@ static int androidKeyToInternal(int androidKey) {
 JNIEXPORT void JNICALL
 Java_com_mojang_minecraftpe_MainActivity_nativeOnKeyDown(JNIEnv* env, jclass cls, jint keyCode) {
     LOGI("@nativeOnKeyDown: %d\n", keyCode);
-    int mapped = androidKeyToInternal(keyCode);
-    Keyboard::feed(mapped, true);
+
+    // @rewrite
+
+    if (keyCode != AKEYCODE_1) {
+        int mapped = androidKeyToInternal(keyCode);
+        Keyboard::feed(mapped, true);
+    }
 }
 JNIEXPORT void JNICALL
 Java_com_mojang_minecraftpe_MainActivity_nativeTextChar(JNIEnv* env, jclass cls, jint unicodeChar) {
+    LOGI("@nativeTextChar: %d '%c'", unicodeChar, (char)unicodeChar);
     // soft-keyboards may send a backspace as a character code
-    if (unicodeChar == 8) {
+    // Kolyah35: i dont believe :v
+    /*if (unicodeChar == 8) {
         Keyboard::feed(Keyboard::KEY_BACKSPACE, true);
         Keyboard::feed(Keyboard::KEY_BACKSPACE, false);
-    } else if (unicodeChar > 0 && unicodeChar < 128) {
+    } else*/ if (unicodeChar > 0 && unicodeChar < 128) {
         Keyboard::feedText((char)unicodeChar);
     }
 }

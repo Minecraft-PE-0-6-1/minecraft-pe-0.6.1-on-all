@@ -31,7 +31,7 @@ public:
 	virtual void keyboardTextEvent();
 	virtual bool handleBackEvent(bool isDown);
 
-    virtual void tick() {}
+    virtual void tick();
 
     virtual void removed() {}
 

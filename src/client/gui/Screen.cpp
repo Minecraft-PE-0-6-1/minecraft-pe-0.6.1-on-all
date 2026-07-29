@@ -61,6 +61,12 @@ bool Screen::handleBackEvent( bool isDown )
 	return false;
 }
 
+void Screen::tick() {
+	for (auto& textbox : textBoxes) {
+		textbox->tick(minecraft);
+	}
+}
+
 void Screen::updateEvents()
 {
 	if (passEvents)
@@ -110,10 +116,12 @@ void Screen::keyboardEvent()
 		keyPressed(Keyboard::getEventKey());
 	}
 }
+
 void Screen::keyboardTextEvent()
 {
 	charPressed(Keyboard::getChar());
 }
+
 void Screen::renderBackground()
 {
 	renderBackground(0);
